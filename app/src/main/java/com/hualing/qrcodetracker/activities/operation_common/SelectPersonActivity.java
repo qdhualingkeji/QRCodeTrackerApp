@@ -53,6 +53,7 @@ public class SelectPersonActivity extends BaseActivity {
     //模糊过滤后的数据
     private List<PersonBean> mFilterData ;
     private MainDao mainDao;
+    private String selectPersonFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class SelectPersonActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
+        selectPersonFlag=getIntent().getStringExtra("selectPersonFlag");
+
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
@@ -147,20 +150,23 @@ public class SelectPersonActivity extends BaseActivity {
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
         @Override
-        public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v =  LayoutInflater.from(SelectPersonActivity.this).inflate(R.layout.adapter_single,parent,false);
-            return new MyAdapter.MyViewHolder(v);
+            return new MyViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(MyAdapter.MyViewHolder holder, int position) {
+        public void onBindViewHolder(MyViewHolder holder, int position) {
             final PersonBean bean = mFilterData.get(position);
             holder.sortName.setText(bean.getTrueName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent ii = new Intent();
-                    ii.putExtra("personName",bean.getTrueName());
+                    if("selectPerson".equals(selectPersonFlag))
+                        ii.putExtra("personName",bean.getTrueName());
+                    else if("selectPerson1".equals(selectPersonFlag))
+                        ii.putExtra("personName1",bean.getTrueName());
                     setResult(RESULT_OK,ii);
                     AllActivitiesHolder.removeAct(SelectPersonActivity.this);
                 }

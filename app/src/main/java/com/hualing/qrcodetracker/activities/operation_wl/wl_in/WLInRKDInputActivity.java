@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.common.StringUtils;
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
@@ -59,6 +61,8 @@ public class WLInRKDInputActivity extends BaseActivity {
 //    EditText mShrValue;
     @BindView(R.id.ShFzrValue)
     TextView mShFzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
 //    @BindView(R.id.JhFzrValue)
 //    EditText mJhFzrValue;
     private MainDao mainDao;
@@ -132,7 +136,7 @@ public class WLInRKDInputActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.ShRqValue, R.id.commitBtn,R.id.selectPerson})
+    @OnClick({R.id.ShRqValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ShRqValue:
@@ -160,7 +164,14 @@ public class WLInRKDInputActivity extends BaseActivity {
 
                 break;
             case R.id.selectPerson:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, null);
+                Bundle bundle=new Bundle();
+                bundle.putString("selectPersonFlag","selectPerson");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle);
+                break;
+            case R.id.selectPerson1:
+                Bundle bundle1=new Bundle();
+                bundle1.putString("selectPersonFlag","selectPerson1");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle1);
                 break;
             case R.id.commitBtn:
 
@@ -177,7 +188,11 @@ public class WLInRKDInputActivity extends BaseActivity {
             switch (requestCode) {
                 case SELECT_PERSON:
                     String personName = data.getStringExtra("personName");
-                    mShFzrValue.setText(personName);
+                    if(!TextUtils.isEmpty(personName))
+                        mShFzrValue.setText(personName);
+                    String personName1 = data.getStringExtra("personName1");
+                    if(!TextUtils.isEmpty(personName1))
+                        mZjyValue.setText(personName1);
                     break;
             }
         }
