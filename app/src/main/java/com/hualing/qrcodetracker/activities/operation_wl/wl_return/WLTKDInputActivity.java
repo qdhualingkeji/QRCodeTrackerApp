@@ -41,6 +41,7 @@ public class WLTKDInputActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_TLFZR = 31;
     private static final int REQUEST_CODE_SELECT_SLFZR = 32;
     private static final int REQUEST_CODE_SELECT_SLR = 33;
+    private static final int REQUEST_CODE_SELECT_ZJY = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -52,6 +53,10 @@ public class WLTKDInputActivity extends BaseActivity {
     TextView mShfzrValue;
     @BindView(R.id.thfzrValue)
     TextView mThfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
+    private int fzrID;
+    private int zjyID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     private CreateWLTKDParam params;
@@ -174,6 +179,10 @@ public class WLTKDInputActivity extends BaseActivity {
         params.setShFzr(shfzrValue);
         params.setThr(GlobalData.realName);
         params.setThFzr(thfzrValue);
+        params.setFzrID(fzrID);
+        params.setFzrStatus(0);
+        params.setZjyID(zjyID);
+        params.setZjyStatus(0);
         params.setRemark(remarkValue);
         return true;
     }
@@ -189,17 +198,22 @@ public class WLTKDInputActivity extends BaseActivity {
                     mShrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SLFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mShfzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_TLFZR:
                     mThfzrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_ZJY:
+                    zjyID=data.getIntExtra("personID",0);
+                    mZjyValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectSLR, R.id.selectSLFZR, R.id.selectTLFZR})
+    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectSLR, R.id.selectSLFZR, R.id.selectTLFZR, R.id.selectZJY})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.selectLLBM:
@@ -213,6 +227,9 @@ public class WLTKDInputActivity extends BaseActivity {
                 break;
             case R.id.selectTLFZR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_TLFZR, null);
+                break;
+            case R.id.selectZJY:
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, null);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

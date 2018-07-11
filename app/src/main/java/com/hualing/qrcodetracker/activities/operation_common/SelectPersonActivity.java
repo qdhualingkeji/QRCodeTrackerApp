@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,6 @@ public class SelectPersonActivity extends BaseActivity {
     //模糊过滤后的数据
     private List<PersonBean> mFilterData ;
     private MainDao mainDao;
-    private String selectPersonFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,6 @@ public class SelectPersonActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
-        selectPersonFlag=getIntent().getStringExtra("selectPersonFlag");
 
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
@@ -163,10 +162,8 @@ public class SelectPersonActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     Intent ii = new Intent();
-                    if("selectPerson".equals(selectPersonFlag))
-                        ii.putExtra("personName",bean.getTrueName());
-                    else if("selectPerson1".equals(selectPersonFlag))
-                        ii.putExtra("personName1",bean.getTrueName());
+                    ii.putExtra("personID", bean.getUserId());
+                    ii.putExtra("personName", bean.getTrueName());
                     setResult(RESULT_OK,ii);
                     AllActivitiesHolder.removeAct(SelectPersonActivity.this);
                 }

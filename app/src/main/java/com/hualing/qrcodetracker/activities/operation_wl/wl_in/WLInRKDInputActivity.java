@@ -47,6 +47,7 @@ import io.reactivex.schedulers.Schedulers;
 public class WLInRKDInputActivity extends BaseActivity {
 
     private static final int SELECT_PERSON = 111;
+    private static final int SELECT_PERSON1 = 112;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.FhDwValue)
@@ -63,6 +64,8 @@ public class WLInRKDInputActivity extends BaseActivity {
     TextView mShFzrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
+    private int fzrID;
+    private int zjyID;
 //    @BindView(R.id.JhFzrValue)
 //    EditText mJhFzrValue;
     private MainDao mainDao;
@@ -133,6 +136,10 @@ public class WLInRKDInputActivity extends BaseActivity {
         params.setShFzr(shfzrValue);
 //        params.setFhr(GlobalData.realName);
 //        params.setJhFzr(jhfzrValue);
+        params.setFzrID(fzrID);
+        params.setFzrStatus(0);
+        params.setZjyID(zjyID);
+        params.setZjyStatus(0);
         return true;
     }
 
@@ -164,14 +171,10 @@ public class WLInRKDInputActivity extends BaseActivity {
 
                 break;
             case R.id.selectPerson:
-                Bundle bundle=new Bundle();
-                bundle.putString("selectPersonFlag","selectPerson");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, null);
                 break;
             case R.id.selectPerson1:
-                Bundle bundle1=new Bundle();
-                bundle1.putString("selectPersonFlag","selectPerson1");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle1);
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON1, null);
                 break;
             case R.id.commitBtn:
 
@@ -185,14 +188,16 @@ public class WLInRKDInputActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (resultCode == RESULT_OK) {
+            int personID = data.getIntExtra("personID",0);
+            String personName = data.getStringExtra("personName");
             switch (requestCode) {
                 case SELECT_PERSON:
-                    String personName = data.getStringExtra("personName");
-                    if(!TextUtils.isEmpty(personName))
-                        mShFzrValue.setText(personName);
-                    String personName1 = data.getStringExtra("personName1");
-                    if(!TextUtils.isEmpty(personName1))
-                        mZjyValue.setText(personName1);
+                    fzrID =personID;
+                    mShFzrValue.setText(personName);
+                    break;
+                case SELECT_PERSON1:
+                    zjyID =personID;
+                    mZjyValue.setText(personName);
                     break;
             }
         }

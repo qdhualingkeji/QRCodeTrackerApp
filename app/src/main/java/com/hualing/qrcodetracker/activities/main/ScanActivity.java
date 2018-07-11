@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
@@ -202,8 +203,8 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Log.i("Scan", "result:" + result);
-        //        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        Log.e("Scan===============", "result:" + result);
+        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
         vibrate();
         //        mZxingview.startSpot();
         //获取到二维码id

@@ -51,6 +51,7 @@ public class WLCKDInputActivity extends BaseActivity {
     TextView mFlfzrValue;
     @BindView(R.id.LlfzrValue)
     TextView mLlfzrValue;
+    private int fzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     private CreateWLCKDParam params;
@@ -149,6 +150,8 @@ public class WLCKDInputActivity extends BaseActivity {
         params.setFhFzr(flfzrValue);
         params.setLhR(GlobalData.realName);
         params.setLhFzr(llfzrValue);
+        params.setFzrID(fzrID);
+        params.setFzrStatus(0);
         params.setRemark(remarkValue);
         return true;
     }
@@ -167,6 +170,7 @@ public class WLCKDInputActivity extends BaseActivity {
                     mFlfzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_FLR:
+                    fzrID=data.getIntExtra("personID",0);
                     mFlrValue.setText(data.getStringExtra("personName"));
                     break;
             }
