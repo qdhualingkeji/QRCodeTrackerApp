@@ -18,6 +18,8 @@ public class CreateBCPCKDParam {
     private String fhFzr;
     private String lhr;
     private String lhFzr;
+    private Integer fzrID;
+    private Integer fzrStatus;
     private String remark;
     private String jhDw;
 
@@ -75,6 +77,22 @@ public class CreateBCPCKDParam {
 
     public void setLhFzr(String lhFzr) {
         this.lhFzr = lhFzr;
+    }
+
+    public Integer getFzrID() {
+        return fzrID;
+    }
+
+    public void setFzrID(Integer fzrID) {
+        this.fzrID = fzrID;
+    }
+
+    public Integer getFzrStatus() {
+        return fzrStatus;
+    }
+
+    public void setFzrStatus(Integer fzrStatus) {
+        this.fzrStatus = fzrStatus;
     }
 
     public String getRemark() {

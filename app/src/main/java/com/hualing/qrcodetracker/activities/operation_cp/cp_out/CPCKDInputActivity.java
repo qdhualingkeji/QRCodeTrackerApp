@@ -56,6 +56,7 @@ public class CPCKDInputActivity extends BaseActivity {
     TextView mJhFhrValue;
     @BindView(R.id.shdwValue)
     EditText mShdwValue;
+    private int fzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
 
@@ -114,6 +115,7 @@ public class CPCKDInputActivity extends BaseActivity {
                     mJhFhrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SHFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mShFzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SHR:
@@ -146,6 +148,8 @@ public class CPCKDInputActivity extends BaseActivity {
         //当前用户提交
         params.setFhr(GlobalData.realName);
         params.setFhFzr(jhfzrValue);
+        params.setFzrID(fzrID);
+        params.setFzrStatus(0);
         params.setRemark(mRemarkValue.getText().toString());
         return true;
     }

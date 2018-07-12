@@ -45,6 +45,7 @@ public class CPRKDInputActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_JHFZR = 31;
     private static final int REQUEST_CODE_SELECT_SHFZR = 32;
     private static final int REQUEST_CODE_SELECT_SHR = 33;
+    private static final int REQUEST_CODE_SELECT_ZJY = 34;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.departmentValue)
@@ -55,6 +56,10 @@ public class CPRKDInputActivity extends BaseActivity {
     TextView mShFzrValue;
     @BindView(R.id.JhFhrValue)
     TextView mJhFhrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
+    private int fzrID;
+    private int zjyID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
 
@@ -102,7 +107,7 @@ public class CPRKDInputActivity extends BaseActivity {
         return R.layout.activity_cprkdinput;
     }
 
-    @OnClick({R.id.selectBM, R.id.commitBtn, R.id.selectSHR, R.id.selectSHFZR, R.id.selectJHFZR})
+    @OnClick({R.id.selectBM, R.id.commitBtn, R.id.selectSHR, R.id.selectSHFZR, R.id.selectJHFZR, R.id.selectZJY})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.selectBM:
@@ -116,6 +121,9 @@ public class CPRKDInputActivity extends BaseActivity {
                 break;
             case R.id.selectJHFZR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_JHFZR, null);
+                break;
+            case R.id.selectZJY:
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, null);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();
@@ -134,10 +142,15 @@ public class CPRKDInputActivity extends BaseActivity {
                     mJhFhrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SHFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mShFzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SHR:
                     mShrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_ZJY:
+                    zjyID=data.getIntExtra("personID",0);
+                    mZjyValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
@@ -161,6 +174,10 @@ public class CPRKDInputActivity extends BaseActivity {
         params.setShFzr(shfzrValue);
         params.setJhr(GlobalData.realName);
         params.setJhFzr(jhfzrValue);
+        params.setFzrID(fzrID);
+        params.setFzrStatus(0);
+        params.setZjyID(zjyID);
+        params.setZjyStatus(0);
         params.setRemark(mRemarkValue.getText().toString());
         return true;
     }

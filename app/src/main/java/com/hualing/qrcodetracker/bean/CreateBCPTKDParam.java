@@ -19,6 +19,10 @@ public class CreateBCPTKDParam {
     private String shFzr ;
     private String thr ;
     private String thFzr ;
+    private Integer fzrID;
+    private Integer fzrStatus;
+    private Integer zjyID;
+    private Integer zjyStatus;
     private String remark ;
 
     public String getBackDh() {
@@ -75,6 +79,38 @@ public class CreateBCPTKDParam {
 
     public void setThFzr(String thFzr) {
         this.thFzr = thFzr;
+    }
+
+    public Integer getFzrID() {
+        return fzrID;
+    }
+
+    public void setFzrID(Integer fzrID) {
+        this.fzrID = fzrID;
+    }
+
+    public Integer getFzrStatus() {
+        return fzrStatus;
+    }
+
+    public void setFzrStatus(Integer fzrStatus) {
+        this.fzrStatus = fzrStatus;
+    }
+
+    public Integer getZjyID() {
+        return zjyID;
+    }
+
+    public void setZjyID(Integer zjyID) {
+        this.zjyID = zjyID;
+    }
+
+    public Integer getZjyStatus() {
+        return zjyStatus;
+    }
+
+    public void setZjyStatus(Integer zjyStatus) {
+        this.zjyStatus = zjyStatus;
     }
 
     public String getRemark() {
