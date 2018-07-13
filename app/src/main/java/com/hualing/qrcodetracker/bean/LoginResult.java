@@ -19,6 +19,16 @@ public class LoginResult {
 
     private String trueName;
 
+    private String checkQXGroup;//审核权限组，有19的话就是领导（负责人），反之是质检员
+
+    public String getCheckQXGroup() {
+        return checkQXGroup;
+    }
+
+    public void setCheckQXGroup(String checkQXGroup) {
+        this.checkQXGroup = checkQXGroup;
+    }
+
     public String getTrueName() {
         return trueName;
     }

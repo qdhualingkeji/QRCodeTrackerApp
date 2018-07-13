@@ -18,6 +18,7 @@ import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.bean.WLTkShowBean;
 import com.hualing.qrcodetracker.bean.WlTkVerifyResult;
 import com.hualing.qrcodetracker.dao.MainDao;
+import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyListView;
@@ -88,6 +89,19 @@ public class WlTkVerifyActivity extends BaseActivity {
 
         param = new VerifyParam();
         if (getIntent() != null) {
+            String[] checkQXArr = GlobalData.checkQXGroup.split(",");
+            boolean isFZR=false;
+            for (String checkQX:checkQXArr) {
+                if("19".equals(checkQX)){
+                    isFZR=true;
+                    break;
+                }
+            }
+            if(isFZR)
+                param.setCheckQXFlag(VerifyParam.FZR);
+            else
+                param.setCheckQXFlag(VerifyParam.ZJY);
+
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
         }

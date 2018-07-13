@@ -42,6 +42,9 @@ public class GlobalData {
     //真实姓名
     public static String realName ;
 
+    //审核权限组，有19的话就是领导（负责人），反之是质检员
+    public static String checkQXGroup ;
+
     //当前功能业务线
     public static int currentFunctionType = FunctionType.NON_SELECTED ;
 

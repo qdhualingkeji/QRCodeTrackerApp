@@ -257,10 +257,10 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.AGREE_WLOUT)
     ActionResult<ActionResult> toAgreeWlOut(VerifyParam param);
 
-    @ActionRequest(func = GlobalData.Service.AGREE_WLTK)
+    @ActionRequest(func = GlobalData.Service.REFUSE_WLTK)
     ActionResult<ActionResult> toRefuseWlTk(VerifyParam param);
 
-    @ActionRequest(func = GlobalData.Service.REFUSE_WLTK)
+    @ActionRequest(func = GlobalData.Service.AGREE_WLTK)
     ActionResult<ActionResult> toAgreeWlTk(VerifyParam param);
 
     @ActionRequest(func = GlobalData.Service.AGREE_BCP_IN)

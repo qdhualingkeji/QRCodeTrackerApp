@@ -149,6 +149,7 @@ public class EmployeeLoginActivity extends BaseActivity {
                             GlobalData.userId = String.valueOf(loginResult.getUserId());
                             GlobalData.userName = loginResult.getUserName();
                             GlobalData.realName = loginResult.getTrueName();
+                            GlobalData.checkQXGroup=loginResult.getCheckQXGroup();
 
                             //设置JPush别名
                             JPushUtil.setAlias(EmployeeLoginActivity.this,GlobalData.realName);
