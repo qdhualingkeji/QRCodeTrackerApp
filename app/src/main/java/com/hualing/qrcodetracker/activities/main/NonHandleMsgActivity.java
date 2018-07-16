@@ -23,6 +23,7 @@ import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.MainParams;
 import com.hualing.qrcodetracker.bean.NonCheckBean;
 import com.hualing.qrcodetracker.bean.NonCheckResult;
+import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
@@ -110,6 +111,18 @@ public class NonHandleMsgActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
+        String[] checkQXArr = GlobalData.checkQXGroup.split(",");
+        boolean isFZR=false;
+        for (String checkQX:checkQXArr) {
+            if("19".equals(checkQX)){
+                isFZR=true;
+                break;
+            }
+        }
+        if(isFZR)
+            params.setCheckQXFlag(MainParams.FZR);
+        else
+            params.setCheckQXFlag(MainParams.ZJY);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<NonCheckResult>>() {
             @Override
