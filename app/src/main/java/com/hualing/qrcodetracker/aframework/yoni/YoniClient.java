@@ -1,5 +1,7 @@
 package com.hualing.qrcodetracker.aframework.yoni;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
@@ -95,6 +97,7 @@ public class YoniClient {
 					requestString).build();
 
 			url += params.getFunc();
+			Log.e("url============",url+"");
 
 			Request request = new Request.Builder().url(url).post(body).build();
 			Response response = okHttpClient.newCall(request).execute();
