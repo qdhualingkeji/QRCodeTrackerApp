@@ -4,3 +4,5 @@
 /QRCodeTracker.iml
 /.idea
 /app/*.iml
+/local.properties
+/QRCodeTrackerApp.iml

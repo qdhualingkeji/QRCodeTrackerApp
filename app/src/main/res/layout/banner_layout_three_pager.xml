@@ -81,7 +81,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="成品入库"
+                    android:text="成品信息录入"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"/>
 
