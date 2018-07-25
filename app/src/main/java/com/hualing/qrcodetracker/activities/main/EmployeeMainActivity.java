@@ -783,6 +783,8 @@ public class EmployeeMainActivity extends BaseActivity {
                     toWhere(GlobalData.currentFunctionType);
                 }
             });
+            CardView cpIn1=view3.findViewById(R.id.cpIn);
+            cpIn1.setLayoutParams(new LinearLayout.LayoutParams(size,size));
             views.add(view3);
         }
 
