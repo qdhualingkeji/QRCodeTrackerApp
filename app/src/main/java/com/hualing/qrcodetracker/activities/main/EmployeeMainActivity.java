@@ -584,11 +584,12 @@ public class EmployeeMainActivity extends BaseActivity {
 
 
         public MyPagerAdapter() {
-            int size = (int) (TheApplication.getScreenWidth()/3.3);
+            int width = (int) (TheApplication.getScreenWidth()/3.3);
+            int height=width+10;
             views = new ArrayList<>();
             view1 = View.inflate(EmployeeMainActivity.this, R.layout.banner_layout_one_pager, null);
             CardView wlIn = view1.findViewById(R.id.wlIn);
-            wlIn.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            wlIn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             wlIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -603,7 +604,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 }
             });
             CardView wlOut = view1.findViewById(R.id.wlOut);
-            wlOut.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            wlOut.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             wlOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -618,7 +619,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 }
             });
             CardView wlThrow = view1.findViewById(R.id.wlThrow);
-            wlThrow.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            wlThrow.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             wlThrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -633,7 +634,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 }
             });
             CardView wlReturn = view1.findViewById(R.id.wlReturn);
-            wlReturn.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            wlReturn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             wlReturn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -647,8 +648,12 @@ public class EmployeeMainActivity extends BaseActivity {
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
-            CardView bcpIn = view1.findViewById(R.id.bcpIn);
-            bcpIn.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            views.add(view1);
+
+
+            view2 = View.inflate(EmployeeMainActivity.this, R.layout.banner_layout_two_pager, null);
+            CardView bcpIn = view2.findViewById(R.id.bcpIn);
+            bcpIn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             bcpIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -662,8 +667,8 @@ public class EmployeeMainActivity extends BaseActivity {
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
-            CardView bcpThrow = view1.findViewById(R.id.bcpThrow);
-            bcpThrow.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            CardView bcpThrow = view2.findViewById(R.id.bcpThrow);
+            bcpThrow.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             bcpThrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -677,12 +682,8 @@ public class EmployeeMainActivity extends BaseActivity {
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
-            views.add(view1);
-
-
-            view2 = View.inflate(EmployeeMainActivity.this, R.layout.banner_layout_two_pager, null);
             CardView bcpReturn = view2.findViewById(R.id.bcpReturn);
-            bcpReturn.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            bcpReturn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             bcpReturn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -696,38 +697,8 @@ public class EmployeeMainActivity extends BaseActivity {
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
-            CardView cpIn = view2.findViewById(R.id.cpIn);
-            cpIn.setLayoutParams(new LinearLayout.LayoutParams(size,size));
-            cpIn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (Module2 module2 : mCanUseList) {
-                        if ("成品入库".equals(module2.getMname())) {
-                            GlobalData.currentFunctionType = FunctionType.PRODUCT_IN;
-                            toWhere(GlobalData.currentFunctionType);
-                            return;
-                        }
-                    }
-                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
-                }
-            });
-            CardView cpOut = view2.findViewById(R.id.cpOut);
-            cpOut.setLayoutParams(new LinearLayout.LayoutParams(size,size));
-            cpOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for (Module2 module2 : mCanUseList) {
-                        if ("成品出库".equals(module2.getMname())) {
-                            GlobalData.currentFunctionType = FunctionType.PRODUCT_OUT;
-                            toWhere(GlobalData.currentFunctionType);
-                            return;
-                        }
-                    }
-                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
-                }
-            });
             CardView track = view2.findViewById(R.id.track);
-            track.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            track.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             track.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -742,7 +713,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 }
             });
             CardView verify = view2.findViewById(R.id.verify);
-            verify.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            verify.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             verify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -757,7 +728,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 }
             });
             CardView check = view2.findViewById(R.id.check);
-            check.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            check.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -775,7 +746,7 @@ public class EmployeeMainActivity extends BaseActivity {
 
             view3 = View.inflate(EmployeeMainActivity.this, R.layout.banner_layout_three_pager, null);
             CardView modifyBtn = view3.findViewById(R.id.modifyData);
-            modifyBtn.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            modifyBtn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             modifyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -783,8 +754,39 @@ public class EmployeeMainActivity extends BaseActivity {
                     toWhere(GlobalData.currentFunctionType);
                 }
             });
-            CardView cpIn1=view3.findViewById(R.id.cpIn);
-            cpIn1.setLayoutParams(new LinearLayout.LayoutParams(size,size));
+            CardView cpInfoIn = view3.findViewById(R.id.cpInfoIn);
+            cpInfoIn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+            cpInfoIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (Module2 module2 : mCanUseList) {
+                        if ("成品入库".equals(module2.getMname())) {
+                            GlobalData.currentFunctionType = FunctionType.PRODUCT_IN;
+                            toWhere(GlobalData.currentFunctionType);
+                            return;
+                        }
+                    }
+                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
+                }
+            });
+            CardView cpIn=view3.findViewById(R.id.cpIn);
+            cpIn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+
+            CardView cpOut = view3.findViewById(R.id.cpOut);
+            cpOut.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+            cpOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (Module2 module2 : mCanUseList) {
+                        if ("成品出库".equals(module2.getMname())) {
+                            GlobalData.currentFunctionType = FunctionType.PRODUCT_OUT;
+                            toWhere(GlobalData.currentFunctionType);
+                            return;
+                        }
+                    }
+                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
+                }
+            });
             views.add(view3);
         }
 

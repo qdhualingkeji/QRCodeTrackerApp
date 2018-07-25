@@ -13,6 +13,84 @@
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/bcpIn"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="@dimen/mainItemSize"
+            android:layout_height="@dimen/mainItemSize"
+            app:cardBackgroundColor="#EE9A00"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="@dimen/singleLogoSize"
+                    android:layout_height="@dimen/singleLogoSize"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/bcpin"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="半成品录入"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/bcpThrow"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="@dimen/mainItemSize"
+            android:layout_height="@dimen/mainItemSize"
+            app:cardBackgroundColor="#00BFFF"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/singleLogoSize"
+                    android:layout_height="@dimen/singleLogoSize"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/bcpthrow"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="半成品投料"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"/>
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
             android:id="@+id/bcpReturn"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,86 +119,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="半成品入库或退库"
+                    android:text="半成品入库/退库"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"/>
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:id="@+id/cpIn"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="@dimen/mainItemSize"
-            android:layout_height="@dimen/mainItemSize"
-            app:cardBackgroundColor="#A0522D"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
-
-
-                <ImageView
-                    android:layout_width="@dimen/singleLogoSize"
-                    android:layout_height="@dimen/singleLogoSize"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/cpin"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="成品入库"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"/>
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:id="@+id/cpOut"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="@dimen/mainItemSize"
-            android:layout_height="@dimen/mainItemSize"
-            app:cardBackgroundColor="#8B8970"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp"
-            app:cardUseCompatPadding="true"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="@dimen/singleLogoSize"
-                    android:layout_height="@dimen/singleLogoSize"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/cpout"/>
-
-                <TextView
-                    android:id="@+id/functionName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="成品出库"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"/>
 
