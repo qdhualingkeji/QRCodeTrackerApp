@@ -203,8 +203,8 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Log.e("Scan===============", "result:" + result);
-        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+        //Log.e("Scan===============", "result:" + result);
+        //Toast.makeText(this, result, Toast.LENGTH_LONG).show();
         vibrate();
         //        mZxingview.startSpot();
         //获取到二维码id

@@ -15,7 +15,7 @@ public class HlSortBean {
 
     private int sortID;
     private int parentID;
-    private int sortOrder;
+    private String sortOrder;
     private String sortName;
     private Timestamp addTime;
     private String sortCode;
@@ -36,11 +36,11 @@ public class HlSortBean {
         this.parentID = parentID;
     }
 
-    public int getSortOrder() {
+    public String getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(int sortOrder) {
+    public void setSortOrder(String sortOrder) {
         this.sortOrder = sortOrder;
     }
 

@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -168,7 +169,7 @@ public class SelectHlSortActivity extends BaseActivity {
                 public void onClick(View v) {
                     Intent ii = new Intent();
                     ii.putExtra("sortName",bean.getSortName());
-                    ii.putExtra("sortCode",bean.getSortCode());
+                    ii.putExtra("sortID",bean.getSortID());
                     setResult(RESULT_OK,ii);
                     AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
                 }

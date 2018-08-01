@@ -160,7 +160,12 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (ckShL > remainShL) {
+        }
+        else if(ckShL==0){
+            Toast.makeText(this, "退库数量不能为0", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if (ckShL > remainShL) {
             Toast.makeText(this, "退库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
         }

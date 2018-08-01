@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -164,7 +165,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 case GET_WLSORT_CODE:
                     String ss = data.getStringExtra("sortName");
                     mWlbmValue.setText(ss);
-                    mSelectedWLBM = data.getStringExtra("sortCode");
+                    mSelectedWLBM = data.getIntExtra("sortID",0)+"";
                     break;
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("lbName");
