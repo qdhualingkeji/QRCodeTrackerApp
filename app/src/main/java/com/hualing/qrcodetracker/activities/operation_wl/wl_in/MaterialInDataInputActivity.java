@@ -57,8 +57,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
     EditText mCdValue;
     //    @BindView(R.id.lbValue)
     //    EditText mLbValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ggValue)
     EditText mGgValue;
     @BindView(R.id.ylpcValue)
@@ -87,7 +87,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
     private WLINParam params;
 
     private String mSelectedWLBM;
-    private int mSelectedLeiBieId = -1;
+    //private int mSelectedLeiBieId = -1;
 
     @Override
     protected void initLogic() {
@@ -137,16 +137,19 @@ public class MaterialInDataInputActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick({R.id.selectWLBM, R.id.commitBtn, R.id.selectLB})
+    //@OnClick({R.id.selectWLBM, R.id.commitBtn, R.id.selectLB})
+    @OnClick({R.id.selectWLBM, R.id.commitBtn})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
             case R.id.selectWLBM:
                 IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, GET_WLSORT_CODE, null);
                 break;
+                /*
             case R.id.selectLB:
                 IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
                 break;
+                */
             case R.id.commitBtn:
                 //数据录入是否完整
                 if (checkIfInfoPerfect()) {
@@ -167,11 +170,13 @@ public class MaterialInDataInputActivity extends BaseActivity {
                     mWlbmValue.setText(ss);
                     mSelectedWLBM = data.getIntExtra("sortID",0)+"";
                     break;
+                    /*
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("lbName");
                     mLbValue.setText(lbName);
                     mSelectedLeiBieId = data.getIntExtra("lbId", -1);
                     break;
+                    */
             }
         }
 
@@ -182,7 +187,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         String wlbmValue = mWlbmValue.getText().toString();
         String nameValue = mNameValue.getText().toString();
         String cdValue = mCdValue.getText().toString();
-        String lbValue = mLbValue.getText().toString();
+        //String lbValue = mLbValue.getText().toString();
         String ggValue = mGgValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String sldwValue = mSldwValue.getText().toString();
@@ -192,8 +197,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
         if ("请选择物料种类".equals(wlbmValue)
                 || TextUtils.isEmpty(nameValue)
                 || TextUtils.isEmpty(cdValue)
-                || "请选择类别".equals(lbValue)
-                || TextUtils.isEmpty(ggValue)
+                //|| "请选择类别".equals(lbValue)
+                //|| TextUtils.isEmpty(ggValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(sldwValue)
                 || TextUtils.isEmpty(slValue)
@@ -207,7 +212,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         params.setwLCode(mSelectedWLBM);
         params.setProductName(nameValue);
         params.setcHD(cdValue);
-        params.setLb(mSelectedLeiBieId);
+        //params.setLb(mSelectedLeiBieId);
         params.setgG(ggValue);
         params.setyLPC(ylpcValue);
         params.setdW(sldwValue);

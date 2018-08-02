@@ -48,8 +48,8 @@ public class BcpThrowActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.nameValue)
     TextView mNameValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ylpcValue)
     TextView mYlpcValue;
     @BindView(R.id.scpcValue)
@@ -142,7 +142,7 @@ public class BcpThrowActivity extends BaseActivity {
                         } else {
                             BcpThrowShowDataResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getProductName());
-                            mLbValue.setText(dataResult.getSortName());
+                            //mLbValue.setText(dataResult.getSortName());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());
                             mGgValue.setText(dataResult.getGg());
@@ -220,6 +220,10 @@ public class BcpThrowActivity extends BaseActivity {
         }
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
         float tlShL = Float.parseFloat(value);
+        if (tlShL==0) {
+            Toast.makeText(this, "投料数量不能为0", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (tlShL > remainShL) {
             Toast.makeText(this, "投料数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;

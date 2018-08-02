@@ -57,8 +57,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
     EditText mProductNameValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ylpcValue)
     EditText mYlpcValue;
     @BindView(R.id.scpcValue)
@@ -94,7 +94,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private static final int MAX_NUM = 50;
 
     private static final int SELECT_HL_SORT = 10;
-    private static final int SELECT_LEI_BIE = 11;
+    //private static final int SELECT_LEI_BIE = 11;
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
     private static final int SELECT_SXYL = 40;
@@ -112,7 +112,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private String mCJHasGongXuId;
     private int mSelectedGxId = -1;
     private String mSXYLQrcodeStr = null;
-    private int mSelectedLeiBieId = -1;
+    //private int mSelectedLeiBieId = -1;
     private String mSelectedBigCpQrCodeId;
 
     private CustomDatePicker customDatePicker;
@@ -183,15 +183,18 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         return R.layout.activity_small_cpin_data_input;
     }
 
-    @OnClick({R.id.selectBCPCode, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn, R.id.selectLB})
+    //@OnClick({R.id.selectBCPCode, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn, R.id.selectLB})
+    @OnClick({R.id.selectBCPCode, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.selectBCPCode:
                 IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_HL_SORT, null);
                 break;
+                /*
             case R.id.selectLB:
                 IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
                 break;
+                */
             case R.id.selectBigCp:
                 IntentUtil.openActivityForResult(this, SelectBigCpActivity.class, SELECT_BIG_CP, null);
                 break;
@@ -237,11 +240,13 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                     mBcpCodeValue.setText(sortName);
                     mSelectedBcpCode = data.getStringExtra("sortCode");
                     break;
+                    /*
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("lbName");
                     mLbValue.setText(lbName);
                     mSelectedLeiBieId = data.getIntExtra("lbId", -1);
                     break;
+                    */
                 case SELECT_BIG_CP:
                     String bigCpName = data.getStringExtra("cpName");
                     mBigCpValue.setText(bigCpName);
@@ -360,7 +365,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private boolean checkIfInfoPerfect() {
         String cpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
-        String lbValue = mLbValue.getText().toString();
+        //String lbValue = mLbValue.getText().toString();
         String bigCpValue = mBigCpValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String scpcValue = mScpcValue.getText().toString();
@@ -374,11 +379,11 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         String scTimeValue = mScTimeValue.getText().toString();
         if ("请选择成品编码".equals(cpCodeValue)
                 || TextUtils.isEmpty(nameValue)
-                || "请选择类别".equals(lbValue)
+                //|| "请选择类别".equals(lbValue)
                 //                || "请选择所属大包装".equals(bigCpValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(scpcValue)
-                || TextUtils.isEmpty(ggValue)
+                //|| TextUtils.isEmpty(ggValue)
                 || TextUtils.isEmpty(shlValue)
                 || TextUtils.isEmpty(dwzlValue)
                 || TextUtils.isEmpty(dwValue)
@@ -397,7 +402,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
 
         params.setCpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
-        params.setSortID(mSelectedLeiBieId);
+        //params.setSortID(mSelectedLeiBieId);
         if (!"请选择所属大包装".equals(bigCpValue))
             params.setcPS2QRCode(mSelectedBigCpQrCodeId);
         params.setShl(Integer.parseInt(shlValue));

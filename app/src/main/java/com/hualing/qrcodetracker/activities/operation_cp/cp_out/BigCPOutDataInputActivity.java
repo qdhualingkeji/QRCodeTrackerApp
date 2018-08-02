@@ -42,8 +42,8 @@ public class BigCPOutDataInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.nameValue)
     TextView mNameValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ylpcValue)
     TextView mYlpcValue;
     @BindView(R.id.scpcValue)
@@ -116,7 +116,7 @@ public class BigCPOutDataInputActivity extends BaseActivity {
                         } else {
                             BigCpOutGetDataResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getCpName());
-                            mLbValue.setText(dataResult.getSortName());
+                            //mLbValue.setText(dataResult.getSortName());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());
                             mGgValue.setText(dataResult.getGg());

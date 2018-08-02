@@ -44,8 +44,8 @@ public class MaterialTKDataInputActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.cdValue)
     TextView mCdValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ggValue)
     TextView mGgValue;
     @BindView(R.id.sldwValue)
@@ -121,7 +121,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                             WLTKShowDataResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getProductName());
                             mCdValue.setText(dataResult.getChd());
-                            mLbValue.setText(dataResult.getSortName());
+                            //mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
                             mSldwValue.setText(dataResult.getDw());
                             mRemainShlValue.setText(dataResult.getShl() + "");

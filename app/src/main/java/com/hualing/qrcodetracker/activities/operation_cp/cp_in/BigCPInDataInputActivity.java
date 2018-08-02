@@ -51,8 +51,8 @@ public class BigCPInDataInputActivity extends BaseActivity {
     TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
     EditText mProductNameValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ylpcValue)
     EditText mYlpcValue;
     @BindView(R.id.scpcValue)
@@ -84,7 +84,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
 
     private String mSelectedBcpCode;
 
-    private int mSelectedLeiBieId = -1;
+    //private int mSelectedLeiBieId = -1;
 
     private CustomDatePicker customDatePicker;
     private String mNowTime;
@@ -152,15 +152,18 @@ public class BigCPInDataInputActivity extends BaseActivity {
         return R.layout.activity_cpin_data_input;
     }
 
-    @OnClick({R.id.selectBCPCode, R.id.selectLB, R.id.scTimeValue, R.id.commitBtn})
+    //@OnClick({R.id.selectBCPCode, R.id.selectLB, R.id.scTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectBCPCode, R.id.scTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.selectBCPCode:
                 IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_HL_SORT, null);
                 break;
+                /*
             case R.id.selectLB:
                 IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
                 break;
+                */
             case R.id.scTimeValue:
                 customDatePicker.show(mNowTime);
                 break;
@@ -182,11 +185,13 @@ public class BigCPInDataInputActivity extends BaseActivity {
                     mBcpCodeValue.setText(sortName);
                     mSelectedBcpCode = data.getStringExtra("sortCode");
                     break;
+                    /*
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("lbName");
                     mLbValue.setText(lbName);
                     mSelectedLeiBieId = data.getIntExtra("lbId", -1);
                     break;
+                    */
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -278,7 +283,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
     private boolean checkIfInfoPerfect() {
         String cpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
-        String lbValue = mLbValue.getText().toString();
+        //String lbValue = mLbValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String scpcValue = mScpcValue.getText().toString();
         String ggValue = mGgValue.getText().toString();
@@ -290,10 +295,10 @@ public class BigCPInDataInputActivity extends BaseActivity {
         String scTimeValue = mScTimeValue.getText().toString();
         if ("请选择成品编码".equals(cpCodeValue)
                 || TextUtils.isEmpty(nameValue)
-                || "请选择类别".equals(lbValue)
+                //|| "请选择类别".equals(lbValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(scpcValue)
-                || TextUtils.isEmpty(ggValue)
+                //|| TextUtils.isEmpty(ggValue)
                 || TextUtils.isEmpty(dwzlValue)
                 || TextUtils.isEmpty(dwValue)
 //                || TextUtils.isEmpty(zjyValue)
@@ -306,7 +311,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
 
         params.setCpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
-        params.setSortID(mSelectedLeiBieId);
+        //params.setSortID(mSelectedLeiBieId);
         params.setYlpc(ylpcValue);
         params.setScpc(scpcValue);
         params.setGg(ggValue);

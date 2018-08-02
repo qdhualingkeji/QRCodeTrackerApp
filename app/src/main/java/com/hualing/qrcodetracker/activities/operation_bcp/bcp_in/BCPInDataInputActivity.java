@@ -52,15 +52,15 @@ public class BCPInDataInputActivity extends BaseActivity {
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
     private static final int SELECT_SXYL = 40;
-    private static final int SELECT_LEI_BIE = 11;
+    //private static final int SELECT_LEI_BIE = 11;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.bcpCodeValue)
     TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
     EditText mProductNameValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.ylpcValue)
     EditText mYlpcValue;
     @BindView(R.id.scpcValue)
@@ -106,7 +106,7 @@ public class BCPInDataInputActivity extends BaseActivity {
 
     private CustomDatePicker customDatePicker1, customDatePicker2, customDatePicker3;
     private String mNowTime;
-    private int mSelectedLeiBieId = -1;
+    //private int mSelectedLeiBieId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,7 +194,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     private boolean checkIfInfoPerfect() {
         String bcpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
-        String lbValue = mLbValue.getText().toString();
+        //String lbValue = mLbValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String scpcValue = mScpcValue.getText().toString();
         String ggValue = mGgValue.getText().toString();
@@ -213,10 +213,10 @@ public class BCPInDataInputActivity extends BaseActivity {
 //        String jybzValue = mJybzValue.getText().toString();
         if ("请选择半成品编码".equals(bcpCodeValue)
                 || TextUtils.isEmpty(nameValue)
-                || "请选择类别".equals(lbValue)
+                //|| "请选择类别".equals(lbValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(scpcValue)
-                || TextUtils.isEmpty(ggValue)
+                //|| TextUtils.isEmpty(ggValue)
                 || TextUtils.isEmpty(shlValue)
                 || TextUtils.isEmpty(dwzlValue)
                 || TextUtils.isEmpty(dwValue)
@@ -235,7 +235,7 @@ public class BCPInDataInputActivity extends BaseActivity {
 
         params.setBcpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
-        params.setSortID(mSelectedLeiBieId);
+        //params.setSortID(mSelectedLeiBieId);
         params.setYlpc(ylpcValue);
         params.setScpc(scpcValue);
         params.setGg(ggValue);
@@ -327,7 +327,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                             new AlertDialog.Builder(BCPInDataInputActivity.this)
                                     .setCancelable(false)
                                     .setTitle("提示")
-                                    .setMessage("是否继续扫码录入数据？")
+                                    .setMessage(result.getMessage()+",是否继续扫码录入数据？")
                                     .setPositiveButton("继续扫码录入", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -378,25 +378,30 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mSXYLQrcodeStr = data.getStringExtra("allYlQrCode");
                     Log.d("Test", "get: "+mSXYLQrcodeStr);
                     break;
+                    /*
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("lbName");
                     mLbValue.setText(lbName);
                     mSelectedLeiBieId = data.getIntExtra("lbId", -1);
                     break;
+                    */
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectBCPCode,R.id.selectLB, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
+    //@OnClick({R.id.selectBCPCode,R.id.selectLB, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectBCPCode,R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.selectBCPCode:
                 IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_HL_SORT, null);
                 break;
+                /*
             case R.id.selectLB:
                 IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
                 break;
+                */
             case R.id.selectCJ:
                 IntentUtil.openActivityForResult(this, SelectCJActivity.class, SELECT_CHE_JIAN, null);
                 break;
