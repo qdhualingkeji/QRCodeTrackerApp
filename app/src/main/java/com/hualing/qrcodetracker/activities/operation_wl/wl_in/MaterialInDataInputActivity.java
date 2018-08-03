@@ -47,6 +47,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TitleBar mTitle;
+    @BindView(R.id.tsValue)
+    EditText mTsValue;
     @BindView(R.id.wlbmValue)
     TextView mWlbmValue;
     //    @BindView(R.id.wlbmValue)
@@ -193,6 +195,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         String sldwValue = mSldwValue.getText().toString();
         String slValue = mSlValue.getText().toString();
         String zhlValue = mZhlValue.getText().toString();
+        String tsValue = mTsValue.getText().toString();
         String beizhuValue = mRemarkValue.getText().toString();
         if ("请选择物料种类".equals(wlbmValue)
                 || TextUtils.isEmpty(nameValue)
@@ -203,12 +206,14 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 || TextUtils.isEmpty(sldwValue)
                 || TextUtils.isEmpty(slValue)
                 || TextUtils.isEmpty(zhlValue)
+                || TextUtils.isEmpty(tsValue)
                 || TextUtils.isEmpty(beizhuValue)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
 
+        params.settS(Integer.parseInt(tsValue));
         params.setwLCode(mSelectedWLBM);
         params.setProductName(nameValue);
         params.setcHD(cdValue);

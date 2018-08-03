@@ -203,7 +203,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                             new AlertDialog.Builder(MaterialTKDataInputActivity.this)
                                     .setCancelable(false)
                                     .setTitle("提示")
-                                    .setMessage("是否继续扫码录入退库数据？")
+                                    .setMessage(result.getMessage()+",是否继续扫码录入退库数据？")
                                     .setPositiveButton("继续扫码录入", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {

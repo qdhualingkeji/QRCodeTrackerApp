@@ -2,6 +2,8 @@ package com.hualing.qrcodetracker.bean;
 
 
 public class WLINParam {
+	//本批次录入条数
+	private  int tS;
 	//二维码编号
 	private String qRCodeID;
 	//物料编码
@@ -34,6 +36,12 @@ public class WLINParam {
 	private int bz;
 	//备注
 	private String remark;
+	public int gettS() {
+		return tS;
+	}
+	public void settS(int tS) {
+		this.tS = tS;
+	}
 	public String getqRCodeID() {
 		return qRCodeID;
 	}
