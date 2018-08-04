@@ -186,6 +186,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
+        String tsValue = mTsValue.getText().toString();
         String wlbmValue = mWlbmValue.getText().toString();
         String nameValue = mNameValue.getText().toString();
         String cdValue = mCdValue.getText().toString();
@@ -195,9 +196,9 @@ public class MaterialInDataInputActivity extends BaseActivity {
         String sldwValue = mSldwValue.getText().toString();
         String slValue = mSlValue.getText().toString();
         String zhlValue = mZhlValue.getText().toString();
-        String tsValue = mTsValue.getText().toString();
         String beizhuValue = mRemarkValue.getText().toString();
-        if ("请选择物料种类".equals(wlbmValue)
+        if (TextUtils.isEmpty(tsValue)
+                || "请选择物料种类".equals(wlbmValue)
                 || TextUtils.isEmpty(nameValue)
                 || TextUtils.isEmpty(cdValue)
                 //|| "请选择类别".equals(lbValue)
@@ -206,7 +207,6 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 || TextUtils.isEmpty(sldwValue)
                 || TextUtils.isEmpty(slValue)
                 || TextUtils.isEmpty(zhlValue)
-                || TextUtils.isEmpty(tsValue)
                 || TextUtils.isEmpty(beizhuValue)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();

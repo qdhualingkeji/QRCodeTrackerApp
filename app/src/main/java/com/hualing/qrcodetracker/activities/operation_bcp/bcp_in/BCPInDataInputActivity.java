@@ -55,6 +55,8 @@ public class BCPInDataInputActivity extends BaseActivity {
     //private static final int SELECT_LEI_BIE = 11;
     @BindView(R.id.title)
     TitleBar mTitle;
+    @BindView(R.id.tsValue)
+    EditText mTsValue;
     @BindView(R.id.bcpCodeValue)
     TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
@@ -192,6 +194,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
+        String tsValue = mTsValue.getText().toString();
         String bcpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
         //String lbValue = mLbValue.getText().toString();
@@ -211,7 +214,8 @@ public class BCPInDataInputActivity extends BaseActivity {
         String wcTimeValue = mWcTimeValue.getText().toString();
 //        String jyztValue = mJyztValue.getText().toString();
 //        String jybzValue = mJybzValue.getText().toString();
-        if ("请选择半成品编码".equals(bcpCodeValue)
+        if (TextUtils.isEmpty(tsValue)
+                || "请选择半成品编码".equals(bcpCodeValue)
                 || TextUtils.isEmpty(nameValue)
                 //|| "请选择类别".equals(lbValue)
                 || TextUtils.isEmpty(ylpcValue)
@@ -233,6 +237,7 @@ public class BCPInDataInputActivity extends BaseActivity {
             return false;
         }
 
+        params.settS(Integer.parseInt(tsValue));
         params.setBcpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
         //params.setSortID(mSelectedLeiBieId);

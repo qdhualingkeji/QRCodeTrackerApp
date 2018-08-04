@@ -11,6 +11,8 @@ package com.hualing.qrcodetracker.bean;
 
 public class BCPINParam {
 
+    //本批次录入条数
+    private  int tS;
     private String qrCodeId;
     private String productName;
     private int sortID;
@@ -46,6 +48,14 @@ public class BCPINParam {
     private String yl8;
     private String yl9;
     private String yl10;
+
+    public int gettS() {
+        return tS;
+    }
+
+    public void settS(int tS) {
+        this.tS = tS;
+    }
 
     public String getQrCodeId() {
         return qrCodeId;
