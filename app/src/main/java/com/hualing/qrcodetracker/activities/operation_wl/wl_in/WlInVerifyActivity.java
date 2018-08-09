@@ -260,10 +260,10 @@ public class WlInVerifyActivity extends BaseActivity {
             viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mCdValue.setText(bean.getcHD());
-            viewHolder.mLbValue.setText(bean.getSortID() + "");
+            //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
-            viewHolder.mSldwValue.setText(bean.getdW());
+            viewHolder.mSldwValue.setText(bean.getUnit());
             viewHolder.mSlValue.setText(bean.getShl() + "");
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
             viewHolder.mRemarkValue.setText(TextUtils.isEmpty(bean.getRemark()) ? "无备注信息" : bean.getRemark());
@@ -278,8 +278,8 @@ public class WlInVerifyActivity extends BaseActivity {
             TextView mNameValue;
             @BindView(R.id.cdValue)
             TextView mCdValue;
-            @BindView(R.id.lbValue)
-            TextView mLbValue;
+            //@BindView(R.id.lbValue)
+            //TextView mLbValue;
             @BindView(R.id.ggValue)
             TextView mGgValue;
             @BindView(R.id.ylpcValue)

@@ -51,7 +51,7 @@ import io.reactivex.schedulers.Schedulers;
 public class WlInModifyActivity extends BaseActivity {
 
     private static final int GET_WLSORT_CODE = 30;
-    private static final int SELECT_LEI_BIE = 11;
+    //private static final int SELECT_LEI_BIE = 11;
     private static final int SELECT_PERSON = 111;
 
     @BindView(R.id.title)
@@ -270,7 +270,7 @@ public class WlInModifyActivity extends BaseActivity {
 
             if (TextUtils.isEmpty(mData.get(i).getProductName())
                     ||TextUtils.isEmpty(mData.get(i).getcHD())
-                    ||TextUtils.isEmpty(mData.get(i).getdW())
+                    ||TextUtils.isEmpty(mData.get(i).getUnit())
                     ||TextUtils.isEmpty(mData.get(i).getgG())
                     ||TextUtils.isEmpty(mData.get(i).getwLCode())
                     ||TextUtils.isEmpty(mData.get(i).getyLPC())
@@ -404,7 +404,7 @@ public class WlInModifyActivity extends BaseActivity {
 
                 }
             });
-            viewHolder.mLbValue.setText(bean.getSortID() + "");
+            //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mGgValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -439,7 +439,7 @@ public class WlInModifyActivity extends BaseActivity {
 
                 }
             });
-            viewHolder.mSldwValue.setText(bean.getdW());
+            viewHolder.mSldwValue.setText(bean.getUnit());
             viewHolder.mSldwValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -448,7 +448,7 @@ public class WlInModifyActivity extends BaseActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    bean.setdW(""+s);
+                    bean.setUnit(""+s);
                 }
 
                 @Override
@@ -527,6 +527,7 @@ public class WlInModifyActivity extends BaseActivity {
                 }
             });
 
+            /*
             viewHolder.mSelectLB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -534,6 +535,7 @@ public class WlInModifyActivity extends BaseActivity {
                     mCurrentPosition = position;
                 }
             });
+            */
 
             return convertView;
         }
@@ -547,10 +549,10 @@ public class WlInModifyActivity extends BaseActivity {
             EditText mNameValue;
             @BindView(R.id.cdValue)
             EditText mCdValue;
-            @BindView(R.id.lbValue)
-            TextView mLbValue;
-            @BindView(R.id.selectLB)
-            LinearLayout mSelectLB;
+            //@BindView(R.id.lbValue)
+            //TextView mLbValue;
+            //@BindView(R.id.selectLB)
+            //LinearLayout mSelectLB;
             @BindView(R.id.ggValue)
             EditText mGgValue;
             @BindView(R.id.ylpcValue)
@@ -584,6 +586,7 @@ public class WlInModifyActivity extends BaseActivity {
                     }
                     mAdapter.notifyDataSetChanged();
                     break;
+                    /*
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("lbName");
                     int lbId = data.getIntExtra("lbId", -1);
@@ -592,6 +595,7 @@ public class WlInModifyActivity extends BaseActivity {
                     }
                     mAdapter.notifyDataSetChanged();
                     break;
+                    */
                 case SELECT_PERSON:
                     String personName = data.getStringExtra("personName");
                     mShfzrValue.setText(personName);

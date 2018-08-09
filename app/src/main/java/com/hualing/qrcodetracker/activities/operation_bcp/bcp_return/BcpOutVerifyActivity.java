@@ -264,7 +264,7 @@ public class BcpOutVerifyActivity extends BaseActivity {
             CpOutShowBean bean = mData.get(position);
             viewHolder.mWlbmValue.setText(bean.getCpCode());
             viewHolder.mNameValue.setText(bean.getCpName());
-            viewHolder.mLbValue.setText(bean.getSortID() + "");
+            //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mScpcValue.setText(bean.getsCPC());
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
@@ -277,8 +277,8 @@ public class BcpOutVerifyActivity extends BaseActivity {
             TextView mWlbmValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
-            @BindView(R.id.lbValue)
-            TextView mLbValue;
+            //@BindView(R.id.lbValue)
+            //TextView mLbValue;
             @BindView(R.id.ylpcValue)
             TextView mYlpcValue;
             @BindView(R.id.scpcValue)

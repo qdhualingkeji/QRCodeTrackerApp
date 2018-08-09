@@ -318,7 +318,7 @@ public class BcpOutModifyActivity extends BaseActivity {
 
             final CpOutShowBean bean = mData.get(position);
             viewHolder.mNameValue.setText(bean.getCpName());
-            viewHolder.mLbValue.setText(bean.getSortID() + "");
+            //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mScpcValue.setText(bean.getsCPC());
             viewHolder.mScTimeValue.setText(bean.getfHDate());
@@ -329,8 +329,8 @@ public class BcpOutModifyActivity extends BaseActivity {
         class ViewHolder {
             @BindView(R.id.nameValue)
             TextView mNameValue;
-            @BindView(R.id.lbValue)
-            TextView mLbValue;
+            //@BindView(R.id.lbValue)
+            //TextView mLbValue;
             @BindView(R.id.ylpcValue)
             TextView mYlpcValue;
             @BindView(R.id.scpcValue)

@@ -121,6 +121,7 @@
             android:layout_height="@dimen/dividerHeight"
             android:background="@color/divide_gray_color"/>
 
+        <!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,6 +168,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dividerHeight"
             android:background="@color/divide_gray_color"/>
+            -->
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -28,7 +28,7 @@ public class WLINShowBean {
     //批次重量
     private float pCZL;
     //单位
-    private String dW ;
+    private String unit ;
     //规格
     private String gG;
     //产地
@@ -108,12 +108,12 @@ public class WLINShowBean {
         this.pCZL = pCZL;
     }
 
-    public String getdW() {
-        return dW;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setdW(String dW) {
-        this.dW = dW;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getgG() {

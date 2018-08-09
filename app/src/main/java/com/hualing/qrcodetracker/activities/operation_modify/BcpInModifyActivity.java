@@ -358,7 +358,7 @@ public class BcpInModifyActivity extends BaseActivity {
 
                 }
             });
-            viewHolder.mLbValue.setText(bean.getSortID() + "");
+            //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mGgValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -463,6 +463,7 @@ public class BcpInModifyActivity extends BaseActivity {
                 }
             });
 
+            /*
             viewHolder.mSelectLB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -470,6 +471,7 @@ public class BcpInModifyActivity extends BaseActivity {
                     mCurrentPosition = position;
                 }
             });
+            */
 
             return convertView;
         }
@@ -481,10 +483,10 @@ public class BcpInModifyActivity extends BaseActivity {
             LinearLayout mSelectBCPCode;
             @BindView(R.id.productNameValue)
             EditText mProductNameValue;
-            @BindView(R.id.lbValue)
-            TextView mLbValue;
-            @BindView(R.id.selectLB)
-            LinearLayout mSelectLB;
+            //@BindView(R.id.lbValue)
+            //TextView mLbValue;
+            //@BindView(R.id.selectLB)
+            //LinearLayout mSelectLB;
             @BindView(R.id.ylpcValue)
             EditText mYlpcValue;
             @BindView(R.id.ggValue)

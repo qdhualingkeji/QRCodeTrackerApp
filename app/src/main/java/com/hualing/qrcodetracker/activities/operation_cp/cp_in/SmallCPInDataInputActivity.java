@@ -53,6 +53,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TitleBar mTitle;
+    @BindView(R.id.tsValue)
+    EditText mTsValue;
     @BindView(R.id.bcpCodeValue)
     TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
@@ -303,7 +305,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                             new AlertDialog.Builder(SmallCPInDataInputActivity.this)
                                     .setCancelable(false)
                                     .setTitle("提示")
-                                    .setMessage("是否继续扫码录入数据？")
+                                    .setMessage(result.getMessage()+",是否继续扫码录入数据？")
                                     .setPositiveButton("继续扫码录入", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -363,6 +365,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
+        String tsValue = mTsValue.getText().toString();
         String cpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
         //String lbValue = mLbValue.getText().toString();
@@ -377,7 +380,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
 //        String jyztValue = mJyztValue.getText().toString();
         String sxylValue = mSxylValue.getText().toString();
         String scTimeValue = mScTimeValue.getText().toString();
-        if ("请选择成品编码".equals(cpCodeValue)
+        if (TextUtils.isEmpty(tsValue)
+                || "请选择成品编码".equals(cpCodeValue)
                 || TextUtils.isEmpty(nameValue)
                 //|| "请选择类别".equals(lbValue)
                 //                || "请选择所属大包装".equals(bigCpValue)
@@ -400,6 +404,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
             return false;
         }
 
+        params.settS(Integer.parseInt(tsValue));
         params.setCpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
         //params.setSortID(mSelectedLeiBieId);
