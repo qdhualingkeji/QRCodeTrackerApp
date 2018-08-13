@@ -195,6 +195,7 @@ public class CPCKDInputActivity extends BaseActivity {
 
     @OnClick({R.id.selectBM, R.id.commitBtn,R.id.selectSHR,R.id.selectSHFZR,R.id.selectJHFZR})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, GET_DEPARTMENT, null);
@@ -203,7 +204,8 @@ public class CPCKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SHR, null);
                 break;
             case R.id.selectSHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SHFZR, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SHFZR, bundle);
                 break;
             case R.id.selectJHFZR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_JHFZR, null);

@@ -91,7 +91,7 @@ public class BcpTkVerifyActivity extends BaseActivity {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             boolean isFZR=false;
             for (String checkQX:checkQXArr) {
-                if("19".equals(checkQX)){
+                if("ld".equals(checkQX)){
                     isFZR=true;
                     break;
                 }

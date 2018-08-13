@@ -24,7 +24,9 @@ import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.PersonBean;
 import com.hualing.qrcodetracker.bean.PersonResult;
 import com.hualing.qrcodetracker.dao.MainDao;
+import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.User;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 import com.hualing.qrcodetracker.widget.TitleBar;
@@ -54,6 +56,7 @@ public class SelectPersonActivity extends BaseActivity {
     //模糊过滤后的数据
     private List<PersonBean> mFilterData ;
     private MainDao mainDao;
+    private User userParam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,10 @@ public class SelectPersonActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
+        Bundle bundle = getIntent().getExtras();
+        userParam = new User();
+        if(bundle!=null)
+            userParam.setCheckQXGroup(bundle.getString("checkQX"));
 
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
@@ -113,7 +120,7 @@ public class SelectPersonActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<ActionResult<PersonResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<PersonResult>> e) throws Exception {
-                ActionResult<PersonResult> nr = mainDao.getAllPerson();
+                ActionResult<PersonResult> nr = mainDao.getAllPerson(userParam);
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程

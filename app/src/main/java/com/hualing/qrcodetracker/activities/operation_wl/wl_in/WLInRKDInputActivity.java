@@ -23,6 +23,7 @@ import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivit
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.CreateWLRKDParam;
+import com.hualing.qrcodetracker.bean.UserGroupBean;
 import com.hualing.qrcodetracker.bean.WLRKDResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
@@ -71,7 +72,6 @@ public class WLInRKDInputActivity extends BaseActivity {
     private MainDao mainDao;
 
     private CreateWLRKDParam params;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +145,7 @@ public class WLInRKDInputActivity extends BaseActivity {
 
     @OnClick({R.id.ShRqValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.ShRqValue:
 
@@ -171,10 +172,12 @@ public class WLInRKDInputActivity extends BaseActivity {
 
                 break;
             case R.id.selectPerson:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle);
                 break;
             case R.id.selectPerson1:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON1, null);
+                bundle.putString("checkQX", "zjy");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON1, bundle);
                 break;
             case R.id.commitBtn:
 

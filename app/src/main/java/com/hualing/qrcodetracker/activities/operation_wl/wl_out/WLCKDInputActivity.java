@@ -180,6 +180,7 @@ public class WLCKDInputActivity extends BaseActivity {
 
     @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectLLFZR, R.id.selectFLFZR, R.id.selectFLR})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectLLBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
@@ -191,7 +192,8 @@ public class WLCKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLFZR, null);
                 break;
             case R.id.selectFLR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLR, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLR, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

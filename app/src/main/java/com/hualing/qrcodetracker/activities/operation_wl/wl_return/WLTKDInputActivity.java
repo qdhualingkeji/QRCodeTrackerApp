@@ -215,6 +215,7 @@ public class WLTKDInputActivity extends BaseActivity {
 
     @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectSLR, R.id.selectSLFZR, R.id.selectTLFZR, R.id.selectZJY})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectLLBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
@@ -223,13 +224,15 @@ public class WLTKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLR, null);
                 break;
             case R.id.selectSLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
                 break;
             case R.id.selectTLFZR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_TLFZR, null);
                 break;
             case R.id.selectZJY:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, null);
+                bundle.putString("checkQX", "zjy");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

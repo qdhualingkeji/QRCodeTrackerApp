@@ -2,6 +2,7 @@ package com.hualing.qrcodetracker.activities.main;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,8 +43,8 @@ public class QualityCheckActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.cdValue)
     TextView mCdValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.wlbmValue)
     TextView mWlbmValue;
     @BindView(R.id.ylpcValue)
@@ -64,8 +65,8 @@ public class QualityCheckActivity extends BaseActivity {
     ScrollView mWlLayout;
     @BindView(R.id.bcpNameValue)
     TextView mBcpNameValue;
-    @BindView(R.id.bcpLbValue)
-    TextView mBcpLbValue;
+    //@BindView(R.id.bcpLbValue)
+    //TextView mBcpLbValue;
     @BindView(R.id.bcpBmValue)
     TextView mBcpBmValue;
     @BindView(R.id.bcpYlpcValue)
@@ -90,8 +91,8 @@ public class QualityCheckActivity extends BaseActivity {
     ScrollView mBcpLayout;
     @BindView(R.id.smallCpNameValue)
     TextView mSmallCpNameValue;
-    @BindView(R.id.smallCpLbValue)
-    TextView mSmallCpLbValue;
+    //@BindView(R.id.smallCpLbValue)
+    //TextView mSmallCpLbValue;
     @BindView(R.id.smallCpBmValue)
     TextView mSmallCpBmValue;
     @BindView(R.id.smallCpYlpcValue)
@@ -112,8 +113,8 @@ public class QualityCheckActivity extends BaseActivity {
     ScrollView mSmallCpLayout;
     @BindView(R.id.bigCpNameValue)
     TextView mBigCpNameValue;
-    @BindView(R.id.bigCpLbValue)
-    TextView mBigCpLbValue;
+    //@BindView(R.id.bigCpLbValue)
+    //TextView mBigCpLbValue;
     @BindView(R.id.bigCpBmValue)
     TextView mBigCpBmValue;
     @BindView(R.id.bigCpYlpcValue)
@@ -168,9 +169,9 @@ public class QualityCheckActivity extends BaseActivity {
             param.setQrCodeId(mQrcodeId);
             //二维码信息包含着扫描的属于物料、半成品、小包装还是大包装
             //测试
-            String sort = "1";
-            //            mSort = mQrcodeId.substring(START_INDEX, END_INDEX);
-            mSort = sort;
+            //String sort = "1";
+            mSort = mQrcodeId.substring(TrackType.START_INDEX, TrackType.END_INDEX);
+            //mSort = sort;
             param.setSort(mSort);
             //当前用户为质检员
             param.setZjy(GlobalData.realName);
@@ -232,7 +233,7 @@ public class QualityCheckActivity extends BaseActivity {
         switch (mSort) {
             case TrackType.WL:
                  mNameValue.setText(dataResult.getWlProductName());
-                 mLbValue.setText(dataResult.getWlSortName());
+                 //mLbValue.setText(dataResult.getWlSortName());
                  mCdValue.setText(dataResult.getWlChd());
                  mWlbmValue.setText(dataResult.getWlCode());
                  mYlpcValue.setText(dataResult.getWlYlpc());
@@ -245,7 +246,7 @@ public class QualityCheckActivity extends BaseActivity {
                 break;
             case TrackType.BCP:
                  mBcpNameValue.setText(dataResult.getBcpProductName());
-                 mBcpLbValue.setText(dataResult.getBcpSortName());
+                 //mBcpLbValue.setText(dataResult.getBcpSortName());
                  mBcpBmValue.setText(dataResult.getBcpCode());
                  mBcpYlpcValue.setText(dataResult.getBcpYlpc());
                  mBcpScpcValue.setText(dataResult.getBcpScpc());
@@ -259,7 +260,7 @@ public class QualityCheckActivity extends BaseActivity {
                 break;
             case TrackType.SMALL_CP:
                  mSmallCpNameValue.setText(dataResult.getCpName());
-                 mSmallCpLbValue.setText(dataResult.getCpsortName());
+                 //mSmallCpLbValue.setText(dataResult.getCpsortName());
                  mSmallCpBmValue.setText(dataResult.getCpCode());
                  mSmallCpYlpcValue.setText(dataResult.getCpYlpc());
                  mSmallCpScpcValue.setText(dataResult.getCpScpc());
@@ -271,7 +272,7 @@ public class QualityCheckActivity extends BaseActivity {
                 break;
             case TrackType.BIG_CP:
                  mBigCpNameValue.setText(dataResult.getBigCpName());
-                 mBigCpLbValue.setText(dataResult.getBigCpSortName());
+                 //mBigCpLbValue.setText(dataResult.getBigCpSortName());
                  mBigCpBmValue.setText(dataResult.getBigCpCode());
                  mBigCpYlpcValue.setText(dataResult.getBigCpYlpc());
                  mBigCpScpcValue.setText(dataResult.getBigCpScpc());

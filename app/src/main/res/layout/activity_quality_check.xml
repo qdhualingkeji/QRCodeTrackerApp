@@ -98,6 +98,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -129,6 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+                -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -395,8 +397,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -430,6 +432,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -461,6 +464,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+                -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -791,8 +795,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -826,6 +830,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -857,6 +862,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+                -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1123,8 +1129,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:background="@android:color/white"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -1158,6 +1164,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -1189,6 +1196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+                -->
 
             <LinearLayout
                 android:layout_width="match_parent"

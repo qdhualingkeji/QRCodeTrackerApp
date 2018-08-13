@@ -32,8 +32,8 @@ public class WlDataTrackActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.cdValue)
     TextView mCdValue;
-    @BindView(R.id.lbValue)
-    TextView mLbValue;
+    //@BindView(R.id.lbValue)
+    //TextView mLbValue;
     @BindView(R.id.wlbmValue)
     TextView mWlbmValue;
     @BindView(R.id.ylpcValue)
@@ -110,7 +110,7 @@ public class WlDataTrackActivity extends BaseActivity {
                             WlTrackResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getProductName());
                             mCdValue.setText(dataResult.getChd());
-                            mLbValue.setText(dataResult.getSortName());
+                            //mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
                             mWlbmValue.setText(dataResult.getWlCode());
                             mYlpcValue.setText(dataResult.getYlpc());

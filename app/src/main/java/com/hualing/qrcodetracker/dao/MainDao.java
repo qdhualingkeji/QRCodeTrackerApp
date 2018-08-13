@@ -77,6 +77,7 @@ import com.hualing.qrcodetracker.bean.WlTkVerifyResult;
 import com.hualing.qrcodetracker.bean.WlTrackParam;
 import com.hualing.qrcodetracker.bean.WlTrackResult;
 import com.hualing.qrcodetracker.global.GlobalData;
+import com.hualing.qrcodetracker.model.User;
 
 /**
  * @author 马鹏昊
@@ -306,7 +307,7 @@ public interface MainDao {
     ActionResult<ActionResult> toUpdateBcpTkData(BcpTkVerifyResult updatedParam);
 
     @ActionRequest(func = GlobalData.Service.GET_PERSON_INFO)
-    ActionResult<PersonResult> getAllPerson();
+    ActionResult<PersonResult> getAllPerson(User userParam);
 
     @ActionRequest(func = GlobalData.Service.GET_CAN_MODIFY_DATA)
     ActionResult<NonCheckResult> getCanModifyData(MainParams params);
