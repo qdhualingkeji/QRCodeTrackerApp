@@ -564,7 +564,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 IntentUtil.openActivity(EmployeeMainActivity.this, NonHandleMsgActivity.class);
                 break;
             case FunctionType.QUALITY_CHECKING:
-                IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
+                IntentUtil.openActivity(EmployeeMainActivity.this, NonHandleMsgActivity.class);
                 break;
             case FunctionType.MODIFY_DATA:
                 IntentUtil.openActivity(EmployeeMainActivity.this, ModifyDataActivity.class);

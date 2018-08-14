@@ -71,6 +71,7 @@ import com.hualing.qrcodetracker.bean.WLTKShowDataResult;
 import com.hualing.qrcodetracker.bean.WLThrowGetShowDataParam;
 import com.hualing.qrcodetracker.bean.WLThrowParam;
 import com.hualing.qrcodetracker.bean.WLThrowShowDataResult;
+import com.hualing.qrcodetracker.bean.WlInQualityCheckResult;
 import com.hualing.qrcodetracker.bean.WlInVerifyResult;
 import com.hualing.qrcodetracker.bean.WlOutVerifyResult;
 import com.hualing.qrcodetracker.bean.WlTkVerifyResult;
@@ -230,6 +231,9 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.GET_WLIN_VERIFY_DATA)
     ActionResult<WlInVerifyResult> getWlInVerifyData(VerifyParam param);
+
+    @ActionRequest(func = GlobalData.Service.GET_WLIN_QUALITY_CHECK_DATA)
+    ActionResult<WlInQualityCheckResult> getWlInQualityCheckData(VerifyParam param);
 
     @ActionRequest(func = GlobalData.Service.GET_WLOUT_VERIFY_DATA)
     ActionResult<WlOutVerifyResult> getWlOutVerifyData(VerifyParam param);

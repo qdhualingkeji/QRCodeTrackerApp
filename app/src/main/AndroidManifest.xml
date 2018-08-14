@@ -214,6 +214,8 @@
         </activity>
         <activity android:name=".activities.operation_wl.wl_in.WlInVerifyActivity">
         </activity>
+        <activity android:name=".activities.operation_wl.wl_in.WlInQualityCheckActivity">
+        </activity>
         <activity android:name=".activities.operation_wl.wl_out.WlOutVerifyActivity">
         </activity>
         <activity android:name=".activities.operation_wl.wl_return.WlTkVerifyActivity">

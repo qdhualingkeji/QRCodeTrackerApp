@@ -15,6 +15,7 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpOutVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpTkVerifyActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_out.WlOutVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_return.WlTkVerifyActivity;
@@ -62,6 +63,7 @@ public class NonHandleMsgActivity extends BaseActivity {
     private MainDao mainDao;
     private MyAdapter mAdapter;
     private List<NonCheckBean> mData;
+    private boolean isFZR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,15 @@ public class NonHandleMsgActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
+        //判断登录角色的身份（领导、质检员）
+        String[] checkQXArr = GlobalData.checkQXGroup.split(",");
+        for (String checkQX:checkQXArr) {
+            if("ld".equals(checkQX)){
+                isFZR=true;
+                break;
+            }
+        }
+
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
@@ -111,14 +122,6 @@ public class NonHandleMsgActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
-        String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-        boolean isFZR=false;
-        for (String checkQX:checkQXArr) {
-            if("ld".equals(checkQX)){
-                isFZR=true;
-                break;
-            }
-        }
         if(isFZR)
             params.setCheckQXFlag(MainParams.FZR);
         else
@@ -199,7 +202,10 @@ public class NonHandleMsgActivity extends BaseActivity {
                             Intent intent =null;
                             switch (name){
                                 case "物料入库单":
-                                    intent = new Intent(NonHandleMsgActivity.this,WlInVerifyActivity.class);
+                                    if(isFZR)
+                                        intent = new Intent(NonHandleMsgActivity.this,WlInVerifyActivity.class);
+                                    else
+                                        intent = new Intent(NonHandleMsgActivity.this,WlInQualityCheckActivity.class);
                                     break;
                                 case "物料出库单":
                                     intent = new Intent(NonHandleMsgActivity.this,WlOutVerifyActivity.class);

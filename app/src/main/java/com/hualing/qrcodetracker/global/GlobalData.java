@@ -310,6 +310,7 @@ public class GlobalData {
         public static final String SEND_NOTIFICATION = "sendNotification";
         public static final String GET_NON_CHECK_DATA = "getNonCheckData";
         public static final String GET_WLIN_VERIFY_DATA = "getWlInVerifyData";
+        public static final String GET_WLIN_QUALITY_CHECK_DATA = "getWlInQualityCheckData";
         public static final String GET_WLOUT_VERIFY_DATA = "getWlOutVerifyData";
         public static final String GET_WLTK_VERIFY_DATA = "getWlTkVerifyData";
         public static final String GET_BCPIN_VERIFY_DATA = "getBcpInVerifyData";

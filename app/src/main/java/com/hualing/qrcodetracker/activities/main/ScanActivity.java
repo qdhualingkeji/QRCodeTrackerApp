@@ -274,9 +274,11 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                 }
 
                 break;
+                /*
             case FunctionType.QUALITY_CHECKING:
                 intent = new Intent(this, QualityCheckActivity.class);
                 break;
+                */
 
 
         }

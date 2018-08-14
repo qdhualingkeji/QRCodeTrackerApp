@@ -58,6 +58,7 @@ public class QualityDataResult {
     private String bigCpGg	;
     private String bigCpCzy	;
 
+
     public String getWlProductName() {
         return wlProductName;
     }
