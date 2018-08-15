@@ -21,6 +21,14 @@ public class BcpInShowBean {
     private int sortID;
     //原料批次
     private String yLPC;
+    //生产批次
+    private String sCPC;
+    //车间
+    private String cheJian;
+    //工序
+    private String gx;
+    //操作员
+    private String czy	;
     //数量
     private float shl ;
     //单位重量
@@ -72,6 +80,38 @@ public class BcpInShowBean {
 
     public void setyLPC(String yLPC) {
         this.yLPC = yLPC;
+    }
+
+    public String getsCPC() {
+        return sCPC;
+    }
+
+    public void setsCPC(String sCPC) {
+        this.sCPC = sCPC;
+    }
+
+    public String getCheJian() {
+        return cheJian;
+    }
+
+    public String getGx() {
+        return gx;
+    }
+
+    public void setGx(String gx) {
+        this.gx = gx;
+    }
+
+    public String getCzy() {
+        return czy;
+    }
+
+    public void setCzy(String czy) {
+        this.czy = czy;
+    }
+
+    public void setCheJian(String cheJian) {
+        this.cheJian = cheJian;
     }
 
     public float getShl() {

@@ -224,6 +224,8 @@
         </activity>
         <activity android:name=".activities.operation_bcp.bcp_in.BcpInVerifyActivity">
         </activity>
+        <activity android:name=".activities.operation_bcp.bcp_in.BcpInQualityCheckActivity">
+        </activity>
         <activity android:name=".activities.operation_bcp.bcp_return.BcpOutVerifyActivity">
         </activity>
         <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkVerifyActivity">

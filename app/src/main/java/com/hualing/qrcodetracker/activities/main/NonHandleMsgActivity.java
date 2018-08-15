@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpOutVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpTkVerifyActivity;
@@ -218,7 +219,10 @@ public class NonHandleMsgActivity extends BaseActivity {
                                         intent = new Intent(NonHandleMsgActivity.this,WlTkQualityCheckActivity.class);
                                     break;
                                 case "半成品/成品入库单":
-                                    intent = new Intent(NonHandleMsgActivity.this,BcpInVerifyActivity.class);
+                                    if(isFZR)
+                                        intent = new Intent(NonHandleMsgActivity.this,BcpInVerifyActivity.class);
+                                    else
+                                        intent = new Intent(NonHandleMsgActivity.this,BcpInQualityCheckActivity.class);
                                     break;
                                 case "成品出库单":
                                     intent = new Intent(NonHandleMsgActivity.this,BcpOutVerifyActivity.class);
