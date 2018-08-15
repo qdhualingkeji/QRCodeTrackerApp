@@ -18,6 +18,7 @@ import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpTkVerifyActi
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_out.WlOutVerifyActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_return.WlTkQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_return.WlTkVerifyActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
@@ -211,7 +212,10 @@ public class NonHandleMsgActivity extends BaseActivity {
                                     intent = new Intent(NonHandleMsgActivity.this,WlOutVerifyActivity.class);
                                     break;
                                 case "物料退库单":
-                                    intent = new Intent(NonHandleMsgActivity.this,WlTkVerifyActivity.class);
+                                    if(isFZR)
+                                        intent = new Intent(NonHandleMsgActivity.this,WlTkVerifyActivity.class);
+                                    else
+                                        intent = new Intent(NonHandleMsgActivity.this,WlTkQualityCheckActivity.class);
                                     break;
                                 case "半成品/成品入库单":
                                     intent = new Intent(NonHandleMsgActivity.this,BcpInVerifyActivity.class);

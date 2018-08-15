@@ -313,6 +313,7 @@ public class GlobalData {
         public static final String GET_WLIN_QUALITY_CHECK_DATA = "getWlInQualityCheckData";
         public static final String GET_WLOUT_VERIFY_DATA = "getWlOutVerifyData";
         public static final String GET_WLTK_VERIFY_DATA = "getWlTkVerifyData";
+        public static final String GET_WLTK_QUALITY_CHECK_DATA = "getWlTkQualityCheckData";
         public static final String GET_BCPIN_VERIFY_DATA = "getBcpInVerifyData";
         public static final String GET_CPOUT_VERIFY_DATA = "getCpOutVerifyData";
         public static final String GET_BCPTK_VERIFY_DATA = "getBcpTkVerifyData";
