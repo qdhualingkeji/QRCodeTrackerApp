@@ -15,6 +15,7 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpOutVerifyActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpTkQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpTkVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInVerifyActivity;
@@ -228,7 +229,10 @@ public class NonHandleMsgActivity extends BaseActivity {
                                     intent = new Intent(NonHandleMsgActivity.this,BcpOutVerifyActivity.class);
                                     break;
                                 case "半成品退库单":
-                                    intent = new Intent(NonHandleMsgActivity.this,BcpTkVerifyActivity.class);
+                                    if(isFZR)
+                                        intent = new Intent(NonHandleMsgActivity.this,BcpTkVerifyActivity.class);
+                                    else
+                                        intent = new Intent(NonHandleMsgActivity.this,BcpTkQualityCheckActivity.class);
                                     break;
                             }
                             if (intent!=null) {

@@ -104,6 +104,8 @@ public class EmployeeMainActivity extends BaseActivity {
 
     private MyPagerAdapter mPagerAdapter;
     private List<Module2> mCanUseList;
+    private boolean isFZR;
+    private boolean isZJY;
 
     //    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
     //        @Override
@@ -143,6 +145,17 @@ public class EmployeeMainActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
+        String[] checkQXArr = GlobalData.checkQXGroup.split(",");
+        isFZR=false;
+        for (String checkQX:checkQXArr) {
+            if("ld".equals(checkQX)){
+                isFZR=true;
+                break;
+            }if("zjy".equals(checkQX)){
+                isZJY=true;
+                break;
+            }
+        }
 
         mUnreadState = findViewById(R.id.unreadState);
 
@@ -717,11 +730,13 @@ public class EmployeeMainActivity extends BaseActivity {
             verify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    for (Module2 module2 : mCanUseList) {
-                        if ("审核".equals(module2.getMname())) {
-                            GlobalData.currentFunctionType = FunctionType.VERIFY;
-                            toWhere(GlobalData.currentFunctionType);
-                            return;
+                    if(isFZR) {
+                        for (Module2 module2 : mCanUseList) {
+                            if ("审核".equals(module2.getMname())) {
+                                GlobalData.currentFunctionType = FunctionType.VERIFY;
+                                toWhere(GlobalData.currentFunctionType);
+                                return;
+                            }
                         }
                     }
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
@@ -732,11 +747,13 @@ public class EmployeeMainActivity extends BaseActivity {
             check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    for (Module2 module2 : mCanUseList) {
-                        if ("质检".equals(module2.getMname())) {
-                            GlobalData.currentFunctionType = FunctionType.QUALITY_CHECKING;
-                            toWhere(GlobalData.currentFunctionType);
-                            return;
+                    if(isZJY) {
+                        for (Module2 module2 : mCanUseList) {
+                            if ("质检".equals(module2.getMname())) {
+                                GlobalData.currentFunctionType = FunctionType.QUALITY_CHECKING;
+                                toWhere(GlobalData.currentFunctionType);
+                                return;
+                            }
                         }
                     }
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();

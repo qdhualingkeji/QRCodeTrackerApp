@@ -25,6 +25,12 @@ public class BcpTkShowBean {
     private String scTime;
     //数量
     private float shl ;
+    //车间
+    private String cheJian;
+    //工序
+    private String gx;
+    //操作员
+    private String czy	;
     //单位重量
     private float dWZL;
     //出库单号
@@ -101,6 +107,30 @@ public class BcpTkShowBean {
 
     public void setShl(float shl) {
         this.shl = shl;
+    }
+
+    public String getCheJian() {
+        return cheJian;
+    }
+
+    public void setCheJian(String cheJian) {
+        this.cheJian = cheJian;
+    }
+
+    public String getGx() {
+        return gx;
+    }
+
+    public void setGx(String gx) {
+        this.gx = gx;
+    }
+
+    public String getCzy() {
+        return czy;
+    }
+
+    public void setCzy(String czy) {
+        this.czy = czy;
     }
 
     public float getdWZL() {

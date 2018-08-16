@@ -318,6 +318,7 @@ public class GlobalData {
         public static final String GET_BCPIN_QUALITY_CHECK_DATA = "getBcpInQualityCheckData";
         public static final String GET_CPOUT_VERIFY_DATA = "getCpOutVerifyData";
         public static final String GET_BCPTK_VERIFY_DATA = "getBcpTkVerifyData";
+        public static final String GET_BCPTK_QUALITY_CHECK_DATA = "getBcpTkQualityCheckData";
         public static final String AGREE_WLIN = "agreeWlIn";
         public static final String REFUSE_WLIN = "refuseWlIn";
         public static final String REFUSE_WLOUT = "refuseWlOut";
