@@ -121,7 +121,8 @@ public class WLCKDInputActivity extends BaseActivity {
                             //                            SharedPreferenceUtil.setWlRKDNumber(mInDhValue.getText().toString());
                             WLCKDResult ckdResult = result.getResult();
                             SharedPreferenceUtil.setWlCKDNumber(String.valueOf(ckdResult.getOutdh()));
-                            IntentUtil.openActivity(WLCKDInputActivity.this, ScanActivity.class);
+                            //IntentUtil.openActivity(WLCKDInputActivity.this, ScanActivity.class);
+                            IntentUtil.openActivity(WLCKDInputActivity.this, MaterialOutDataInputActivity.class);
                             AllActivitiesHolder.removeAct(WLCKDInputActivity.this);
                             return;
                         } else {

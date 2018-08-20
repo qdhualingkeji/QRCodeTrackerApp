@@ -88,9 +88,12 @@ public class MaterialOutDataInputActivity extends BaseActivity {
         params = new WLOutParam();
         getParam = new WLOutGetShowDataParam();
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
         getParam.setQrcodeId(mQrcodeId);
 
         mTitle.setRightButtonEnable(false);

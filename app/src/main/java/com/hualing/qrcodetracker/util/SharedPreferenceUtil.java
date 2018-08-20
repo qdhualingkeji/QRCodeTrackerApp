@@ -126,6 +126,7 @@ public class SharedPreferenceUtil {
         editor.putString("WlRKDNumber", number);
         editor.commit();
     }
+
     /**
      *  获取物料入库单号
      */
@@ -216,5 +217,24 @@ public class SharedPreferenceUtil {
     public static String getBCPCKDNumber() {
         SharedPreferences preferences = TheApplication.getSharedPreferences() ;
         return preferences.getString("BCPCKDNumber",null);
+    }
+
+    /**
+     * 保存二维码编号
+     * @param qrCodeId
+     */
+    public static void setQrCodeId(String qrCodeId) {
+        SharedPreferences preferences = TheApplication.getSharedPreferences() ;
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("qrCodeId", qrCodeId);
+        editor.commit();
+    }
+
+    /**
+     * 获取二维码编号
+     */
+    public static String getQrCodeId() {
+        SharedPreferences preferences = TheApplication.getSharedPreferences() ;
+        return preferences.getString("qrCodeId",null);
     }
 }

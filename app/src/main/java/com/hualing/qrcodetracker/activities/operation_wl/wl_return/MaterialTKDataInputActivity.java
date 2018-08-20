@@ -74,9 +74,12 @@ public class MaterialTKDataInputActivity extends BaseActivity {
         params = new WLTKParam();
         getParam = new WLTKGetShowDataParam();
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
         getParam.setQrcodeId(mQrcodeId);
 
         mainDao = YoniClient.getInstance().create(MainDao.class);

@@ -235,7 +235,8 @@ public class WLInRKDInputActivity extends BaseActivity {
                             //                            SharedPreferenceUtil.setWlRKDNumber(mInDhValue.getText().toString());
                             WLRKDResult rkdResult = result.getResult();
                             SharedPreferenceUtil.setWlRKDNumber(String.valueOf(rkdResult.getInDh()));
-                            IntentUtil.openActivity(WLInRKDInputActivity.this, ScanActivity.class);
+                            //IntentUtil.openActivity(WLInRKDInputActivity.this, ScanActivity.class);
+                            IntentUtil.openActivity(WLInRKDInputActivity.this, MaterialInDataInputActivity.class);
                             AllActivitiesHolder.removeAct(WLInRKDInputActivity.this);
                             return;
                         } else {

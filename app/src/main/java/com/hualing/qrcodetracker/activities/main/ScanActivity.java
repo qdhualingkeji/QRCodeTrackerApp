@@ -26,14 +26,18 @@ import com.hualing.qrcodetracker.activities.operation_track.BigCpDataTrackActivi
 import com.hualing.qrcodetracker.activities.operation_track.SmallCpDataTrackActivity;
 import com.hualing.qrcodetracker.activities.operation_track.WlDataTrackActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.MaterialInDataInputActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WLInRKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_out.MaterialOutDataInputActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_out.WLCKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_return.MaterialTKDataInputActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_return.WLTKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_tl.MaterialThrowActivity;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.model.CPType;
 import com.hualing.qrcodetracker.model.FunctionType;
 import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
 import java.util.ArrayList;
@@ -208,19 +212,30 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         vibrate();
         //        mZxingview.startSpot();
         //获取到二维码id
+        boolean isFirst = getIntent().getBooleanExtra("isFirst",false);
         Intent intent = null;
         switch (GlobalData.currentFunctionType) {
             case FunctionType.MATERIAL_IN:
-                intent = new Intent(this, MaterialInDataInputActivity.class);
+                //intent = new Intent(this, MaterialInDataInputActivity.class);
+                if(isFirst)
+                    intent = new Intent(this, WLInRKDInputActivity.class);
+                else
+                    intent = new Intent(this, MaterialInDataInputActivity.class);
                 break;
             case FunctionType.MATERIAL_OUT:
-                intent = new Intent(this, MaterialOutDataInputActivity.class);
+                if(isFirst)
+                    intent = new Intent(this, WLCKDInputActivity.class);
+                else
+                    intent = new Intent(this, MaterialOutDataInputActivity.class);
                 break;
             case FunctionType.MATERIAL_THROW:
                 intent = new Intent(this, MaterialThrowActivity.class);
                 break;
             case FunctionType.MATERIAL_RETURN:
-                intent = new Intent(this, MaterialTKDataInputActivity.class);
+                if(isFirst)
+                    intent = new Intent(this, WLTKDInputActivity.class);
+                else
+                    intent = new Intent(this, MaterialTKDataInputActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_IN:
                 intent = new Intent(this, BCPInDataInputActivity.class);
@@ -282,7 +297,8 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
 
         }
-        intent.putExtra("qrCodeId", result);
+        //intent.putExtra("qrCodeId", result);
+        SharedPreferenceUtil.setQrCodeId(result);
         startActivity(intent);
         AllActivitiesHolder.removeAct(this);
 

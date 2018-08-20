@@ -150,7 +150,8 @@ public class WLTKDInputActivity extends BaseActivity {
                             WLTKDResult tkdResult = result.getResult();
                             //保存物料退库单号
                             SharedPreferenceUtil.setWlTKDNumber(String.valueOf(tkdResult.getBackDh()));
-                            IntentUtil.openActivity(WLTKDInputActivity.this, ScanActivity.class);
+                            //IntentUtil.openActivity(WLTKDInputActivity.this, ScanActivity.class);
+                            IntentUtil.openActivity(WLTKDInputActivity.this, MaterialTKDataInputActivity.class);
                             AllActivitiesHolder.removeAct(WLTKDInputActivity.this);
                             return;
                         } else {

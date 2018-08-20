@@ -533,19 +533,23 @@ public class EmployeeMainActivity extends BaseActivity {
      * @param type
      */
     private void toWhere(int type) {
-
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFirst", true);
         switch (type) {
             case FunctionType.MATERIAL_IN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialInMainActivity.class);
-                IntentUtil.openActivity(EmployeeMainActivity.this, WLInRKDInputActivity.class);
+                //IntentUtil.openActivity(EmployeeMainActivity.this, WLInRKDInputActivity.class);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanActivity.class,-1,bundle);
                 break;
             case FunctionType.MATERIAL_OUT:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialOutMainActivity.class);
-                IntentUtil.openActivity(EmployeeMainActivity.this, WLCKDInputActivity.class);
+                //IntentUtil.openActivity(EmployeeMainActivity.this, WLCKDInputActivity.class);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
                 break;
             case FunctionType.MATERIAL_RETURN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialReturnMainActivity.class);
-                IntentUtil.openActivity(EmployeeMainActivity.this, WLTKDInputActivity.class);
+                //IntentUtil.openActivity(EmployeeMainActivity.this, WLTKDInputActivity.class);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
                 break;
             //投料不需要生成单据,所以直接打开扫描二维码页
             case FunctionType.MATERIAL_THROW:
