@@ -20,6 +20,7 @@ import com.hualing.qrcodetracker.bean.CreateBCPRKDParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.CPType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
@@ -213,7 +214,15 @@ public class CPRKDInputActivity extends BaseActivity {
                             BCPRKDResult rkdResult = result.getResult();
                             SharedPreferenceUtil.setBCPRKDNumber(String.valueOf(rkdResult.getIndh()));
                             //去选择大包装入库还是小包装入库
-                            IntentUtil.openActivity(CPRKDInputActivity.this, CPInProductStylePickActivity.class);
+                            //IntentUtil.openActivity(CPRKDInputActivity.this, CPInProductStylePickActivity.class);
+                            switch (GlobalData.currentCPInType) {
+                                case CPType.BIG_CP_IN:
+                                    IntentUtil.openActivity(CPRKDInputActivity.this, BigCPInDataInputActivity.class);
+                                    break;
+                                case CPType.SMALL_CP_IN:
+                                    IntentUtil.openActivity(CPRKDInputActivity.this, SmallCPInDataInputActivity.class);
+                                    break;
+                            }
                             AllActivitiesHolder.removeAct(CPRKDInputActivity.this);
                             return;
                         } else {

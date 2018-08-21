@@ -152,7 +152,8 @@ public class BcpTKDInputActivity extends BaseActivity {
                             BCPTKDResult tkdResult = result.getResult();
                             //保存物料退库单号
                             SharedPreferenceUtil.setBCPTKDNumber(String.valueOf(tkdResult.getBackDh()));
-                            IntentUtil.openActivity(BcpTKDInputActivity.this, ScanActivity.class);
+                            //IntentUtil.openActivity(BcpTKDInputActivity.this, ScanActivity.class);
+                            IntentUtil.openActivity(BcpTKDInputActivity.this, BcpTKDataInputActivity.class);
                             AllActivitiesHolder.removeAct(BcpTKDInputActivity.this);
                             return;
                         } else {

@@ -66,6 +66,9 @@ public class CPInProductStylePickActivity extends BaseActivity {
                 GlobalData.currentCPInType = CPType.SMALL_CP_IN;
                 break;
         }
-        IntentUtil.openActivity(this, ScanActivity.class);
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFirst", true);
+        IntentUtil.openActivityForResult(this, ScanActivity.class,-1,bundle);
     }
 }

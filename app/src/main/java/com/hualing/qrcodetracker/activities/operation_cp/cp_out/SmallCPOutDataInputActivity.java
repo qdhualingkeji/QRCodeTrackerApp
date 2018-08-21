@@ -88,9 +88,12 @@ public class SmallCPOutDataInputActivity extends BaseActivity {
         params = new SmallCpOutParam();
         mSmallCpOutGetDataParam = new SmallCpOutGetDataParam();
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
         params.setQrCodeId(mQrcodeId);
         mSmallCpOutGetDataParam.setQrCodeId(mQrcodeId);
     }

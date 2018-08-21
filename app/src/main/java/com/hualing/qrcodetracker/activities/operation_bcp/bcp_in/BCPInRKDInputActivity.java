@@ -208,7 +208,8 @@ public class BCPInRKDInputActivity extends BaseActivity {
                             //                            SharedPreferenceUtil.setWlRKDNumber(mInDhValue.getText().toString());
                             BCPRKDResult rkdResult = result.getResult();
                             SharedPreferenceUtil.setBCPRKDNumber(String.valueOf(rkdResult.getIndh()));
-                            IntentUtil.openActivity(BCPInRKDInputActivity.this, ScanActivity.class);
+                            //IntentUtil.openActivity(BCPInRKDInputActivity.this, ScanActivity.class);
+                            IntentUtil.openActivity(BCPInRKDInputActivity.this, BCPInDataInputActivity.class);
                             AllActivitiesHolder.removeAct(BCPInRKDInputActivity.this);
                             return;
                         } else {

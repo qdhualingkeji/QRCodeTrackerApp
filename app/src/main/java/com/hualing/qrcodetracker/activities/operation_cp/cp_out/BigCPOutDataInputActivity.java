@@ -88,9 +88,12 @@ public class BigCPOutDataInputActivity extends BaseActivity {
         params = new BigCpOutParam();
         mBigCpOutGetDataParam = new BigCpOutGetDataParam();
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
         params.setQrCodeId(mQrcodeId);
         mBigCpOutGetDataParam.setQrCodeId(mQrcodeId);
     }

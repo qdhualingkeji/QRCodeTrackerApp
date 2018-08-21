@@ -15,11 +15,15 @@ import android.widget.Toast;
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BCPInDataInputActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BCPInRKDInputActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpTKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpTKDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpThrowActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_in.BigCPInDataInputActivity;
+import com.hualing.qrcodetracker.activities.operation_cp.cp_in.CPRKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_in.SmallCPInDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_out.BigCPOutDataInputActivity;
+import com.hualing.qrcodetracker.activities.operation_cp.cp_out.CPCKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_out.SmallCPOutDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_track.BcpDataTrackActivity;
 import com.hualing.qrcodetracker.activities.operation_track.BigCpDataTrackActivity;
@@ -238,32 +242,46 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                     intent = new Intent(this, MaterialTKDataInputActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_IN:
-                intent = new Intent(this, BCPInDataInputActivity.class);
+                if(isFirst)
+                    intent = new Intent(this, BCPInRKDInputActivity.class);
+                else
+                    intent = new Intent(this, BCPInDataInputActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_THROW:
                 intent = new Intent(this, BcpThrowActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_RETURN:
-                intent = new Intent(this, BcpTKDataInputActivity.class);
+                if(isFirst)
+                    intent = new Intent(this, BcpTKDInputActivity.class);
+                else
+                    intent = new Intent(this, BcpTKDataInputActivity.class);
                 break;
             case FunctionType.PRODUCT_IN:
-                switch (GlobalData.currentCPInType) {
-                    case CPType.BIG_CP_IN:
-                        intent = new Intent(this, BigCPInDataInputActivity.class);
-                        break;
-                    case CPType.SMALL_CP_IN:
-                        intent = new Intent(this, SmallCPInDataInputActivity.class);
-                        break;
+                if(isFirst)
+                    intent = new Intent(this, CPRKDInputActivity.class);
+                else{
+                    switch (GlobalData.currentCPInType) {
+                        case CPType.BIG_CP_IN:
+                            intent = new Intent(this, BigCPInDataInputActivity.class);
+                            break;
+                        case CPType.SMALL_CP_IN:
+                            intent = new Intent(this, SmallCPInDataInputActivity.class);
+                            break;
+                    }
                 }
                 break;
             case FunctionType.PRODUCT_OUT:
-                switch (GlobalData.currentCPInType) {
-                    case CPType.BIG_CP_OUT:
-                        intent = new Intent(this, BigCPOutDataInputActivity.class);
-                        break;
-                    case CPType.SMALL_CP_OUT:
-                        intent = new Intent(this, SmallCPOutDataInputActivity.class);
-                        break;
+                if(isFirst)
+                    intent = new Intent(this, CPCKDInputActivity.class);
+                else {
+                    switch (GlobalData.currentCPInType) {
+                        case CPType.BIG_CP_OUT:
+                            intent = new Intent(this, BigCPOutDataInputActivity.class);
+                            break;
+                        case CPType.SMALL_CP_OUT:
+                            intent = new Intent(this, SmallCPOutDataInputActivity.class);
+                            break;
+                    }
                 }
                 break;
             case FunctionType.DATA_TRACK:

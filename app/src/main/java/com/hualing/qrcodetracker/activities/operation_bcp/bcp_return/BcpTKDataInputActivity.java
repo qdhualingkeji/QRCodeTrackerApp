@@ -79,9 +79,12 @@ public class BcpTKDataInputActivity extends BaseActivity {
         params = new BCPTKParam();
         getParam = new BCPTKGetShowDataParam();
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
         getParam.setQrcodeId(mQrcodeId);
 
         mainDao = YoniClient.getInstance().create(MainDao.class);

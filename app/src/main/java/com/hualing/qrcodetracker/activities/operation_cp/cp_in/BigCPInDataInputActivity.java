@@ -100,9 +100,12 @@ public class BigCPInDataInputActivity extends BaseActivity {
     protected void initLogic() {
         mainDao = YoniClient.getInstance().create(MainDao.class);
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
 
         params = new BigCPINParam();
 
