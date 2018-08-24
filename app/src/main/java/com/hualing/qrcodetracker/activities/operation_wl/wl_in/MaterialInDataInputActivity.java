@@ -16,7 +16,8 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -42,25 +43,26 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MaterialInDataInputActivity extends BaseActivity {
 
-    private static final int GET_WLSORT_CODE = 30;
+    //private static final int GET_WLSORT_CODE = 30;
     private static final int SELECT_LEI_BIE = 11;
+    private static final int SELECT_PRODUCT_NAME = 12;
 
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.tsValue)
     EditText mTsValue;
-    @BindView(R.id.wlbmValue)
-    TextView mWlbmValue;
+    //@BindView(R.id.wlbmValue)
+    //TextView mWlbmValue;
     //    @BindView(R.id.wlbmValue)
     //    EditText mWlbmValue;
     @BindView(R.id.nameValue)
-    EditText mNameValue;
+    TextView mNameValue;
     @BindView(R.id.cdValue)
     EditText mCdValue;
     //    @BindView(R.id.lbValue)
     //    EditText mLbValue;
-    //@BindView(R.id.lbValue)
-    //TextView mLbValue;
+    @BindView(R.id.lbValue)
+    TextView mLbValue;
     @BindView(R.id.ggValue)
     EditText mGgValue;
     @BindView(R.id.ylpcValue)
@@ -89,7 +91,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
     private WLINParam params;
 
     private String mSelectedWLBM;
-    //private int mSelectedLeiBieId = -1;
+    private int mSelectedLeiBieId = -1;
 
     @Override
     protected void initLogic() {
@@ -143,18 +145,18 @@ public class MaterialInDataInputActivity extends BaseActivity {
     }
 
     //@OnClick({R.id.selectWLBM, R.id.commitBtn, R.id.selectLB})
-    @OnClick({R.id.selectWLBM, R.id.commitBtn})
+    @OnClick({R.id.commitBtn, R.id.selectLB, R.id.selectName})
     public void onViewClicked(View view) {
 
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
-            case R.id.selectWLBM:
-                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, GET_WLSORT_CODE, null);
-                break;
-                /*
             case R.id.selectLB:
-                IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
+                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
                 break;
-                */
+            case R.id.selectName:
+                bundle.putInt("sortID",mSelectedLeiBieId);
+                IntentUtil.openActivityForResult(this, SelectHlProductActivity.class, SELECT_PRODUCT_NAME, bundle);
+                break;
             case R.id.commitBtn:
                 //数据录入是否完整
                 if (checkIfInfoPerfect()) {
@@ -170,18 +172,22 @@ public class MaterialInDataInputActivity extends BaseActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+                    /*
                 case GET_WLSORT_CODE:
                     String ss = data.getStringExtra("sortName");
                     mWlbmValue.setText(ss);
                     mSelectedWLBM = data.getIntExtra("sortID",0)+"";
                     break;
-                    /*
-                case SELECT_LEI_BIE:
-                    String lbName = data.getStringExtra("lbName");
-                    mLbValue.setText(lbName);
-                    mSelectedLeiBieId = data.getIntExtra("lbId", -1);
-                    break;
                     */
+                case SELECT_LEI_BIE:
+                    String lbName = data.getStringExtra("sortName");
+                    mLbValue.setText(lbName);
+                    mSelectedLeiBieId = data.getIntExtra("sortID", -1);
+                    break;
+                case SELECT_PRODUCT_NAME:
+                    String productName = data.getStringExtra("productName");
+                    mNameValue.setText(productName);
+                    break;
             }
         }
 
@@ -190,10 +196,10 @@ public class MaterialInDataInputActivity extends BaseActivity {
 
     private boolean checkIfInfoPerfect() {
         String tsValue = mTsValue.getText().toString();
-        String wlbmValue = mWlbmValue.getText().toString();
+        //String wlbmValue = mWlbmValue.getText().toString();
         String nameValue = mNameValue.getText().toString();
         String cdValue = mCdValue.getText().toString();
-        //String lbValue = mLbValue.getText().toString();
+        String lbValue = mLbValue.getText().toString();
         String ggValue = mGgValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String sldwValue = mSldwValue.getText().toString();
@@ -201,10 +207,10 @@ public class MaterialInDataInputActivity extends BaseActivity {
         String zhlValue = mZhlValue.getText().toString();
         String beizhuValue = mRemarkValue.getText().toString();
         if (TextUtils.isEmpty(tsValue)
-                || "请选择物料种类".equals(wlbmValue)
+                //|| "请选择物料种类".equals(wlbmValue)
                 || TextUtils.isEmpty(nameValue)
                 || TextUtils.isEmpty(cdValue)
-                //|| "请选择类别".equals(lbValue)
+                || "请选择类别".equals(lbValue)
                 //|| TextUtils.isEmpty(ggValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(sldwValue)
@@ -220,7 +226,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         params.setwLCode(mSelectedWLBM);
         params.setProductName(nameValue);
         params.setcHD(cdValue);
-        //params.setLb(mSelectedLeiBieId);
+        params.setLb(mSelectedLeiBieId);
         params.setgG(ggValue);
         params.setyLPC(ylpcValue);
         params.setdW(sldwValue);

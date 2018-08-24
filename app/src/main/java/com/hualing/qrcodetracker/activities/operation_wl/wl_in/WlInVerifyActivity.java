@@ -257,10 +257,9 @@ public class WlInVerifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             WLINShowBean bean = mData.get(position);
-            viewHolder.mWlbmValue.setText(bean.getwLCode());
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mCdValue.setText(bean.getcHD());
-            //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getUnit());
@@ -272,14 +271,12 @@ public class WlInVerifyActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
             @BindView(R.id.cdValue)
             TextView mCdValue;
-            //@BindView(R.id.lbValue)
-            //TextView mLbValue;
             @BindView(R.id.ggValue)
             TextView mGgValue;
             @BindView(R.id.ylpcValue)

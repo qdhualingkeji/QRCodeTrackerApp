@@ -253,9 +253,9 @@ public class WlInQualityCheckActivity extends BaseActivity {
                 viewHolder = (WlInQualityCheckActivity.MyAdapter.ViewHolder) convertView.getTag();
 
             WLINShowBean bean = mData.get(position);
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mCdValue.setText(bean.getcHD());
-            viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mPczlValue.setText(bean.getpCZL() + "");
             viewHolder.mLlTimeValue.setText(bean.getlLTime());
@@ -268,12 +268,12 @@ public class WlInQualityCheckActivity extends BaseActivity {
         }
 
         class ViewHolder {
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
             @BindView(R.id.cdValue)
             TextView mCdValue;
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
             @BindView(R.id.ylpcValue)
             TextView mYlpcValue;
             @BindView(R.id.pczlValue)

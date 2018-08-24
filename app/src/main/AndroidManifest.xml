@@ -95,7 +95,11 @@
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
-            android:name=".activities.operation_wl.wl_in.SelectHlSortActivity"
+            android:name=".activities.operation_common.SelectHlSortActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".activities.operation_common.SelectHlProductActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity

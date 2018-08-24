@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.HlProductBean;
+import com.hualing.qrcodetracker.bean.HlProductParam;
+import com.hualing.qrcodetracker.bean.HlProductResult;
 import com.hualing.qrcodetracker.bean.HlSortBean;
 import com.hualing.qrcodetracker.bean.HlSortResult;
 import com.hualing.qrcodetracker.dao.MainDao;
@@ -39,11 +43,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-
-/**
- * @desc 选择物料编码
- */
-public class SelectHlSortActivity extends BaseActivity {
+public class SelectHlProductActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -52,11 +52,12 @@ public class SelectHlSortActivity extends BaseActivity {
     @BindView(R.id.dataList)
     RecyclerView mRecyclerView;
 
-    private MyAdapter mAdapter;
-    private List<HlSortBean> mData ;
+    private SelectHlProductActivity.MyAdapter mAdapter;
+    private List<HlProductBean> mData ;
     //模糊过滤后的数据
-    private List<HlSortBean> mFilterData ;
+    private List<HlProductBean> mFilterData ;
     private MainDao mainDao;
+    private HlProductParam param;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +66,15 @@ public class SelectHlSortActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
+        param=new HlProductParam();
+        if(getIntent()!=null)
+            param.setSortID(getIntent().getIntExtra("sortID",-1));
+        Log.e("SortID=======",""+param.getSortID());
+
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
-                AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
+                AllActivitiesHolder.removeAct(SelectHlProductActivity.this);
             }
 
             @Override
@@ -82,8 +88,8 @@ public class SelectHlSortActivity extends BaseActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new MyRecycleViewDivider(
-                                this, LinearLayoutManager.HORIZONTAL, 1, getResources().getColor(R.color.divide_gray_color)));
-        mAdapter = new MyAdapter();
+                this, LinearLayoutManager.HORIZONTAL, 1, getResources().getColor(R.color.divide_gray_color)));
+        mAdapter = new SelectHlProductActivity.MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
         mInputValue.addTextChangedListener(new TextWatcher() {
@@ -114,23 +120,23 @@ public class SelectHlSortActivity extends BaseActivity {
         progressDialog.show();
 
 
-        Observable.create(new ObservableOnSubscribe<ActionResult<HlSortResult>>() {
+        Observable.create(new ObservableOnSubscribe<ActionResult<HlProductResult>>() {
             @Override
-            public void subscribe(ObservableEmitter<ActionResult<HlSortResult>> e) throws Exception {
-                ActionResult<HlSortResult> nr = mainDao.getHlSort();
+            public void subscribe(ObservableEmitter<ActionResult<HlProductResult>> e) throws Exception {
+                ActionResult<HlProductResult> nr = mainDao.getHlProduct(param);
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
                 .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                .subscribe(new Consumer<ActionResult<HlSortResult>>() {
+                .subscribe(new Consumer<ActionResult<HlProductResult>>() {
                     @Override
-                    public void accept(ActionResult<HlSortResult> result) throws Exception {
+                    public void accept(ActionResult<HlProductResult> result) throws Exception {
                         progressDialog.dismiss();
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            HlSortResult data = result.getResult();
-                            List<HlSortBean> hlSortBeans = data.getHlSortBeans();
+                            HlProductResult data = result.getResult();
+                            List<HlProductBean> hlSortBeans = data.getHlProductBeans();
                             mData.clear();
                             mData.addAll(hlSortBeans);
                             mFilterData.clear();
@@ -149,28 +155,27 @@ public class SelectHlSortActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_select_wlsort;
+        return R.layout.activity_select_product;
     }
 
-    private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
+    private class MyAdapter extends RecyclerView.Adapter<SelectHlProductActivity.MyAdapter.MyViewHolder> implements Filterable {
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v =  LayoutInflater.from(SelectHlSortActivity.this).inflate(R.layout.adapter_single,parent,false);
-            return new MyViewHolder(v);
+        public SelectHlProductActivity.MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v =  LayoutInflater.from(SelectHlProductActivity.this).inflate(R.layout.product_adapter_single,parent,false);
+            return new SelectHlProductActivity.MyAdapter.MyViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            final HlSortBean bean = mFilterData.get(position);
-            holder.sortName.setText(bean.getSortName());
+        public void onBindViewHolder(SelectHlProductActivity.MyAdapter.MyViewHolder holder, int position) {
+            final HlProductBean bean = mFilterData.get(position);
+            holder.productName.setText(bean.getProductName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent ii = new Intent();
-                    ii.putExtra("sortName",bean.getSortName());
-                    ii.putExtra("sortID",bean.getSortID());
+                    ii.putExtra("productName",bean.getProductName());
                     setResult(RESULT_OK,ii);
-                    AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
+                    AllActivitiesHolder.removeAct(SelectHlProductActivity.this);
                 }
             });
         }
@@ -191,10 +196,10 @@ public class SelectHlSortActivity extends BaseActivity {
                         //没有过滤的内容，则使用源数据
                         mFilterData = mData;
                     } else {
-                        List<HlSortBean> filteredList = new ArrayList<>();
-                        for (HlSortBean bean : mData) {
+                        List<HlProductBean> filteredList = new ArrayList<>();
+                        for (HlProductBean bean : mData) {
                             //这里根据需求，添加匹配规则
-                            if (bean.getSortName().contains(charString)) {
+                            if (bean.getProductName().contains(charString)) {
                                 filteredList.add(bean);
                             }
                         }
@@ -209,7 +214,7 @@ public class SelectHlSortActivity extends BaseActivity {
                 //把过滤后的值返回出来
                 @Override
                 protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                    mFilterData = (ArrayList<HlSortBean>) filterResults.values;
+                    mFilterData = (ArrayList<HlProductBean>) filterResults.values;
                     notifyDataSetChanged();
                 }
             };
@@ -217,11 +222,11 @@ public class SelectHlSortActivity extends BaseActivity {
 
         class MyViewHolder extends RecyclerView.ViewHolder{
 
-            TextView sortName;
+            TextView productName;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                sortName = itemView.findViewById(R.id.sortName);
+                productName = itemView.findViewById(R.id.productName);
             }
         }
 
