@@ -14,6 +14,7 @@ import com.hualing.qrcodetracker.bean.WlTrackResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
 import butterknife.BindView;
@@ -32,10 +33,10 @@ public class WlDataTrackActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.cdValue)
     TextView mCdValue;
-    //@BindView(R.id.lbValue)
-    //TextView mLbValue;
-    @BindView(R.id.wlbmValue)
-    TextView mWlbmValue;
+    @BindView(R.id.lbValue)
+    TextView mLbValue;
+    //@BindView(R.id.wlbmValue)
+    //TextView mWlbmValue;
     @BindView(R.id.ylpcValue)
     TextView mYlpcValue;
     @BindView(R.id.pczlValue)
@@ -78,10 +79,14 @@ public class WlDataTrackActivity extends BaseActivity {
         });
 
         param = new WlTrackParam();
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
             param.setQrCodeId(mQrcodeId);
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
+        param.setQrCodeId(mQrcodeId);
 
     }
 
@@ -110,9 +115,9 @@ public class WlDataTrackActivity extends BaseActivity {
                             WlTrackResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getProductName());
                             mCdValue.setText(dataResult.getChd());
-                            //mLbValue.setText(dataResult.getSortName());
+                            mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
-                            mWlbmValue.setText(dataResult.getWlCode());
+                            //mWlbmValue.setText(dataResult.getWlCode());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mPczlValue.setText(dataResult.getPczl()+"");
                             mLlTimeValue.setText(dataResult.getLlTime());

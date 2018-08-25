@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.zxing.common.StringUtils;
@@ -57,6 +58,8 @@ public class WLInRKDInputActivity extends BaseActivity {
     //    EditText mShRqValue;
     @BindView(R.id.ShRqValue)
     TextView mShRqValue;
+    @BindView(R.id.ShSjValue)
+    TextView mShSjValue;
     //    @BindView(R.id.InDhValue)
     //    EditText mInDhValue;
 //    @BindView(R.id.ShrValue)
@@ -116,12 +119,14 @@ public class WLInRKDInputActivity extends BaseActivity {
     private boolean checkDataIfCompleted() {
         String fhdwValue = mFhDwValue.getText().toString();
         String shrqValue = mShRqValue.getText().toString();
+        String shsjValue = mShSjValue.getText().toString();
         //        String indhValue = mInDhValue.getText().toString();
 //        String shrValue = mShrValue.getText().toString();
         String shfzrValue = mShFzrValue.getText().toString();
 //        String jhfzrValue = mJhFzrValue.getText().toString();
         if (TextUtils.isEmpty(fhdwValue)
-                || "请选择收获日期".equals(shrqValue)
+                || "请选择收货日期".equals(shrqValue)
+                || "请选择收货时间".equals(shsjValue)
                 //                || TextUtils.isEmpty(indhValue)
 //                || TextUtils.isEmpty(shrValue)
 //                || TextUtils.isEmpty(jhfzrValue)
@@ -129,7 +134,7 @@ public class WLInRKDInputActivity extends BaseActivity {
             return false;
         }
         params.setFhDw(fhdwValue);
-        params.setShRq(shrqValue);
+        params.setShRq(shrqValue+" "+shsjValue);
         //        params.setInDh(indhValue);
         //收货人改为当前用户（操作者是仓库管理员）
         params.setShr(GlobalData.realName);
@@ -143,7 +148,7 @@ public class WLInRKDInputActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.ShRqValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1})
+    @OnClick({R.id.ShRqValue, R.id.ShSjValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -153,7 +158,7 @@ public class WLInRKDInputActivity extends BaseActivity {
                 final DatePicker datePicker = v.findViewById(R.id.datePicker);
                 String lastDate = mShRqValue.getText().toString();
                 String[] sa = null;
-                if (!"请选择收获日期".equals(lastDate)) {
+                if (!"请选择收货日期".equals(lastDate)) {
                     sa = lastDate.split("-");
                 }
                 if (sa != null) {
@@ -165,6 +170,23 @@ public class WLInRKDInputActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String dateStr = datePicker.getYear() + "-" + (datePicker.getMonth() + 1) + "-" + datePicker.getDayOfMonth();
                                 mShRqValue.setText(dateStr);
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+
+                break;
+            case R.id.ShSjValue:
+
+                View v1 = LayoutInflater.from(this).inflate(R.layout.time_select, null);
+                final TimePicker timePicker = v1.findViewById(R.id.timePicker);
+                timePicker.setIs24HourView(true);
+                new AlertDialog.Builder(this).setView(v1)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String dateStr = timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute();
+                                mShSjValue.setText(dateStr);
                             }
                         })
                         .setNegativeButton("取消", null)

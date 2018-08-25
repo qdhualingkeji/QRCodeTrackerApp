@@ -216,7 +216,6 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 || TextUtils.isEmpty(sldwValue)
                 || TextUtils.isEmpty(slValue)
                 || TextUtils.isEmpty(zhlValue)
-                || TextUtils.isEmpty(beizhuValue)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;

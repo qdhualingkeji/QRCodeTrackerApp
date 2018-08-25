@@ -20,6 +20,7 @@ import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -45,8 +46,8 @@ public class BcpDataTrackActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.lbValue)
     TextView mLbValue;
-    @BindView(R.id.wlbmValue)
-    TextView mWlbmValue;
+    //@BindView(R.id.wlbmValue)
+    //TextView mWlbmValue;
     @BindView(R.id.ylpcValue)
     TextView mYlpcValue;
     @BindView(R.id.ggValue)
@@ -104,10 +105,14 @@ public class BcpDataTrackActivity extends BaseActivity {
         });
 
         param = new WlTrackParam();
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
             param.setQrCodeId(mQrcodeId);
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
+        param.setQrCodeId(mQrcodeId);
 
         mData = new ArrayList<>();
         mAdapter = new MyAdapter();
@@ -141,7 +146,7 @@ public class BcpDataTrackActivity extends BaseActivity {
                             mJyztValue.setText(dataResult.getJyzt());
                             mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
-                            mWlbmValue.setText(dataResult.getBcpCode());
+                            //mWlbmValue.setText(dataResult.getBcpCode());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());
                             mScTimeValue.setText(dataResult.getScTime());

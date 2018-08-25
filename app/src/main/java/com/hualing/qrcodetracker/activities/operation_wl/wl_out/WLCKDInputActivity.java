@@ -45,8 +45,8 @@ public class WLCKDInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.LldwValue)
     TextView mLldwValue;
-    @BindView(R.id.FlrValue)
-    TextView mFlrValue;
+    //@BindView(R.id.FlrValue)
+    //TextView mFlrValue;
     @BindView(R.id.FlfzrValue)
     TextView mFlfzrValue;
     @BindView(R.id.LlfzrValue)
@@ -134,12 +134,11 @@ public class WLCKDInputActivity extends BaseActivity {
 
     private boolean checkDataIfCompleted() {
         String lldwValue = mLldwValue.getText().toString();
-        String flrValue = mFlrValue.getText().toString();
+        //String flrValue = mFlrValue.getText().toString();
         String flfzrValue = mFlfzrValue.getText().toString();
         String llfzrValue = mLlfzrValue.getText().toString();
         String remarkValue = mRemarkValue.getText().toString();
         if ("请选择部门".equals(lldwValue)
-                || "请选择发料人".equals(flrValue)
                 || "请选择发料负责人".equals(flfzrValue)
                 || "请选择领料负责人".equals(llfzrValue)
             //                || TextUtils.isEmpty(remarkValue)
@@ -147,7 +146,7 @@ public class WLCKDInputActivity extends BaseActivity {
             return false;
         }
         params.setLhDw(lldwValue);
-        params.setFhR(flrValue);
+        params.setFhR(GlobalData.realName);
         params.setFhFzr(flfzrValue);
         params.setLhR(GlobalData.realName);
         params.setLhFzr(llfzrValue);
@@ -168,18 +167,20 @@ public class WLCKDInputActivity extends BaseActivity {
                     mLlfzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_FLFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mFlfzrValue.setText(data.getStringExtra("personName"));
                     break;
+                    /*
                 case REQUEST_CODE_SELECT_FLR:
-                    fzrID=data.getIntExtra("personID",0);
                     mFlrValue.setText(data.getStringExtra("personName"));
                     break;
+                    */
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectLLFZR, R.id.selectFLFZR, R.id.selectFLR})
+    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectLLFZR, R.id.selectFLFZR})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -190,11 +191,8 @@ public class WLCKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
                 break;
             case R.id.selectFLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLFZR, null);
-                break;
-            case R.id.selectFLR:
                 bundle.putString("checkQX", "ld");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLR, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

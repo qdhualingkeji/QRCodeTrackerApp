@@ -258,9 +258,9 @@ public class WlOutVerifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             WLOutShowBean bean = mData.get(position);
-            viewHolder.mWlbmValue.setText(bean.getwLCode());
+            //viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mNameValue.setText(bean.getProductName());
-            //viewHolder.mLbValue.setText(bean.getSortID()+"");
+            viewHolder.mLbValue.setText(bean.getSortID()+"");
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
@@ -271,12 +271,12 @@ public class WlOutVerifyActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
+            //@BindView(R.id.wlbmValue)
+            //TextView mWlbmValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
-            //@BindView(R.id.lbValue)
-            //TextView mLbValue;
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
             @BindView(R.id.ggValue)
             TextView mGgValue;
             @BindView(R.id.ylpcValue)

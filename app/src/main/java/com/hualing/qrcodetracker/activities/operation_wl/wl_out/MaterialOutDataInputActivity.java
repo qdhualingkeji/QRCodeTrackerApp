@@ -50,8 +50,8 @@ public class MaterialOutDataInputActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.cdValue)
     TextView mCdValue;
-    //@BindView(R.id.lbValue)
-    //TextView mLbValue;
+    @BindView(R.id.lbValue)
+    TextView mLbValue;
     @BindView(R.id.ggValue)
     TextView mGgValue;
     @BindView(R.id.zzlValue)
@@ -139,7 +139,7 @@ public class MaterialOutDataInputActivity extends BaseActivity {
                             WLOutShowDataResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getProductName());
                             mCdValue.setText(dataResult.getChd());
-                            //mLbValue.setText(dataResult.getSortName());
+                            mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
                             mZzlValue.setText(dataResult.getPczl() + "");
                             mSldwValue.setText(dataResult.getDw());

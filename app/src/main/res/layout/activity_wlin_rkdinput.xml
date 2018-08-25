@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="请选择收获日期"/>
+                android:text="请选择收货日期"/>
 
         </LinearLayout>
 
@@ -106,6 +106,32 @@
                 <!--android:textSize="16sp"/>-->
 
         <!--</LinearLayout>-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/divide_gray_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/date"/>
+
+            <TextView
+                android:id="@+id/ShSjValue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="请选择收货时间"/>
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
