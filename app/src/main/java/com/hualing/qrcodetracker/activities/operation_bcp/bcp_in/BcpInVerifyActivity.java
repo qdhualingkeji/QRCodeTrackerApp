@@ -190,6 +190,8 @@ public class BcpInVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "核退成功", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
                             return;
                         }
                     }

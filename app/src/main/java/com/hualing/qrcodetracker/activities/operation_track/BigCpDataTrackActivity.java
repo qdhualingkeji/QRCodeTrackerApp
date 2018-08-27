@@ -2,6 +2,7 @@ package com.hualing.qrcodetracker.activities.operation_track;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import com.hualing.qrcodetracker.bean.WlTrackParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
 import butterknife.BindView;
@@ -36,8 +38,8 @@ public class BigCpDataTrackActivity extends BaseActivity {
     TextView mNameValue;
     @BindView(R.id.lbValue)
     TextView mLbValue;
-    @BindView(R.id.wlbmValue)
-    TextView mWlbmValue;
+    //@BindView(R.id.wlbmValue)
+    //TextView mWlbmValue;
     @BindView(R.id.ylpcValue)
     TextView mYlpcValue;
     @BindView(R.id.scpcValue)
@@ -87,10 +89,14 @@ public class BigCpDataTrackActivity extends BaseActivity {
         });
 
         param = new WlTrackParam();
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
             param.setQrCodeId(mQrcodeId);
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
+        param.setQrCodeId(mQrcodeId);
 
     }
 
@@ -120,7 +126,7 @@ public class BigCpDataTrackActivity extends BaseActivity {
                             mJyztValue.setText(dataResult.getJyzt());
                             mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
-                            mWlbmValue.setText(dataResult.getCpCode());
+                            //mWlbmValue.setText(dataResult.getCpCode());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());
                             mScTimeValue.setText(dataResult.getScTime());
