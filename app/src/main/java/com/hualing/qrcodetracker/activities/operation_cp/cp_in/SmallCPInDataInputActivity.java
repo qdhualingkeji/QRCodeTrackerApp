@@ -18,9 +18,10 @@ import com.hualing.qrcodetracker.activities.main.ScanActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectBigCpActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectCJActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectGXActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectSXYLActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.SelectHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -55,18 +56,18 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.tsValue)
     EditText mTsValue;
-    @BindView(R.id.bcpCodeValue)
-    TextView mBcpCodeValue;
+    //@BindView(R.id.bcpCodeValue)
+    //TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
-    EditText mProductNameValue;
-    //@BindView(R.id.lbValue)
-    //TextView mLbValue;
+    TextView mProductNameValue;
+    @BindView(R.id.lbValue)
+    TextView mLbValue;
     @BindView(R.id.ylpcValue)
     EditText mYlpcValue;
     @BindView(R.id.scpcValue)
     EditText mScpcValue;
     @BindView(R.id.ggValue)
-    EditText mGgValue;
+    TextView mGgValue;
     @BindView(R.id.shlValue)
     EditText mShlValue;
     @BindView(R.id.dwzlValue)
@@ -96,7 +97,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private static final int MAX_NUM = 50;
 
     private static final int SELECT_HL_SORT = 10;
-    //private static final int SELECT_LEI_BIE = 11;
+    private static final int SELECT_LEI_BIE = 11;
+    private static final int SELECT_PRODUCT_NAME = 12;
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
     private static final int SELECT_SXYL = 40;
@@ -114,7 +116,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private String mCJHasGongXuId;
     private int mSelectedGxId = -1;
     private String mSXYLQrcodeStr = null;
-    //private int mSelectedLeiBieId = -1;
+    private int mSelectedLeiBieId = -1;
     private String mSelectedBigCpQrCodeId;
 
     private CustomDatePicker customDatePicker;
@@ -189,17 +191,23 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     }
 
     //@OnClick({R.id.selectBCPCode, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn, R.id.selectLB})
-    @OnClick({R.id.selectBCPCode, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectLB, R.id.selectName, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
+
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
+                /*
             case R.id.selectBCPCode:
                 IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_HL_SORT, null);
                 break;
-                /*
-            case R.id.selectLB:
-                IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
-                break;
                 */
+            case R.id.selectLB:
+                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
+                break;
+            case R.id.selectName:
+                bundle.putInt("sortID",mSelectedLeiBieId);
+                IntentUtil.openActivityForResult(this, SelectHlProductActivity.class, SELECT_PRODUCT_NAME, bundle);
+                break;
             case R.id.selectBigCp:
                 IntentUtil.openActivityForResult(this, SelectBigCpActivity.class, SELECT_BIG_CP, null);
                 break;
@@ -211,7 +219,6 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                     Toast.makeText(this, "请先选择车间", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Bundle bundle = new Bundle();
                 bundle.putString("cjGXIds", mCJHasGongXuId);
                 IntentUtil.openActivityForResult(this, SelectGXActivity.class, SELECT_GONG_XU, bundle);
                 break;
@@ -240,18 +247,24 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+                    /*
                 case SELECT_HL_SORT:
                     String sortName = data.getStringExtra("sortName");
                     mBcpCodeValue.setText(sortName);
                     mSelectedBcpCode = data.getStringExtra("sortCode");
                     break;
-                    /*
-                case SELECT_LEI_BIE:
-                    String lbName = data.getStringExtra("lbName");
-                    mLbValue.setText(lbName);
-                    mSelectedLeiBieId = data.getIntExtra("lbId", -1);
-                    break;
                     */
+                case SELECT_LEI_BIE:
+                    String lbName = data.getStringExtra("sortName");
+                    mLbValue.setText(lbName);
+                    mSelectedLeiBieId = data.getIntExtra("sortID", -1);
+                    break;
+                case SELECT_PRODUCT_NAME:
+                    String productName = data.getStringExtra("productName");
+                    mProductNameValue.setText(productName);
+                    String model = data.getStringExtra("model");
+                    mGgValue.setText(model);
+                    break;
                 case SELECT_BIG_CP:
                     String bigCpName = data.getStringExtra("cpName");
                     mBigCpValue.setText(bigCpName);
@@ -369,9 +382,9 @@ public class SmallCPInDataInputActivity extends BaseActivity {
 
     private boolean checkIfInfoPerfect() {
         String tsValue = mTsValue.getText().toString();
-        String cpCodeValue = mBcpCodeValue.getText().toString();
+        //String cpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
-        //String lbValue = mLbValue.getText().toString();
+        String lbValue = mLbValue.getText().toString();
         String bigCpValue = mBigCpValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String scpcValue = mScpcValue.getText().toString();
@@ -384,9 +397,9 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         String sxylValue = mSxylValue.getText().toString();
         String scTimeValue = mScTimeValue.getText().toString();
         if (TextUtils.isEmpty(tsValue)
-                || "请选择成品编码".equals(cpCodeValue)
+                //|| "请选择成品编码".equals(cpCodeValue)
                 || TextUtils.isEmpty(nameValue)
-                //|| "请选择类别".equals(lbValue)
+                || "请选择类别".equals(lbValue)
                 //                || "请选择所属大包装".equals(bigCpValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(scpcValue)
@@ -410,7 +423,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         params.settS(Integer.parseInt(tsValue));
         params.setCpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
-        //params.setSortID(mSelectedLeiBieId);
+        params.setSortID(mSelectedLeiBieId);
         if (!"请选择所属大包装".equals(bigCpValue))
             params.setcPS2QRCode(mSelectedBigCpQrCodeId);
         params.setShl(Integer.parseInt(shlValue));

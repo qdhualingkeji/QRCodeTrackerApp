@@ -326,7 +326,14 @@ public class EmployeeMainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getNonCheckData();
 
+    }
+
+    /**
+     * 检查是否有未读单据
+     * */
+    private void getNonCheckData() {
         boolean ifGo = false ;
         for (Module2 module2 : mCanUseList) {
             if ("审核".equals(module2.getMname())) {
@@ -345,6 +352,10 @@ public class EmployeeMainActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
+        if(isFZR)
+            params.setCheckQXFlag(MainParams.FZR);
+        else
+            params.setCheckQXFlag(MainParams.ZJY);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<NonCheckResult>>() {
             @Override
@@ -418,6 +429,7 @@ public class EmployeeMainActivity extends BaseActivity {
                             //                            }
                             //                            mAdapter.notifyDataSetChanged();
                         }
+                        getNonCheckData();
                     }
                 });
 

@@ -174,6 +174,7 @@ public class SelectHlProductActivity extends BaseActivity {
                 public void onClick(View v) {
                     Intent ii = new Intent();
                     ii.putExtra("productName",bean.getProductName());
+                    ii.putExtra("model",bean.getModel());
                     setResult(RESULT_OK,ii);
                     AllActivitiesHolder.removeAct(SelectHlProductActivity.this);
                 }

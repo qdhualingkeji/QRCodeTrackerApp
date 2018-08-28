@@ -18,9 +18,10 @@ import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectCJActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectGXActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectSXYLActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.SelectHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BCPINParam;
@@ -52,23 +53,24 @@ public class BCPInDataInputActivity extends BaseActivity {
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
     private static final int SELECT_SXYL = 40;
-    //private static final int SELECT_LEI_BIE = 11;
+    private static final int SELECT_LEI_BIE = 11;
+    private static final int SELECT_PRODUCT_NAME = 12;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.tsValue)
     EditText mTsValue;
-    @BindView(R.id.bcpCodeValue)
-    TextView mBcpCodeValue;
+    //@BindView(R.id.bcpCodeValue)
+    //TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
-    EditText mProductNameValue;
-    //@BindView(R.id.lbValue)
-    //TextView mLbValue;
+    TextView mProductNameValue;
+    @BindView(R.id.lbValue)
+    TextView mLbValue;
     @BindView(R.id.ylpcValue)
     EditText mYlpcValue;
     @BindView(R.id.scpcValue)
     EditText mScpcValue;
     @BindView(R.id.ggValue)
-    EditText mGgValue;
+    TextView mGgValue;
     @BindView(R.id.shlValue)
     EditText mShlValue;
     @BindView(R.id.dwzlValue)
@@ -108,7 +110,7 @@ public class BCPInDataInputActivity extends BaseActivity {
 
     private CustomDatePicker customDatePicker1, customDatePicker2, customDatePicker3;
     private String mNowTime;
-    //private int mSelectedLeiBieId = -1;
+    private int mSelectedLeiBieId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,9 +200,9 @@ public class BCPInDataInputActivity extends BaseActivity {
 
     private boolean checkIfInfoPerfect() {
         String tsValue = mTsValue.getText().toString();
-        String bcpCodeValue = mBcpCodeValue.getText().toString();
+        //String bcpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
-        //String lbValue = mLbValue.getText().toString();
+        String lbValue = mLbValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String scpcValue = mScpcValue.getText().toString();
         String ggValue = mGgValue.getText().toString();
@@ -218,9 +220,9 @@ public class BCPInDataInputActivity extends BaseActivity {
 //        String jyztValue = mJyztValue.getText().toString();
 //        String jybzValue = mJybzValue.getText().toString();
         if (TextUtils.isEmpty(tsValue)
-                || "请选择半成品编码".equals(bcpCodeValue)
+                //|| "请选择半成品编码".equals(bcpCodeValue)
                 || TextUtils.isEmpty(nameValue)
-                //|| "请选择类别".equals(lbValue)
+                || "请选择类别".equals(lbValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(scpcValue)
                 //|| TextUtils.isEmpty(ggValue)
@@ -243,7 +245,7 @@ public class BCPInDataInputActivity extends BaseActivity {
         params.settS(Integer.parseInt(tsValue));
         params.setBcpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
-        //params.setSortID(mSelectedLeiBieId);
+        params.setSortID(mSelectedLeiBieId);
         params.setYlpc(ylpcValue);
         params.setScpc(scpcValue);
         params.setGg(ggValue);
@@ -361,11 +363,13 @@ public class BCPInDataInputActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+                /*
                 case SELECT_HL_SORT:
                     String sortName = data.getStringExtra("sortName");
                     mBcpCodeValue.setText(sortName);
                     mSelectedBcpCode = data.getStringExtra("sortCode");
                     break;
+                    */
                 case SELECT_CHE_JIAN:
                     String cjName = data.getStringExtra("cjName");
                     mCjValue.setText(cjName);
@@ -386,30 +390,40 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mSXYLQrcodeStr = data.getStringExtra("allYlQrCode");
                     Log.d("Test", "get: "+mSXYLQrcodeStr);
                     break;
-                    /*
                 case SELECT_LEI_BIE:
-                    String lbName = data.getStringExtra("lbName");
+                    String lbName = data.getStringExtra("sortName");
                     mLbValue.setText(lbName);
-                    mSelectedLeiBieId = data.getIntExtra("lbId", -1);
+                    mSelectedLeiBieId = data.getIntExtra("sortID", -1);
                     break;
-                    */
+                case SELECT_PRODUCT_NAME:
+                    String productName = data.getStringExtra("productName");
+                    mProductNameValue.setText(productName);
+                    String model = data.getStringExtra("model");
+                    mGgValue.setText(model);
+                    break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     //@OnClick({R.id.selectBCPCode,R.id.selectLB, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
-    @OnClick({R.id.selectBCPCode,R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectLB,R.id.selectName ,R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
+
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
+                /*
             case R.id.selectBCPCode:
                 IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_HL_SORT, null);
                 break;
-                /*
-            case R.id.selectLB:
-                IntentUtil.openActivityForResult(this, SelectLBActivity.class, SELECT_LEI_BIE, null);
-                break;
                 */
+            case R.id.selectLB:
+                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
+                break;
+            case R.id.selectName:
+                bundle.putInt("sortID",mSelectedLeiBieId);
+                IntentUtil.openActivityForResult(this, SelectHlProductActivity.class, SELECT_PRODUCT_NAME, bundle);
+                break;
             case R.id.selectCJ:
                 IntentUtil.openActivityForResult(this, SelectCJActivity.class, SELECT_CHE_JIAN, null);
                 break;
@@ -418,7 +432,6 @@ public class BCPInDataInputActivity extends BaseActivity {
                     Toast.makeText(this, "请先选择车间", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Bundle bundle = new Bundle();
                 bundle.putString("cjGXIds", mCJHasGongXuId);
                 IntentUtil.openActivityForResult(this, SelectGXActivity.class, SELECT_GONG_XU, bundle);
                 break;

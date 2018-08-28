@@ -64,7 +64,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
     @BindView(R.id.lbValue)
     TextView mLbValue;
     @BindView(R.id.ggValue)
-    EditText mGgValue;
+    TextView mGgValue;
     @BindView(R.id.ylpcValue)
     EditText mYlpcValue;
     @BindView(R.id.sldwValue)
@@ -187,6 +187,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 case SELECT_PRODUCT_NAME:
                     String productName = data.getStringExtra("productName");
                     mNameValue.setText(productName);
+                    String model = data.getStringExtra("model");
+                    mGgValue.setText(model);
                     break;
             }
         }
