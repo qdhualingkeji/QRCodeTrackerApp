@@ -23,6 +23,7 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.SelectHlSortActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.VerifyParam;
@@ -47,6 +48,8 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RETURN_AND_REFRESH;
 
 public class WlInModifyActivity extends BaseActivity {
 
@@ -310,6 +313,8 @@ public class WlInModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(WlInModifyActivity.this);
                             return;
                         }
                     }

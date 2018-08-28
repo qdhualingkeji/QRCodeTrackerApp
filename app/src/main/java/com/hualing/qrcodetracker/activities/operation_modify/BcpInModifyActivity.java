@@ -44,6 +44,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RETURN_AND_REFRESH;
+
 public class BcpInModifyActivity extends BaseActivity {
 
     private static final int GET_WLSORT_CODE = 30;
@@ -276,6 +278,8 @@ public class BcpInModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(BcpInModifyActivity.this);
                             return;
                         }
                     }

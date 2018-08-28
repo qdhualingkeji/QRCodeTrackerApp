@@ -43,6 +43,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RETURN_AND_REFRESH;
+
 public class BcpTkModifyActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 12;
@@ -287,6 +289,8 @@ public class BcpTkModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(BcpTkModifyActivity.this);
                             return;
                         }
                     }
