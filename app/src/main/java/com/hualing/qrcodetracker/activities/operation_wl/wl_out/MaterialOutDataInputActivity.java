@@ -251,7 +251,6 @@ public class MaterialOutDataInputActivity extends BaseActivity {
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.WL_CKD);
 
-
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 

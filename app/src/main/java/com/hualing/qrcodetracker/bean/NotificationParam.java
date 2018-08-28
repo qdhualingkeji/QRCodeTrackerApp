@@ -11,9 +11,14 @@ package com.hualing.qrcodetracker.bean;
 
 public class NotificationParam {
 
+    public static final int FZR = 1;
+    public static final int ZJY = 2;
+
     private String dh ;
 
     private int style;
+
+    private int personFlag;
 
     public String getDh() {
         return dh;
@@ -29,5 +34,13 @@ public class NotificationParam {
 
     public void setStyle(int style) {
         this.style = style;
+    }
+
+    public int getPersonFlag() {
+        return personFlag;
+    }
+
+    public void setPersonFlag(int personFlag) {
+        this.personFlag = personFlag;
     }
 }

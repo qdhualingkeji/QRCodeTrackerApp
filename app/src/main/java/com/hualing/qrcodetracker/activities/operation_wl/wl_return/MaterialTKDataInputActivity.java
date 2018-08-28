@@ -234,7 +234,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getWlTKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.WL_TKD);
-
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();

@@ -350,7 +350,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getBCPRKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.CP_RKD);
-
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();

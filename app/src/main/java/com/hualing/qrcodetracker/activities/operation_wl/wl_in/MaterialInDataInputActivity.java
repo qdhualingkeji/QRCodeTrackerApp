@@ -296,7 +296,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getWlRKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.WL_RKD);
-
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();

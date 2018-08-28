@@ -94,7 +94,8 @@ public class LaunchActivity extends BaseActivity {
                             GlobalData.checkQXGroup=loginResult.getCheckQXGroup();
 
                             //设置JPush别名
-                            JPushUtil.setAlias(LaunchActivity.this,GlobalData.realName);
+                            //JPushUtil.setAlias(LaunchActivity.this,GlobalData.realName);
+                            JPushUtil.setAlias(LaunchActivity.this,GlobalData.userId);
 
                             //之后获取和用户相关的服务就不需要额外传userId了
                             YoniClient.getInstance().setUser(GlobalData.userId);
