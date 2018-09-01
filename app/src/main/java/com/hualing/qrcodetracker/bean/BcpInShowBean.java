@@ -17,8 +17,10 @@ public class BcpInShowBean {
     private String wLCode;
     //货物名称
     private String productName;
-    //类别
+    //类别编号
     private int sortID;
+    //类别名称
+    private String sortName;
     //原料批次
     private String yLPC;
     //生产批次
@@ -72,6 +74,14 @@ public class BcpInShowBean {
 
     public void setSortID(int sortID) {
         this.sortID = sortID;
+    }
+
+    public String getSortName() {
+        return sortName;
+    }
+
+    public void setSortName(String sortName) {
+        this.sortName = sortName;
     }
 
     public String getyLPC() {

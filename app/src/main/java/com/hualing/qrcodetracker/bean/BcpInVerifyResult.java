@@ -20,6 +20,10 @@ public class BcpInVerifyResult {
     private String jhFzr;
     private String shFzr;
     private String remark;
+    private int fzrID;
+    private int fzrStatus;
+    private int zjyID;
+    private int zjyStatus;
 
     private List<BcpInShowBean> beans;
 
@@ -77,6 +81,38 @@ public class BcpInVerifyResult {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public int getFzrID() {
+        return fzrID;
+    }
+
+    public void setFzrID(int fzrID) {
+        this.fzrID = fzrID;
+    }
+
+    public int getFzrStatus() {
+        return fzrStatus;
+    }
+
+    public void setFzrStatus(int fzrStatus) {
+        this.fzrStatus = fzrStatus;
+    }
+
+    public int getZjyID() {
+        return zjyID;
+    }
+
+    public void setZjyID(int zjyID) {
+        this.zjyID = zjyID;
+    }
+
+    public int getZjyStatus() {
+        return zjyStatus;
+    }
+
+    public void setZjyStatus(int zjyStatus) {
+        this.zjyStatus = zjyStatus;
     }
 
     public List<BcpInShowBean> getBeans() {

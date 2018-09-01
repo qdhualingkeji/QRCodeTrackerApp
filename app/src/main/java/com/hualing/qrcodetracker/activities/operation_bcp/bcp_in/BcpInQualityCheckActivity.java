@@ -302,8 +302,9 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                 viewHolder = (BcpInQualityCheckActivity.MyAdapter.ViewHolder) convertView.getTag();
 
             BcpInShowBean bean = mData.get(position);
+            viewHolder.mBcpLbValue.setText(bean.getSortName());
             viewHolder.mBcpNameValue.setText(bean.getProductName());
-            viewHolder.mBcpBmValue.setText(bean.getwLCode());
+            //viewHolder.mBcpBmValue.setText(bean.getwLCode());
             viewHolder.mBcpYlpcValue.setText(bean.getyLPC());
             viewHolder.mBcpScpcValue.setText(bean.getsCPC());
             viewHolder.mBcpScTimeValue.setText(bean.getTime());
@@ -318,10 +319,12 @@ public class BcpInQualityCheckActivity extends BaseActivity {
         }
 
         class ViewHolder {
+            @BindView(R.id.bcpLbValue)
+            TextView mBcpLbValue;
             @BindView(R.id.bcpNameValue)
             TextView mBcpNameValue;
-            @BindView(R.id.bcpBmValue)
-            TextView mBcpBmValue;
+            //@BindView(R.id.bcpBmValue)
+            //TextView mBcpBmValue;
             @BindView(R.id.bcpYlpcValue)
             TextView mBcpYlpcValue;
             @BindView(R.id.bcpScpcValue)
