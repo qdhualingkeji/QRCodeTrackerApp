@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +21,25 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
+import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.SelectHlSortActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_in.MaterialInDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.bean.WLINShowBean;
 import com.hualing.qrcodetracker.bean.WlInVerifyResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -53,9 +60,11 @@ import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RET
 
 public class WlInModifyActivity extends BaseActivity {
 
-    private static final int GET_WLSORT_CODE = 30;
-    //private static final int SELECT_LEI_BIE = 11;
+    //private static final int GET_WLSORT_CODE = 30;
+    private static final int SELECT_LEI_BIE = 11;
+    private static final int SELECT_PRODUCT_NAME = 12;
     private static final int SELECT_PERSON = 111;
+    private static final int SELECT_ZJY = 112;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -67,6 +76,8 @@ public class WlInModifyActivity extends BaseActivity {
     TextView mShrqValue;
     @BindView(R.id.shfzrValue)
     TextView mShfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
 //    @BindView(R.id.jhRValue)
 //    EditText mJhRValue;
 //    @BindView(R.id.jhfzrValue)
@@ -84,6 +95,8 @@ public class WlInModifyActivity extends BaseActivity {
     private WlInVerifyResult updatedParam;
     //记录选择物料编码或者类别的数据位置
     private int mCurrentPosition = -1;
+    private int fzrID;
+    private int zjyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +218,9 @@ public class WlInModifyActivity extends BaseActivity {
 
                                 }
                             });
+                            fzrID=dataResult.getFzrID();
+                            zjyID=dataResult.getZjyID();
+                            mZjyValue.setText(dataResult.getZjyName());
 //                            mJhRValue.setText(dataResult.getFhR());
 //                            mJhRValue.addTextChangedListener(new TextWatcher() {
 //                                @Override
@@ -275,7 +291,7 @@ public class WlInModifyActivity extends BaseActivity {
                     ||TextUtils.isEmpty(mData.get(i).getcHD())
                     ||TextUtils.isEmpty(mData.get(i).getUnit())
                     ||TextUtils.isEmpty(mData.get(i).getgG())
-                    ||TextUtils.isEmpty(mData.get(i).getwLCode())
+                    //||TextUtils.isEmpty(mData.get(i).getwLCode())
                     ||TextUtils.isEmpty(mData.get(i).getyLPC())
                     ||mData.get(i).getSortID()<0
                     ||mData.get(i).getdWZL()==-1
@@ -283,6 +299,7 @@ public class WlInModifyActivity extends BaseActivity {
                     ||"请选择收获日期".equals(mShrqValue.getText().toString())
                     ||TextUtils.isEmpty(mJhdwValue.getText().toString())
                     ||"请选择仓库负责人".equals(mShfzrValue.getText().toString())
+                    ||"请选择质检员".equals(mZjyValue.getText().toString())
 //                    ||TextUtils.isEmpty(mJhRValue.getText().toString())
 //                    ||TextUtils.isEmpty(mJhfzrValue.getText().toString())
                     ) {
@@ -292,6 +309,8 @@ public class WlInModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setFzrStatus(0);
+        updatedParam.setZjyStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -313,12 +332,48 @@ public class WlInModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(WlInModifyActivity.this);
+                            sendNotification();
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification() {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        String dh = SharedPreferenceUtil.getWlRKDNumber();
+        notificationParam.setDh(dh);
+        notificationParam.setStyle(NotificationType.WL_RKD);
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(WlInModifyActivity.this);
+                        }
+                    }
+                });
+
     }
 
     @Override
@@ -333,12 +388,18 @@ public class WlInModifyActivity extends BaseActivity {
 
     @OnClick({R.id.confirmBtn,R.id.selectPerson})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.confirmBtn:
                 toCommit();
                 break;
             case R.id.selectPerson:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle);
+                break;
+            case R.id.selectZJY:
+                bundle.putString("checkQX", "zjy");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_ZJY, bundle);
                 break;
         }
 
@@ -363,7 +424,7 @@ public class WlInModifyActivity extends BaseActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = View.inflate(WlInModifyActivity.this, R.layout.item_wlin_modify, null);
                 viewHolder = new ViewHolder(convertView);
@@ -372,9 +433,11 @@ public class WlInModifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             final WLINShowBean bean = mData.get(position);
+            /*
             if (!TextUtils.isEmpty(bean.getwLCode())) {
                 viewHolder.mWlbmValue.setText(bean.getwLCode());
             }
+            */
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mNameValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -409,7 +472,8 @@ public class WlInModifyActivity extends BaseActivity {
 
                 }
             });
-            //viewHolder.mLbValue.setText(bean.getSortID() + "");
+            viewHolder.mSelectedLeiBieId=bean.getSortID();
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mGgValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -524,6 +588,7 @@ public class WlInModifyActivity extends BaseActivity {
                 }
             });
 
+            /*
             viewHolder.mSelectWLBM.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -531,33 +596,43 @@ public class WlInModifyActivity extends BaseActivity {
                     mCurrentPosition = position;
                 }
             });
+            */
 
-            /*
             viewHolder.mSelectLB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectLBActivity.class, SELECT_LEI_BIE, null);
+                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
                     mCurrentPosition = position;
                 }
             });
-            */
+
+            viewHolder.mSelectName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("sortID",viewHolder.mSelectedLeiBieId);
+                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectHlProductActivity.class, SELECT_PRODUCT_NAME, bundle);
+                }
+            });
 
             return convertView;
         }
 
         class ViewHolder {
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
-            @BindView(R.id.selectWLBM)
-            LinearLayout mSelectWLBM;
-            @BindView(R.id.nameValue)
-            EditText mNameValue;
+            //@BindView(R.id.wlbmValue)
+            //TextView mWlbmValue;
+            //@BindView(R.id.selectWLBM)
+            //LinearLayout mSelectWLBM;
             @BindView(R.id.cdValue)
             EditText mCdValue;
-            //@BindView(R.id.lbValue)
-            //TextView mLbValue;
-            //@BindView(R.id.selectLB)
-            //LinearLayout mSelectLB;
+            @BindView(R.id.selectLB)
+            LinearLayout mSelectLB;
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
+            @BindView(R.id.selectName)
+            LinearLayout mSelectName;
+            @BindView(R.id.nameValue)
+            TextView mNameValue;
             @BindView(R.id.ggValue)
             EditText mGgValue;
             @BindView(R.id.ylpcValue)
@@ -570,6 +645,7 @@ public class WlInModifyActivity extends BaseActivity {
             EditText mZhlValue;
             @BindView(R.id.remarkValue)
             EditText mRemarkValue;
+            int mSelectedLeiBieId = -1;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
@@ -583,6 +659,7 @@ public class WlInModifyActivity extends BaseActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+                /*
                 case GET_WLSORT_CODE:
                     String sortName = data.getStringExtra("sortName");
                     String sortCode = data.getStringExtra("sortCode");
@@ -591,19 +668,33 @@ public class WlInModifyActivity extends BaseActivity {
                     }
                     mAdapter.notifyDataSetChanged();
                     break;
-                    /*
+                    */
                 case SELECT_LEI_BIE:
-                    String lbName = data.getStringExtra("lbName");
-                    int lbId = data.getIntExtra("lbId", -1);
+                    String sortName = data.getStringExtra("sortName");
+                    int sortID = data.getIntExtra("sortID", -1);
                     if (mCurrentPosition!=-1) {
-                        mData.get(mCurrentPosition).setSortID(lbId);
+                        WLINShowBean item = mData.get(mCurrentPosition);
+                        item.setSortID(sortID);
+                        item.setSortName(sortName);
+                        mData.remove(mCurrentPosition);
+                        mData.add(mCurrentPosition,item);
                     }
                     mAdapter.notifyDataSetChanged();
                     break;
-                    */
+                case SELECT_PRODUCT_NAME:
+                    WLINShowBean item = mData.get(mCurrentPosition);
+                    String productName = data.getStringExtra("productName");
+                    item.setProductName(productName);
+                    String model = data.getStringExtra("model");
+                    item.setgG(model);
+                    break;
                 case SELECT_PERSON:
-                    String personName = data.getStringExtra("personName");
-                    mShfzrValue.setText(personName);
+                    fzrID=data.getIntExtra("personID",0);
+                    mShfzrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case SELECT_ZJY:
+                    zjyID=data.getIntExtra("personID",0);
+                    mZjyValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

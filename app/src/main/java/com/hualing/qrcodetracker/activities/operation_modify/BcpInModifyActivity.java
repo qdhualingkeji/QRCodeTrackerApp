@@ -53,6 +53,7 @@ public class BcpInModifyActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_SHFZR = 31;
     private static final int REQUEST_CODE_SELECT_JHFZR = 32;
     private static final int REQUEST_CODE_SELECT_SHR = 33;
+    private static final int REQUEST_CODE_SELECT_ZJY = 34;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.indhValue)

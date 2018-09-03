@@ -20,13 +20,16 @@ import com.hualing.qrcodetracker.activities.main.SelectDepartmentActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.bean.WLOutShowBean;
 import com.hualing.qrcodetracker.bean.WlOutVerifyResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -267,6 +270,7 @@ public class WlOutModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setFzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -288,12 +292,48 @@ public class WlOutModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(WlOutModifyActivity.this);
+                            sendNotification();
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification() {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        String dh = SharedPreferenceUtil.getWlCKDNumber();
+        notificationParam.setDh(dh);
+        notificationParam.setStyle(NotificationType.WL_CKD);
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(WlOutModifyActivity.this);
+                        }
+                    }
+                });
+
     }
 
     class MyAdapter extends BaseAdapter {
@@ -324,11 +364,13 @@ public class WlOutModifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             final WLOutShowBean bean = mData.get(position);
+            /*
             if (!TextUtils.isEmpty(bean.getwLCode())) {
                 viewHolder.mWlbmValue.setText(bean.getwLCode());
             }
+            */
             viewHolder.mNameValue.setText(bean.getProductName());
-            //viewHolder.mLbValue.setText(bean.getSortID() + "");
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
@@ -361,12 +403,12 @@ public class WlOutModifyActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
+            //@BindView(R.id.wlbmValue)
+            //TextView mWlbmValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
-            //@BindView(R.id.lbValue)
-            //TextView mLbValue;
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
             @BindView(R.id.ggValue)
             TextView mGgValue;
             @BindView(R.id.ylpcValue)

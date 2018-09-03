@@ -262,7 +262,7 @@ public class WlOutVerifyActivity extends BaseActivity {
             WLOutShowBean bean = mData.get(position);
             //viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mNameValue.setText(bean.getProductName());
-            viewHolder.mLbValue.setText(bean.getSortID()+"");
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());

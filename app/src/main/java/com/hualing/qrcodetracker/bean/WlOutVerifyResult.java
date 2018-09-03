@@ -20,6 +20,8 @@ public class WlOutVerifyResult {
     private String lhFzr;
     private String fhFzr;
     private String remark;
+    private Integer fzrID;
+    private Integer fzrStatus;
 
     private List<WLOutShowBean> beans;
 
@@ -77,6 +79,22 @@ public class WlOutVerifyResult {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Integer getFzrID() {
+        return fzrID;
+    }
+
+    public void setFzrID(Integer fzrID) {
+        this.fzrID = fzrID;
+    }
+
+    public Integer getFzrStatus() {
+        return fzrStatus;
+    }
+
+    public void setFzrStatus(Integer fzrStatus) {
+        this.fzrStatus = fzrStatus;
     }
 
     public List<WLOutShowBean> getBeans() {
