@@ -261,7 +261,7 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
 
             BcpTkShowBean bean = mData.get(position);
             viewHolder.mBcpNameValue.setText(bean.getProductName());
-            viewHolder.mBcpBmValue.setText(bean.getBcpCode());
+            //viewHolder.mBcpBmValue.setText(bean.getBcpCode());
             viewHolder.mBcpYlpcValue.setText(bean.getyLPC());
             viewHolder.mBcpScpcValue.setText(bean.getsCPC());
             viewHolder.mBcpScTimeValue.setText(bean.getScTime());
@@ -276,8 +276,8 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
         class ViewHolder {
             @BindView(R.id.bcpNameValue)
             TextView mBcpNameValue;
-            @BindView(R.id.bcpBmValue)
-            TextView mBcpBmValue;
+            //@BindView(R.id.bcpBmValue)
+            //TextView mBcpBmValue;
             @BindView(R.id.bcpYlpcValue)
             TextView mBcpYlpcValue;
             @BindView(R.id.bcpScpcValue)

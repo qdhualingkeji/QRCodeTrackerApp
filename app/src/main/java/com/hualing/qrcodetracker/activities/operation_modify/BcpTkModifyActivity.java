@@ -22,11 +22,14 @@ import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpTkShowBean;
 import com.hualing.qrcodetracker.bean.BcpTkVerifyResult;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -51,6 +54,7 @@ public class BcpTkModifyActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_TLFZR = 31;
     private static final int REQUEST_CODE_SELECT_SLFZR = 32;
     private static final int REQUEST_CODE_SELECT_SLR = 33;
+    private static final int REQUEST_CODE_SELECT_ZJY = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -66,6 +70,8 @@ public class BcpTkModifyActivity extends BaseActivity {
     TextView mShRValue;
     @BindView(R.id.shfzrValue)
     TextView mShfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
@@ -77,6 +83,8 @@ public class BcpTkModifyActivity extends BaseActivity {
     private String mDh;
     private VerifyParam param;
     private BcpTkVerifyResult updatedParam;
+    private int fzrID;
+    private int zjyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +168,9 @@ public class BcpTkModifyActivity extends BaseActivity {
 
                                 }
                             });
+                            fzrID=dataResult.getFzrID();
+                            zjyID=dataResult.getZjyID();
+                            mZjyValue.setText(dataResult.getZjyName());
                             mShRValue.setText(dataResult.getThR());
                             mShRValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -234,6 +245,7 @@ public class BcpTkModifyActivity extends BaseActivity {
 
     @OnClick({R.id.confirmBtn,R.id.selectTHFZR,R.id.selectSHR,R.id.selectSHFZR})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.selectTHFZR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_TLFZR, null);
@@ -242,7 +254,12 @@ public class BcpTkModifyActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLR, null);
                 break;
             case R.id.selectSHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
+                break;
+            case R.id.selectZJY:
+                bundle.putString("checkQX", "zjy");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -268,6 +285,8 @@ public class BcpTkModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setFzrStatus(0);
+        updatedParam.setZjyStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -289,12 +308,48 @@ public class BcpTkModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(BcpTkModifyActivity.this);
+                            sendNotification();
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification() {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        String dh = SharedPreferenceUtil.getBCPTKDNumber();
+        notificationParam.setDh(dh);
+        notificationParam.setStyle(NotificationType.BCP_TKD);
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(BcpTkModifyActivity.this);
+                    }
+                });
+
     }
 
     class MyAdapter extends BaseAdapter {
@@ -411,10 +466,15 @@ public class BcpTkModifyActivity extends BaseActivity {
                     mShRValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SLFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mShfzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_TLFZR:
                     mTkfzrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_ZJY:
+                    zjyID=data.getIntExtra("personID",0);
+                    mZjyValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

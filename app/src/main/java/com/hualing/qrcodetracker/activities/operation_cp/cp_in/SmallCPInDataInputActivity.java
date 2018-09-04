@@ -54,8 +54,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TitleBar mTitle;
-    @BindView(R.id.tsValue)
-    EditText mTsValue;
+    //@BindView(R.id.tsValue)
+    //EditText mTsValue;
     //@BindView(R.id.bcpCodeValue)
     //TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
@@ -381,7 +381,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
-        String tsValue = mTsValue.getText().toString();
+        //String tsValue = mTsValue.getText().toString();
         //String cpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
         String lbValue = mLbValue.getText().toString();
@@ -396,9 +396,9 @@ public class SmallCPInDataInputActivity extends BaseActivity {
 //        String jyztValue = mJyztValue.getText().toString();
         String sxylValue = mSxylValue.getText().toString();
         String scTimeValue = mScTimeValue.getText().toString();
-        if (TextUtils.isEmpty(tsValue)
+        if (//TextUtils.isEmpty(tsValue)
                 //|| "请选择成品编码".equals(cpCodeValue)
-                || TextUtils.isEmpty(nameValue)
+                TextUtils.isEmpty(nameValue)
                 || "请选择类别".equals(lbValue)
                 //                || "请选择所属大包装".equals(bigCpValue)
                 || TextUtils.isEmpty(ylpcValue)
@@ -420,7 +420,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
             return false;
         }
 
-        params.settS(Integer.parseInt(tsValue));
+        //params.settS(Integer.parseInt(tsValue));
         params.setCpCode(mSelectedBcpCode);
         params.setProductName(nameValue);
         params.setSortID(mSelectedLeiBieId);
