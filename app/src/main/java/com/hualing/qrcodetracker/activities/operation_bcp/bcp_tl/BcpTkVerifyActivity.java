@@ -258,9 +258,9 @@ public class BcpTkVerifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             BcpTkShowBean bean = mData.get(position);
-            viewHolder.mWlbmValue.setText(bean.getBcpCode());
+            //viewHolder.mWlbmValue.setText(bean.getBcpCode());
             viewHolder.mNameValue.setText(bean.getProductName());
-            //viewHolder.mLbValue.setText(bean.getSortID()+"");
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mRemarkValue.setText(TextUtils.isEmpty(bean.getRemark())?"无备注信息":bean.getRemark());
             viewHolder.mSlValue.setText(bean.getShl() + "");
@@ -270,12 +270,12 @@ public class BcpTkVerifyActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
+            //@BindView(R.id.wlbmValue)
+            //TextView mWlbmValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
-            //@BindView(R.id.lbValue)
-            //TextView mLbValue;
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
             @BindView(R.id.ylpcValue)
             TextView mYlpcValue;
             @BindView(R.id.remarkValue)

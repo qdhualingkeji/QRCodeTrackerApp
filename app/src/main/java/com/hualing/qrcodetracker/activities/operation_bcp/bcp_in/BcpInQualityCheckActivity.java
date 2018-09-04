@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.operation_bcp.bcp_in;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -236,9 +237,8 @@ public class BcpInQualityCheckActivity extends BaseActivity {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getBCPRKDNumber();
-        notificationParam.setDh(dh);
-        notificationParam.setStyle(NotificationType.CP_RKD);
+        notificationParam.setDh(param.getDh());
+        notificationParam.setStyle(NotificationType.BCP_RKD);
         notificationParam.setPersonFlag(NotificationParam.FZR);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
