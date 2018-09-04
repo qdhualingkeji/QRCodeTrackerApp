@@ -612,6 +612,7 @@ public class WlInModifyActivity extends BaseActivity {
                     Bundle bundle = new Bundle();
                     bundle.putInt("sortID",viewHolder.mSelectedLeiBieId);
                     IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectHlProductActivity.class, SELECT_PRODUCT_NAME, bundle);
+                    mCurrentPosition = position;
                 }
             });
 
@@ -670,23 +671,28 @@ public class WlInModifyActivity extends BaseActivity {
                     break;
                     */
                 case SELECT_LEI_BIE:
-                    String sortName = data.getStringExtra("sortName");
-                    int sortID = data.getIntExtra("sortID", -1);
                     if (mCurrentPosition!=-1) {
+                        int sortID = data.getIntExtra("sortID", -1);
+                        String sortName = data.getStringExtra("sortName");
                         WLINShowBean item = mData.get(mCurrentPosition);
                         item.setSortID(sortID);
                         item.setSortName(sortName);
                         mData.remove(mCurrentPosition);
                         mData.add(mCurrentPosition,item);
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mAdapter.notifyDataSetChanged();
                     break;
                 case SELECT_PRODUCT_NAME:
-                    WLINShowBean item = mData.get(mCurrentPosition);
-                    String productName = data.getStringExtra("productName");
-                    item.setProductName(productName);
-                    String model = data.getStringExtra("model");
-                    item.setgG(model);
+                    if (mCurrentPosition!=-1) {
+                        String productName = data.getStringExtra("productName");
+                        String model = data.getStringExtra("model");
+                        WLINShowBean item = mData.get(mCurrentPosition);
+                        item.setProductName(productName);
+                        item.setgG(model);
+                        mData.remove(mCurrentPosition);
+                        mData.add(mCurrentPosition,item);
+                        mAdapter.notifyDataSetChanged();
+                    }
                     break;
                 case SELECT_PERSON:
                     fzrID=data.getIntExtra("personID",0);

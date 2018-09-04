@@ -24,6 +24,7 @@ public class BcpInVerifyResult {
     private int fzrStatus;
     private int zjyID;
     private int zjyStatus;
+    private String zjyName;
 
     private List<BcpInShowBean> beans;
 
@@ -113,6 +114,14 @@ public class BcpInVerifyResult {
 
     public void setZjyStatus(int zjyStatus) {
         this.zjyStatus = zjyStatus;
+    }
+
+    public String getZjyName() {
+        return zjyName;
+    }
+
+    public void setZjyName(String zjyName) {
+        this.zjyName = zjyName;
     }
 
     public List<BcpInShowBean> getBeans() {
