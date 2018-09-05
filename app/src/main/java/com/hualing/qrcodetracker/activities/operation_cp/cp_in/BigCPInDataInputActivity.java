@@ -15,8 +15,8 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.SelectHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BigCPINParam;
@@ -53,7 +53,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
     //@BindView(R.id.bcpCodeValue)
     //TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
-    EditText mProductNameValue;
+    TextView mProductNameValue;
     @BindView(R.id.lbValue)
     TextView mLbValue;
     @BindView(R.id.ylpcValue)
@@ -268,7 +268,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getBCPRKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.CP_RKD);
-
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -288,11 +288,11 @@ public class BigCPInDataInputActivity extends BaseActivity {
                         progressDialog.dismiss();
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
-                            AllActivitiesHolder.removeAct(BigCPInDataInputActivity.this);
-
                         }
+                        else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                        }
+                        AllActivitiesHolder.removeAct(BigCPInDataInputActivity.this);
                     }
                 });
 

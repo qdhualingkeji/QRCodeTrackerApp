@@ -264,6 +264,7 @@ public class BcpOutModifyActivity extends BaseActivity {
             return;
         }
         updatedParam.setBeans(mData);
+        updatedParam.setFzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
