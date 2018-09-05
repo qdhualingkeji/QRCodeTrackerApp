@@ -258,8 +258,8 @@ public class BcpInModifyActivity extends BaseActivity {
 
             if (TextUtils.isEmpty(mData.get(i).getProductName())
                     || TextUtils.isEmpty(mData.get(i).getdW())
-                    || TextUtils.isEmpty(mData.get(i).getgG())
-                    || "请选择编码".equals(mData.get(i).getwLCode())
+                    //|| TextUtils.isEmpty(mData.get(i).getgG())
+                    //|| "请选择编码".equals(mData.get(i).getwLCode())
                     || TextUtils.isEmpty(mData.get(i).getyLPC())
                     || mData.get(i).getSortID() < 0
                     || mData.get(i).getdWZL() == -1

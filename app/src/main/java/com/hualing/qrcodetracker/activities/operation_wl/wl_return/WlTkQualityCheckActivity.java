@@ -240,8 +240,7 @@ public class WlTkQualityCheckActivity extends BaseActivity {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getWlTKDNumber();
-        notificationParam.setDh(dh);
+        notificationParam.setDh(mDh);
         notificationParam.setStyle(NotificationType.WL_TKD);
         notificationParam.setPersonFlag(NotificationParam.FZR);
 
@@ -265,9 +264,9 @@ public class WlTkQualityCheckActivity extends BaseActivity {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(WlTkQualityCheckActivity.this);
                         }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(WlTkQualityCheckActivity.this);
                     }
                 });
 

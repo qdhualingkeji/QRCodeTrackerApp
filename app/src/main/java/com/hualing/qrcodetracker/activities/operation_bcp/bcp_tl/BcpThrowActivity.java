@@ -27,6 +27,7 @@ import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
 import butterknife.BindView;
@@ -100,9 +101,12 @@ public class BcpThrowActivity extends BaseActivity {
         params = new BcpThrowParam();
         getParam = new BcpThrowGetShowDataParam();
 
+        /*
         if (getIntent() != null) {
             mQrcodeId = getIntent().getStringExtra("qrCodeId");
         }
+        */
+        mQrcodeId = SharedPreferenceUtil.getQrCodeId();
         getParam.setQrcodeId(mQrcodeId);
 
         mTitle.setEvents(new TitleBar.AddClickEvents() {

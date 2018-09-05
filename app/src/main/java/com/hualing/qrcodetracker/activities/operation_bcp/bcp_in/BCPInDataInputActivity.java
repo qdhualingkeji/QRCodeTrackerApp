@@ -366,7 +366,7 @@ public class BCPInDataInputActivity extends BaseActivity {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getWlTKDNumber();
+        String dh = SharedPreferenceUtil.getBCPRKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.BCP_RKD);
         notificationParam.setPersonFlag(NotificationParam.ZJY);
@@ -391,9 +391,9 @@ public class BCPInDataInputActivity extends BaseActivity {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
-                            IntentUtil.openActivity(BCPInDataInputActivity.this, EmployeeMainActivity.class);
-                            AllActivitiesHolder.removeAct(BCPInDataInputActivity.this);
                         }
+                        IntentUtil.openActivity(BCPInDataInputActivity.this, EmployeeMainActivity.class);
+                        AllActivitiesHolder.removeAct(BCPInDataInputActivity.this);
                     }
                 });
 
