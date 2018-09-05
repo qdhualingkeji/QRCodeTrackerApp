@@ -290,7 +290,7 @@ public class WlInModifyActivity extends BaseActivity {
             if (TextUtils.isEmpty(mData.get(i).getProductName())
                     ||TextUtils.isEmpty(mData.get(i).getcHD())
                     ||TextUtils.isEmpty(mData.get(i).getUnit())
-                    ||TextUtils.isEmpty(mData.get(i).getgG())
+                    //||TextUtils.isEmpty(mData.get(i).getgG())
                     //||TextUtils.isEmpty(mData.get(i).getwLCode())
                     ||TextUtils.isEmpty(mData.get(i).getyLPC())
                     ||mData.get(i).getSortID()<0
@@ -425,12 +425,13 @@ public class WlInModifyActivity extends BaseActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder viewHolder;
-            if (convertView == null) {
+            //if (convertView == null) {
                 convertView = View.inflate(WlInModifyActivity.this, R.layout.item_wlin_modify, null);
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
-            } else
-                viewHolder = (ViewHolder) convertView.getTag();
+            //}
+            //else
+                //viewHolder = (ViewHolder) convertView.getTag();
 
             final WLINShowBean bean = mData.get(position);
             /*
