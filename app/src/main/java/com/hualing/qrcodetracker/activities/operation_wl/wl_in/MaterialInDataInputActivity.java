@@ -318,9 +318,9 @@ public class MaterialInDataInputActivity extends BaseActivity {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
-                            IntentUtil.openActivity(MaterialInDataInputActivity.this, EmployeeMainActivity.class);
-                            AllActivitiesHolder.removeAct(MaterialInDataInputActivity.this);
                         }
+                        IntentUtil.openActivity(MaterialInDataInputActivity.this, EmployeeMainActivity.class);
+                        AllActivitiesHolder.removeAct(MaterialInDataInputActivity.this);
                     }
                 });
 

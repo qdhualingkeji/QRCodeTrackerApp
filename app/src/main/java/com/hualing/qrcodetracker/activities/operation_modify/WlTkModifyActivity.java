@@ -17,17 +17,22 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
+import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.SelectDepartmentActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_wl.wl_return.MaterialTKDataInputActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.bean.WLTkShowBean;
 import com.hualing.qrcodetracker.bean.WlTkVerifyResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -52,6 +57,7 @@ public class WlTkModifyActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_TLFZR = 31;
     private static final int REQUEST_CODE_SELECT_SLFZR = 32;
     private static final int REQUEST_CODE_SELECT_SLR = 33;
+    private static final int REQUEST_CODE_SELECT_ZJY = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -63,6 +69,8 @@ public class WlTkModifyActivity extends BaseActivity {
     LinearLayout mSelectLLBM;
     @BindView(R.id.slfzrValue)
     TextView mSlfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
     @BindView(R.id.slRValue)
     TextView mSlRValue;
     @BindView(R.id.tkfzrValue)
@@ -78,6 +86,8 @@ public class WlTkModifyActivity extends BaseActivity {
     private String mDh;
     private VerifyParam param;
     private WlTkVerifyResult updatedParam;
+    private int fzrID;
+    private int zjyID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +171,11 @@ public class WlTkModifyActivity extends BaseActivity {
 
                                 }
                             });
+
+                            fzrID=dataResult.getFzrID();
+                            zjyID=dataResult.getZjyID();
+                            mZjyValue.setText(dataResult.getZjyName());
+
                             mSlRValue.setText(dataResult.getThR());
                             mSlRValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -233,17 +248,23 @@ public class WlTkModifyActivity extends BaseActivity {
         return R.layout.activity_wl_tk_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectSLFZR,R.id.selectSLR,R.id.selectTKFZR})
+    @OnClick({R.id.confirmBtn,R.id.selectSLFZR,R.id.selectSLR,R.id.selectTKFZR,R.id.selectZJY})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.selectSLR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLR, null);
                 break;
             case R.id.selectSLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, null);
+                bundle.putString("checkQX", "ld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
                 break;
             case R.id.selectTKFZR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_TLFZR, null);
+                break;
+            case R.id.selectZJY:
+                bundle.putString("checkQX", "zjy");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -267,6 +288,8 @@ public class WlTkModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setFzrStatus(0);
+        updatedParam.setZjyStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -288,12 +311,48 @@ public class WlTkModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(WlTkModifyActivity.this);
+                            //调接口发推送审核
+                            sendNotification();
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification() {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        notificationParam.setDh(mDh);
+        notificationParam.setStyle(NotificationType.WL_TKD);
+        notificationParam.setPersonFlag(NotificationParam.ZJY);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(WlTkModifyActivity.this);
+                    }
+                });
+
     }
 
     class MyAdapter extends BaseAdapter {
@@ -324,11 +383,13 @@ public class WlTkModifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             final WLTkShowBean bean = mData.get(position);
+            /*
             if (!TextUtils.isEmpty(bean.getwLCode())) {
                 viewHolder.mWlbmValue.setText(bean.getwLCode());
             }
+            */
             viewHolder.mNameValue.setText(bean.getProductName());
-            //viewHolder.mLbValue.setText(bean.getSortID() + "");
+            viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
@@ -361,12 +422,12 @@ public class WlTkModifyActivity extends BaseActivity {
         }
 
         class ViewHolder {
-            @BindView(R.id.wlbmValue)
-            TextView mWlbmValue;
+            //@BindView(R.id.wlbmValue)
+            //TextView mWlbmValue;
             @BindView(R.id.nameValue)
             TextView mNameValue;
-            //@BindView(R.id.lbValue)
-            //TextView mLbValue;
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
             @BindView(R.id.ggValue)
             TextView mGgValue;
             @BindView(R.id.ylpcValue)
@@ -398,10 +459,15 @@ public class WlTkModifyActivity extends BaseActivity {
                     mSlRValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SLFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mSlfzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_TLFZR:
                     mTkfzrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_ZJY:
+                    zjyID=data.getIntExtra("personID",0);
+                    mZjyValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

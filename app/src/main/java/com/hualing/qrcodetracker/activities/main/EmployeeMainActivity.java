@@ -812,8 +812,11 @@ public class EmployeeMainActivity extends BaseActivity {
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            /*
             CardView cpIn=view3.findViewById(R.id.cpIn);
             cpIn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+            */
 
             CardView cpOut = view3.findViewById(R.id.cpOut);
             cpOut.setLayoutParams(new LinearLayout.LayoutParams(width,height));

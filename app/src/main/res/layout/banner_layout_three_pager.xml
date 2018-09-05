@@ -51,6 +51,8 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+
+        <!--
         <android.support.v7.widget.CardView
             android:id="@+id/cpIn"
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,6 +92,8 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
+        -->
+
         <android.support.v7.widget.CardView
             android:id="@+id/cpOut"
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -129,15 +133,6 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
             android:id="@+id/modifyData"

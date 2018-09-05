@@ -328,9 +328,9 @@ public class WlOutModifyActivity extends BaseActivity {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(WlOutModifyActivity.this);
                         }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(WlOutModifyActivity.this);
                     }
                 });
 
