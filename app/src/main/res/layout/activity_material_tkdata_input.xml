@@ -340,7 +340,6 @@
                     android:id="@+id/remark"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
                     android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity;
@@ -53,7 +54,7 @@ public class MyReceiver extends BroadcastReceiver {
                 EmployeeMainActivity.sHandler.sendEmptyMessage(0);
             }
             //清除通知
-            JPushInterface.clearAllNotifications(TheApplication.getContext());
+            //JPushInterface.clearAllNotifications(TheApplication.getContext());
 
             receivingNotification(context, bundle);
 
