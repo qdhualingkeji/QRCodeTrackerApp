@@ -65,7 +65,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
     @BindView(R.id.dwzlValue)
     EditText mDwzlValue;
     @BindView(R.id.dwValue)
-    EditText mDwValue;
+    TextView mDwValue;
 //    @BindView(R.id.zjyValue)
 //    EditText mZjyValue;
 //    @BindView(R.id.jyztValue)
@@ -210,6 +210,8 @@ public class BigCPInDataInputActivity extends BaseActivity {
                     mProductNameValue.setText(productName);
                     String model = data.getStringExtra("model");
                     mGgValue.setText(model);
+                    String company = data.getStringExtra("company");
+                    mDwValue.setText(company);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);

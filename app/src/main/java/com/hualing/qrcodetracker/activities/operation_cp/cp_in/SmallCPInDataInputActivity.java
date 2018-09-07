@@ -73,7 +73,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     @BindView(R.id.dwzlValue)
     EditText mDwzlValue;
     @BindView(R.id.dwValue)
-    EditText mDwValue;
+    TextView mDwValue;
     @BindView(R.id.cjValue)
     TextView mCjValue;
     @BindView(R.id.gxValue)
@@ -264,6 +264,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                     mProductNameValue.setText(productName);
                     String model = data.getStringExtra("model");
                     mGgValue.setText(model);
+                    String company = data.getStringExtra("company");
+                    mDwValue.setText(company);
                     break;
                 case SELECT_BIG_CP:
                     String bigCpName = data.getStringExtra("cpName");

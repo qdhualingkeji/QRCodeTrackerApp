@@ -93,7 +93,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     @BindView(R.id.wcTimeValue)
     TextView mWcTimeValue;
     @BindView(R.id.dwValue)
-    EditText mDwValue;
+    TextView mDwValue;
 //    @BindView(R.id.jyztValue)
 //    EditText mJyztValue;
 //    @BindView(R.id.jybzValue)
@@ -440,6 +440,8 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mProductNameValue.setText(productName);
                     String model = data.getStringExtra("model");
                     mGgValue.setText(model);
+                    String company = data.getStringExtra("company");
+                    mDwValue.setText(company);
                     break;
             }
         }
