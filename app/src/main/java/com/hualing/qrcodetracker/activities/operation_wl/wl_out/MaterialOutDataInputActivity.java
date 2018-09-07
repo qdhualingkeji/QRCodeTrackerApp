@@ -172,14 +172,14 @@ public class MaterialOutDataInputActivity extends BaseActivity {
         String value = mNeedShlValue.getText().toString();
         //        String llbm = mLlbmValue.getText().toString();
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
-        float ckShL = Float.parseFloat(value);
         if (TextUtils.isEmpty(value)
             //                || "请选择领料部门".equals(llbm)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if(ckShL==0){
+        float ckShL = Float.parseFloat(value);
+        if(ckShL==0){
             Toast.makeText(this, "出库数量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
