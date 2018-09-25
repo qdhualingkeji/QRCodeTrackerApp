@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.hualing.qrcodetracker"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hualing.qrcodetracker">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
     <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Required -->
     <permission
         android:name="com.hualing.qrcodetracker.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature"/>
+        android:protectionLevel="signature" />
 
     <!-- Required -->
-    <uses-permission android:name="com.hualing.qrcodetracker.permission.JPUSH_MESSAGE"/>
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="com.hualing.qrcodetracker.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".global.TheApplication"
@@ -49,221 +49,158 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activities.main.EmployeeMainActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".activities.main.LaunchActivity"
             android:theme="@style/theme_fullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.abandon.UserTypePickActivity">
-        </activity>
-        <activity android:name=".activities.abandon.GuestMainActivity">
-        </activity>
+        <activity android:name=".activities.abandon.UserTypePickActivity" />
+        <activity android:name=".activities.abandon.GuestMainActivity" />
         <activity
             android:name=".activities.main.EmployeeLoginActivity"
-            android:label="@string/title_activity_employee_login">
-        </activity>
+            android:label="@string/title_activity_employee_login" />
         <activity
             android:name=".activities.main.ScanActivity"
-            android:launchMode="singleTask">
-        </activity>
-        <activity android:name=".activities.abandon.InfoShowActivity">
-        </activity>
+            android:launchMode="singleTask" />
+        <activity android:name=".activities.abandon.InfoShowActivity" />
         <activity
             android:name=".activities.operation_wl.wl_in.MaterialInDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_wl.wl_out.MaterialOutDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_in.MaterialInMainActivity">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_out.MaterialOutMainActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_wl.wl_in.MaterialInMainActivity" />
+        <activity android:name=".activities.operation_wl.wl_out.MaterialOutMainActivity" />
         <activity
             android:name=".activities.operation_wl.wl_in.WLInRKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_wl.wl_out.WLCKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_common.SelectHlSortActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_common.SelectHlProductActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.main.SelectDepartmentActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_return.MaterialReturnMainActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_wl.wl_return.MaterialReturnMainActivity" />
         <activity
             android:name=".activities.operation_wl.wl_return.WLTKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_wl.wl_return.MaterialTKDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_wl.wl_tl.MaterialThrowActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_common.SelectGXActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_common.SelectCJActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_in.BcpInMainActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_bcp.bcp_in.BcpInMainActivity" />
         <activity
             android:name=".activities.operation_bcp.bcp_in.BCPInRKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_bcp.bcp_in.BCPInDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_common.SelectSXYLActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_bcp.bcp_tl.BcpThrowActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_return.BcpReturnMainActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_bcp.bcp_return.BcpReturnMainActivity" />
         <activity
             android:name=".activities.operation_bcp.bcp_return.BcpTKDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_bcp.bcp_return.BcpTKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_cp.cp_in.BigCPInDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_cp.cp_in.CPInMainActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_cp.cp_in.CPInMainActivity" />
         <activity
             android:name=".activities.operation_cp.cp_in.CPRKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_cp.cp_out.CPOutMainActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_cp.cp_out.CPOutMainActivity" />
         <activity
             android:name=".activities.operation_cp.cp_out.BigCPOutDataInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_cp.cp_out.CPCKDInputActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_track.BcpDataTrackActivity">
-        </activity>
-        <activity android:name=".activities.operation_cp.cp_in.CPInProductStylePickActivity">
-        </activity>
-        <activity android:name=".activities.operation_cp.cp_out.CPOutProductStylePickActivity">
-        </activity>
-        <activity android:name=".activities.operation_cp.cp_in.SmallCPInDataInputActivity">
-        </activity>
-        <activity android:name=".activities.operation_cp.cp_out.SmallCPOutDataInputActivity">
-        </activity>
-        <activity android:name=".activities.operation_common.SelectLBActivity">
-        </activity>
-        <activity android:name=".activities.operation_common.SelectBigCpActivity">
-        </activity>
-        <activity android:name=".activities.operation_track.SmallCpDataTrackActivity">
-        </activity>
-        <activity android:name=".activities.operation_track.WlDataTrackActivity">
-        </activity>
-        <activity android:name=".activities.operation_track.BigCpDataTrackActivity">
-        </activity>
-        <activity android:name=".activities.main.NonHandleMsgActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_track.BcpDataTrackActivity" />
+        <activity android:name=".activities.operation_cp.cp_in.CPInProductStylePickActivity" />
+        <activity android:name=".activities.operation_cp.cp_out.CPOutProductStylePickActivity" />
+        <activity android:name=".activities.operation_cp.cp_in.SmallCPInDataInputActivity" />
+        <activity android:name=".activities.operation_cp.cp_out.SmallCPOutDataInputActivity" />
+        <activity android:name=".activities.operation_common.SelectLBActivity" />
+        <activity android:name=".activities.operation_common.SelectBigCpActivity" />
+        <activity android:name=".activities.operation_track.SmallCpDataTrackActivity" />
+        <activity android:name=".activities.operation_track.WlDataTrackActivity" />
+        <activity android:name=".activities.operation_track.BigCpDataTrackActivity" />
+        <activity android:name=".activities.main.NonHandleMsgActivity" />
 
         <receiver
             android:name=".receiver.MyReceiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTRATION"/>
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION"/>
-                <action android:name="cn.jpush.android.intent.CONNECTION"/>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
 
-                <category android:name="com.hualing.qrcodetracker"/>
+                <category android:name="com.hualing.qrcodetracker" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.main.QualityCheckActivity">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_in.WlInVerifyActivity">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_in.WlInQualityCheckActivity">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_out.WlOutVerifyActivity">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_return.WlTkVerifyActivity">
-        </activity>
-        <activity android:name=".activities.operation_wl.wl_return.WlTkQualityCheckActivity">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_in.BcpInVerifyActivity">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_in.BcpInQualityCheckActivity">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_return.BcpOutVerifyActivity">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkVerifyActivity">
-        </activity>
-        <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkQualityCheckActivity">
-        </activity>
-        <activity android:name=".activities.main.ModifyDataActivity">
-        </activity>
+        <activity android:name=".activities.main.QualityCheckActivity" />
+        <activity android:name=".activities.operation_wl.wl_in.WlInVerifyActivity" />
+        <activity android:name=".activities.operation_wl.wl_in.WlInQualityCheckActivity" />
+        <activity android:name=".activities.operation_wl.wl_out.WlOutVerifyActivity" />
+        <activity android:name=".activities.operation_wl.wl_return.WlTkVerifyActivity" />
+        <activity android:name=".activities.operation_wl.wl_return.WlTkQualityCheckActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_in.BcpInVerifyActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_in.BcpInQualityCheckActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_return.BcpOutVerifyActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkVerifyActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkQualityCheckActivity" />
+        <activity android:name=".activities.main.ModifyDataActivity" />
         <activity
             android:name=".activities.operation_modify.WlInModifyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_modify.WlOutModifyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_modify.WlTkModifyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_modify.BcpInModifyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_modify.BcpOutModifyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_modify.BcpTkModifyActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity android:name=".activities.operation_common.SelectPersonActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.operation_common.SelectPersonActivity" />
+        <activity android:name=".activities.main.ScanHWActivity" />
+        <activity android:name=".activities.operation_common.SelectPersonGroupActivity"></activity>
     </application>
 
 </manifest>
