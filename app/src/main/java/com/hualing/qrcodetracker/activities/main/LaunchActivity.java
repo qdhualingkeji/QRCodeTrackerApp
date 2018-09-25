@@ -1,8 +1,15 @@
 package com.hualing.qrcodetracker.activities.main;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.hualing.qrcodetracker.IZKCService;
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
@@ -31,10 +38,22 @@ public class LaunchActivity extends BaseActivity {
 
     private static final long DELAY = 3000;
     private MainDao mainDao;
+    public static IZKCService mIzkcService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = new Intent("com.zkc.aidl.all");
+        intent.setPackage("com.smartdevice.aidl");
+        bindService(intent, mServiceConn, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unbindService(mServiceConn);
     }
 
     @Override
@@ -105,6 +124,23 @@ public class LaunchActivity extends BaseActivity {
                     }
                 });
     }
+
+    private ServiceConnection mServiceConn = new ServiceConnection() {
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            Log.e("client", "onServiceDisconnected");
+            mIzkcService = null;
+        }
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e("client", "onServiceConnected");
+            /**
+             服务绑定成功，获取到该服务接口对象，可通过该接口调用相关的接口方法来完成相应的功能
+             *success to get the sevice interface object
+             */
+            mIzkcService = IZKCService.Stub.asInterface(service);
+        }
+    };
 
     @Override
     protected void getDataFormWeb() {

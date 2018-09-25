@@ -21,6 +21,7 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.CreateWLRKDParam;
@@ -195,11 +196,11 @@ public class WLInRKDInputActivity extends BaseActivity {
                 break;
             case R.id.selectPerson:
                 bundle.putString("checkQX", "ld");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
                 break;
             case R.id.selectPerson1:
                 bundle.putString("checkQX", "zjy");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON1, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON1, bundle);
                 break;
             case R.id.commitBtn:
 

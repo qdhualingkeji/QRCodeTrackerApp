@@ -237,4 +237,5 @@ public class SharedPreferenceUtil {
         SharedPreferences preferences = TheApplication.getSharedPreferences() ;
         return preferences.getString("qrCodeId",null);
     }
+
 }

@@ -13,6 +13,7 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
 import com.hualing.qrcodetracker.activities.main.SelectDepartmentActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.CreateWLCKDParam;
@@ -188,11 +189,11 @@ public class WLCKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
                 break;
             case R.id.selectLLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
                 break;
             case R.id.selectFLFZR:
                 bundle.putString("checkQX", "ld");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

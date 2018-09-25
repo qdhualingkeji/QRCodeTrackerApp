@@ -1,6 +1,10 @@
 package com.hualing.qrcodetracker.activities.main;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -554,6 +558,7 @@ public class EmployeeMainActivity extends BaseActivity {
                 //IntentUtil.openActivity(EmployeeMainActivity.this, WLInRKDInputActivity.class);
                 bundle.putBoolean("isFirst", true);
                 IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanActivity.class,-1,bundle);
+                //IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanHWActivity.class,-1,bundle);
                 break;
             case FunctionType.MATERIAL_OUT:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialOutMainActivity.class);

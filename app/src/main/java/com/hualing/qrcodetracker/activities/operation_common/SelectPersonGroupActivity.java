@@ -23,12 +23,12 @@ import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.PersonBean;
 import com.hualing.qrcodetracker.bean.PersonResult;
+import com.hualing.qrcodetracker.bean.UserGroupBean;
+import com.hualing.qrcodetracker.bean.UserGroupResult;
 import com.hualing.qrcodetracker.dao.MainDao;
-import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
-import com.hualing.qrcodetracker.model.User;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
-import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
+import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -43,7 +43,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class SelectPersonActivity extends BaseActivity {
+public class SelectPersonGroupActivity extends BaseActivity {
+
+    private static final int SELECT_PERSON = 111;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -53,11 +55,11 @@ public class SelectPersonActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     private MyAdapter mAdapter;
-    private List<PersonBean> mData ;
+    private List<UserGroupBean> mData ;
     //模糊过滤后的数据
-    private List<PersonBean> mFilterData ;
+    private List<UserGroupBean> mFilterData ;
     private MainDao mainDao;
-    private User userParam;
+    private Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +68,11 @@ public class SelectPersonActivity extends BaseActivity {
 
     @Override
     protected void initLogic() {
-        Bundle bundle = getIntent().getExtras();
-        userParam = new User();
-        if(bundle!=null)
-            userParam.setGroupID(bundle.getInt("groupID"));
-        userParam.setCheckQXGroup(bundle.getString("checkQX"));
-
+        bundle = getIntent().getExtras();
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
-                AllActivitiesHolder.removeAct(SelectPersonActivity.this);
+                AllActivitiesHolder.removeAct(SelectPersonGroupActivity.this);
             }
 
             @Override
@@ -90,7 +87,7 @@ public class SelectPersonActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new MyRecycleViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 1, getResources().getColor(R.color.divide_gray_color)));
-        mAdapter = new MyAdapter();
+        mAdapter = new SelectPersonGroupActivity.MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
         mInputValue.addTextChangedListener(new TextWatcher() {
@@ -112,6 +109,26 @@ public class SelectPersonActivity extends BaseActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case SELECT_PERSON:
+                    int personID = data.getIntExtra("personID",0);
+                    String personName = data.getStringExtra("personName");
+                    Intent ii = new Intent();
+                    ii.putExtra("personID", personID);
+                    ii.putExtra("personName", personName);
+                    setResult(RESULT_OK,ii);
+                    AllActivitiesHolder.removeAct(SelectPersonGroupActivity.this);
+                    break;
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void getDataFormWeb() {
         mainDao = YoniClient.getInstance().create(MainDao.class);
 
@@ -119,27 +136,27 @@ public class SelectPersonActivity extends BaseActivity {
         progressDialog.show();
 
 
-        Observable.create(new ObservableOnSubscribe<ActionResult<PersonResult>>() {
+        Observable.create(new ObservableOnSubscribe<ActionResult<UserGroupResult>>() {
             @Override
-            public void subscribe(ObservableEmitter<ActionResult<PersonResult>> e) throws Exception {
-                ActionResult<PersonResult> nr = mainDao.getAllPerson(userParam);
+            public void subscribe(ObservableEmitter<ActionResult<UserGroupResult>> e) throws Exception {
+                ActionResult<UserGroupResult> nr = mainDao.getDepartmentData();
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
                 .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                .subscribe(new Consumer<ActionResult<PersonResult>>() {
+                .subscribe(new Consumer<ActionResult<UserGroupResult>>() {
                     @Override
-                    public void accept(ActionResult<PersonResult> result) throws Exception {
+                    public void accept(ActionResult<UserGroupResult> result) throws Exception {
                         progressDialog.dismiss();
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            PersonResult data = result.getResult();
-                            List<PersonBean> personBeans = data.getPersonBeans();
+                            UserGroupResult data = result.getResult();
+                            List<UserGroupBean> userGroupBeans = data.getGroupBeanList();
                             mData.clear();
-                            mData.addAll(personBeans);
+                            mData.addAll(userGroupBeans);
                             mFilterData.clear();
-                            mFilterData.addAll(personBeans);
+                            mFilterData.addAll(userGroupBeans);
                             mAdapter.notifyDataSetChanged();
                         }
                     }
@@ -153,28 +170,29 @@ public class SelectPersonActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_select_person;
+        return R.layout.activity_select_person_group;
     }
 
-    private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
+
+    private class MyAdapter extends RecyclerView.Adapter<SelectPersonGroupActivity.MyAdapter.MyViewHolder> implements Filterable {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v =  LayoutInflater.from(SelectPersonActivity.this).inflate(R.layout.adapter_single,parent,false);
-            return new MyViewHolder(v);
+            View v =  LayoutInflater.from(SelectPersonGroupActivity.this).inflate(R.layout.adapter_single,parent,false);
+            return new SelectPersonGroupActivity.MyAdapter.MyViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            final PersonBean bean = mFilterData.get(position);
-            holder.sortName.setText(bean.getTrueName());
+        public void onBindViewHolder(SelectPersonGroupActivity.MyAdapter.MyViewHolder holder, int position) {
+            final UserGroupBean bean = mFilterData.get(position);
+            holder.sortName.setText(bean.getGroupName());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent ii = new Intent();
-                    ii.putExtra("personID", bean.getUserId());
-                    ii.putExtra("personName", bean.getTrueName());
-                    setResult(RESULT_OK,ii);
-                    AllActivitiesHolder.removeAct(SelectPersonActivity.this);
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putInt("groupID", bean.getGroupID());
+                    if(bundle!=null)
+                        bundle1.putString("checkQX", bundle.getString("checkQX"));
+                    IntentUtil.openActivityForResult(SelectPersonGroupActivity.this, SelectPersonActivity.class, SELECT_PERSON, bundle1);
                 }
             });
         }
@@ -195,10 +213,10 @@ public class SelectPersonActivity extends BaseActivity {
                         //没有过滤的内容，则使用源数据
                         mFilterData = mData;
                     } else {
-                        List<PersonBean> filteredList = new ArrayList<>();
-                        for (PersonBean bean : mData) {
+                        List<UserGroupBean> filteredList = new ArrayList<>();
+                        for (UserGroupBean bean : mData) {
                             //这里根据需求，添加匹配规则
-                            if (bean.getTrueName().contains(charString)) {
+                            if (bean.getGroupName().contains(charString)) {
                                 filteredList.add(bean);
                             }
                         }
@@ -213,7 +231,7 @@ public class SelectPersonActivity extends BaseActivity {
                 //把过滤后的值返回出来
                 @Override
                 protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                    mFilterData = (ArrayList<PersonBean>) filterResults.values;
+                    mFilterData = (ArrayList<UserGroupBean>) filterResults.values;
                     notifyDataSetChanged();
                 }
             };
@@ -230,5 +248,4 @@ public class SelectPersonActivity extends BaseActivity {
         }
 
     }
-
 }

@@ -16,6 +16,7 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
+import com.hualing.qrcodetracker.activities.main.ScanHWActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
@@ -273,7 +274,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
                                     .setPositiveButton("继续扫码录入", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            IntentUtil.openActivity(MaterialInDataInputActivity.this, ScanActivity.class);
+                                            //IntentUtil.openActivity(MaterialInDataInputActivity.this, ScanActivity.class);
+                                            IntentUtil.openActivity(MaterialInDataInputActivity.this, ScanHWActivity.class);
                                             AllActivitiesHolder.removeAct(MaterialInDataInputActivity.this);
                                         }
                                     })
