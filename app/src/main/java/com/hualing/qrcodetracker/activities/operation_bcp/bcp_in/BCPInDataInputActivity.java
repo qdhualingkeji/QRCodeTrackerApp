@@ -37,6 +37,7 @@ import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 import com.hualing.qrcodetracker.widget.datetime_picker.CustomDatePicker;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -55,7 +56,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     private static final int SELECT_HL_SORT = 10;
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
-    private static final int SELECT_SXYL = 40;
+    //private static final int SELECT_SXYL = 40;
     private static final int SELECT_LEI_BIE = 11;
     private static final int SELECT_PRODUCT_NAME = 12;
     @BindView(R.id.title)
@@ -82,8 +83,8 @@ public class BCPInDataInputActivity extends BaseActivity {
     TextView mCjValue;
     @BindView(R.id.gxValue)
     TextView mGxValue;
-    @BindView(R.id.sxylValue)
-    TextView mSxylValue;
+    //@BindView(R.id.sxylValue)
+    //TextView mSxylValue;
 //    @BindView(R.id.zjyValue)
 //    EditText mZjyValue;
     @BindView(R.id.scTimeValue)
@@ -109,7 +110,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     private int mSelectedCheJianId;
     private String mCJHasGongXuId;
     private int mSelectedGxId = -1;
-    private String mSXYLQrcodeStr = null;
+    //private String mSXYLQrcodeStr = null;
 
     private CustomDatePicker customDatePicker1, customDatePicker2, customDatePicker3;
     private String mNowTime;
@@ -162,7 +163,12 @@ public class BCPInDataInputActivity extends BaseActivity {
         customDatePicker1 = new CustomDatePicker(this, new CustomDatePicker.ResultHandler() {
             @Override
             public void handle(String time) { // 回调接口，获得选中的时间
-                mScTimeValue.setText(time);
+                SimpleDateFormat ymdSdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                try {
+                    mScTimeValue.setText(ymdSdf.format(ymdSdf.parse(time)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }, "2010-01-01 00:00", now); // 初始化日期格式请用：yyyy-MM-dd HH:mm，否则不能正常运行
         customDatePicker1.showSpecificTime(true); // 不显示时和分
@@ -216,7 +222,7 @@ public class BCPInDataInputActivity extends BaseActivity {
 
         String cjName = mCjValue.getText().toString();
         String gxName = mGxValue.getText().toString();
-        String sxylValue = mSxylValue.getText().toString();
+        //String sxylValue = mSxylValue.getText().toString();
         String scTimeValue = mScTimeValue.getText().toString();
         String ksTimeValue = mKsTimeValue.getText().toString();
         String wcTimeValue = mWcTimeValue.getText().toString();
@@ -236,7 +242,7 @@ public class BCPInDataInputActivity extends BaseActivity {
 //                || TextUtils.isEmpty(jyztValue)
                 || "请选择车间".equals(cjName)
                 || "请选择工序".equals(gxName)
-                || "请选择所需原料".equals(sxylValue)
+                //|| "请选择所需原料".equals(sxylValue)
                 || "请选择生产时间".equals(scTimeValue)
                 || "请选择开始时间".equals(ksTimeValue)
                 || "请选择完成时间".equals(wcTimeValue)
@@ -270,11 +276,12 @@ public class BCPInDataInputActivity extends BaseActivity {
         params.setBz(1);
 
         //填充所需原料数据
-        addSXYLData();
+        //addSXYLData();
 
         return true;
     }
 
+    /*
     private void addSXYLData() {
         if (TextUtils.isEmpty(mSXYLQrcodeStr))
             return;
@@ -314,6 +321,7 @@ public class BCPInDataInputActivity extends BaseActivity {
         }
 
     }
+    */
 
 
     private void commitDataToWeb() {
@@ -421,6 +429,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mGxValue.setText(s1);
                     mSelectedGxId = data.getIntExtra("gxId", -1);
                     break;
+                    /*
                 case SELECT_SXYL:
                     String allYlStr = data.getStringExtra("allYlStr");
                     if (TextUtils.isEmpty(allYlStr))
@@ -430,6 +439,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mSXYLQrcodeStr = data.getStringExtra("allYlQrCode");
                     Log.d("Test", "get: "+mSXYLQrcodeStr);
                     break;
+                    */
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("sortName");
                     mLbValue.setText(lbName);
@@ -449,7 +459,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     }
 
     //@OnClick({R.id.selectBCPCode,R.id.selectLB, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
-    @OnClick({R.id.selectLB,R.id.selectName ,R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectLB,R.id.selectName ,R.id.selectCJ, R.id.selectGX, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
 
         Bundle bundle = new Bundle();
@@ -477,6 +487,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                 bundle.putString("cjGXIds", mCJHasGongXuId);
                 IntentUtil.openActivityForResult(this, SelectGXActivity.class, SELECT_GONG_XU, bundle);
                 break;
+                /*
             case R.id.selectSXYL:
                 if ("请选择工序".equals(mGxValue.getText().toString())) {
                     Toast.makeText(this, "请先选择工序", Toast.LENGTH_SHORT).show();
@@ -486,6 +497,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                 bundle2.putInt("selectedGxId", mSelectedGxId);
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
+                */
             case R.id.scTimeValue:
                 customDatePicker1.show(mNowTime);
                 break;
