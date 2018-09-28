@@ -75,8 +75,8 @@ public class BCPInDataInputActivity extends BaseActivity {
     EditText mScpcValue;
     @BindView(R.id.ggValue)
     TextView mGgValue;
-    @BindView(R.id.shlValue)
-    EditText mShlValue;
+    //@BindView(R.id.shlValue)
+    //EditText mShlValue;
     @BindView(R.id.dwzlValue)
     EditText mDwzlValue;
     @BindView(R.id.cjValue)
@@ -215,7 +215,6 @@ public class BCPInDataInputActivity extends BaseActivity {
         String ylpcValue = mYlpcValue.getText().toString();
         String scpcValue = mScpcValue.getText().toString();
         String ggValue = mGgValue.getText().toString();
-        String shlValue = mShlValue.getText().toString();
         String dwzlValue = mDwzlValue.getText().toString();
         String dwValue = mDwValue.getText().toString();
 //        String zjyValue = mZjyValue.getText().toString();
@@ -235,7 +234,6 @@ public class BCPInDataInputActivity extends BaseActivity {
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(scpcValue)
                 //|| TextUtils.isEmpty(ggValue)
-                || TextUtils.isEmpty(shlValue)
                 || TextUtils.isEmpty(dwzlValue)
                 || TextUtils.isEmpty(dwValue)
 //                || TextUtils.isEmpty(zjyValue)
@@ -258,7 +256,7 @@ public class BCPInDataInputActivity extends BaseActivity {
         params.setYlpc(ylpcValue);
         params.setScpc(scpcValue);
         params.setGg(ggValue);
-        params.setShl(Float.parseFloat(shlValue));
+        params.setShl(1);
         params.setDwzl(Float.parseFloat(dwzlValue));
         params.setDw(dwValue);
 //        params.setZjy(zjyValue);

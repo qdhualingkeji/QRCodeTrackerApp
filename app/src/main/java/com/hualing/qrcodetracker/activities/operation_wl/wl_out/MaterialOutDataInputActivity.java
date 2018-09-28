@@ -30,6 +30,8 @@ import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,8 +64,8 @@ public class MaterialOutDataInputActivity extends BaseActivity {
     TextView mRemainShlValue;
     @BindView(R.id.zhlValue)
     TextView mZhlValue;
-    @BindView(R.id.needShlValue)
-    EditText mNeedShlValue;
+    @BindView(R.id.needZhlValue)
+    EditText mNeedZhlValue;
     //    @BindView(R.id.llbmValue)
     //    TextView mLlbmValue;
 
@@ -169,7 +171,8 @@ public class MaterialOutDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
-        String value = mNeedShlValue.getText().toString();
+        float dwzl = Float.parseFloat(mZhlValue.getText().toString());
+        String value = mNeedZhlValue.getText().toString();
         //        String llbm = mLlbmValue.getText().toString();
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
         if (TextUtils.isEmpty(value)
@@ -178,18 +181,20 @@ public class MaterialOutDataInputActivity extends BaseActivity {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
-        float ckShL = Float.parseFloat(value);
-        if(ckShL==0){
-            Toast.makeText(this, "出库数量不能为0", Toast.LENGTH_SHORT).show();
+        float ckZhl = Float.parseFloat(value);
+        if(ckZhl==0){
+            Toast.makeText(this, "出库重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (ckShL > remainShL) {
-            Toast.makeText(this, "出库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
+        else if (ckZhl > dwzl) {
+            Toast.makeText(this, "出库重量不得大于单位重量", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         params.setQrCodeId(mQrcodeId);
-        params.setCkShL(Float.parseFloat(value));
+        DecimalFormat df = new DecimalFormat("0.00");
+        params.setCkShL(Float.parseFloat(df.format(remainShL - (dwzl - Float.parseFloat(value)) / dwzl)));
+        params.setDwzl(Float.parseFloat(value));
         //        params.setLlbm(llbm);
         params.setOutDh(SharedPreferenceUtil.getWlCKDNumber());
 

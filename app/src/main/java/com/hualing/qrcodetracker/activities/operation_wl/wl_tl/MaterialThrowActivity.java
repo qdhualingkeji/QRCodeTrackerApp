@@ -30,6 +30,8 @@ import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -62,6 +64,8 @@ public class MaterialThrowActivity extends BaseActivity {
     TextView mZhlValue;
     @BindView(R.id.tlShlValue)
     EditText mTlShlValue;
+    @BindView(R.id.tlZhlValue)
+    EditText mTlZhlValue;
     @BindView(R.id.gxValue)
     TextView mGxValue;
     @BindView(R.id.cjValue)
@@ -82,6 +86,7 @@ public class MaterialThrowActivity extends BaseActivity {
     private String mCJHasGongXuId ;
     //工序id
     private int mSelectedGxId = NON_SELECT;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +120,46 @@ public class MaterialThrowActivity extends BaseActivity {
             @Override
             public void clickRightButton() {
 
+            }
+        });
+
+        mTlShlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                }
+                else {
+                    // 此处为失去焦点时的处理内容
+                    String tlShlStr = mTlShlValue.getText().toString();
+                    if(!TextUtils.isEmpty(tlShlStr)){
+                        float tlShl = Float.parseFloat(tlShlStr);
+                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
+                        float zhl = Float.parseFloat(mZhlValue.getText().toString());
+                        mTlZhlValue.setText(df.format((tlShl / remainShl)*zhl));
+                    }
+                }
+            }
+        });
+
+        mTlZhlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                }
+                else {
+                    // 此处为失去焦点时的处理内容
+                    String tlZhlStr = mTlZhlValue.getText().toString();
+                    if(!TextUtils.isEmpty(tlZhlStr)){
+                        float tlZhl = Float.parseFloat(tlZhlStr);
+                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
+                        float zhl = Float.parseFloat(mZhlValue.getText().toString());
+                        mTlShlValue.setText(df.format(tlZhl*remainShl/zhl));
+                    }
+                }
             }
         });
     }
@@ -220,6 +265,7 @@ public class MaterialThrowActivity extends BaseActivity {
         }
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
         float ckShL = Float.parseFloat(value);
+        float tlZhl = Float.parseFloat(mTlZhlValue.getText().toString());
         if (ckShL > remainShL) {
             Toast.makeText(this, "投料数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
@@ -227,6 +273,7 @@ public class MaterialThrowActivity extends BaseActivity {
 
         params.setQrcodeId(mQrcodeId);
         params.setTlShl(Float.parseFloat(value));
+        params.setDwzl(tlZhl);
         params.setCjId(mSelectedCJId);
         params.setCj(mCjValue.getText().toString());
         params.setGxId(mSelectedGxId);

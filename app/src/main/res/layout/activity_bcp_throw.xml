@@ -228,6 +228,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -258,6 +259,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+                -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -301,11 +304,11 @@
                     android:padding="20dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/propertyNameText"
-                    android:text="单位重量："
+                    android:text="重量："
                     />
 
                 <TextView
-                    android:id="@+id/dwZhlValue"
+                    android:id="@+id/zhlValue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
@@ -321,6 +324,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -338,6 +342,39 @@
 
                 <EditText
                     android:id="@+id/tlShlValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:background="@android:color/transparent"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    android:maxLength="75"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+                -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    android:text="投料重量："
+                    />
+
+                <EditText
+                    android:id="@+id/tlZhlValue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="numberDecimal"

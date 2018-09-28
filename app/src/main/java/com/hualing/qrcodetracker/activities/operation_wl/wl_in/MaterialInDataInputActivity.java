@@ -70,8 +70,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
     EditText mYlpcValue;
     @BindView(R.id.sldwValue)
     TextView mSldwValue;
-    @BindView(R.id.slValue)
-    EditText mSlValue;
+    //@BindView(R.id.slValue)
+    //EditText mSlValue;
     @BindView(R.id.zhlValue)
     EditText mZhlValue;
     @BindView(R.id.remarkValue)
@@ -208,7 +208,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         String ggValue = mGgValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
         String sldwValue = mSldwValue.getText().toString();
-        String slValue = mSlValue.getText().toString();
+        String slValue = "1";
         String zhlValue = mZhlValue.getText().toString();
         String beizhuValue = mRemarkValue.getText().toString();
         if (TextUtils.isEmpty(tsValue)
@@ -219,7 +219,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 //|| TextUtils.isEmpty(ggValue)
                 || TextUtils.isEmpty(ylpcValue)
                 || TextUtils.isEmpty(sldwValue)
-                || TextUtils.isEmpty(slValue)
+                //|| TextUtils.isEmpty(slValue)
                 || TextUtils.isEmpty(zhlValue)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();

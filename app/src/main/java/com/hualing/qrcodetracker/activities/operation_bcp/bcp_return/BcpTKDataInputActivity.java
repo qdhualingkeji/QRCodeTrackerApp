@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,8 @@ import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
+
+import java.text.DecimalFormat;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +65,8 @@ public class BcpTKDataInputActivity extends BaseActivity {
     TextView mDwZhlValue;
     @BindView(R.id.tkShlValue)
     EditText mTkShlValue;
+    @BindView(R.id.tkZhlValue)
+    EditText mTkZhlValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
 
@@ -69,6 +74,7 @@ public class BcpTKDataInputActivity extends BaseActivity {
     private BCPTKParam params;
     private BCPTKGetShowDataParam getParam;
     private String mQrcodeId;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     private Dialog progressDialog ;
 
@@ -101,6 +107,46 @@ public class BcpTKDataInputActivity extends BaseActivity {
             @Override
             public void clickRightButton() {
 
+            }
+        });
+
+        mTkShlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                }
+                else {
+                    // 此处为失去焦点时的处理内容
+                    String tkShlStr = mTkShlValue.getText().toString();
+                    if(!TextUtils.isEmpty(tkShlStr)){
+                        float tkShl = Float.parseFloat(tkShlStr);
+                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
+                        float zhl = Float.parseFloat(mDwZhlValue.getText().toString());
+                        mTkZhlValue.setText(df.format((tkShl / remainShl)*zhl));
+                    }
+                }
+            }
+        });
+
+        mTkZhlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                }
+                else {
+                    // 此处为失去焦点时的处理内容
+                    String tkZhlStr = mTkZhlValue.getText().toString();
+                    if(!TextUtils.isEmpty(tkZhlStr)){
+                        float tkZhl = Float.parseFloat(tkZhlStr);
+                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
+                        float zhl = Float.parseFloat(mDwZhlValue.getText().toString());
+                        mTkShlValue.setText(df.format(tkZhl*remainShl/zhl));
+                    }
+                }
             }
         });
 
@@ -175,9 +221,11 @@ public class BcpTKDataInputActivity extends BaseActivity {
             Toast.makeText(this, "退库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
         }
+        float tkzl = Float.parseFloat(mTkZhlValue.getText().toString());
 
         params.setQrCodeId(mQrcodeId);
         params.setShl(tkShL);
+        params.setDwzl(tkzl);
         params.setCzy(GlobalData.realName);
         params.setRemark(mRemarkValue.getText().toString());
         params.setBackDh(SharedPreferenceUtil.getBCPTKDNumber());

@@ -330,11 +330,11 @@
                     android:padding="20dp"
                     android:textColor="@color/black"
                     android:textSize="@dimen/propertyNameText"
-                    android:text="出库数量："
+                    android:text="出库重量："
                     />
 
                 <EditText
-                    android:id="@+id/needShlValue"
+                    android:id="@+id/needZhlValue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="numberDecimal"

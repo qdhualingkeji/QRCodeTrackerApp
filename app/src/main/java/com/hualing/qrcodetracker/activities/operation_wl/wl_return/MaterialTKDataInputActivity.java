@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
+
+import java.text.DecimalFormat;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -56,12 +60,15 @@ public class MaterialTKDataInputActivity extends BaseActivity {
     TextView mZhlValue;
     @BindView(R.id.tkShlValue)
     EditText mTkShlValue;
+    @BindView(R.id.tkZhlValue)
+    EditText mTkZhlValue;
     @BindView(R.id.remark)
     EditText mRemark;
     private MainDao mainDao;
     private WLTKParam params;
     private WLTKGetShowDataParam getParam;
     private String mQrcodeId;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,46 @@ public class MaterialTKDataInputActivity extends BaseActivity {
             @Override
             public void clickRightButton() {
 
+            }
+        });
+
+        mTkShlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                }
+                else {
+                    // 此处为失去焦点时的处理内容
+                    String tkShlStr = mTkShlValue.getText().toString();
+                    if(!TextUtils.isEmpty(tkShlStr)){
+                        float tkShl = Float.parseFloat(tkShlStr);
+                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
+                        float zhl = Float.parseFloat(mZhlValue.getText().toString());
+                        mTkZhlValue.setText(df.format((tkShl / remainShl)*zhl));
+                    }
+                }
+            }
+        });
+
+        mTkZhlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                }
+                else {
+                    // 此处为失去焦点时的处理内容
+                    String tkZhlStr = mTkZhlValue.getText().toString();
+                    if(!TextUtils.isEmpty(tkZhlStr)){
+                        float tkZhl = Float.parseFloat(tkZhlStr);
+                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
+                        float zhl = Float.parseFloat(mZhlValue.getText().toString());
+                        mTkShlValue.setText(df.format(tkZhl*remainShl/zhl));
+                    }
+                }
             }
         });
 
@@ -157,6 +204,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
         String remark = mRemark.getText().toString();
         //        String llbm = mLlbmValue.getText().toString();
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
+        float tkZhl = Float.parseFloat(mTkZhlValue.getText().toString());
         if (TextUtils.isEmpty(value)
             //                || "请选择领料部门".equals(llbm)
                 ) {
@@ -175,6 +223,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
 
         params.setQrCodeId(mQrcodeId);
         params.setTkShL(Float.parseFloat(value));
+        params.setDwzl(tkZhl);
         params.setBz(remark);
         //        params.setLlbm(llbm);
         params.setOutDh(SharedPreferenceUtil.getWlTKDNumber());
