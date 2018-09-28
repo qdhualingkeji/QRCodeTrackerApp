@@ -58,12 +58,12 @@ public class MaterialThrowActivity extends BaseActivity {
     TextView mGgValue;
     @BindView(R.id.sldwValue)
     TextView mSldwValue;
-    @BindView(R.id.remainShlValue)
-    TextView mRemainShlValue;
+    //@BindView(R.id.remainShlValue)
+    //TextView mRemainShlValue;
     @BindView(R.id.zhlValue)
     TextView mZhlValue;
-    @BindView(R.id.tlShlValue)
-    EditText mTlShlValue;
+    //@BindView(R.id.tlShlValue)
+    //EditText mTlShlValue;
     @BindView(R.id.tlZhlValue)
     EditText mTlZhlValue;
     @BindView(R.id.gxValue)
@@ -87,6 +87,8 @@ public class MaterialThrowActivity extends BaseActivity {
     //工序id
     private int mSelectedGxId = NON_SELECT;
     private DecimalFormat df = new DecimalFormat("0.00");
+    private float remainShl;
+    private float tlShl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +125,7 @@ public class MaterialThrowActivity extends BaseActivity {
             }
         });
 
+        /*
         mTlShlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
 
             @Override
@@ -142,6 +145,7 @@ public class MaterialThrowActivity extends BaseActivity {
                 }
             }
         });
+        */
 
         mTlZhlValue.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener(){
 
@@ -152,16 +156,22 @@ public class MaterialThrowActivity extends BaseActivity {
                 }
                 else {
                     // 此处为失去焦点时的处理内容
-                    String tlZhlStr = mTlZhlValue.getText().toString();
-                    if(!TextUtils.isEmpty(tlZhlStr)){
-                        float tlZhl = Float.parseFloat(tlZhlStr);
-                        float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
-                        float zhl = Float.parseFloat(mZhlValue.getText().toString());
-                        mTlShlValue.setText(df.format(tlZhl*remainShl/zhl));
-                    }
+                    jiSuanTlShl();
                 }
             }
         });
+    }
+
+    /**
+     * 计算出投料数量（虽然界面上去掉了投料数量，但数据库需要这个字段，必须计算出来后放进变量里）
+     */
+    private void jiSuanTlShl(){
+        String tlZhlStr = mTlZhlValue.getText().toString();
+        if(!TextUtils.isEmpty(tlZhlStr)){
+            float tlZhl = Float.parseFloat(tlZhlStr);
+            float zhl = Float.parseFloat(mZhlValue.getText().toString());
+            tlShl=tlZhl*remainShl/zhl;
+        }
     }
 
     @Override
@@ -192,7 +202,7 @@ public class MaterialThrowActivity extends BaseActivity {
                             //mLbValue.setText(dataResult.getSortName());
                             mGgValue.setText(dataResult.getGg());
                             mSldwValue.setText(dataResult.getDw());
-                            mRemainShlValue.setText(dataResult.getShl() + "");
+                            remainShl = dataResult.getShl();
                             mZhlValue.setText(dataResult.getDwzl() + "");
                         }
                     }
@@ -254,25 +264,29 @@ public class MaterialThrowActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
-        String value = mTlShlValue.getText().toString();
-        //        String llbm = mLlbmValue.getText().toString();
-        if (TextUtils.isEmpty(value)
+        if(mTlZhlValue.hasFocus())//要是投料重量输入框没有失去焦点的话，这里需要计算一下投料数量
+            jiSuanTlShl();
+        String tlZhlStr = mTlZhlValue.getText().toString();
+        if (TextUtils.isEmpty(tlZhlStr)
                 || (mSelectedGxId == NON_SELECT)
                 || (mSelectedCJId == NON_SELECT)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
-        float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
-        float ckShL = Float.parseFloat(value);
-        float tlZhl = Float.parseFloat(mTlZhlValue.getText().toString());
-        if (ckShL > remainShL) {
-            Toast.makeText(this, "投料数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
+        float tlZhl = Float.parseFloat(tlZhlStr);
+        float zhL = Float.parseFloat(mZhlValue.getText().toString());
+        if (tlZhl==0) {
+            Toast.makeText(this, "投料重量不能为0", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (tlZhl > zhL) {
+            Toast.makeText(this, "投料重量不得大于重量", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         params.setQrcodeId(mQrcodeId);
-        params.setTlShl(Float.parseFloat(value));
+        params.setTlShl(tlShl);
         params.setDwzl(tlZhl);
         params.setCjId(mSelectedCJId);
         params.setCj(mCjValue.getText().toString());

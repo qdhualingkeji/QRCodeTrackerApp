@@ -91,7 +91,6 @@ public class BcpThrowActivity extends BaseActivity {
     private String mCJHasGongXuId;
     //工序id
     private int mSelectedGxId = NON_SELECT;
-    private DecimalFormat df = new DecimalFormat("0.00");
     private float remainShl;
     private float tlShl;
 
@@ -271,30 +270,28 @@ public class BcpThrowActivity extends BaseActivity {
     private boolean checkIfInfoPerfect() {
         if(mTlZhlValue.hasFocus())//要是投料重量输入框没有失去焦点的话，这里需要计算一下投料数量
             jiSuanTlShl();
-        //String value = mTlShlValue.getText().toString();
-        if (//TextUtils.isEmpty(value) ||
+        String tlZhlStr = mTlZhlValue.getText().toString();
+        if (TextUtils.isEmpty(tlZhlStr) ||
                 (mSelectedGxId == NON_SELECT)
                 || (mSelectedCJId == NON_SELECT)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
-        /*
-        float tlShL = Float.parseFloat(value);
-        if (tlShL==0) {
-            Toast.makeText(this, "投料数量不能为0", Toast.LENGTH_SHORT).show();
+        float tlZhL = Float.parseFloat(tlZhlStr);
+        float zhL = Float.parseFloat(mZhlValue.getText().toString());
+        if (tlZhL==0) {
+            Toast.makeText(this, "投料重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (tlShL > remainShL) {
-            Toast.makeText(this, "投料数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
+        if (tlZhL > zhL) {
+            Toast.makeText(this, "投料重量不得大于重量", Toast.LENGTH_SHORT).show();
             return false;
         }
-        */
-        float tlzl = Float.parseFloat(mTlZhlValue.getText().toString());
 
         params.setQrcodeId(mQrcodeId);
         params.setTlShl(tlShl);
-        params.setDwzl(tlzl);
+        params.setDwzl(tlZhL);
         params.setCjId(mSelectedCJId);
         params.setCheJian(mCjValue.getText().toString());
         params.setGxId(mSelectedGxId);
