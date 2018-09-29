@@ -51,6 +51,8 @@ public class WLInRKDInputActivity extends BaseActivity {
 
     private static final int SELECT_PERSON = 111;
     private static final int SELECT_PERSON1 = 112;
+    private static final int SELECT_BZ = 113;
+    private static final int SELECT_ZJLD = 114;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.FhDwValue)
@@ -67,10 +69,16 @@ public class WLInRKDInputActivity extends BaseActivity {
 //    EditText mShrValue;
     @BindView(R.id.ShFzrValue)
     TextView mShFzrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
+    @BindView(R.id.zjldValue)
+    TextView mZjldValue;
+    private int bzID;
     private int fzrID;
     private int zjyID;
+    private int zjldID;
 //    @BindView(R.id.JhFzrValue)
 //    EditText mJhFzrValue;
     private MainDao mainDao;
@@ -142,14 +150,18 @@ public class WLInRKDInputActivity extends BaseActivity {
         params.setShFzr(shfzrValue);
 //        params.setFhr(GlobalData.realName);
 //        params.setJhFzr(jhfzrValue);
+        params.setBzID(bzID);
+        params.setBzStatus(0);
         params.setFzrID(fzrID);
         params.setFzrStatus(0);
         params.setZjyID(zjyID);
         params.setZjyStatus(0);
+        params.setZjldID(zjldID);
+        params.setZjldStatus(0);
         return true;
     }
 
-    @OnClick({R.id.ShRqValue, R.id.ShSjValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1})
+    @OnClick({R.id.ShRqValue, R.id.ShSjValue, R.id.commitBtn, R.id.selectBz,R.id.selectPerson,R.id.selectPerson1,R.id.selectZjld})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -194,6 +206,10 @@ public class WLInRKDInputActivity extends BaseActivity {
                         .show();
 
                 break;
+            case R.id.selectBz:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_BZ, bundle);
+                break;
             case R.id.selectPerson:
                 bundle.putString("checkQX", "ld");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
@@ -201,6 +217,10 @@ public class WLInRKDInputActivity extends BaseActivity {
             case R.id.selectPerson1:
                 bundle.putString("checkQX", "zjy");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON1, bundle);
+                break;
+            case R.id.selectZjld:
+                bundle.putString("checkQX", "zjld");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_ZJLD, bundle);
                 break;
             case R.id.commitBtn:
 
@@ -217,6 +237,10 @@ public class WLInRKDInputActivity extends BaseActivity {
             int personID = data.getIntExtra("personID",0);
             String personName = data.getStringExtra("personName");
             switch (requestCode) {
+                case SELECT_BZ:
+                    bzID =personID;
+                    mBzValue.setText(personName);
+                    break;
                 case SELECT_PERSON:
                     fzrID =personID;
                     mShFzrValue.setText(personName);
@@ -224,6 +248,10 @@ public class WLInRKDInputActivity extends BaseActivity {
                 case SELECT_PERSON1:
                     zjyID =personID;
                     mZjyValue.setText(personName);
+                    break;
+                case SELECT_ZJLD:
+                    zjldID =personID;
+                    mZjldValue.setText(personName);
                     break;
             }
         }

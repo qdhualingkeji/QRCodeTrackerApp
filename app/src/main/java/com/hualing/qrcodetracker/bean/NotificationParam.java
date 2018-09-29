@@ -13,6 +13,8 @@ public class NotificationParam {
 
     public static final int FZR = 1;
     public static final int ZJY = 2;
+    public static final int BZ = 3;
+    public static final int ZJLD = 4;
 
     private String dh ;
 

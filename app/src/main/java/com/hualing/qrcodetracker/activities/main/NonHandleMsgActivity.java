@@ -66,7 +66,10 @@ public class NonHandleMsgActivity extends BaseActivity {
     private MainDao mainDao;
     private MyAdapter mAdapter;
     private List<NonCheckBean> mData;
+    private boolean isBZ;
     private boolean isFZR;
+    private boolean isZJY;
+    private boolean isZJLD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +81,20 @@ public class NonHandleMsgActivity extends BaseActivity {
         //判断登录角色的身份（领导、质检员）
         String[] checkQXArr = GlobalData.checkQXGroup.split(",");
         for (String checkQX:checkQXArr) {
-            if("ld".equals(checkQX)){
+            if("bz".equals(checkQX)){
+                isBZ=true;
+                break;
+            }
+            else if("ld".equals(checkQX)){
                 isFZR=true;
+                break;
+            }
+            else if("zjy".equals(checkQX)){
+                isZJY=true;
+                break;
+            }
+            else if("zjld".equals(checkQX)){
+                isZJLD=true;
                 break;
             }
         }
@@ -125,10 +140,14 @@ public class NonHandleMsgActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
-        if(isFZR)
+        if(isBZ)
+            params.setCheckQXFlag(MainParams.BZ);
+        else if(isFZR)
             params.setCheckQXFlag(MainParams.FZR);
-        else
+        else if(isZJY)
             params.setCheckQXFlag(MainParams.ZJY);
+        else if(isZJLD)
+            params.setCheckQXFlag(MainParams.ZJLD);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<NonCheckResult>>() {
             @Override
@@ -205,9 +224,9 @@ public class NonHandleMsgActivity extends BaseActivity {
                             Intent intent =null;
                             switch (name){
                                 case "物料入库单":
-                                    if(isFZR)
+                                    if(isBZ||isFZR)
                                         intent = new Intent(NonHandleMsgActivity.this,WlInVerifyActivity.class);
-                                    else
+                                    else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,WlInQualityCheckActivity.class);
                                     break;
                                 case "物料出库单":

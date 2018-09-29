@@ -110,8 +110,10 @@ public class EmployeeMainActivity extends BaseActivity {
 
     private MyPagerAdapter mPagerAdapter;
     private List<Module2> mCanUseList;
+    private boolean isBZ;
     private boolean isFZR;
     private boolean isZJY;
+    private boolean isZJLD;
 
     //    private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
     //        @Override
@@ -152,13 +154,21 @@ public class EmployeeMainActivity extends BaseActivity {
     @Override
     protected void initLogic() {
         String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-        isFZR=false;
         for (String checkQX:checkQXArr) {
-            if("ld".equals(checkQX)){
+            if("bz".equals(checkQX)){
+                isBZ=true;
+                break;
+            }
+            else if("ld".equals(checkQX)){
                 isFZR=true;
                 break;
-            }if("zjy".equals(checkQX)){
+            }
+            else if("zjy".equals(checkQX)){
                 isZJY=true;
+                break;
+            }
+            else if("zjld".equals(checkQX)){
+                isZJLD=true;
                 break;
             }
         }
@@ -761,8 +771,9 @@ public class EmployeeMainActivity extends BaseActivity {
             verify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(isFZR) {
+                    if(isBZ||isFZR) {
                         for (Module2 module2 : mCanUseList) {
+                            Log.e("isBZ=========",""+isBZ);
                             if ("审核".equals(module2.getMname())) {
                                 GlobalData.currentFunctionType = FunctionType.VERIFY;
                                 toWhere(GlobalData.currentFunctionType);
@@ -778,7 +789,7 @@ public class EmployeeMainActivity extends BaseActivity {
             check.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(isZJY) {
+                    if(isZJY||isZJLD) {
                         for (Module2 module2 : mCanUseList) {
                             if ("质检".equals(module2.getMname())) {
                                 GlobalData.currentFunctionType = FunctionType.QUALITY_CHECKING;

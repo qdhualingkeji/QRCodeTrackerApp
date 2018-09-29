@@ -151,6 +151,49 @@
                 android:src="@drawable/person"/>
 
             <LinearLayout
+                android:id="@+id/selectBz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/bzValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:text="请选择班长"
+                    android:textColor="@color/divide_dark_gray_color"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/next"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/divide_gray_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/person"/>
+
+            <LinearLayout
                 android:id="@+id/selectPerson"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -175,34 +218,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/dividerHeight"-->
-            <!--android:background="@color/divide_gray_color"/>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="20dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="30dp"-->
-                <!--android:layout_height="30dp"-->
-                <!--android:layout_marginRight="20dp"-->
-                <!--android:src="@drawable/person"/>-->
-
-            <!--<EditText-->
-                <!--android:id="@+id/JhFzrValue"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:hint="入库方负责人"-->
-                <!--android:background="@android:color/transparent"-->
-                <!--android:textColor="@android:color/black"-->
-                <!--android:textSize="16sp"/>-->
-
-        <!--</LinearLayout>-->
 
         <View
             android:layout_width="match_parent"
@@ -235,6 +250,50 @@
                     android:background="@android:color/transparent"
                     android:gravity="center_vertical"
                     android:text="请选择质检员"
+                    android:textColor="@color/divide_dark_gray_color"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/next"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dividerHeight"
+            android:background="@color/divide_gray_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/person"/>
+
+            <LinearLayout
+                android:id="@+id/selectZjld"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/zjldValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:text="请选择质检领导"
                     android:textColor="@color/divide_dark_gray_color"
                     android:textSize="16sp" />
 
