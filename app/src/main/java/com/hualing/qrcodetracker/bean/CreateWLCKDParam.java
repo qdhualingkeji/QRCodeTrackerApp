@@ -16,8 +16,10 @@ public class CreateWLCKDParam {
     private String lhR;
     private String lhFzr;
     private String remark;
-    private Integer FzrID;
-    private Integer FzrStatus;
+    private Integer bzID;
+    private Integer bzStatus;
+    private Integer fzrID;
+    private Integer fzrStatus;
 
     public String getOutDh() {
         return outDh;
@@ -83,20 +85,36 @@ public class CreateWLCKDParam {
         this.remark = remark;
     }
 
+    public Integer getBzID() {
+        return bzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        this.bzID = bzID;
+    }
+
+    public Integer getBzStatus() {
+        return bzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        this.bzStatus = bzStatus;
+    }
+
     public Integer getFzrID() {
-        return FzrID;
+        return fzrID;
     }
 
     public void setFzrID(Integer fzrID) {
-        FzrID = fzrID;
+        this.fzrID = fzrID;
     }
 
     public Integer getFzrStatus() {
-        return FzrStatus;
+        return fzrStatus;
     }
 
     public void setFzrStatus(Integer fzrStatus) {
-        FzrStatus = fzrStatus;
+        this.fzrStatus = fzrStatus;
     }
 
 }

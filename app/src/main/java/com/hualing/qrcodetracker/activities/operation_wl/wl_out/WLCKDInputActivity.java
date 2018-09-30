@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.operation_wl.wl_out;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -41,17 +42,20 @@ public class WLCKDInputActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 30;
     private static final int REQUEST_CODE_SELECT_LLFZR = 31;
     private static final int REQUEST_CODE_SELECT_FLFZR = 32;
-    private static final int REQUEST_CODE_SELECT_FLR = 33;
+    private static final int REQUEST_CODE_SELECT_BZ = 33;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.LldwValue)
     TextView mLldwValue;
     //@BindView(R.id.FlrValue)
     //TextView mFlrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.FlfzrValue)
     TextView mFlfzrValue;
     @BindView(R.id.LlfzrValue)
     TextView mLlfzrValue;
+    private int bzID;
     private int fzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
@@ -151,6 +155,9 @@ public class WLCKDInputActivity extends BaseActivity {
         params.setFhFzr(flfzrValue);
         params.setLhR(GlobalData.realName);
         params.setLhFzr(llfzrValue);
+        params.setBzID(bzID);
+        params.setBzStatus(0);
+        Log.e("fzrID==========",""+fzrID);
         params.setFzrID(fzrID);
         params.setFzrStatus(0);
         params.setRemark(remarkValue);
@@ -164,12 +171,16 @@ public class WLCKDInputActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_DEPARTMENT:
                     mLldwValue.setText(data.getStringExtra("groupName"));
                     break;
-                case REQUEST_CODE_SELECT_LLFZR:
-                    mLlfzrValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_BZ:
+                    bzID=data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_FLFZR:
                     fzrID=data.getIntExtra("personID",0);
                     mFlfzrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_LLFZR:
+                    mLlfzrValue.setText(data.getStringExtra("personName"));
                     break;
                     /*
                 case REQUEST_CODE_SELECT_FLR:
@@ -181,19 +192,23 @@ public class WLCKDInputActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectLLFZR, R.id.selectFLFZR})
+    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectBZ, R.id.selectFLFZR, R.id.selectLLFZR})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectLLBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
                 break;
-            case R.id.selectLLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
+            case R.id.selectBZ:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectFLFZR:
                 bundle.putString("checkQX", "ld");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
+                break;
+            case R.id.selectLLFZR:
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

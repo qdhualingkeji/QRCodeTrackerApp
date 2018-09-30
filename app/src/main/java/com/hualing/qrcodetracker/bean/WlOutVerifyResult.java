@@ -20,6 +20,8 @@ public class WlOutVerifyResult {
     private String lhFzr;
     private String fhFzr;
     private String remark;
+    private Integer bzID;
+    private Integer bzStatus;
     private Integer fzrID;
     private Integer fzrStatus;
 
@@ -79,6 +81,22 @@ public class WlOutVerifyResult {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Integer getBzID() {
+        return bzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        this.bzID = bzID;
+    }
+
+    public Integer getBzStatus() {
+        return bzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        this.bzStatus = bzStatus;
     }
 
     public Integer getFzrID() {

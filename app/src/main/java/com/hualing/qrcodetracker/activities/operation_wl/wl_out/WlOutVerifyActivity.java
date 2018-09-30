@@ -14,12 +14,14 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInVerifyActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.bean.WLOutShowBean;
 import com.hualing.qrcodetracker.bean.WlOutVerifyResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
@@ -65,6 +67,10 @@ public class WlOutVerifyActivity extends BaseActivity {
     private List<WLOutShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isBZ=false;
+    private boolean isFZR=false;
+    private boolean isZJY=false;
+    private boolean isZJLD=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +96,32 @@ public class WlOutVerifyActivity extends BaseActivity {
         param = new VerifyParam();
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-            boolean isFZR=false;
             for (String checkQX:checkQXArr) {
-                if("ld".equals(checkQX)){
+                if("bz".equals(checkQX)){
+                    isBZ=true;
+                    break;
+                }
+                else if("ld".equals(checkQX)){
                     isFZR=true;
                     break;
                 }
+                else if("zjy".equals(checkQX)){
+                    isZJY=true;
+                    break;
+                }
+                else if("zjld".equals(checkQX)){
+                    isZJLD=true;
+                    break;
+                }
             }
-            if(isFZR)
+            if(isBZ)
+                param.setCheckQXFlag(VerifyParam.BZ);
+            else if(isFZR)
                 param.setCheckQXFlag(VerifyParam.FZR);
-            else
+            else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
+            else if(isZJLD)
+                param.setCheckQXFlag(VerifyParam.ZJLD);
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
@@ -214,12 +235,53 @@ public class WlOutVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(WlOutVerifyActivity.this);
+                            if(isBZ)//如果登录者是班长的话，说明还得推送给负责人
+                                sendNotification();
+                            else{//不是的话，说明登录者就是负责人，最后一道审核就不必再推送了
+                                setResult(RETURN_AND_REFRESH);
+                                AllActivitiesHolder.removeAct(WlOutVerifyActivity.this);
+                            }
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification() {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        notificationParam.setDh(param.getDh());
+        notificationParam.setStyle(NotificationType.WL_CKD);
+        int personFlag=NotificationParam.FZR;
+        notificationParam.setPersonFlag(personFlag);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(WlOutVerifyActivity.this);
+                    }
+                });
+
     }
 
     @Override

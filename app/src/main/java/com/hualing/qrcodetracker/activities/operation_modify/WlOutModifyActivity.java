@@ -270,6 +270,7 @@ public class WlOutModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setBzStatus(0);
         updatedParam.setFzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
@@ -306,7 +307,7 @@ public class WlOutModifyActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getWlCKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.WL_CKD);
-        notificationParam.setPersonFlag(NotificationParam.ZJY);
+        notificationParam.setPersonFlag(NotificationParam.BZ);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
