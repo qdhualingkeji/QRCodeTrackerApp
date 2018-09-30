@@ -70,6 +70,8 @@ public class WlTkQualityCheckActivity extends BaseActivity {
     private List<WLTkShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isZJY=false;
+    private boolean isZJLD=false;
 
     @Override
     protected void initLogic() {
@@ -90,17 +92,23 @@ public class WlTkQualityCheckActivity extends BaseActivity {
         param = new VerifyParam();
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-            boolean isFZR=false;
             for (String checkQX:checkQXArr) {
-                if("ld".equals(checkQX)){
-                    isFZR=true;
+                if("zjy".equals(checkQX)){
+                    isZJY=true;
+                    break;
+                }
+                else if("zjld".equals(checkQX)){
+                    isZJLD=true;
                     break;
                 }
             }
-            if(isFZR)
-                param.setCheckQXFlag(VerifyParam.FZR);
-            else
-                param.setCheckQXFlag(VerifyParam.ZJY);
+            //下面是根据身份判断当前是质检还是审核
+            int checkQXFlag=-1;
+            if(isZJY)
+                checkQXFlag=VerifyParam.ZJY;
+            else if(isZJLD)
+                checkQXFlag=VerifyParam.ZJLD;
+            param.setCheckQXFlag(checkQXFlag);
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
@@ -200,6 +208,8 @@ public class WlTkQualityCheckActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "核退成功", Toast.LENGTH_SHORT).show();
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(WlTkQualityCheckActivity.this);
                             return;
                         }
                     }
@@ -242,7 +252,13 @@ public class WlTkQualityCheckActivity extends BaseActivity {
         //根据单号去查找审核人
         notificationParam.setDh(mDh);
         notificationParam.setStyle(NotificationType.WL_TKD);
-        notificationParam.setPersonFlag(NotificationParam.FZR);
+        int personFlag=-1;
+        //下面是判断下一个质检或审核人是谁
+        if(isZJY)//如果是质检员，就推送给质检领导
+            personFlag=NotificationParam.ZJLD;
+        else if(isZJLD)//如果是质检领导，就推送给班长
+            personFlag=NotificationParam.BZ;
+        notificationParam.setPersonFlag(personFlag);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();

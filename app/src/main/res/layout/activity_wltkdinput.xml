@@ -22,6 +22,11 @@
         app:title_textSize="@dimen/titleBar_textSize">
     </com.hualing.qrcodetracker.widget.TitleBar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,6 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dividerHeight"
         android:background="@color/divide_gray_color"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -126,6 +132,51 @@
             android:layout_height="30dp"
             android:layout_marginRight="20dp"
             android:src="@drawable/person"/>
+
+        <LinearLayout
+            android:id="@+id/selectBz"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/bzValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="请选择班长"
+                android:textColor="@color/divide_dark_gray_color"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/next"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dividerHeight"
+        android:background="@color/divide_gray_color"/>
+
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/person"/>
+
         <LinearLayout
             android:id="@+id/selectSLFZR"
             android:layout_width="match_parent"
@@ -199,49 +250,93 @@
         android:layout_height="@dimen/dividerHeight"
         android:background="@color/divide_gray_color"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/person"/>
+
         <LinearLayout
+            android:id="@+id/selectZJY"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:orientation="horizontal"
-            >
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/zjyValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="请选择质检员"
+                android:textColor="@color/divide_dark_gray_color"
+                android:textSize="16sp" />
 
             <ImageView
                 android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/person"/>
-
-            <LinearLayout
-                android:id="@+id/selectZJY"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/zjyValue"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:text="请选择质检员"
-                    android:textColor="@color/divide_dark_gray_color"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/next"/>
-
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/next"/>
 
         </LinearLayout>
 
-        <View
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dividerHeight"
+        android:background="@color/divide_gray_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/person"/>
+
+        <LinearLayout
+            android:id="@+id/selectZJLD"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/zjldValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical"
+                android:text="请选择质检领导"
+                android:textColor="@color/divide_dark_gray_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/next"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dividerHeight"
+        android:background="@color/divide_gray_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -297,5 +392,7 @@
 
     </android.support.v7.widget.CardView>
     </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

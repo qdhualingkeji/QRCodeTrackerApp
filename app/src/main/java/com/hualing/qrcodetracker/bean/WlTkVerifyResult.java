@@ -20,11 +20,65 @@ public class WlTkVerifyResult {
     private String thFzr;
     private String shFzr;
     private String remark;
+    private Integer bzID;
+    private Integer bzStatus;
+    private String bzName;
     private int fzrID;
     private int fzrStatus;
     private int zjyID;
     private int zjyStatus;
     private String zjyName;
+    private Integer zjldID;
+    private Integer zjldStatus;
+    private String zjldName;
+
+    public Integer getBzID() {
+        return bzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        this.bzID = bzID;
+    }
+
+    public Integer getBzStatus() {
+        return bzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        this.bzStatus = bzStatus;
+    }
+
+    public String getBzName() {
+        return bzName;
+    }
+
+    public void setBzName(String bzName) {
+        this.bzName = bzName;
+    }
+
+    public Integer getZjldID() {
+        return zjldID;
+    }
+
+    public void setZjldID(Integer zjldID) {
+        this.zjldID = zjldID;
+    }
+
+    public Integer getZjldStatus() {
+        return zjldStatus;
+    }
+
+    public void setZjldStatus(Integer zjldStatus) {
+        this.zjldStatus = zjldStatus;
+    }
+
+    public String getZjldName() {
+        return zjldName;
+    }
+
+    public void setZjldName(String zjldName) {
+        this.zjldName = zjldName;
+    }
 
     private List<WLTkShowBean> beans;
 

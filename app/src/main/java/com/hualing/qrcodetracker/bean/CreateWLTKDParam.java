@@ -19,10 +19,14 @@ public class CreateWLTKDParam {
     private String shFzr ;
     private String thr ;
     private String thFzr ;
+    private Integer BzID;
+    private Integer BzStatus;
     private Integer fzrID;
     private Integer fzrStatus;
     private Integer zjyID;
     private Integer zjyStatus;
+    private Integer ZjldID;
+    private Integer ZjldStatus;
 
     private String remark ;
 
@@ -112,6 +116,38 @@ public class CreateWLTKDParam {
 
     public void setZjyStatus(Integer zjyStatus) {
         this.zjyStatus = zjyStatus;
+    }
+
+    public Integer getBzID() {
+        return BzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        BzID = bzID;
+    }
+
+    public Integer getBzStatus() {
+        return BzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        BzStatus = bzStatus;
+    }
+
+    public Integer getZjldID() {
+        return ZjldID;
+    }
+
+    public void setZjldID(Integer zjldID) {
+        ZjldID = zjldID;
+    }
+
+    public Integer getZjldStatus() {
+        return ZjldStatus;
+    }
+
+    public void setZjldStatus(Integer zjldStatus) {
+        ZjldStatus = zjldStatus;
     }
 
     public String getRemark() {

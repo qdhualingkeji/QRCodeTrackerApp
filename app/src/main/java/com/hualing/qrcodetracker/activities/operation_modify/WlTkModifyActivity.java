@@ -58,6 +58,8 @@ public class WlTkModifyActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_SLFZR = 32;
     private static final int REQUEST_CODE_SELECT_SLR = 33;
     private static final int REQUEST_CODE_SELECT_ZJY = 34;
+    private static final int REQUEST_CODE_SELECT_BZ = 35;
+    private static final int REQUEST_CODE_SELECT_ZJLD = 36;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -67,10 +69,14 @@ public class WlTkModifyActivity extends BaseActivity {
     TextView mLldwValue;
     @BindView(R.id.selectLLBM)
     LinearLayout mSelectLLBM;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.slfzrValue)
     TextView mSlfzrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
+    @BindView(R.id.zjldValue)
+    TextView mZjldValue;
     @BindView(R.id.slRValue)
     TextView mSlRValue;
     @BindView(R.id.tkfzrValue)
@@ -86,8 +92,10 @@ public class WlTkModifyActivity extends BaseActivity {
     private String mDh;
     private VerifyParam param;
     private WlTkVerifyResult updatedParam;
+    private int bzID;
     private int fzrID;
     private int zjyID;
+    private int zjldID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +162,11 @@ public class WlTkModifyActivity extends BaseActivity {
                                     IntentUtil.openActivityForResult(WlTkModifyActivity.this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
                                 }
                             });
+
+                            bzID=dataResult.getBzID();
+                            mBzValue.setText(dataResult.getBzName());
+
+                            fzrID=dataResult.getFzrID();
                             mSlfzrValue.setText(dataResult.getShFzr());
                             mSlfzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -172,9 +185,11 @@ public class WlTkModifyActivity extends BaseActivity {
                                 }
                             });
 
-                            fzrID=dataResult.getFzrID();
                             zjyID=dataResult.getZjyID();
                             mZjyValue.setText(dataResult.getZjyName());
+
+                            zjldID=dataResult.getZjldID();
+                            mZjldValue.setText(dataResult.getZjldName());
 
                             mSlRValue.setText(dataResult.getThR());
                             mSlRValue.addTextChangedListener(new TextWatcher() {
@@ -248,12 +263,16 @@ public class WlTkModifyActivity extends BaseActivity {
         return R.layout.activity_wl_tk_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectSLFZR,R.id.selectSLR,R.id.selectTKFZR,R.id.selectZJY})
+    @OnClick({R.id.confirmBtn,R.id.selectBZ,R.id.selectSLFZR,R.id.selectSLR,R.id.selectTKFZR,R.id.selectZJY,R.id.selectZJLD})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.selectSLR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLR, null);
+                break;
+            case R.id.selectBZ:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectSLFZR:
                 bundle.putString("checkQX", "ld");
@@ -265,6 +284,10 @@ public class WlTkModifyActivity extends BaseActivity {
             case R.id.selectZJY:
                 bundle.putString("checkQX", "zjy");
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
+                break;
+            case R.id.selectZJLD:
+                bundle.putString("checkQX", "zjld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -458,6 +481,10 @@ public class WlTkModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_SLR:
                     mSlRValue.setText(data.getStringExtra("personName"));
                     break;
+                case REQUEST_CODE_SELECT_BZ:
+                    bzID=data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
+                    break;
                 case REQUEST_CODE_SELECT_SLFZR:
                     fzrID=data.getIntExtra("personID",0);
                     mSlfzrValue.setText(data.getStringExtra("personName"));
@@ -468,6 +495,10 @@ public class WlTkModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_ZJY:
                     zjyID=data.getIntExtra("personID",0);
                     mZjyValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_ZJLD:
+                    zjldID=data.getIntExtra("personID",0);
+                    mZjldValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
