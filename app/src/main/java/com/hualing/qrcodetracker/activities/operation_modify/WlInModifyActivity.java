@@ -26,6 +26,7 @@ import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActi
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.MaterialInDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
@@ -65,6 +66,8 @@ public class WlInModifyActivity extends BaseActivity {
     private static final int SELECT_PRODUCT_NAME = 12;
     private static final int SELECT_PERSON = 111;
     private static final int SELECT_ZJY = 112;
+    private static final int SELECT_BZ = 113;
+    private static final int SELECT_ZJLD = 114;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -74,10 +77,14 @@ public class WlInModifyActivity extends BaseActivity {
     EditText mJhdwValue;
     @BindView(R.id.shrqValue)
     TextView mShrqValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.shfzrValue)
     TextView mShfzrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
+    @BindView(R.id.zjldValue)
+    TextView mZjldValue;
 //    @BindView(R.id.jhRValue)
 //    EditText mJhRValue;
 //    @BindView(R.id.jhfzrValue)
@@ -95,8 +102,10 @@ public class WlInModifyActivity extends BaseActivity {
     private WlInVerifyResult updatedParam;
     //记录选择物料编码或者类别的数据位置
     private int mCurrentPosition = -1;
+    private int bzID;
     private int fzrID;
     private int zjyID;
+    private int zjldID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +210,9 @@ public class WlInModifyActivity extends BaseActivity {
                                             .show();
                                 }
                             });
+                            bzID=dataResult.getBzID();
+                            mBzValue.setText(dataResult.getBzName());
+                            fzrID=dataResult.getFzrID();
                             mShfzrValue.setText(dataResult.getShFzr());
                             mShfzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -218,7 +230,6 @@ public class WlInModifyActivity extends BaseActivity {
 
                                 }
                             });
-                            fzrID=dataResult.getFzrID();
                             zjyID=dataResult.getZjyID();
                             mZjyValue.setText(dataResult.getZjyName());
 //                            mJhRValue.setText(dataResult.getFhR());
@@ -255,6 +266,8 @@ public class WlInModifyActivity extends BaseActivity {
 //
 //                                }
 //                            });
+                            zjldID=dataResult.getZjldID();
+                            mZjldValue.setText(dataResult.getZjldName());
                             mRemarkValue.setText(dataResult.getRemark());
                             mRemarkValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -309,8 +322,10 @@ public class WlInModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setBzStatus(0);
         updatedParam.setFzrStatus(0);
         updatedParam.setZjyStatus(0);
+        updatedParam.setZjldStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -386,20 +401,28 @@ public class WlInModifyActivity extends BaseActivity {
         return R.layout.activity_wl_in_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectPerson})
+    @OnClick({R.id.confirmBtn,R.id.selectBz,R.id.selectPerson,R.id.selectZJY,R.id.selectZJLD})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.confirmBtn:
                 toCommit();
                 break;
+            case R.id.selectBz:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_BZ, bundle);
+                break;
             case R.id.selectPerson:
                 bundle.putString("checkQX", "ld");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_PERSON, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
                 break;
             case R.id.selectZJY:
                 bundle.putString("checkQX", "zjy");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, SELECT_ZJY, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_ZJY, bundle);
+                break;
+            case R.id.selectZJLD:
+                bundle.putString("checkQX", "zjld");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_ZJLD, bundle);
                 break;
         }
 
@@ -695,6 +718,10 @@ public class WlInModifyActivity extends BaseActivity {
                         mAdapter.notifyDataSetChanged();
                     }
                     break;
+                case SELECT_BZ:
+                    bzID=data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
+                    break;
                 case SELECT_PERSON:
                     fzrID=data.getIntExtra("personID",0);
                     mShfzrValue.setText(data.getStringExtra("personName"));
@@ -702,6 +729,10 @@ public class WlInModifyActivity extends BaseActivity {
                 case SELECT_ZJY:
                     zjyID=data.getIntExtra("personID",0);
                     mZjyValue.setText(data.getStringExtra("personName"));
+                    break;
+                case SELECT_ZJLD:
+                    zjldID=data.getIntExtra("personID",0);
+                    mZjldValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
