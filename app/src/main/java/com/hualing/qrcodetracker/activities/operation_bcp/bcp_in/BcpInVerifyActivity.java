@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.operation_bcp.bcp_in;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -65,6 +66,10 @@ public class BcpInVerifyActivity extends BaseActivity {
     private List<BcpInShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isBZ=false;
+    private boolean isFZR=false;
+    private boolean isZJY=false;
+    private boolean isZJLD=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +95,32 @@ public class BcpInVerifyActivity extends BaseActivity {
         param = new VerifyParam();
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-            boolean isFZR=false;
             for (String checkQX:checkQXArr) {
-                if("ld".equals(checkQX)){
+                if("bz".equals(checkQX)){
+                    isBZ=true;
+                    break;
+                }
+                else if("ld".equals(checkQX)){
                     isFZR=true;
                     break;
                 }
+                else if("zjy".equals(checkQX)){
+                    isZJY=true;
+                    break;
+                }
+                else if("zjld".equals(checkQX)){
+                    isZJLD=true;
+                    break;
+                }
             }
-            if(isFZR)
+            if(isBZ)
+                param.setCheckQXFlag(VerifyParam.BZ);
+            else if(isFZR)
                 param.setCheckQXFlag(VerifyParam.FZR);
-            else
+            else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
+            else if(isZJLD)
+                param.setCheckQXFlag(VerifyParam.ZJLD);
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);

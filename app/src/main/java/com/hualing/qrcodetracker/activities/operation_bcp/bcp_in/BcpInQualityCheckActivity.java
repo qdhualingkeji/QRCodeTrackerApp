@@ -70,6 +70,8 @@ public class BcpInQualityCheckActivity extends BaseActivity {
     private List<BcpInShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isZJY=false;
+    private boolean isZJLD=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,17 +97,23 @@ public class BcpInQualityCheckActivity extends BaseActivity {
         param = new VerifyParam();
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-            boolean isFZR=false;
             for (String checkQX:checkQXArr) {
-                if("ld".equals(checkQX)){
-                    isFZR=true;
+                if("zjy".equals(checkQX)){
+                    isZJY=true;
+                    break;
+                }
+                else if("zjld".equals(checkQX)){
+                    isZJLD=true;
                     break;
                 }
             }
-            if(isFZR)
-                param.setCheckQXFlag(VerifyParam.FZR);
-            else
-                param.setCheckQXFlag(VerifyParam.ZJY);
+            //下面是根据身份判断当前是质检还是审核
+            int checkQXFlag=-1;
+            if(isZJY)
+                checkQXFlag=VerifyParam.ZJY;
+            else if(isZJLD)
+                checkQXFlag=VerifyParam.ZJLD;
+            param.setCheckQXFlag(checkQXFlag);
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);

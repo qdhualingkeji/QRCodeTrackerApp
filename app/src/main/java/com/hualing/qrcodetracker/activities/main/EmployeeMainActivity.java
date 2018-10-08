@@ -773,7 +773,6 @@ public class EmployeeMainActivity extends BaseActivity {
                 public void onClick(View v) {
                     if(isBZ||isFZR) {
                         for (Module2 module2 : mCanUseList) {
-                            Log.e("isBZ=========",""+isBZ);
                             if ("审核".equals(module2.getMname())) {
                                 GlobalData.currentFunctionType = FunctionType.VERIFY;
                                 toWhere(GlobalData.currentFunctionType);

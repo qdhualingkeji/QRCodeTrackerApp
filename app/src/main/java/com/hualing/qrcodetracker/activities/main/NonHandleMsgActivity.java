@@ -233,15 +233,15 @@ public class NonHandleMsgActivity extends BaseActivity {
                                     intent = new Intent(NonHandleMsgActivity.this,WlOutVerifyActivity.class);
                                     break;
                                 case "物料退库单":
-                                    if(isFZR)
+                                    if(isBZ||isFZR)
                                         intent = new Intent(NonHandleMsgActivity.this,WlTkVerifyActivity.class);
-                                    else
+                                    else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,WlTkQualityCheckActivity.class);
                                     break;
                                 case "半成品/成品入库单":
-                                    if(isFZR)
+                                    if(isBZ||isFZR)
                                         intent = new Intent(NonHandleMsgActivity.this,BcpInVerifyActivity.class);
-                                    else
+                                    else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,BcpInQualityCheckActivity.class);
                                     break;
                                 case "成品出库单":

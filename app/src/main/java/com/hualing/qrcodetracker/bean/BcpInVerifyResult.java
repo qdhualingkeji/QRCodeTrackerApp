@@ -20,11 +20,17 @@ public class BcpInVerifyResult {
     private String jhFzr;
     private String shFzr;
     private String remark;
+    private int bzID;
+    private int bzStatus;
+    private String bzName;
     private int fzrID;
     private int fzrStatus;
     private int zjyID;
     private int zjyStatus;
     private String zjyName;
+    private int zjldID;
+    private int zjldStatus;
+    private String zjldName;
 
     private List<BcpInShowBean> beans;
 
@@ -130,5 +136,53 @@ public class BcpInVerifyResult {
 
     public void setBeans(List<BcpInShowBean> beans) {
         this.beans = beans;
+    }
+
+    public int getBzID() {
+        return bzID;
+    }
+
+    public void setBzID(int bzID) {
+        this.bzID = bzID;
+    }
+
+    public int getBzStatus() {
+        return bzStatus;
+    }
+
+    public void setBzStatus(int bzStatus) {
+        this.bzStatus = bzStatus;
+    }
+
+    public String getBzName() {
+        return bzName;
+    }
+
+    public void setBzName(String bzName) {
+        this.bzName = bzName;
+    }
+
+    public int getZjldID() {
+        return zjldID;
+    }
+
+    public void setZjldID(int zjldID) {
+        this.zjldID = zjldID;
+    }
+
+    public int getZjldStatus() {
+        return zjldStatus;
+    }
+
+    public void setZjldStatus(int zjldStatus) {
+        this.zjldStatus = zjldStatus;
+    }
+
+    public String getZjldName() {
+        return zjldName;
+    }
+
+    public void setZjldName(String zjldName) {
+        this.zjldName = zjldName;
     }
 }

@@ -18,10 +18,14 @@ public class CreateBCPRKDParam {
     private String ShFzr;
     private String Jhr;
     private String JhFzr;
+    private Integer BzID;
+    private Integer BzStatus;
     private Integer FzrID;
     private Integer FzrStatus;
     private Integer ZjyID;
     private Integer ZjyStatus;
+    private Integer ZjldID;
+    private Integer ZjldStatus;
     private String remark;
 
     public String getInDh() {
@@ -118,5 +122,37 @@ public class CreateBCPRKDParam {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Integer getBzID() {
+        return BzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        BzID = bzID;
+    }
+
+    public Integer getBzStatus() {
+        return BzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        BzStatus = bzStatus;
+    }
+
+    public Integer getZjldID() {
+        return ZjldID;
+    }
+
+    public void setZjldID(Integer zjldID) {
+        ZjldID = zjldID;
+    }
+
+    public Integer getZjldStatus() {
+        return ZjldStatus;
+    }
+
+    public void setZjldStatus(Integer zjldStatus) {
+        ZjldStatus = zjldStatus;
     }
 }

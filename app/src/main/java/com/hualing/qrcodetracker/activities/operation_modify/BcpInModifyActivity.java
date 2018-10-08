@@ -61,6 +61,8 @@ public class BcpInModifyActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_JHFZR = 32;
     private static final int REQUEST_CODE_SELECT_SHR = 33;
     private static final int REQUEST_CODE_SELECT_ZJY = 34;
+    private static final int REQUEST_CODE_SELECT_BZ = 35;
+    private static final int REQUEST_CODE_SELECT_ZJLD = 36;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.indhValue)
@@ -71,12 +73,16 @@ public class BcpInModifyActivity extends BaseActivity {
     LinearLayout mSelectBM;
     @BindView(R.id.ShrValue)
     TextView mShrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.ShFzrValue)
     TextView mShFzrValue;
     @BindView(R.id.JhFhrValue)
     TextView mJhFhrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
+    @BindView(R.id.zjldValue)
+    TextView mZjldValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
@@ -90,8 +96,10 @@ public class BcpInModifyActivity extends BaseActivity {
     private BcpInVerifyResult updatedParam;
     //记录选择物料编码或者类别的数据位置
     private int mCurrentPosition = -1;
+    private int bzID;
     private int fzrID;
     private int zjyID;
+    private int zjldID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +176,10 @@ public class BcpInModifyActivity extends BaseActivity {
 
                                 }
                             });
+
+                            bzID=dataResult.getBzID();
+                            mBzValue.setText(dataResult.getBzName());
+
                             mShFzrValue.setText(dataResult.getShFzr());
                             mShFzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -189,6 +201,9 @@ public class BcpInModifyActivity extends BaseActivity {
                             fzrID=dataResult.getFzrID();
                             zjyID=dataResult.getZjyID();
                             mZjyValue.setText(dataResult.getZjyName());
+
+                            zjldID=dataResult.getZjldID();
+                            mZjldValue.setText(dataResult.getZjldName());
 
                             mShrValue.setText(dataResult.getJhR());
                             mShrValue.addTextChangedListener(new TextWatcher() {
@@ -274,8 +289,10 @@ public class BcpInModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setBzStatus(0);
         updatedParam.setFzrStatus(0);
         updatedParam.setZjyStatus(0);
+        updatedParam.setZjldStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -351,12 +368,16 @@ public class BcpInModifyActivity extends BaseActivity {
         return R.layout.activity_bcp_in_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectSHR,R.id.selectSHFZR,R.id.selectJHFZR,R.id.selectZJY})
+    @OnClick({R.id.confirmBtn,R.id.selectSHR,R.id.selectBZ,R.id.selectSHFZR,R.id.selectJHFZR,R.id.selectZJY,R.id.selectZJLD})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.selectSHR:
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_SHR,null);
+                break;
+            case R.id.selectBZ:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_BZ,bundle);
                 break;
             case R.id.selectSHFZR:
                 bundle.putString("checkQX", "ld");
@@ -368,6 +389,10 @@ public class BcpInModifyActivity extends BaseActivity {
             case R.id.selectZJY:
                 bundle.putString("checkQX", "zjy");
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
+                break;
+            case R.id.selectZJLD:
+                bundle.putString("checkQX", "zjld");
+                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -633,6 +658,10 @@ public class BcpInModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_SHR:
                     mShrValue.setText(data.getStringExtra("personName"));
                     break;
+                case REQUEST_CODE_SELECT_BZ:
+                    bzID=data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
+                    break;
                 case REQUEST_CODE_SELECT_SHFZR:
                     fzrID=data.getIntExtra("personID",0);
                     mShFzrValue.setText(data.getStringExtra("personName"));
@@ -643,6 +672,10 @@ public class BcpInModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_ZJY:
                     zjyID=data.getIntExtra("personID",0);
                     mZjyValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_ZJLD:
+                    zjldID=data.getIntExtra("personID",0);
+                    mZjldValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
