@@ -45,6 +45,7 @@ public class CPCKDInputActivity extends BaseActivity {
     private static final int REQUEST_CODE_SELECT_JHFZR = 31;
     private static final int REQUEST_CODE_SELECT_SHFZR = 32;
     private static final int REQUEST_CODE_SELECT_SHR = 33;
+    private static final int REQUEST_CODE_SELECT_BZ = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -52,12 +53,15 @@ public class CPCKDInputActivity extends BaseActivity {
     TextView mDepartmentValue;
     @BindView(R.id.ShrValue)
     TextView mShrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.ShFzrValue)
     TextView mShFzrValue;
     @BindView(R.id.JhFhrValue)
     TextView mJhFhrValue;
     @BindView(R.id.shdwValue)
     EditText mShdwValue;
+    private int bzID;
     private int fzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
@@ -116,6 +120,10 @@ public class CPCKDInputActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_JHFZR:
                     mJhFhrValue.setText(data.getStringExtra("personName"));
                     break;
+                case REQUEST_CODE_SELECT_BZ:
+                    bzID=data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
+                    break;
                 case REQUEST_CODE_SELECT_SHFZR:
                     fzrID=data.getIntExtra("personID",0);
                     mShFzrValue.setText(data.getStringExtra("personName"));
@@ -150,6 +158,8 @@ public class CPCKDInputActivity extends BaseActivity {
         //当前用户提交
         params.setFhr(GlobalData.realName);
         params.setFhFzr(jhfzrValue);
+        params.setBzID(bzID);
+        params.setBzStatus(0);
         params.setFzrID(fzrID);
         params.setFzrStatus(0);
         params.setRemark(mRemarkValue.getText().toString());
@@ -203,7 +213,7 @@ public class CPCKDInputActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.selectBM, R.id.commitBtn,R.id.selectSHR,R.id.selectSHFZR,R.id.selectJHFZR})
+    @OnClick({R.id.selectBM, R.id.commitBtn,R.id.selectSHR,R.id.selectBZ,R.id.selectSHFZR,R.id.selectJHFZR})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -212,6 +222,10 @@ public class CPCKDInputActivity extends BaseActivity {
                 break;
             case R.id.selectSHR:
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHR, null);
+                break;
+            case R.id.selectBZ:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectSHFZR:
                 bundle.putString("checkQX", "ld");

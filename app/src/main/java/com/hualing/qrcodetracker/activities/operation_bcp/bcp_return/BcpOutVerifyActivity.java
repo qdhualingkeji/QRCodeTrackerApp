@@ -67,6 +67,10 @@ public class BcpOutVerifyActivity extends BaseActivity {
     private List<CpOutShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isBZ=false;
+    private boolean isFZR=false;
+    private boolean isZJY=false;
+    private boolean isZJLD=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,17 +97,32 @@ public class BcpOutVerifyActivity extends BaseActivity {
         if (getIntent() != null) {
             Log.e("checkQX==========",""+GlobalData.checkQXGroup);
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
-            boolean isFZR=false;
             for (String checkQX:checkQXArr) {
-                if("ld".equals(checkQX)){
+                if("bz".equals(checkQX)){
+                    isBZ=true;
+                    break;
+                }
+                else if("ld".equals(checkQX)){
                     isFZR=true;
                     break;
                 }
+                else if("zjy".equals(checkQX)){
+                    isZJY=true;
+                    break;
+                }
+                else if("zjld".equals(checkQX)){
+                    isZJLD=true;
+                    break;
+                }
             }
-            if(isFZR)
+            if(isBZ)
+                param.setCheckQXFlag(VerifyParam.BZ);
+            else if(isFZR)
                 param.setCheckQXFlag(VerifyParam.FZR);
-            else
+            else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
+            else if(isZJLD)
+                param.setCheckQXFlag(VerifyParam.ZJLD);
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
@@ -202,7 +221,6 @@ public class BcpOutVerifyActivity extends BaseActivity {
     }
 
     private void toAgree() {
-        Log.e("param==========",""+param.getCheckQXFlag());
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 

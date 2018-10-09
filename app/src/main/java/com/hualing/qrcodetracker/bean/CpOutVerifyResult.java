@@ -20,6 +20,8 @@ public class CpOutVerifyResult {
     private String lhFzr;
     private String fhFzr;
     private String remark;
+    private Integer bzID;
+    private Integer bzStatus;
     private Integer fzrID;
     private Integer fzrStatus;
 
@@ -95,6 +97,22 @@ public class CpOutVerifyResult {
 
     public void setFzrStatus(Integer fzrStatus) {
         this.fzrStatus = fzrStatus;
+    }
+
+    public Integer getBzID() {
+        return bzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        this.bzID = bzID;
+    }
+
+    public Integer getBzStatus() {
+        return bzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        this.bzStatus = bzStatus;
     }
 
     public List<CpOutShowBean> getBeans() {

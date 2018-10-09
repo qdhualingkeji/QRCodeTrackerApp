@@ -17,6 +17,7 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.SelectDepartmentActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.CpOutShowBean;
@@ -48,7 +49,7 @@ public class BcpOutModifyActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 12;
     private static final int REQUEST_CODE_SELECT_FHFZR = 31;
-    private static final int REQUEST_CODE_SELECT_FHR = 32;
+    private static final int REQUEST_CODE_SELECT_LHR = 32;
     private static final int REQUEST_CODE_SELECT_SHFZR = 33;
 
     @BindView(R.id.title)
@@ -61,8 +62,8 @@ public class BcpOutModifyActivity extends BaseActivity {
     LinearLayout mSelectLLBM;
     @BindView(R.id.fhfzrValue)
     TextView mFhfzrValue;
-    @BindView(R.id.fhRValue)
-    TextView mFhRValue;
+    @BindView(R.id.lhRValue)
+    TextView mLhRValue;
     @BindView(R.id.shfzrValue)
     TextView mShfzrValue;
     @BindView(R.id.remarkValue)
@@ -159,8 +160,8 @@ public class BcpOutModifyActivity extends BaseActivity {
 
                                 }
                             });
-                            mFhRValue.setText(dataResult.getLhR());
-                            mFhRValue.addTextChangedListener(new TextWatcher() {
+                            mLhRValue.setText(dataResult.getLhR());
+                            mLhRValue.addTextChangedListener(new TextWatcher() {
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -231,19 +232,19 @@ public class BcpOutModifyActivity extends BaseActivity {
         return R.layout.activity_bcp_out_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectFHFZR,R.id.selectFHR,R.id.selectSHFZR})
+    @OnClick({R.id.confirmBtn,R.id.selectFHFZR,R.id.selectLHR,R.id.selectSHFZR})
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.selectFHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FHFZR, null);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FHFZR, null);
 
                 break;
-            case R.id.selectFHR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FHR, null);
+            case R.id.selectLHR:
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LHR, null);
 
                 break;
             case R.id.selectSHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SHFZR, null);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHFZR, null);
 
                 break;
             case R.id.confirmBtn:
@@ -256,7 +257,7 @@ public class BcpOutModifyActivity extends BaseActivity {
     private void toCommit() {
 
         if ("请选择部门".equals(mLldwValue.getText().toString())
-                || "请选择发货人".equals(mFhRValue.getText().toString())
+                || "请选择领货人".equals(mLhRValue.getText().toString())
                 || "请选择收货负责人".equals(mShfzrValue.getText().toString())
                 || "请选择发货负责人".equals(mFhfzrValue.getText().toString())
                 ) {
@@ -264,6 +265,7 @@ public class BcpOutModifyActivity extends BaseActivity {
             return;
         }
         updatedParam.setBeans(mData);
+        updatedParam.setBzStatus(0);
         updatedParam.setFzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
@@ -362,8 +364,8 @@ public class BcpOutModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_FHFZR:
                     mFhfzrValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_FHR:
-                    mFhRValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_LHR:
+                    mLhRValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_SHFZR:
                     mShfzrValue.setText(data.getStringExtra("personName"));

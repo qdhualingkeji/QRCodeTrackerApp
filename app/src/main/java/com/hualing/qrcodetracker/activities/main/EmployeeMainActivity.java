@@ -366,10 +366,14 @@ public class EmployeeMainActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
-        if(isFZR)
+        if(isBZ)
+            params.setCheckQXFlag(MainParams.BZ);
+        else if(isFZR)
             params.setCheckQXFlag(MainParams.FZR);
-        else
+        else if(isZJY)
             params.setCheckQXFlag(MainParams.ZJY);
+        else if(isZJLD)
+            params.setCheckQXFlag(MainParams.ZJLD);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<NonCheckResult>>() {
             @Override
