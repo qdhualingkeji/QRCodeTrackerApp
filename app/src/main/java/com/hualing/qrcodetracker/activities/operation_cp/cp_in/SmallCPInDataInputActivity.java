@@ -339,7 +339,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             //调接口发推送审核
-                                            sendNotification();
+                                            //sendNotification();
+                                            AllActivitiesHolder.removeAct(SmallCPInDataInputActivity.this);
                                         }
                                     })
                                     .show();
