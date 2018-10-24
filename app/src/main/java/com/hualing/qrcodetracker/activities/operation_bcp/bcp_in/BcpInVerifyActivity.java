@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -293,6 +295,18 @@ public class BcpInVerifyActivity extends BaseActivity {
                 viewHolder.mSlValue.setText(bean.getShl() + "");
             }
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+            final String qRCodeID = bean.getqRCodeID();
+            if("4".equals(qRCodeID.substring(8,9))){
+                viewHolder.goSmallBtn.setVisibility(View.VISIBLE);
+                viewHolder.goSmallBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("qRCodeID",qRCodeID);
+                        IntentUtil.openActivityForResult(BcpInVerifyActivity.this, SmallCPInQualityCheckActivity.class, -1, bundle);
+                    }
+                });
+            }
 
             return convertView;
         }
@@ -314,6 +328,8 @@ public class BcpInVerifyActivity extends BaseActivity {
             TextView mSlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.goSmallBtn)
+            Button goSmallBtn;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

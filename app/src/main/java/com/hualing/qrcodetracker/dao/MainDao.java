@@ -256,6 +256,9 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.GET_BCPIN_VERIFY_DATA)
     ActionResult<BcpInVerifyResult> getBcpInVerifyData(VerifyParam param);
 
+    @ActionRequest(func = GlobalData.Service.GET_SMALL_CP_IN_VERIFY_DATA)
+    ActionResult<BcpInVerifyResult> getSmallCPInVerifyData(BcpInShowBean params);
+
     @ActionRequest(func = GlobalData.Service.GET_BCPIN_QUALITY_CHECK_DATA)
     ActionResult<BcpInQualityCheckResult> getBcpInQualityCheckData(VerifyParam param);
 
@@ -336,4 +339,5 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.GET_SMALLCP_IN_QUALITY_CHECKDATA)
     ActionResult<BcpInQualityCheckResult> getSmallCPInQualityCheckData(BcpInShowBean params);
+
 }

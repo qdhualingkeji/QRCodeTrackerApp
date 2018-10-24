@@ -201,7 +201,14 @@
         <activity android:name=".activities.operation_common.SelectPersonActivity" />
         <activity android:name=".activities.main.ScanHWActivity" />
         <activity android:name=".activities.operation_common.SelectPersonGroupActivity" />
-        <activity android:name=".activities.operation_bcp.bcp_in.SmallCPInQualityCheckActivity"></activity>
+        <activity android:name=".activities.operation_bcp.bcp_in.SmallCPInQualityCheckActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_in.SmallCPInVerifyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
