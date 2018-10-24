@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_in.SmallCPInDataInputActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
@@ -25,6 +27,7 @@ import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
@@ -322,6 +325,18 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             viewHolder.mBcpCzyValue.setText(bean.getCzy());
             viewHolder.mBcpSldwValue.setText(bean.getdW());
             viewHolder.mBcpZhlValue.setText(bean.getdWZL() + "");
+            final String qRCodeID = bean.getqRCodeID();
+            if("4".equals(qRCodeID.substring(8,9))){
+                viewHolder.goSmallBtn.setVisibility(View.VISIBLE);
+                viewHolder.goSmallBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("qRCodeID",qRCodeID);
+                        IntentUtil.openActivityForResult(BcpInQualityCheckActivity.this, SmallCPInQualityCheckActivity.class, -1, bundle);
+                    }
+                });
+            }
 
             return convertView;
         }
@@ -351,6 +366,8 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             TextView mBcpSldwValue;
             @BindView(R.id.bcpZhlValue)
             TextView mBcpZhlValue;
+            @BindView(R.id.goSmallBtn)
+            Button goSmallBtn;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

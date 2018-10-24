@@ -257,18 +257,18 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                     intent = new Intent(this, BcpTKDataInputActivity.class);
                 break;
             case FunctionType.PRODUCT_IN:
-                if(isFirst)
-                    intent = new Intent(this, CPRKDInputActivity.class);
-                else{
                     switch (GlobalData.currentCPInType) {
                         case CPType.BIG_CP_IN:
-                            intent = new Intent(this, BigCPInDataInputActivity.class);
+                            if(isFirst)
+                                intent = new Intent(this, CPRKDInputActivity.class);
+                            else{
+                                intent = new Intent(this, BigCPInDataInputActivity.class);
+                            }
                             break;
                         case CPType.SMALL_CP_IN:
                             intent = new Intent(this, SmallCPInDataInputActivity.class);
                             break;
                     }
-                }
                 break;
             case FunctionType.PRODUCT_OUT:
                 if(isFirst)

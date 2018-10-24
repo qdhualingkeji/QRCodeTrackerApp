@@ -445,7 +445,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         params.setCzy(GlobalData.realName);
         params.setQrCodeId(mQrcodeId);
         params.setBz(1);
-        params.setIndh(SharedPreferenceUtil.getBCPRKDNumber());
+        //params.setIndh(SharedPreferenceUtil.getBCPRKDNumber());
 
         //填充所需原料数据
         //addSXYLData();
