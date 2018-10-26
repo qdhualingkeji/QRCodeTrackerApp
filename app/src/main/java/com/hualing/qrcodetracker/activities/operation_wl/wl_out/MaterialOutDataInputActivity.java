@@ -193,7 +193,8 @@ public class MaterialOutDataInputActivity extends BaseActivity {
 
         params.setQrCodeId(mQrcodeId);
         DecimalFormat df = new DecimalFormat("0.00");
-        params.setCkShL(Float.parseFloat(df.format(remainShL - (dwzl - Float.parseFloat(value)) / dwzl)));
+        //params.setCkShL(Float.parseFloat(df.format(remainShL - (dwzl - Float.parseFloat(value)) / dwzl)));
+        params.setCkShL(Float.parseFloat(value)*remainShL/dwzl);
         params.setDwzl(Float.parseFloat(value));
         //        params.setLlbm(llbm);
         params.setOutDh(SharedPreferenceUtil.getWlCKDNumber());

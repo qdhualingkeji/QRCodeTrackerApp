@@ -14,6 +14,7 @@ public class WLTKShowDataResult {
     private String productName;
 
     private String sortName;
+    private float pczl;
     private float dwzl;
     private float shl;
     private String chd;
@@ -34,6 +35,14 @@ public class WLTKShowDataResult {
 
     public void setSortName(String sortName) {
         this.sortName = sortName;
+    }
+
+    public float getPczl() {
+        return pczl;
+    }
+
+    public void setPczl(float pczl) {
+        this.pczl = pczl;
     }
 
     public float getDwzl() {

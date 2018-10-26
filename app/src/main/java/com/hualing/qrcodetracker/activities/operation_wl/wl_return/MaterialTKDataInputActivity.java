@@ -68,6 +68,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
     private WLTKParam params;
     private WLTKGetShowDataParam getParam;
     private String mQrcodeId;
+    private float pczl;
     private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
@@ -175,6 +176,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                             mGgValue.setText(dataResult.getGg());
                             mSldwValue.setText(dataResult.getDw());
                             mRemainShlValue.setText(dataResult.getShl() + "");
+                            pczl = dataResult.getPczl();
                             mZhlValue.setText(dataResult.getDwzl() + "");
                         }
                     }
@@ -211,6 +213,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
+        /*
         float ckShL = Float.parseFloat(value);
         if(ckShL==0){
             Toast.makeText(this, "退库数量不能为0", Toast.LENGTH_SHORT).show();
@@ -220,6 +223,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
             Toast.makeText(this, "退库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
         }
+        */
 
         params.setQrCodeId(mQrcodeId);
         params.setTkShL(Float.parseFloat(value));
