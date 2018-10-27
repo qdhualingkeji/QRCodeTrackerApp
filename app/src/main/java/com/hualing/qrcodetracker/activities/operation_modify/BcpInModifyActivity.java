@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInQualityCheckActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.SmallCPInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
@@ -581,6 +584,19 @@ public class BcpInModifyActivity extends BaseActivity {
                 }
             });
 
+            final String qRCodeID = bean.getqRCodeID();
+            if("4".equals(qRCodeID.substring(8,9))){
+                viewHolder.goSmallBtn.setVisibility(View.VISIBLE);
+                viewHolder.goSmallBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("qRCodeID",qRCodeID);
+                        IntentUtil.openActivityForResult(BcpInModifyActivity.this, SmallCPInVerifyActivity.class, -1, bundle);
+                    }
+                });
+            }
+
             return convertView;
         }
 
@@ -607,6 +623,8 @@ public class BcpInModifyActivity extends BaseActivity {
             EditText mDwzlValue;
             @BindView(R.id.dwValue)
             EditText mDwValue;
+            @BindView(R.id.goSmallBtn)
+            Button goSmallBtn;
             int mSelectedLeiBieId = -1;
 
             ViewHolder(View view) {

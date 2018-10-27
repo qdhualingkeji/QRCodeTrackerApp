@@ -217,10 +217,12 @@ public class BcpTKDataInputActivity extends BaseActivity {
         }
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
         float tkShL = Float.parseFloat(value);
+        /*
         if (tkShL > remainShL) {
             Toast.makeText(this, "退库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
         }
+        */
         float tkzl = Float.parseFloat(mTkZhlValue.getText().toString());
 
         params.setQrCodeId(mQrcodeId);

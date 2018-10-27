@@ -19,6 +19,7 @@ import com.hualing.qrcodetracker.bean.BcpInShowBean;
 import com.hualing.qrcodetracker.bean.BcpInVerifyResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 
@@ -27,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -96,6 +98,15 @@ public class SmallCPInVerifyActivity extends BaseActivity {
     @Override
     protected void debugShow() {
 
+    }
+
+    @OnClick({R.id.returnBtn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.returnBtn:
+                AllActivitiesHolder.removeAct(SmallCPInVerifyActivity.this);
+                break;
+        }
     }
 
     @Override
