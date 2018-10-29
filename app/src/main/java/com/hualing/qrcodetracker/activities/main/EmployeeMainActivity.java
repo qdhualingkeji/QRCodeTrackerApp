@@ -33,6 +33,7 @@ import com.hualing.qrcodetracker.activities.operation_cp.cp_in.CPInProductStyleP
 import com.hualing.qrcodetracker.activities.operation_cp.cp_in.CPRKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_out.CPCKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_cp.cp_out.CPOutProductStylePickActivity;
+import com.hualing.qrcodetracker.activities.operation_user.UserManagerActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WLInRKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_out.WLCKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_return.WLTKDInputActivity;
@@ -627,6 +628,9 @@ public class EmployeeMainActivity extends BaseActivity {
             case FunctionType.MODIFY_DATA:
                 IntentUtil.openActivity(EmployeeMainActivity.this, ModifyDataActivity.class);
                 break;
+            case FunctionType.USER_MANAGER:
+                IntentUtil.openActivity(EmployeeMainActivity.this, UserManagerActivity.class);
+                break;
         }
 
     }
@@ -832,11 +836,6 @@ public class EmployeeMainActivity extends BaseActivity {
                 }
             });
 
-            /*
-            CardView cpIn=view3.findViewById(R.id.cpIn);
-            cpIn.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-            */
-
             CardView cpOut = view3.findViewById(R.id.cpOut);
             cpOut.setLayoutParams(new LinearLayout.LayoutParams(width,height));
             cpOut.setOnClickListener(new View.OnClickListener() {
@@ -845,6 +844,22 @@ public class EmployeeMainActivity extends BaseActivity {
                     for (Module2 module2 : mCanUseList) {
                         if ("成品出库".equals(module2.getMname())) {
                             GlobalData.currentFunctionType = FunctionType.PRODUCT_OUT;
+                            toWhere(GlobalData.currentFunctionType);
+                            return;
+                        }
+                    }
+                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            CardView userManager=view3.findViewById(R.id.userManager);
+            userManager.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+            userManager.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (Module2 module2 : mCanUseList) {
+                        if ("用户管理".equals(module2.getMname())) {
+                            GlobalData.currentFunctionType = FunctionType.USER_MANAGER;
                             toWhere(GlobalData.currentFunctionType);
                             return;
                         }

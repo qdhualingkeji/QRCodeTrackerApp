@@ -53,4 +53,7 @@ public class FunctionType {
     //审核不过关修改录入的数据业务线
     public static final int MODIFY_DATA = 42;
 
+    //用户管理线
+    public static final int USER_MANAGER = 43;
+
 }

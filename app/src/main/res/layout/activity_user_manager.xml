@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/layout_back"
+    tools:context=".activities.operation_user.UserManagerActivity">
+
+    <com.hualing.qrcodetracker.widget.TitleBar
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleBar_Height"
+        app:background_color="@color/colorPrimary"
+        app:leftButton_size="20dp"
+        app:left_img="@drawable/last"
+        app:rightButton_size="20dp"
+        app:text_content="用户管理"
+        app:title_textColor="@color/titleBar_textColor"
+        app:title_textSize="@dimen/titleBar_textSize">
+    </com.hualing.qrcodetracker.widget.TitleBar>
+
+    <LinearLayout
+        android:id="@+id/userRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/white"
+        android:padding="15dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/userregister"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="员工注册"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/userSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@android:color/white"
+        android:padding="15dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/usersearch"
+            android:layout_marginRight="15dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="员工查询"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

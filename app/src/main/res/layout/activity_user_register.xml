@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.operation_user.UserRegisterActivity">
+
+    <com.hualing.qrcodetracker.widget.TitleBar
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleBar_Height"
+        app:background_color="@color/colorPrimary"
+        app:leftButton_size="20dp"
+        app:left_img="@drawable/last"
+        app:rightButton_size="20dp"
+        app:text_content="员工注册"
+        app:title_textColor="@color/titleBar_textColor"
+        app:title_textSize="@dimen/titleBar_textSize">
+    </com.hualing.qrcodetracker.widget.TitleBar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="部门："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/selectPerson"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/ShFzrValue"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:text="请选择仓库负责人"
+                        android:textColor="@color/divide_dark_gray_color"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/next"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="姓名："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/trueNameValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:inputType="numberDecimal"
+                    android:hint="请填写姓名"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="账号："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/loginNameValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:hint="请填写账号"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/passwordValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPassword"
+                    android:hint="请填写密码"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="确认密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/password2Value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPassword"
+                    android:hint="请再次输入密码"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

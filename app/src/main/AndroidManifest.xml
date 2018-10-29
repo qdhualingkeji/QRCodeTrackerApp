@@ -209,6 +209,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.operation_user.UserManagerActivity" />
+        <activity android:name=".activities.operation_user.UserRegisterActivity"></activity>
     </application>
 
 </manifest>
