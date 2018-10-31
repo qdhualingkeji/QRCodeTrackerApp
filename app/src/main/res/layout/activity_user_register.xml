@@ -49,18 +49,18 @@
                     />
 
                 <LinearLayout
-                    android:id="@+id/selectPerson"
+                    android:id="@+id/selectBM"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/ShFzrValue"
+                        android:id="@+id/bmValue"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
-                        android:text="请选择仓库负责人"
+                        android:text="请选择部门"
                         android:textColor="@color/divide_dark_gray_color"
                         android:textSize="16sp"/>
 
@@ -99,7 +99,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:inputType="numberDecimal"
                     android:hint="请填写姓名"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"/>
@@ -205,6 +204,78 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="权限："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/selectQX"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/qxValue"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:text="请选择权限"
+                        android:textColor="@color/divide_dark_gray_color"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/next"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/commitBtn"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="@color/item_back"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true"
+                app:contentPadding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="确认提交"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp"/>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 

@@ -210,7 +210,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.operation_user.UserManagerActivity" />
-        <activity android:name=".activities.operation_user.UserRegisterActivity"></activity>
+        <activity android:name=".activities.operation_user.UserRegisterActivity" />
+        <activity android:name=".activities.operation_user.SelectModule2Activity"></activity>
     </application>
 
 </manifest>

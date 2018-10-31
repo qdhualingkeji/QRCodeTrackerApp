@@ -69,6 +69,7 @@ public class SelectPersonGroupActivity extends BaseActivity {
     @Override
     protected void initLogic() {
         bundle = getIntent().getExtras();
+
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
@@ -188,11 +189,21 @@ public class SelectPersonGroupActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle bundle1 = new Bundle();
-                    bundle1.putInt("groupID", bean.getGroupID());
-                    if(bundle!=null)
-                        bundle1.putString("checkQX", bundle.getString("checkQX"));
-                    IntentUtil.openActivityForResult(SelectPersonGroupActivity.this, SelectPersonActivity.class, SELECT_PERSON, bundle1);
+                    int flag = bundle.getInt("flag",0);
+                    if(flag==1) {
+                        Intent ii = new Intent();
+                        ii.putExtra("groupName",bean.getGroupName());
+                        ii.putExtra("groupID",bean.getGroupID());
+                        setResult(RESULT_OK,ii);
+                        AllActivitiesHolder.removeAct(SelectPersonGroupActivity.this);
+                    }
+                    else {
+                        Bundle bundle1 = new Bundle();
+                        bundle1.putInt("groupID", bean.getGroupID());
+                        if (bundle != null)
+                            bundle1.putString("checkQX", bundle.getString("checkQX"));
+                        IntentUtil.openActivityForResult(SelectPersonGroupActivity.this, SelectPersonActivity.class, SELECT_PERSON, bundle1);
+                    }
                 }
             });
         }

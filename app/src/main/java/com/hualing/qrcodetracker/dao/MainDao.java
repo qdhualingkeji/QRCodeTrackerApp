@@ -47,9 +47,11 @@ import com.hualing.qrcodetracker.bean.MainParams;
 import com.hualing.qrcodetracker.bean.MainResult;
 import com.hualing.qrcodetracker.bean.MaterialInParams;
 import com.hualing.qrcodetracker.bean.MaterialOutParams;
+import com.hualing.qrcodetracker.bean.Module2Result;
 import com.hualing.qrcodetracker.bean.NonCheckResult;
 import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.PdtSortResult;
+import com.hualing.qrcodetracker.bean.PersonParam;
 import com.hualing.qrcodetracker.bean.PersonResult;
 import com.hualing.qrcodetracker.bean.ProductInParams;
 import com.hualing.qrcodetracker.bean.ProductOutParams;
@@ -340,4 +342,9 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.GET_SMALLCP_IN_QUALITY_CHECKDATA)
     ActionResult<BcpInQualityCheckResult> getSmallCPInQualityCheckData(BcpInShowBean params);
 
+    @ActionRequest(func = GlobalData.Service.GET_XZQX)
+    ActionResult<Module2Result> getXZQX();
+
+    @ActionRequest(func = GlobalData.Service.COMMIT_USER_REGISTERED_DATA)
+    ActionResult<ActionResult> commitUserRegisteredData(PersonParam params);
 }
