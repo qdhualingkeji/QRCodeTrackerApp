@@ -342,6 +342,7 @@ public class GlobalData {
         public static final String UPDATA_CPOUT_DATA = "updateCpOutData";
         public static final String UPDATA_BCPTK_DATA = "updateBcpTkData";
         public static final String GET_PERSON_INFO = "getAllPerson";
+        public static final String SEARCH_ALL_PERSON = "searchAllPerson";
         public static final String GET_CAN_MODIFY_DATA = "getCanModifyData";
         public static final String GET_SMALLCP_IN_QUALITY_CHECKDATA = "getSmallCPInQualityCheckData";
         public static final String GET_XZQX = "getXZQX";

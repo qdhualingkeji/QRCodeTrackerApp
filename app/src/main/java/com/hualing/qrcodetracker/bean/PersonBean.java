@@ -11,6 +11,7 @@ package com.hualing.qrcodetracker.bean;
 public class PersonBean {
     private int userId;
     private int groupID;
+    private String groupName;
     private String loginName;
     private String password;
     private int userStatus;
@@ -40,6 +41,14 @@ public class PersonBean {
 
     public void setGroupID(int groupID) {
         this.groupID = groupID;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getLoginName() {

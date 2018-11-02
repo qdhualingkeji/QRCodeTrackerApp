@@ -60,7 +60,7 @@ public class UserManagerActivity extends BaseActivity {
                 IntentUtil.openActivity(UserManagerActivity.this, UserRegisterActivity.class);
                 break;
             case R.id.userSearch:
-                //IntentUtil.openActivity(UserManagerActivity.this, UserSearchActivity.class);
+                IntentUtil.openActivity(UserManagerActivity.this, UserSearchActivity.class);
                 break;
         }
     }
