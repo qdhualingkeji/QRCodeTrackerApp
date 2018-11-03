@@ -51,6 +51,7 @@ import com.hualing.qrcodetracker.bean.Module2Result;
 import com.hualing.qrcodetracker.bean.NonCheckResult;
 import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.PdtSortResult;
+import com.hualing.qrcodetracker.bean.PersonBean;
 import com.hualing.qrcodetracker.bean.PersonParam;
 import com.hualing.qrcodetracker.bean.PersonResult;
 import com.hualing.qrcodetracker.bean.ProductInParams;
@@ -335,6 +336,9 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.GET_PERSON_INFO)
     ActionResult<PersonResult> getAllPerson(User userParam);
+
+    @ActionRequest(func = GlobalData.Service.GET_PERSON_BY_ID)
+    ActionResult<PersonBean> getPersonById(User param);
 
     @ActionRequest(func = GlobalData.Service.SEARCH_ALL_PERSON)
     ActionResult<PersonResult> searchAllPerson();

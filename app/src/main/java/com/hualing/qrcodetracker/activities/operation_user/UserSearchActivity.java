@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
+import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.PersonBean;
@@ -25,6 +27,7 @@ import com.hualing.qrcodetracker.bean.PersonResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -155,6 +158,14 @@ public class UserSearchActivity extends BaseActivity {
             holder.group.setText(bean.getGroupName());
             holder.loginName.setText(bean.getLoginName());
             holder.regTime.setText(bean.getRegTime());
+            holder.lookBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("userID", bean.getUserId());
+                    IntentUtil.openActivityForResult(UserSearchActivity.this,UserInfoActivity.class,-1,bundle);
+                }
+            });
         }
 
         @Override
@@ -203,6 +214,8 @@ public class UserSearchActivity extends BaseActivity {
             TextView group;
             TextView loginName;
             TextView regTime;
+            Button lookBtn;
+            Button deleteBtn;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
@@ -210,6 +223,8 @@ public class UserSearchActivity extends BaseActivity {
                 group = itemView.findViewById(R.id.groupValue);
                 loginName = itemView.findViewById(R.id.loginNameValue);
                 regTime = itemView.findViewById(R.id.regTimeValue);
+                lookBtn = itemView.findViewById(R.id.lookBtn);
+                deleteBtn = itemView.findViewById(R.id.deleteBtn);
             }
         }
 

@@ -212,7 +212,8 @@
         <activity android:name=".activities.operation_user.UserManagerActivity" />
         <activity android:name=".activities.operation_user.UserRegisterActivity" />
         <activity android:name=".activities.operation_user.SelectModule2Activity" />
-        <activity android:name=".activities.operation_user.UserSearchActivity"></activity>
+        <activity android:name=".activities.operation_user.UserSearchActivity" />
+        <activity android:name=".activities.operation_user.UserInfoActivity"></activity>
     </application>
 
 </manifest>
