@@ -338,7 +338,7 @@ public interface MainDao {
     ActionResult<PersonResult> getAllPerson(User userParam);
 
     @ActionRequest(func = GlobalData.Service.GET_PERSON_BY_ID)
-    ActionResult<PersonBean> getPersonById(User param);
+    ActionResult<PersonResult> getPersonById(User param);
 
     @ActionRequest(func = GlobalData.Service.SEARCH_ALL_PERSON)
     ActionResult<PersonResult> searchAllPerson();
@@ -354,4 +354,7 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.COMMIT_USER_REGISTERED_DATA)
     ActionResult<ActionResult> commitUserRegisteredData(PersonParam params);
+
+    @ActionRequest(func = GlobalData.Service.UPDATE_USER_DATA)
+    ActionResult<ActionResult> updateUserData(PersonResult updatedParam);
 }

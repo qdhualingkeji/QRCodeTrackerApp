@@ -348,5 +348,6 @@ public class GlobalData {
         public static final String GET_SMALLCP_IN_QUALITY_CHECKDATA = "getSmallCPInQualityCheckData";
         public static final String GET_XZQX = "getXZQX";
         public static final String COMMIT_USER_REGISTERED_DATA = "registerUser";
+        public static final String UPDATE_USER_DATA = "updateUserData";
     }
 }
