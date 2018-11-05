@@ -349,5 +349,6 @@ public class GlobalData {
         public static final String GET_XZQX = "getXZQX";
         public static final String COMMIT_USER_REGISTERED_DATA = "registerUser";
         public static final String UPDATE_USER_DATA = "updateUserData";
+        public static final String DELETE_USER = "deleteUser";
     }
 }

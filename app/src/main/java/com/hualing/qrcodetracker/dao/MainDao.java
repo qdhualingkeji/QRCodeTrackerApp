@@ -357,4 +357,7 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.UPDATE_USER_DATA)
     ActionResult<ActionResult> updateUserData(PersonResult updatedParam);
+
+    @ActionRequest(func = GlobalData.Service.DELETE_USER)
+    ActionResult<ActionResult> deleteUser(PersonParam personParam);
 }

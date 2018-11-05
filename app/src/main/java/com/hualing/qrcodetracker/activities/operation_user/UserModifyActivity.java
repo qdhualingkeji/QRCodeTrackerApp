@@ -160,7 +160,6 @@ public class UserModifyActivity extends BaseActivity {
                 ||TextUtils.isEmpty(checkQXGroup)
                 ||TextUtils.isEmpty(qxValue)
                 ){
-            Log.e("========",trueName+","+groupID+","+bmValue+","+loginNameValue+","+checkQXGroup+","+qxValue);
             Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
             return;
         }

@@ -1,8 +1,10 @@
 package com.hualing.qrcodetracker.activities.operation_user;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,6 +25,7 @@ import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.PersonBean;
+import com.hualing.qrcodetracker.bean.PersonParam;
 import com.hualing.qrcodetracker.bean.PersonResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
@@ -152,7 +155,7 @@ public class UserSearchActivity extends BaseActivity {
         }
 
         @Override
-        public void onBindViewHolder(UserSearchActivity.MyAdapter.MyViewHolder holder, int position) {
+        public void onBindViewHolder(UserSearchActivity.MyAdapter.MyViewHolder holder, final int position) {
             final PersonBean bean = mFilterData.get(position);
             holder.trueName.setText(bean.getTrueName());
             holder.group.setText(bean.getGroupName());
@@ -164,6 +167,53 @@ public class UserSearchActivity extends BaseActivity {
                     Bundle bundle = new Bundle();
                     bundle.putInt("userID", bean.getUserId());
                     IntentUtil.openActivityForResult(UserSearchActivity.this,UserInfoActivity.class,-1,bundle);
+                }
+            });
+            holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(UserSearchActivity.this)
+                            .setCancelable(false)
+                            .setTitle("提示")
+                            .setMessage("确定要删除员工："+bean.getLoginName()+"？删除后不可恢复，请谨慎操作！")
+                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    final Dialog progressDialog = TheApplication.createLoadingDialog(UserSearchActivity.this, "");
+                                    progressDialog.show();
+
+                                    final PersonParam personParam = new PersonParam();
+                                    personParam.setUserId(bean.getUserId());
+                                    Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+                                        @Override
+                                        public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                                            ActionResult<ActionResult> nr = mainDao.deleteUser(personParam);
+                                            e.onNext(nr);
+                                        }
+                                    }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                                            .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                                            .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                                                @Override
+                                                public void accept(ActionResult<ActionResult> result) throws Exception {
+                                                    progressDialog.dismiss();
+                                                    if (result.getCode() != 0) {
+                                                        Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        mFilterData.remove(position);
+                                                        MyAdapter.this.notifyDataSetChanged();
+                                                    }
+                                                }
+                                            });
+                                }
+                            })
+                            .show();
                 }
             });
         }
