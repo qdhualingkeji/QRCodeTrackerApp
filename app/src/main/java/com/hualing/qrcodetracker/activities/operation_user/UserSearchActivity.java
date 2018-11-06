@@ -169,53 +169,59 @@ public class UserSearchActivity extends BaseActivity {
                     IntentUtil.openActivityForResult(UserSearchActivity.this,UserInfoActivity.class,-1,bundle);
                 }
             });
-            holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(UserSearchActivity.this)
-                            .setCancelable(false)
-                            .setTitle("提示")
-                            .setMessage("确定要删除员工："+bean.getLoginName()+"？删除后不可恢复，请谨慎操作！")
-                            .setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+            if("admin".equals(bean.getLoginName())) {
+                holder.deleteBtn.setVisibility(View.GONE);
+            }
+            else{
+                holder.deleteBtn.setVisibility(View.VISIBLE);
+                holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AlertDialog.Builder(UserSearchActivity.this)
+                                .setCancelable(false)
+                                .setTitle("提示")
+                                .setMessage("确定要删除员工：" + bean.getLoginName() + "？删除后不可恢复，请谨慎操作！")
+                                .setPositiveButton("取消", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                }
-                            })
-                            .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    final Dialog progressDialog = TheApplication.createLoadingDialog(UserSearchActivity.this, "");
-                                    progressDialog.show();
+                                    }
+                                })
+                                .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        final Dialog progressDialog = TheApplication.createLoadingDialog(UserSearchActivity.this, "");
+                                        progressDialog.show();
 
-                                    final PersonParam personParam = new PersonParam();
-                                    personParam.setUserId(bean.getUserId());
-                                    Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
-                                        @Override
-                                        public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
-                                            ActionResult<ActionResult> nr = mainDao.deleteUser(personParam);
-                                            e.onNext(nr);
-                                        }
-                                    }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
-                                            .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                                            .subscribe(new Consumer<ActionResult<ActionResult>>() {
-                                                @Override
-                                                public void accept(ActionResult<ActionResult> result) throws Exception {
-                                                    progressDialog.dismiss();
-                                                    if (result.getCode() != 0) {
-                                                        Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                                                        mFilterData.remove(position);
-                                                        MyAdapter.this.notifyDataSetChanged();
+                                        final PersonParam personParam = new PersonParam();
+                                        personParam.setUserId(bean.getUserId());
+                                        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+                                            @Override
+                                            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                                                ActionResult<ActionResult> nr = mainDao.deleteUser(personParam);
+                                                e.onNext(nr);
+                                            }
+                                        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                                                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                                                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                                                    @Override
+                                                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                                                        progressDialog.dismiss();
+                                                        if (result.getCode() != 0) {
+                                                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                                            mFilterData.remove(position);
+                                                            MyAdapter.this.notifyDataSetChanged();
+                                                        }
                                                     }
-                                                }
-                                            });
-                                }
-                            })
-                            .show();
-                }
-            });
+                                                });
+                                    }
+                                })
+                                .show();
+                    }
+                });
+            }
         }
 
         @Override
