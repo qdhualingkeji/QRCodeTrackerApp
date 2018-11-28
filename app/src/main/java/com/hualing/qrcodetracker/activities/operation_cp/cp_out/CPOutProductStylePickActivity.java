@@ -6,6 +6,7 @@ import android.view.View;
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
+import com.hualing.qrcodetracker.activities.main.ScanHWActivity;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.model.CPType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
@@ -68,6 +69,7 @@ public class CPOutProductStylePickActivity extends BaseActivity {
 
         Bundle bundle = new Bundle();
         bundle.putBoolean("isFirst", true);
-        IntentUtil.openActivityForResult(this, ScanActivity.class,-1,bundle);
+        //IntentUtil.openActivityForResult(this, ScanActivity.class,-1,bundle);
+        IntentUtil.openActivityForResult(this, ScanHWActivity.class,-1,bundle);
     }
 }

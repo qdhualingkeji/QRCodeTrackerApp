@@ -189,7 +189,10 @@ public class SelectPersonGroupActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int flag = bundle.getInt("flag",0);
+                    int flag = 0;
+                    if(bundle!=null)
+                        flag = bundle.getInt("flag",0);
+
                     if(flag==1) {
                         Intent ii = new Intent();
                         ii.putExtra("groupName",bean.getGroupName());

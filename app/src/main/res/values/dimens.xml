@@ -15,5 +15,5 @@
 
     <dimen name="dividerHeight">0.5dp</dimen>
     <dimen name="propertyNameText">16sp</dimen>
-    <dimen name="mainItemSize">130dp</dimen>
+    <dimen name="mainItemSize">125dp</dimen>
 </resources>
