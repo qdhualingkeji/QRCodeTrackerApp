@@ -28,6 +28,7 @@ public class PersonResult {
     private int groupCode;
     private int group1;
     private int group2;
+    private String shenFen;
     private String checkQXGroup;
     private String qxNameGroup;
     private List<PersonBean> personBeans;
@@ -167,6 +168,14 @@ public class PersonResult {
 
     public void setGroup2(int group2) {
         this.group2 = group2;
+    }
+
+    public String getShenFen() {
+        return shenFen;
+    }
+
+    public void setShenFen(String shenFen) {
+        this.shenFen = shenFen;
     }
 
     public String getCheckQXGroup() {

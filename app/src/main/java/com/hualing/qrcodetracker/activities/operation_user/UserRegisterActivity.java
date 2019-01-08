@@ -124,6 +124,7 @@ public class UserRegisterActivity extends BaseActivity {
         params.setTrueName(trueNameValue);
         params.setLoginName(loginNameValue);
         params.setPassword(passwordValue);
+        params.setShenFen(sfId);
         params.setCheckQXGroup(allQxId);
         return true;
     }

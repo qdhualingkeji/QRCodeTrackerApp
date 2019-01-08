@@ -654,8 +654,8 @@ public class EmployeeMainActivity extends BaseActivity {
 
         public MyPagerAdapter() {
             int width = (int) (TheApplication.getScreenWidth()/3.3);
-            //int height=width+10;
-            int height=width-2;
+            int height=width+10;
+            //int height=width-2;
             views = new ArrayList<>();
             view1 = View.inflate(EmployeeMainActivity.this, R.layout.banner_layout_one_pager, null);
             CardView wlIn = view1.findViewById(R.id.wlIn);

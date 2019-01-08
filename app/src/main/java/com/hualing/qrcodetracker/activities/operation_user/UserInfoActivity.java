@@ -43,6 +43,8 @@ public class UserInfoActivity extends BaseActivity {
     TextView groupName;
     @BindView(R.id.regTimeValue)
     TextView regTime;
+    @BindView(R.id.sfValue)
+    TextView mSfValue;
     @BindView(R.id.qxValue)
     TextView qxNameGroup;
     private MainDao mainDao;
@@ -98,6 +100,17 @@ public class UserInfoActivity extends BaseActivity {
                             loginName.setText(dataResult.getLoginName());
                             groupName.setText(dataResult.getGroupName());
                             regTime.setText(dataResult.getRegTime());
+                            String checkQXGroup = dataResult.getCheckQXGroup();
+                            String sfName=null;
+                            if(checkQXGroup.contains("zjy"))
+                                sfName="质检员";
+                            else if(checkQXGroup.contains("zjld"))
+                                sfName="质检领导";
+                            if(checkQXGroup.contains("bz"))
+                                sfName="班长";
+                            if(checkQXGroup.contains("zjy"))
+                                sfName="质检员";
+                            mSfValue.setText(sfName);
                             qxNameGroup.setText(dataResult.getQxNameGroup());
                         }
                     }

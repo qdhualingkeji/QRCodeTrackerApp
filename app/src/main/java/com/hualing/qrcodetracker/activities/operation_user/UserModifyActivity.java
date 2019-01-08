@@ -37,6 +37,7 @@ public class UserModifyActivity extends BaseActivity {
 
     private static final int SELECT_BU_MEN = 11;
     private static final int SELECT_QUAN_XIAN = 12;
+    private static final int SELECT_SHEN_FEN=13;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.trueNameValue)
@@ -49,6 +50,8 @@ public class UserModifyActivity extends BaseActivity {
     EditText mPasswordValue;
     @BindView(R.id.password2Value)
     EditText mPassword2Value;
+    @BindView(R.id.sfValue)
+    TextView mSfValue;
     @BindView(R.id.qxValue)
     TextView mQxValue;
     private User param;
@@ -57,6 +60,7 @@ public class UserModifyActivity extends BaseActivity {
     private int userId;
     private int groupID;
     private String checkQXGroup;
+    private String sfId;
 
     @Override
     protected void initLogic() {
@@ -109,6 +113,16 @@ public class UserModifyActivity extends BaseActivity {
                             mBmValue.setText(dataResult.getGroupName());
                             mLoginNameValue.setText(dataResult.getLoginName());
                             checkQXGroup = dataResult.getCheckQXGroup();
+                            String sfName=null;
+                            if(checkQXGroup.contains("zjy"))
+                                sfName="质检员";
+                            else if(checkQXGroup.contains("zjld"))
+                                sfName="质检领导";
+                            if(checkQXGroup.contains("bz"))
+                                sfName="班长";
+                            if(checkQXGroup.contains("zjy"))
+                                sfName="质检员";
+                            mSfValue.setText(sfName);
                             mQxValue.setText(dataResult.getQxNameGroup());
                         }
                     }
@@ -125,16 +139,26 @@ public class UserModifyActivity extends BaseActivity {
         return R.layout.activity_user_modify;
     }
 
-    @OnClick({R.id.selectBM,R.id.selectQX,R.id.submitBtn,R.id.returnBtn})
+    @OnClick({R.id.selectBM,R.id.selectSF,R.id.selectQX,R.id.submitBtn,R.id.returnBtn})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.selectBM:
-                Bundle bundle = new Bundle();
                 bundle.putInt("flag", 1);
                 IntentUtil.openActivityForResult(UserModifyActivity.this, SelectPersonGroupActivity.class, SELECT_BU_MEN, bundle);
                 break;
+            case R.id.selectSF:
+                IntentUtil.openActivityForResult(this, SelectIdentityActivity.class, SELECT_SHEN_FEN, null);
+                break;
             case R.id.selectQX:
-                IntentUtil.openActivityForResult(UserModifyActivity.this, SelectModule2Activity.class, SELECT_QUAN_XIAN, null);
+                String sfValue = mSfValue.getText().toString();
+                if("请选择身份".equals(sfValue)){
+                    Toast.makeText(this, "请先选择身份", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    bundle.putString("sfId", sfId);
+                    IntentUtil.openActivityForResult(UserModifyActivity.this, SelectModule2Activity.class, SELECT_QUAN_XIAN, bundle);
+                }
                 break;
             case R.id.submitBtn:
                 toCommit();
@@ -149,6 +173,7 @@ public class UserModifyActivity extends BaseActivity {
         String trueName = mTrueName.getText().toString();
         String bmValue = mBmValue.getText().toString();
         String loginNameValue = mLoginNameValue.getText().toString();
+        String sfValue = mSfValue.getText().toString();
         String qxValue = mQxValue.getText().toString();
         String passwordValue = mPasswordValue.getText().toString();
         String password2Value = mPassword2Value.getText().toString();
@@ -158,6 +183,7 @@ public class UserModifyActivity extends BaseActivity {
                 ||TextUtils.isEmpty(bmValue)
                 ||TextUtils.isEmpty(loginNameValue)
                 ||TextUtils.isEmpty(checkQXGroup)
+                ||TextUtils.isEmpty(sfValue)
                 ||TextUtils.isEmpty(qxValue)
                 ){
             Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
@@ -172,7 +198,9 @@ public class UserModifyActivity extends BaseActivity {
         updatedParam.setTrueName(trueName);
         updatedParam.setGroupID(groupID);
         updatedParam.setLoginName(loginNameValue);
-        updatedParam.setPassword(passwordValue);
+        if(!TextUtils.isEmpty(passwordValue))
+            updatedParam.setPassword(passwordValue);
+        updatedParam.setShenFen(sfId);
         updatedParam.setCheckQXGroup(checkQXGroup);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
@@ -209,6 +237,10 @@ public class UserModifyActivity extends BaseActivity {
                     groupID = data.getIntExtra("groupID", 0);
                     String groupName = data.getStringExtra("groupName");
                     mBmValue.setText(groupName);
+                    break;
+                case SELECT_SHEN_FEN:
+                    mSfValue.setText(data.getStringExtra("sfName"));
+                    sfId=data.getStringExtra("sfId");
                     break;
                 case SELECT_QUAN_XIAN:
                     checkQXGroup = data.getStringExtra("allQxId");
