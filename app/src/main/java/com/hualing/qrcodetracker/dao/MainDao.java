@@ -350,7 +350,7 @@ public interface MainDao {
     ActionResult<BcpInQualityCheckResult> getSmallCPInQualityCheckData(BcpInShowBean params);
 
     @ActionRequest(func = GlobalData.Service.GET_XZQX)
-    ActionResult<Module2Result> getXZQX();
+    ActionResult<Module2Result> getXZQX(PersonParam param);
 
     @ActionRequest(func = GlobalData.Service.COMMIT_USER_REGISTERED_DATA)
     ActionResult<ActionResult> commitUserRegisteredData(PersonParam params);

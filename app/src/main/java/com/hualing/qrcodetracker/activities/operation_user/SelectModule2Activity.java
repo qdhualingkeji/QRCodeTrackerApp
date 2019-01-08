@@ -25,14 +25,17 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectSXYLActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.MainParams;
 import com.hualing.qrcodetracker.bean.Module2Bean;
 import com.hualing.qrcodetracker.bean.Module2Result;
+import com.hualing.qrcodetracker.bean.PersonParam;
 import com.hualing.qrcodetracker.bean.PersonResult;
 import com.hualing.qrcodetracker.bean.SXYLResult;
 import com.hualing.qrcodetracker.bean.TLYLBean;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.LocalShowBean;
+import com.hualing.qrcodetracker.model.User;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 
@@ -63,6 +66,7 @@ public class SelectModule2Activity extends BaseActivity {
     //模糊过滤后的数据
     private List<LocalShowBean> mFilterData;
     private MainDao mainDao;
+    private Bundle bundle;
 
     @Override
     protected void initLogic() {
@@ -93,7 +97,7 @@ public class SelectModule2Activity extends BaseActivity {
             }
         });
 
-        Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
 
         mSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -118,10 +122,14 @@ public class SelectModule2Activity extends BaseActivity {
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
+        String sfId = bundle.getString("sfId");
+        final PersonParam param = new PersonParam();
+        param.setShenFen(sfId);
+
         Observable.create(new ObservableOnSubscribe<ActionResult<Module2Result>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<Module2Result>> e) throws Exception {
-                ActionResult<Module2Result> nr = mainDao.getXZQX();
+                ActionResult<Module2Result> nr = mainDao.getXZQX(param);
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程

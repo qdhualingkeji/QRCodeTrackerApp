@@ -203,6 +203,7 @@
         <activity android:name=".activities.operation_common.SelectPersonGroupActivity" />
         <activity android:name=".activities.operation_bcp.bcp_in.SmallCPInQualityCheckActivity" />
         <activity android:name=".activities.operation_bcp.bcp_in.SmallCPInVerifyActivity">
+
             <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -216,7 +217,8 @@
         <activity android:name=".activities.operation_user.SelectModule2Activity" />
         <activity android:name=".activities.operation_user.UserSearchActivity" />
         <activity android:name=".activities.operation_user.UserInfoActivity" />
-        <activity android:name=".activities.operation_user.UserModifyActivity"></activity>
+        <activity android:name=".activities.operation_user.UserModifyActivity" />
+        <activity android:name=".activities.operation_user.SelectIdentityActivity"></activity>
     </application>
 
 </manifest>

@@ -572,45 +572,45 @@ public class EmployeeMainActivity extends BaseActivity {
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialInMainActivity.class);
                 //IntentUtil.openActivity(EmployeeMainActivity.this, WLInRKDInputActivity.class);
                 bundle.putBoolean("isFirst", true);
-                //IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanActivity.class,-1,bundle);
-                IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanHWActivity.class,-1,bundle);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanActivity.class,-1,bundle);
+                //IntentUtil.openActivityForResult(EmployeeMainActivity.this,ScanHWActivity.class,-1,bundle);
                 break;
             case FunctionType.MATERIAL_OUT:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialOutMainActivity.class);
                 //IntentUtil.openActivity(EmployeeMainActivity.this, WLCKDInputActivity.class);
                 bundle.putBoolean("isFirst", true);
-                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
-                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
+                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
                 break;
             case FunctionType.MATERIAL_RETURN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, MaterialReturnMainActivity.class);
                 //IntentUtil.openActivity(EmployeeMainActivity.this, WLTKDInputActivity.class);
                 bundle.putBoolean("isFirst", true);
-                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
-                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
+                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
                 break;
             //投料不需要生成单据,所以直接打开扫描二维码页
             case FunctionType.MATERIAL_THROW:
-                //IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
-                IntentUtil.openActivity(EmployeeMainActivity.this, ScanHWActivity.class);
+                IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
+                //IntentUtil.openActivity(EmployeeMainActivity.this, ScanHWActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_IN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, BcpInMainActivity.class);
                 //IntentUtil.openActivity(EmployeeMainActivity.this, BCPInRKDInputActivity.class);
                 bundle.putBoolean("isFirst", true);
-                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
-                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
+                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
                 break;
             case FunctionType.HALF_PRODUCT_THROW:
-                //IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
-                IntentUtil.openActivity(EmployeeMainActivity.this, ScanHWActivity.class);
+                IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
+                //IntentUtil.openActivity(EmployeeMainActivity.this, ScanHWActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_RETURN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, BcpReturnMainActivity.class);
                 //IntentUtil.openActivity(EmployeeMainActivity.this, BcpTKDInputActivity.class);
                 bundle.putBoolean("isFirst", true);
-                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
-                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
+                //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
                 break;
             case FunctionType.PRODUCT_IN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, CPInMainActivity.class);
@@ -623,8 +623,8 @@ public class EmployeeMainActivity extends BaseActivity {
                 IntentUtil.openActivity(EmployeeMainActivity.this, CPOutProductStylePickActivity.class);
                 break;
             case FunctionType.DATA_TRACK:
-                //IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
-                IntentUtil.openActivity(EmployeeMainActivity.this, ScanHWActivity.class);
+                IntentUtil.openActivity(EmployeeMainActivity.this, ScanActivity.class);
+                //IntentUtil.openActivity(EmployeeMainActivity.this, ScanHWActivity.class);
                 break;
             case FunctionType.VERIFY:
                 IntentUtil.openActivity(EmployeeMainActivity.this, NonHandleMsgActivity.class);

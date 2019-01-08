@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class UserRegisterActivity extends BaseActivity {
 
     private static final int SELECT_BU_MEN=10;
     private static final int SELECT_QUAN_XIAN=11;
+    private static final int SELECT_SHEN_FEN=12;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.bmValue)
@@ -50,12 +52,15 @@ public class UserRegisterActivity extends BaseActivity {
     EditText mPasswordValue;
     @BindView(R.id.password2Value)
     EditText mPassword2Value;
+    @BindView(R.id.sfValue)
+    TextView mSfValue;
     @BindView(R.id.qxValue)
     TextView mQxValue;
     private MainDao mainDao;
     private PersonParam params;
     private int mSelectBMId;
     private String allQxId;
+    private String sfId;
 
     @Override
     protected void initLogic() {
@@ -97,12 +102,14 @@ public class UserRegisterActivity extends BaseActivity {
         String loginNameValue = mLoginNameValue.getText().toString();
         String passwordValue = mPasswordValue.getText().toString();
         String password2Value = mPassword2Value.getText().toString();
+        String sfValue = mSfValue.getText().toString();
         String qxValue = mQxValue.getText().toString();
         if("请选择部门".equals(mbValue)
                 ||TextUtils.isEmpty(trueNameValue)
                 ||TextUtils.isEmpty(loginNameValue)
                 ||TextUtils.isEmpty(passwordValue)
                 ||TextUtils.isEmpty(password2Value)
+                ||"请选择身份".equals(sfValue)
                 ||"请选择权限".equals(qxValue)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
@@ -149,7 +156,7 @@ public class UserRegisterActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.selectBM,R.id.selectQX,R.id.commitBtn})
+    @OnClick({R.id.selectBM,R.id.selectSF,R.id.selectQX,R.id.commitBtn})
     public void onViewClicked(View view){
 
         Bundle bundle = new Bundle();
@@ -158,8 +165,18 @@ public class UserRegisterActivity extends BaseActivity {
                 bundle.putInt("flag",1);
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_BU_MEN, bundle);
                 break;
+            case R.id.selectSF:
+                IntentUtil.openActivityForResult(this, SelectIdentityActivity.class, SELECT_SHEN_FEN, null);
+                break;
             case R.id.selectQX:
-                IntentUtil.openActivityForResult(this, SelectModule2Activity.class, SELECT_QUAN_XIAN, null);
+                String sfValue = mSfValue.getText().toString();
+                if("请选择身份".equals(sfValue)){
+                    Toast.makeText(this, "请先选择身份", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    bundle.putString("sfId", sfId);
+                    IntentUtil.openActivityForResult(this, SelectModule2Activity.class, SELECT_QUAN_XIAN, bundle);
+                }
                 break;
             case R.id.commitBtn:
                 //数据录入是否完整
@@ -177,6 +194,10 @@ public class UserRegisterActivity extends BaseActivity {
                 case SELECT_BU_MEN:
                     mBmValue.setText(data.getStringExtra("groupName"));
                     mSelectBMId=data.getIntExtra("groupID",0);
+                    break;
+                case SELECT_SHEN_FEN:
+                    mSfValue.setText(data.getStringExtra("sfName"));
+                    sfId=data.getStringExtra("sfId");
                     break;
                 case SELECT_QUAN_XIAN:
                     mQxValue.setText(data.getStringExtra("allQxNameStr"));

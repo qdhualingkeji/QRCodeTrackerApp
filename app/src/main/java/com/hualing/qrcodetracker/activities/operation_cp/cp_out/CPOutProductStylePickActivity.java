@@ -69,7 +69,7 @@ public class CPOutProductStylePickActivity extends BaseActivity {
 
         Bundle bundle = new Bundle();
         bundle.putBoolean("isFirst", true);
-        //IntentUtil.openActivityForResult(this, ScanActivity.class,-1,bundle);
-        IntentUtil.openActivityForResult(this, ScanHWActivity.class,-1,bundle);
+        IntentUtil.openActivityForResult(this, ScanActivity.class,-1,bundle);
+        //IntentUtil.openActivityForResult(this, ScanHWActivity.class,-1,bundle);
     }
 }

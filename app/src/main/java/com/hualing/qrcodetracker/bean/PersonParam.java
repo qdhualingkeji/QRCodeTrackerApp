@@ -17,6 +17,7 @@ public class PersonParam {
     private int groupCode;
     private int group1;
     private int group2;
+    private String shenFen;
     private String checkQXGroup;
 
     public int getUserId() {
@@ -145,6 +146,14 @@ public class PersonParam {
 
     public void setGroup2(int group2) {
         this.group2 = group2;
+    }
+
+    public String getShenFen() {
+        return shenFen;
+    }
+
+    public void setShenFen(String shenFen) {
+        this.shenFen = shenFen;
     }
 
     public String getCheckQXGroup() {
