@@ -22,302 +22,308 @@
         app:title_textSize="@dimen/titleBar_textSize">
     </com.hualing.qrcodetracker.widget.TitleBar>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:text="姓名："
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                />
-
-            <EditText
-                android:id="@+id/trueNameValue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                android:text="所属部门："
-                />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/selectBM"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/bmValue"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="姓名："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/trueNameValue"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:textColor="@color/divide_dark_gray_color"
-                    android:textSize="16sp"
-                    android:gravity="center_vertical"
-                    android:text="请选择部门"/>
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/next"
-                    android:layout_marginRight="15dp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:text="账号："
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                />
-
-            <EditText
-                android:id="@+id/loginNameValue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:text="新密码："
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                />
-
-            <EditText
-                android:id="@+id/passwordValue"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:inputType="textPassword"
-                android:hint="不填写新密码默认原来的"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:text="确认新密码："
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                />
-
-            <EditText
-                android:id="@+id/password2Value"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:inputType="textPassword"
-                android:hint="请再次输入新密码"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"/>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:text="身份："
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                />
-
-            <LinearLayout
-                android:id="@+id/selectSF"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/sfValue"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:text="请选择身份"
-                    android:textColor="@color/divide_dark_gray_color"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"/>
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/next"/>
-
             </LinearLayout>
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="20dp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/propertyNameText"
-                android:text="权限："
-                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
 
             <LinearLayout
-                android:id="@+id/selectQX"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/qxValue"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-                    android:textColor="@color/divide_dark_gray_color"
-                    android:textSize="16sp"
                     android:gravity="center_vertical"
-                    android:text="请选择权限"/>
+                    android:padding="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    android:text="所属部门："
+                    />
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/next"
-                    android:layout_marginRight="15dp"/>
+                <LinearLayout
+                    android:id="@+id/selectBM"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/bmValue"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/divide_dark_gray_color"
+                        android:textSize="16sp"
+                        android:gravity="center_vertical"
+                        android:text="请选择部门"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/next"
+                        android:layout_marginRight="15dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="账号："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/loginNameValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="新密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/passwordValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPassword"
+                    android:hint="不填写新密码默认原来的"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="确认新密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/password2Value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPassword"
+                    android:hint="请再次输入新密码"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="身份："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/selectSF"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/sfValue"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:text="请选择身份"
+                        android:textColor="@color/divide_dark_gray_color"
+                        android:textSize="16sp"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/next"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    android:text="权限："
+                    />
+
+                <LinearLayout
+                    android:id="@+id/selectQX"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/qxValue"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/divide_dark_gray_color"
+                        android:textSize="16sp"
+                        android:gravity="center_vertical"
+                        android:text="请选择权限"/>
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/next"
+                        android:layout_marginRight="15dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:background="@android:color/white"
+                >
+
+                <Button
+                    android:id="@+id/submitBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提交"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white"/>
+
+                <Button
+                    android:id="@+id/returnBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="返回"
+                    android:background="@color/divide_gray_color"
+                    android:textColor="@android:color/white"/>
+
+            </RelativeLayout>
+
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dividerHeight"
-            android:background="@color/divide_gray_color"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp"
-            android:background="@android:color/white"
-            >
-
-            <Button
-                android:id="@+id/submitBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="提交"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"/>
-
-            <Button
-                android:id="@+id/returnBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="返回"
-                android:background="@color/divide_gray_color"
-                android:textColor="@android:color/white"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

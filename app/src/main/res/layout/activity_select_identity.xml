@@ -8,6 +8,29 @@
     android:orientation="vertical"
     tools:context=".activities.operation_user.SelectIdentityActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="@dimen/titleBar_Height">
+
+        <ImageView
+            android:id="@+id/lastButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="13dp"
+            android:src="@drawable/last"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="选择身份"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/titleBar_textColor"
+            />
+
+    </FrameLayout>
+
     <ListView
         android:id="@+id/dataList"
         android:layout_width="match_parent"

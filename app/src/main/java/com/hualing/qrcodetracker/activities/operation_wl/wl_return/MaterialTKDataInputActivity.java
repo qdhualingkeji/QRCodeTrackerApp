@@ -205,25 +205,28 @@ public class MaterialTKDataInputActivity extends BaseActivity {
         String value = mTkShlValue.getText().toString();
         String remark = mRemark.getText().toString();
         //        String llbm = mLlbmValue.getText().toString();
+        float zhl = Float.parseFloat(mZhlValue.getText().toString());
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
         float tkZhl = Float.parseFloat(mTkZhlValue.getText().toString());
+        float tkShL = Float.parseFloat(value);
         if (TextUtils.isEmpty(value)
             //                || "请选择领料部门".equals(llbm)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
-        /*
-        float ckShL = Float.parseFloat(value);
-        if(ckShL==0){
-            Toast.makeText(this, "退库数量不能为0", Toast.LENGTH_SHORT).show();
+        if(tkZhl==0){
+            Toast.makeText(this, "退库重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (ckShL > remainShL) {
+        if(tkZhl>zhl){
+            Toast.makeText(this, "退库重量不能大于单位重量", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (tkShL > remainShL) {
             Toast.makeText(this, "退库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
         }
-        */
 
         params.setQrCodeId(mQrcodeId);
         params.setTkShL(Float.parseFloat(value));

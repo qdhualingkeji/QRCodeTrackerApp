@@ -114,14 +114,22 @@ public class UserModifyActivity extends BaseActivity {
                             mLoginNameValue.setText(dataResult.getLoginName());
                             checkQXGroup = dataResult.getCheckQXGroup();
                             String sfName=null;
-                            if(checkQXGroup.contains("zjy"))
-                                sfName="质检员";
-                            else if(checkQXGroup.contains("zjld"))
-                                sfName="质检领导";
-                            if(checkQXGroup.contains("bz"))
-                                sfName="班长";
-                            if(checkQXGroup.contains("zjy"))
-                                sfName="质检员";
+                            if(checkQXGroup.contains("zjy")) {
+                                sfId="zjy";
+                                sfName = "质检员";
+                            }
+                            else if(checkQXGroup.contains("zjld")) {
+                                sfId="zjld";
+                                sfName = "质检领导";
+                            }
+                            if(checkQXGroup.contains("bz")) {
+                                sfId="bz";
+                                sfName = "班长";
+                            }
+                            if(checkQXGroup.contains("zjy")) {
+                                sfId="zjy";
+                                sfName = "质检员";
+                            }
                             mSfValue.setText(sfName);
                             mQxValue.setText(dataResult.getQxNameGroup());
                         }
@@ -223,7 +231,7 @@ public class UserModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            AllActivitiesHolder.removeAct(UserModifyActivity.this);
+                            IntentUtil.openActivity(UserModifyActivity.this, UserSearchActivity.class);
                         }
                     }
                 });
@@ -241,6 +249,8 @@ public class UserModifyActivity extends BaseActivity {
                 case SELECT_SHEN_FEN:
                     mSfValue.setText(data.getStringExtra("sfName"));
                     sfId=data.getStringExtra("sfId");
+                    checkQXGroup="";
+                    mQxValue.setText("");
                     break;
                 case SELECT_QUAN_XIAN:
                     checkQXGroup = data.getStringExtra("allQxId");

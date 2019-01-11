@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SelectIdentityActivity extends BaseActivity {
 
@@ -81,5 +82,10 @@ public class SelectIdentityActivity extends BaseActivity {
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_select_identity;
+    }
+
+    @OnClick(R.id.lastButton)
+    public void onViewClicked() {
+        AllActivitiesHolder.removeAct(this);
     }
 }
