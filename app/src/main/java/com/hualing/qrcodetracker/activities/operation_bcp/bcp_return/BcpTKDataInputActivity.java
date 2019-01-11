@@ -211,23 +211,30 @@ public class BcpTKDataInputActivity extends BaseActivity {
 
     private boolean checkIfInfoPerfect() {
         String value = mTkShlValue.getText().toString();
+        float dwZhl = Float.parseFloat(mDwZhlValue.getText().toString());
+        float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
+        float tkZhl = Float.parseFloat(mTkZhlValue.getText().toString());
+        float tkShL = Float.parseFloat(value);
         if (TextUtils.isEmpty(value)) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
-        float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
-        float tkShL = Float.parseFloat(value);
-        /*
+        if(tkZhl==0){
+            Toast.makeText(this, "退库重量不能为0", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(tkZhl>dwZhl){
+            Toast.makeText(this, "退库重量不能大于单位重量", Toast.LENGTH_SHORT).show();
+            return false;
+        }
         if (tkShL > remainShL) {
             Toast.makeText(this, "退库数量不得大于剩余数量", Toast.LENGTH_SHORT).show();
             return false;
         }
-        */
-        float tkzl = Float.parseFloat(mTkZhlValue.getText().toString());
 
         params.setQrCodeId(mQrcodeId);
         params.setShl(tkShL);
-        params.setDwzl(tkzl);
+        params.setDwzl(tkZhl);
         params.setCzy(GlobalData.realName);
         params.setRemark(mRemarkValue.getText().toString());
         params.setBackDh(SharedPreferenceUtil.getBCPTKDNumber());

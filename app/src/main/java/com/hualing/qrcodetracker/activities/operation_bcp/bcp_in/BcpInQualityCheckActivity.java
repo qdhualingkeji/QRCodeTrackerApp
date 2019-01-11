@@ -337,6 +337,9 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                     }
                 });
             }
+            else{
+                viewHolder.goSmallBtn.setVisibility(View.GONE);
+            }
 
             return convertView;
         }
