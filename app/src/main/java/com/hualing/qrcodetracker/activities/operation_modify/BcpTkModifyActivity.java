@@ -90,10 +90,10 @@ public class BcpTkModifyActivity extends BaseActivity {
     private String mDh;
     private VerifyParam param;
     private BcpTkVerifyResult updatedParam;
-    private int bzID;
-    private int fzrID;
-    private int zjyID;
-    private int zjldID;
+    private Integer bzID;
+    private Integer fzrID;
+    private Integer zjyID;
+    private Integer zjldID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

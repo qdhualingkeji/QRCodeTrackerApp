@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -148,12 +149,29 @@ public class SmallCPInQualityCheckActivity extends BaseActivity {
             viewHolder.mBcpYlpcValue.setText(bean.getyLPC());
             viewHolder.mBcpScpcValue.setText(bean.getsCPC());
             viewHolder.mBcpScTimeValue.setText(bean.getTime());
-            viewHolder.mBcpGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if("".equals(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mBcpGgValue.setText(gg);
             viewHolder.mBcpCjValue.setText(bean.getCheJian());
             viewHolder.mBcpGxValue.setText(bean.getGx());
             viewHolder.mBcpCzyValue.setText(bean.getCzy());
             viewHolder.mBcpSldwValue.setText(bean.getdW());
             viewHolder.mBcpZhlValue.setText(bean.getdWZL() + "");
+            if("4".equals(qRCodeID.substring(8,9))){
+                viewHolder.mBcpCjLayout.setVisibility(View.GONE);
+                viewHolder.mBcpCjView.setVisibility(View.GONE);
+
+                viewHolder.mBcpGxLayout.setVisibility(View.GONE);
+                viewHolder.mBcpGxView.setVisibility(View.GONE);
+            }
+            else{
+                viewHolder.mBcpCjLayout.setVisibility(View.VISIBLE);
+                viewHolder.mBcpCjView.setVisibility(View.VISIBLE);
+
+                viewHolder.mBcpGxLayout.setVisibility(View.VISIBLE);
+                viewHolder.mBcpGxView.setVisibility(View.VISIBLE);
+            }
 
             return convertView;
         }
@@ -173,10 +191,18 @@ public class SmallCPInQualityCheckActivity extends BaseActivity {
             TextView mBcpScTimeValue;
             @BindView(R.id.bcpGgValue)
             TextView mBcpGgValue;
+            @BindView(R.id.bcpCjLayout)
+            LinearLayout mBcpCjLayout;
             @BindView(R.id.bcpCjValue)
             TextView mBcpCjValue;
+            @BindView(R.id.bcpCjView)
+            View mBcpCjView;
+            @BindView(R.id.bcpGxLayout)
+            LinearLayout mBcpGxLayout;
             @BindView(R.id.bcpGxValue)
             TextView mBcpGxValue;
+            @BindView(R.id.bcpGxView)
+            View mBcpGxView;
             @BindView(R.id.bcpCzyValue)
             TextView mBcpCzyValue;
             @BindView(R.id.bcpSldwValue)

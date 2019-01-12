@@ -132,6 +132,7 @@ public class YoniClient {
 			}
 
 		} catch (JSONException e1) {
+			//Log.e("e1===",e1+"");
 			nr.setCode(NetResponse.STATUS_ERROR_PARAMS);
 			nr.setMessage("参数解析失败");
 			e1.printStackTrace();

@@ -138,6 +138,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         }
         */
         mQrcodeId = SharedPreferenceUtil.getQrCodeId();
+        //Log.e("mQrcodeId===",""+mQrcodeId);
 
         params = new SmallCPINParam();
 
@@ -264,7 +265,10 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 case SELECT_PRODUCT_NAME:
                     String productName = data.getStringExtra("productName");
                     mProductNameValue.setText(productName);
-                    String model = data.getStringExtra("model");
+                    String model = null;
+                    model = data.getStringExtra("model");
+                    if("".equals(model))
+                        model=getString(R.string.no_gg);
                     mGgValue.setText(model);
                     String company = data.getStringExtra("company");
                     mDwValue.setText(company);
@@ -436,6 +440,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         params.setShl(Integer.parseInt(shlValue));
         params.setYlpc(ylpcValue);
         params.setScpc(scpcValue);
+        if(getString(R.string.no_gg).equals(ggValue))
+            ggValue="";
         params.setGg(ggValue);
         params.setDwzl(Float.parseFloat(dwzlValue));
         params.setDw(dwValue);

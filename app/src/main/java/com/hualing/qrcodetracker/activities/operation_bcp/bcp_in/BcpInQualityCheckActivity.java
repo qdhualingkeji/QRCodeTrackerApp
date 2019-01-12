@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -319,7 +320,10 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             viewHolder.mBcpYlpcValue.setText(bean.getyLPC());
             viewHolder.mBcpScpcValue.setText(bean.getsCPC());
             viewHolder.mBcpScTimeValue.setText(bean.getTime());
-            viewHolder.mBcpGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if("".equals(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mBcpGgValue.setText(gg);
             viewHolder.mBcpCjValue.setText(bean.getCheJian());
             viewHolder.mBcpGxValue.setText(bean.getGx());
             viewHolder.mBcpCzyValue.setText(bean.getCzy());
@@ -327,6 +331,12 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             viewHolder.mBcpZhlValue.setText(bean.getdWZL() + "");
             final String qRCodeID = bean.getqRCodeID();
             if("4".equals(qRCodeID.substring(8,9))){
+                viewHolder.mBcpCjLayout.setVisibility(View.GONE);
+                viewHolder.mBcpCjView.setVisibility(View.GONE);
+
+                viewHolder.mBcpGxLayout.setVisibility(View.GONE);
+                viewHolder.mBcpGxView.setVisibility(View.GONE);
+
                 viewHolder.goSmallBtn.setVisibility(View.VISIBLE);
                 viewHolder.goSmallBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -338,6 +348,12 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                 });
             }
             else{
+                viewHolder.mBcpCjLayout.setVisibility(View.VISIBLE);
+                viewHolder.mBcpCjView.setVisibility(View.VISIBLE);
+
+                viewHolder.mBcpGxLayout.setVisibility(View.VISIBLE);
+                viewHolder.mBcpGxView.setVisibility(View.VISIBLE);
+
                 viewHolder.goSmallBtn.setVisibility(View.GONE);
             }
 
@@ -359,10 +375,18 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             TextView mBcpScTimeValue;
             @BindView(R.id.bcpGgValue)
             TextView mBcpGgValue;
+            @BindView(R.id.bcpCjLayout)
+            LinearLayout mBcpCjLayout;
             @BindView(R.id.bcpCjValue)
             TextView mBcpCjValue;
+            @BindView(R.id.bcpCjView)
+            View mBcpCjView;
+            @BindView(R.id.bcpGxLayout)
+            LinearLayout mBcpGxLayout;
             @BindView(R.id.bcpGxValue)
             TextView mBcpGxValue;
+            @BindView(R.id.bcpGxView)
+            View mBcpGxView;
             @BindView(R.id.bcpCzyValue)
             TextView mBcpCzyValue;
             @BindView(R.id.bcpSldwValue)

@@ -189,6 +189,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
                     String productName = data.getStringExtra("productName");
                     mNameValue.setText(productName);
                     String model = data.getStringExtra("model");
+                    if("".equals(model))
+                        model=getString(R.string.no_gg);
                     mGgValue.setText(model);
                     String company = data.getStringExtra("company");
                     mSldwValue.setText(company);
@@ -231,6 +233,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
         params.setProductName(nameValue);
         params.setcHD(cdValue);
         params.setLb(mSelectedLeiBieId);
+        if(getString(R.string.no_gg).equals(ggValue))
+            ggValue="";
         params.setgG(ggValue);
         params.setyLPC(ylpcValue);
         params.setdW(sldwValue);

@@ -234,6 +234,7 @@
         android:background="@color/divide_gray_color"/>
 
     <LinearLayout
+        android:id="@+id/bcpCjLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -261,11 +262,13 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/bcpCjView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dividerHeight"
         android:background="@color/divide_gray_color"/>
 
     <LinearLayout
+        android:id="@+id/bcpGxLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -293,6 +296,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/bcpGxView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dividerHeight"
         android:background="@color/divide_gray_color"/>
