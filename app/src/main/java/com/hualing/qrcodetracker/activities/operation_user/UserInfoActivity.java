@@ -106,10 +106,12 @@ public class UserInfoActivity extends BaseActivity {
                                 sfName="质检员";
                             else if(checkQXGroup.contains("zjld"))
                                 sfName="质检领导";
-                            if(checkQXGroup.contains("bz"))
+                            else if(checkQXGroup.contains("bz"))
                                 sfName="班长";
-                            if(checkQXGroup.contains("zjy"))
-                                sfName="质检员";
+                            else if(checkQXGroup.contains("fzr"))
+                                sfName="负责人";
+                            else
+                                sfName="普通员工";
                             mSfValue.setText(sfName);
                             qxNameGroup.setText(dataResult.getQxNameGroup());
                         }

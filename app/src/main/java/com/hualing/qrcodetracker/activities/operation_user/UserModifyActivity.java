@@ -122,13 +122,17 @@ public class UserModifyActivity extends BaseActivity {
                                 sfId="zjld";
                                 sfName = "质检领导";
                             }
-                            if(checkQXGroup.contains("bz")) {
+                            else if(checkQXGroup.contains("bz")) {
                                 sfId="bz";
                                 sfName = "班长";
                             }
-                            if(checkQXGroup.contains("zjy")) {
-                                sfId="zjy";
-                                sfName = "质检员";
+                            else if(checkQXGroup.contains("zjy")) {
+                                sfId="fzr";
+                                sfName = "负责人";
+                            }
+                            else{
+                                sfId="ptyg";
+                                sfName = "普通员工";
                             }
                             mSfValue.setText(sfName);
                             mQxValue.setText(dataResult.getQxNameGroup());

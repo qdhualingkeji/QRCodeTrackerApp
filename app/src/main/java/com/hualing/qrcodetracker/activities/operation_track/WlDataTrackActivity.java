@@ -2,6 +2,7 @@ package com.hualing.qrcodetracker.activities.operation_track;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,7 +117,10 @@ public class WlDataTrackActivity extends BaseActivity {
                             mNameValue.setText(dataResult.getProductName());
                             mCdValue.setText(dataResult.getChd());
                             mLbValue.setText(dataResult.getSortName());
-                            mGgValue.setText(dataResult.getGg());
+                            String gg = dataResult.getGg();
+                            if(TextUtils.isEmpty(gg))
+                               gg=getString(R.string.no_gg);
+                            mGgValue.setText(gg);
                             //mWlbmValue.setText(dataResult.getWlCode());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mPczlValue.setText(dataResult.getPczl()+"");

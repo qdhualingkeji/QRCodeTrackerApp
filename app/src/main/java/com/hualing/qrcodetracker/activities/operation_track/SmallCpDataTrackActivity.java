@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.operation_track;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -139,7 +140,10 @@ public class SmallCpDataTrackActivity extends BaseActivity {
                             mNameValue.setText(dataResult.getCpName());
                             mJyztValue.setText(dataResult.getJyzt());
                             mLbValue.setText(dataResult.getSortName());
-                            mGgValue.setText(dataResult.getGg());
+                            String gg = dataResult.getGg();
+                            if(TextUtils.isEmpty(gg))
+                               gg=getString(R.string.no_gg);
+                            mGgValue.setText(gg);
                             //mWlbmValue.setText(dataResult.getCpCode());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());
