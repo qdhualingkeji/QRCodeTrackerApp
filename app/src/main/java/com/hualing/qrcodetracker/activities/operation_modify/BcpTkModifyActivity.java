@@ -276,7 +276,7 @@ public class BcpTkModifyActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectSHFZR:
-                bundle.putString("checkQX", "ld");
+                bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
                 break;
             case R.id.selectZJY:

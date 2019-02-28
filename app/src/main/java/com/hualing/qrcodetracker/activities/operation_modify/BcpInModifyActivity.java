@@ -383,7 +383,7 @@ public class BcpInModifyActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_BZ,bundle);
                 break;
             case R.id.selectSHFZR:
-                bundle.putString("checkQX", "ld");
+                bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_SHFZR,bundle);
                 break;
             case R.id.selectJHFZR:

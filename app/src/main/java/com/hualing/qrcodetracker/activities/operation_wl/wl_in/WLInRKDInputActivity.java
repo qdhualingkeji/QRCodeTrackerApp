@@ -211,7 +211,7 @@ public class WLInRKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_BZ, bundle);
                 break;
             case R.id.selectPerson:
-                bundle.putString("checkQX", "ld");
+                bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
                 break;
             case R.id.selectPerson1:

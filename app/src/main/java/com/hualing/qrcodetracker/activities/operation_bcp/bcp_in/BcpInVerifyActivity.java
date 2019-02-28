@@ -102,7 +102,7 @@ public class BcpInVerifyActivity extends BaseActivity {
                     isBZ=true;
                     break;
                 }
-                else if("ld".equals(checkQX)){
+                else if("fzr".equals(checkQX)){
                     isFZR=true;
                     break;
                 }

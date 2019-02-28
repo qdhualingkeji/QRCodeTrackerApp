@@ -6,12 +6,17 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
@@ -34,7 +39,9 @@ import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -164,6 +171,23 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                                 mData.addAll(dataResult.getBeans());
                                 mAdapter.notifyDataSetChanged();
                             }
+                        }
+
+                        if(isZJY) {
+                            JSONArray bcpInShowJA = new JSONArray();
+                            JSONObject bcpInShowJO=null;
+                            Log.e("mData===",""+mData.size());
+                            for(BcpInShowBean bcpInShow : mData){
+                                Log.e("getqRCodeID===",bcpInShow.getqRCodeID());
+                                //bcpInShow.setZjy(GlobalData.realName);
+                                bcpInShowJO = new JSONObject();
+                                bcpInShowJO.put("qRCodeID",bcpInShow.getqRCodeID());
+                                bcpInShowJO.put("zjy",GlobalData.realName);
+                                bcpInShowJO.put("zjzt",bcpInShow.getZjzt());
+                                bcpInShowJA.add(bcpInShowJO);
+                            }
+                            Log.e("bcpInShowJA===",""+bcpInShowJA.toString());
+                            //param.setBcpInShowJAStr(bcpInShowJA);
                         }
                     }
                 });
@@ -304,7 +328,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             BcpInQualityCheckActivity.MyAdapter.ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = View.inflate(BcpInQualityCheckActivity.this, R.layout.item_cp_quality_check, null);
@@ -329,6 +353,31 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             viewHolder.mBcpCzyValue.setText(bean.getCzy());
             viewHolder.mBcpSldwValue.setText(bean.getdW());
             viewHolder.mBcpZhlValue.setText(bean.getdWZL() + "");
+
+            List<Map<String, String>> jyztList = new ArrayList<Map<String, String>>();
+            Map<String, String> jyztMap = new HashMap<String, String>();
+            jyztMap.put("name", "合格");
+            jyztMap.put("id", "1");
+            jyztList.add(jyztMap);
+            jyztMap = new HashMap<String, String>();
+            jyztMap.put("name", "不合格");
+            jyztMap.put("id", "0");
+            jyztList.add(jyztMap);
+            viewHolder.mZjztAdapter = new SimpleAdapter(BcpInQualityCheckActivity.this,jyztList,R.layout.item_shen_fen,new String[]{"name","id"},new int[]{R.id.nameValue,R.id.idValue});
+            viewHolder.mZjztSpinner.setAdapter(viewHolder.mZjztAdapter);
+            viewHolder.mZjztSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int jyztPosition, long id) {
+                    mData.get(position).setZjzt(jyztPosition);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
             final String qRCodeID = bean.getqRCodeID();
             if("4".equals(qRCodeID.substring(8,9))){
                 viewHolder.mBcpCjLayout.setVisibility(View.GONE);
@@ -393,6 +442,9 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             TextView mBcpSldwValue;
             @BindView(R.id.bcpZhlValue)
             TextView mBcpZhlValue;
+            SimpleAdapter mZjztAdapter;
+            @BindView(R.id.zjztSpinner)
+            Spinner mZjztSpinner;
             @BindView(R.id.goSmallBtn)
             Button goSmallBtn;
 

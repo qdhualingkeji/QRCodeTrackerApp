@@ -204,7 +204,7 @@ public class WLCKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectFLFZR:
-                bundle.putString("checkQX", "ld");
+                bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
                 break;
             case R.id.selectLLFZR:

@@ -228,7 +228,7 @@ public class CPCKDInputActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectSHFZR:
-                bundle.putString("checkQX", "ld");
+                bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHFZR, bundle);
                 break;
             case R.id.selectJHFZR:
