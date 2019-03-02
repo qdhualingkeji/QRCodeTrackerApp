@@ -173,7 +173,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                             }
                         }
 
-                        if(isZJY) {
+                        if(isZJY||isZJLD) {
                             JSONArray bcpInShowJA = new JSONArray();
                             JSONObject bcpInShowJO=null;
                             Log.e("mData===",""+mData.size());
@@ -187,7 +187,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                                 bcpInShowJA.add(bcpInShowJO);
                             }
                             Log.e("bcpInShowJA===",""+bcpInShowJA.toString());
-                            //param.setBcpInShowJAStr(bcpInShowJA);
+                            param.setBcpInShowJAStr(bcpInShowJA.toString());
                         }
                     }
                 });
@@ -329,7 +329,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            BcpInQualityCheckActivity.MyAdapter.ViewHolder viewHolder;
+            final BcpInQualityCheckActivity.MyAdapter.ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = View.inflate(BcpInQualityCheckActivity.this, R.layout.item_cp_quality_check, null);
                 viewHolder = new BcpInQualityCheckActivity.MyAdapter.ViewHolder(convertView);
@@ -365,18 +365,33 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             jyztList.add(jyztMap);
             viewHolder.mZjztAdapter = new SimpleAdapter(BcpInQualityCheckActivity.this,jyztList,R.layout.item_shen_fen,new String[]{"name","id"},new int[]{R.id.nameValue,R.id.idValue});
             viewHolder.mZjztSpinner.setAdapter(viewHolder.mZjztAdapter);
-            viewHolder.mZjztSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            if(isZJY) {
+                viewHolder.mZjztSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int jyztPosition, long id) {
-                    mData.get(position).setZjzt(jyztPosition);
-                }
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int jyztPosition, long id) {
+                        //mData.get(position).setZjzt(jyztPosition);
+                        String bcpInShowJAStr = param.getBcpInShowJAStr();
+                        JSONArray bcpInShowJA = JSONArray.parseArray(bcpInShowJAStr);
+                        JSONObject bcpInShowJO = (JSONObject) bcpInShowJA.get(position);
+                        Map<String, String> selectedItemMap = (Map<String, String>) viewHolder.mZjztSpinner.getSelectedItem();
+                        bcpInShowJO.put("zjzt", selectedItemMap.get("id"));
+                        param.setBcpInShowJAStr(bcpInShowJA.toString());
+                    }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
 
-                }
-            });
+                    }
+                });
+            }
+            else if(isZJLD){
+                String bcpInShowJAStr = param.getBcpInShowJAStr();
+                JSONArray bcpInShowJA = JSONArray.parseArray(bcpInShowJAStr);
+                JSONObject bcpInShowJO = (JSONObject) bcpInShowJA.get(position);
+                viewHolder.mZjztSpinner.setSelection(1-bcpInShowJO.getInteger("zjzt"));
+                viewHolder.mZjztSpinner.setEnabled(false);
+            }
 
             final String qRCodeID = bean.getqRCodeID();
             if("4".equals(qRCodeID.substring(8,9))){

@@ -144,7 +144,8 @@ public class BcpDataTrackActivity extends BaseActivity {
                         } else {
                             BcpTrackResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getProductName());
-                            mJyztValue.setText(dataResult.getJyzt());
+                            String jyzt = dataResult.getJyzt();
+                            mJyztValue.setText("0".equals(jyzt)?"不合格":"合格");
                             mLbValue.setText(dataResult.getSortName());
                             String gg = dataResult.getGg();
                             if(TextUtils.isEmpty(gg))

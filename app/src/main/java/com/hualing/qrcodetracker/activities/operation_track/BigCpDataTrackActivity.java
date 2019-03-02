@@ -124,7 +124,8 @@ public class BigCpDataTrackActivity extends BaseActivity {
                         } else {
                             BigCpTrackResult dataResult = result.getResult();
                             mNameValue.setText(dataResult.getCpName());
-                            mJyztValue.setText(dataResult.getJyzt());
+                            String jyzt = dataResult.getJyzt();
+                            mJyztValue.setText("0".equals(jyzt)?"不合格":"合格");
                             mLbValue.setText(dataResult.getSortName());
                             String gg = dataResult.getGg();
                             if(TextUtils.isEmpty(gg))
