@@ -255,6 +255,8 @@ public class BCPInDataInputActivity extends BaseActivity {
         params.setSortID(mSelectedLeiBieId);
         params.setYlpc(ylpcValue);
         params.setScpc(scpcValue);
+        if(getString(R.string.no_gg).equals(ggValue))
+            ggValue="";
         params.setGg(ggValue);
         params.setShl(1);
         params.setDwzl(Float.parseFloat(dwzlValue));
@@ -447,6 +449,8 @@ public class BCPInDataInputActivity extends BaseActivity {
                     String productName = data.getStringExtra("productName");
                     mProductNameValue.setText(productName);
                     String model = data.getStringExtra("model");
+                    if("".equals(model))
+                        model=getString(R.string.no_gg);
                     mGgValue.setText(model);
                     String company = data.getStringExtra("company");
                     mDwValue.setText(company);

@@ -325,7 +325,10 @@ public class WlTkVerifyActivity extends BaseActivity {
             //viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mLbValue.setText(bean.getSortName());
-            viewHolder.mGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if(TextUtils.isEmpty(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mGgValue.setText(gg);
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
             viewHolder.mSlValue.setText(bean.getShl() + "");

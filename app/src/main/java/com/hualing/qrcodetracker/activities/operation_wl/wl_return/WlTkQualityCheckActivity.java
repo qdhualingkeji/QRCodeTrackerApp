@@ -321,7 +321,10 @@ public class WlTkQualityCheckActivity extends BaseActivity {
             //viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mTimeValue.setText(bean.getTime());
-            viewHolder.mGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if(TextUtils.isEmpty(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mGgValue.setText(gg);
             viewHolder.mSldwValue.setText(bean.getdW());
             viewHolder.mZhlValue.setText(bean.getdWZL() + "");
 

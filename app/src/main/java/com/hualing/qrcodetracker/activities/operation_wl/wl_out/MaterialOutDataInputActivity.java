@@ -142,7 +142,10 @@ public class MaterialOutDataInputActivity extends BaseActivity {
                             mNameValue.setText(dataResult.getProductName());
                             mCdValue.setText(dataResult.getChd());
                             mLbValue.setText(dataResult.getSortName());
-                            mGgValue.setText(dataResult.getGg());
+                            String gg = dataResult.getGg();
+                            if(TextUtils.isEmpty(gg))
+                                gg=getString(R.string.no_gg);
+                            mGgValue.setText(gg);
                             mZzlValue.setText(dataResult.getPczl() + "");
                             mSldwValue.setText(dataResult.getDw());
                             mRemainShlValue.setText(dataResult.getShl() + "");

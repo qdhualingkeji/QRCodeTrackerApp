@@ -318,7 +318,10 @@ public class WlInQualityCheckActivity extends BaseActivity {
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mPczlValue.setText(bean.getpCZL() + "");
             viewHolder.mLlTimeValue.setText(bean.getlLTime());
-            viewHolder.mGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if(TextUtils.isEmpty(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mGgValue.setText(gg);
             viewHolder.mCzyValue.setText(bean.getcZY());
             viewHolder.mSldwValue.setText(bean.getUnit());
             viewHolder.mZhlValue.setText(bean.getdWZL() + "");

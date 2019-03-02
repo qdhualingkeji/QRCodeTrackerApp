@@ -324,7 +324,10 @@ public class WlInVerifyActivity extends BaseActivity {
             viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mCdValue.setText(bean.getcHD());
-            viewHolder.mGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if(TextUtils.isEmpty(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mGgValue.setText(gg);
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getUnit());
             viewHolder.mSlValue.setText(bean.getShl() + "");

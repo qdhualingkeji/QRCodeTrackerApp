@@ -285,7 +285,10 @@ public class BcpInVerifyActivity extends BaseActivity {
             //viewHolder.mWlbmValue.setText(bean.getwLCode());
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mLbValue.setText(bean.getSortName());
-            viewHolder.mGgValue.setText(bean.getgG());
+            String gg = bean.getgG();
+            if(TextUtils.isEmpty(gg))
+                gg=getString(R.string.no_gg);
+            viewHolder.mGgValue.setText(gg);
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
             if (bean.getShl()==-1) {
@@ -306,6 +309,12 @@ public class BcpInVerifyActivity extends BaseActivity {
                         IntentUtil.openActivityForResult(BcpInVerifyActivity.this, SmallCPInQualityCheckActivity.class, -1, bundle);
                     }
                 });
+
+                viewHolder.mBcpGSBView.setVisibility(View.VISIBLE);
+            }
+            else{
+                viewHolder.goSmallBtn.setVisibility(View.GONE);
+                viewHolder.mBcpGSBView.setVisibility(View.GONE);
             }
 
             return convertView;
@@ -330,6 +339,8 @@ public class BcpInVerifyActivity extends BaseActivity {
             TextView mDwzlValue;
             @BindView(R.id.goSmallBtn)
             Button goSmallBtn;
+            @BindView(R.id.bcpGSBView)
+            View mBcpGSBView;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

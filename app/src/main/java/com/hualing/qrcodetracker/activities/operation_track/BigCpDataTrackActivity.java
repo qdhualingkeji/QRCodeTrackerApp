@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -125,7 +126,10 @@ public class BigCpDataTrackActivity extends BaseActivity {
                             mNameValue.setText(dataResult.getCpName());
                             mJyztValue.setText(dataResult.getJyzt());
                             mLbValue.setText(dataResult.getSortName());
-                            mGgValue.setText(dataResult.getGg());
+                            String gg = dataResult.getGg();
+                            if(TextUtils.isEmpty(gg))
+                                gg=getString(R.string.no_gg);
+                            mGgValue.setText(gg);
                             //mWlbmValue.setText(dataResult.getCpCode());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());

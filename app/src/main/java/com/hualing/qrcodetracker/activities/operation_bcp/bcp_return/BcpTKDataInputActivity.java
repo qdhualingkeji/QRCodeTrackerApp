@@ -181,7 +181,10 @@ public class BcpTKDataInputActivity extends BaseActivity {
                             //mLbValue.setText(dataResult.getSortName());
                             mYlpcValue.setText(dataResult.getYlpc());
                             mScpcValue.setText(dataResult.getScpc());
-                            mGgValue.setText(dataResult.getGg());
+                            String gg = dataResult.getGg();
+                            if(TextUtils.isEmpty(gg))
+                                gg=getString(R.string.no_gg);
+                            mGgValue.setText(gg);
                             mScTimeValue.setText(dataResult.getScTime());
                             mRemainShlValue.setText(dataResult.getShl() + "");
                             mShlDwValue.setText(dataResult.getDw());
