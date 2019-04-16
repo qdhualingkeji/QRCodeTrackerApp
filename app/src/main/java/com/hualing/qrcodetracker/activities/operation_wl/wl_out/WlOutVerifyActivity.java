@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.operation_wl.wl_out;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -67,6 +68,7 @@ public class WlOutVerifyActivity extends BaseActivity {
     private List<WLOutShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isKG=false;
     private boolean isBZ=false;
     private boolean isFZR=false;
     private boolean isZJY=false;
@@ -97,7 +99,11 @@ public class WlOutVerifyActivity extends BaseActivity {
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
-                if("bz".equals(checkQX)){
+                if("kg".equals(checkQX)){
+                    isKG=true;
+                    break;
+                }
+                else if("bz".equals(checkQX)){
                     isBZ=true;
                     break;
                 }
@@ -114,10 +120,17 @@ public class WlOutVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isBZ)
+            if(isKG)
+                param.setCheckQXFlag(VerifyParam.KG);
+            else if(isBZ)
                 param.setCheckQXFlag(VerifyParam.BZ);
-            else if(isFZR)
-                param.setCheckQXFlag(VerifyParam.FZR);
+            else if(isFZR) {
+                int personFlag = getIntent().getIntExtra("personFlag", -1);
+                if(personFlag==NotificationParam.FLFZR)
+                    param.setCheckQXFlag(VerifyParam.FLFZR);
+                else if(personFlag==NotificationParam.LLFZR)
+                    param.setCheckQXFlag(VerifyParam.LLFZR);
+            }
             else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
             else if(isZJLD)
@@ -235,8 +248,8 @@ public class WlOutVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            if(isBZ)//如果登录者是班长的话，说明还得推送给负责人
-                                sendNotification();
+                            if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.FLFZR||param.getCheckQXFlag()==VerifyParam.BZ)//如果登录者是发料负责人的话，说明还得推送给班长;如果登录者是班长的话，说明还得推送给领料负责人
+                                sendNotification(param.getCheckQXFlag());
                             else{//不是的话，说明登录者就是负责人，最后一道审核就不必再推送了
                                 setResult(RETURN_AND_REFRESH);
                                 AllActivitiesHolder.removeAct(WlOutVerifyActivity.this);
@@ -247,19 +260,33 @@ public class WlOutVerifyActivity extends BaseActivity {
                 });
     }
 
-    private void sendNotification() {
+    private void sendNotification(Integer checkQXFlag) {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
         notificationParam.setDh(param.getDh());
         notificationParam.setStyle(NotificationType.WL_CKD);
-        int personFlag=NotificationParam.FZR;
+        int personFlag=-1;
+        String notifText=null;
+        if(checkQXFlag==VerifyParam.KG){
+            personFlag=NotificationParam.FLFZR;
+            notifText="已通知发料领导审核";
+        }
+        if(checkQXFlag==VerifyParam.FLFZR){
+            personFlag=NotificationParam.BZ;
+            notifText="已通知班长审核";
+        }
+        else if(checkQXFlag==VerifyParam.BZ){
+            personFlag=NotificationParam.LLFZR;
+            notifText="已通知领料领导审核";
+        }
         notificationParam.setPersonFlag(personFlag);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
 
+        final String finalNotifText = notifText;
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
@@ -275,7 +302,7 @@ public class WlOutVerifyActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), finalNotifText, Toast.LENGTH_SHORT).show();
                         }
                         setResult(RETURN_AND_REFRESH);
                         AllActivitiesHolder.removeAct(WlOutVerifyActivity.this);

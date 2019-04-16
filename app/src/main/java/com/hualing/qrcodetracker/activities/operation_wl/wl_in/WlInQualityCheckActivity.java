@@ -252,8 +252,8 @@ public class WlInQualityCheckActivity extends BaseActivity {
         //下面是判断下一个质检或审核人是谁
         if(isZJY)//如果是质检员，就推送给质检领导
             personFlag=NotificationParam.ZJLD;
-        else if(isZJLD)//如果是质检领导，就推送给班长
-            personFlag=NotificationParam.BZ;
+        else if(isZJLD)//如果是质检领导，就推送给仓库负责人
+            personFlag=NotificationParam.FZR;
         notificationParam.setPersonFlag(personFlag);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
@@ -275,7 +275,10 @@ public class WlInQualityCheckActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            if(isZJY)//如果是质检员，就推送给质检领导
+                                Toast.makeText(TheApplication.getContext(), "已通知质检领导质检", Toast.LENGTH_SHORT).show();
+                            else if(isZJLD)//如果是质检领导，就推送给仓库负责人
+                                Toast.makeText(TheApplication.getContext(), "已通知仓库负责人审核", Toast.LENGTH_SHORT).show();
                         }
                         setResult(RETURN_AND_REFRESH);
                         AllActivitiesHolder.removeAct(WlInQualityCheckActivity.this);

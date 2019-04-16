@@ -51,7 +51,6 @@ public class WLInRKDInputActivity extends BaseActivity {
 
     private static final int SELECT_PERSON = 111;
     private static final int SELECT_PERSON1 = 112;
-    private static final int SELECT_BZ = 113;
     private static final int SELECT_ZJLD = 114;
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -69,13 +68,10 @@ public class WLInRKDInputActivity extends BaseActivity {
 //    EditText mShrValue;
     @BindView(R.id.ShFzrValue)
     TextView mShFzrValue;
-    @BindView(R.id.bzValue)
-    TextView mBzValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
     @BindView(R.id.zjldValue)
     TextView mZjldValue;
-    private int bzID;
     private int fzrID;
     private int zjyID;
     private int zjldID;
@@ -150,8 +146,6 @@ public class WLInRKDInputActivity extends BaseActivity {
         params.setShFzr(shfzrValue);
 //        params.setFhr(GlobalData.realName);
 //        params.setJhFzr(jhfzrValue);
-        params.setBzID(bzID);
-        params.setBzStatus(0);
         params.setFzrID(fzrID);
         params.setFzrStatus(0);
         params.setZjyID(zjyID);
@@ -161,7 +155,7 @@ public class WLInRKDInputActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.ShRqValue, R.id.ShSjValue, R.id.commitBtn, R.id.selectBz,R.id.selectPerson,R.id.selectPerson1,R.id.selectZjld})
+    @OnClick({R.id.ShRqValue, R.id.ShSjValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1,R.id.selectZjld})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -206,10 +200,6 @@ public class WLInRKDInputActivity extends BaseActivity {
                         .show();
 
                 break;
-            case R.id.selectBz:
-                bundle.putString("checkQX", "bz");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_BZ, bundle);
-                break;
             case R.id.selectPerson:
                 bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
@@ -237,10 +227,6 @@ public class WLInRKDInputActivity extends BaseActivity {
             int personID = data.getIntExtra("personID",0);
             String personName = data.getStringExtra("personName");
             switch (requestCode) {
-                case SELECT_BZ:
-                    bzID =personID;
-                    mBzValue.setText(personName);
-                    break;
                 case SELECT_PERSON:
                     fzrID =personID;
                     mShFzrValue.setText(personName);

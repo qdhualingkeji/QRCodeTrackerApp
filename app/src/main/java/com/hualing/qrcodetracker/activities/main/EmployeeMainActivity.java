@@ -111,6 +111,7 @@ public class EmployeeMainActivity extends BaseActivity {
 
     private MyPagerAdapter mPagerAdapter;
     private List<Module2> mCanUseList;
+    private boolean isKG;
     private boolean isBZ;
     private boolean isFZR;
     private boolean isZJY;
@@ -156,7 +157,11 @@ public class EmployeeMainActivity extends BaseActivity {
     protected void initLogic() {
         String[] checkQXArr = GlobalData.checkQXGroup.split(",");
         for (String checkQX:checkQXArr) {
-            if("bz".equals(checkQX)){
+            if("kg".equals(checkQX)){
+                isKG=true;
+                break;
+            }
+            else if("bz".equals(checkQX)){
                 isBZ=true;
                 break;
             }
@@ -367,7 +372,9 @@ public class EmployeeMainActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
-        if(isBZ)
+        if(isKG)
+            params.setCheckQXFlag(MainParams.KG);
+        else if(isBZ)
             params.setCheckQXFlag(MainParams.BZ);
         else if(isFZR)
             params.setCheckQXFlag(MainParams.FZR);
@@ -787,7 +794,7 @@ public class EmployeeMainActivity extends BaseActivity {
             verify.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(isBZ||isFZR) {
+                    if(isKG||isBZ||isFZR) {
                         for (Module2 module2 : mCanUseList) {
                             if ("审核".equals(module2.getMname())) {
                                 GlobalData.currentFunctionType = FunctionType.VERIFY;

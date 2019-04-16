@@ -259,7 +259,7 @@ public class MaterialOutDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getWlCKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.WL_CKD);
-        notificationParam.setPersonFlag(NotificationParam.BZ);
+        notificationParam.setPersonFlag(NotificationParam.KG);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();

@@ -16,10 +16,14 @@ public class CreateWLCKDParam {
     private String lhR;
     private String lhFzr;
     private String remark;
+    private Integer kgID;
+    private Integer kgStatus;
+    private Integer flfzrID;
+    private Integer flfzrStatus;
     private Integer bzID;
     private Integer bzStatus;
-    private Integer fzrID;
-    private Integer fzrStatus;
+    private Integer llfzrID;
+    private Integer llfzrStatus;
 
     public String getOutDh() {
         return outDh;
@@ -101,20 +105,52 @@ public class CreateWLCKDParam {
         this.bzStatus = bzStatus;
     }
 
-    public Integer getFzrID() {
-        return fzrID;
+    public Integer getKgID() {
+        return kgID;
     }
 
-    public void setFzrID(Integer fzrID) {
-        this.fzrID = fzrID;
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
     }
 
-    public Integer getFzrStatus() {
-        return fzrStatus;
+    public Integer getKgStatus() {
+        return kgStatus;
     }
 
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
+    public Integer getFlfzrID() {
+        return flfzrID;
+    }
+
+    public void setFlfzrID(Integer flfzrID) {
+        this.flfzrID = flfzrID;
+    }
+
+    public Integer getFlfzrStatus() {
+        return flfzrStatus;
+    }
+
+    public void setFlfzrStatus(Integer flfzrStatus) {
+        this.flfzrStatus = flfzrStatus;
+    }
+
+    public Integer getLlfzrID() {
+        return llfzrID;
+    }
+
+    public void setLlfzrID(Integer llfzrID) {
+        this.llfzrID = llfzrID;
+    }
+
+    public Integer getLlfzrStatus() {
+        return llfzrStatus;
+    }
+
+    public void setLlfzrStatus(Integer llfzrStatus) {
+        this.llfzrStatus = llfzrStatus;
     }
 
 }

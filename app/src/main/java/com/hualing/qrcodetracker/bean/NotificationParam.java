@@ -15,6 +15,9 @@ public class NotificationParam {
     public static final int ZJY = 2;
     public static final int BZ = 3;
     public static final int ZJLD = 4;
+    public static final int KG = 5;
+    public static final int FLFZR = 6;
+    public static final int LLFZR = 7;
 
     private String dh ;
 

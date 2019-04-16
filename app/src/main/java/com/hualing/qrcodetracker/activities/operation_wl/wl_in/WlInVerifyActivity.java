@@ -66,7 +66,6 @@ public class WlInVerifyActivity extends BaseActivity {
     private List<WLINShowBean> mData;
     private String mDh;
     private VerifyParam param;
-    private boolean isBZ=false;
     private boolean isFZR=false;
     private boolean isZJY=false;
     private boolean isZJLD=false;
@@ -96,11 +95,7 @@ public class WlInVerifyActivity extends BaseActivity {
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
-                if("bz".equals(checkQX)){
-                    isBZ=true;
-                    break;
-                }
-                else if("fzr".equals(checkQX)){
+                if("fzr".equals(checkQX)){
                     isFZR=true;
                     break;
                 }
@@ -113,9 +108,7 @@ public class WlInVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isBZ)
-                param.setCheckQXFlag(VerifyParam.BZ);
-            else if(isFZR)
+            if(isFZR)
                 param.setCheckQXFlag(VerifyParam.FZR);
             else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
@@ -244,53 +237,12 @@ public class WlInVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            if(isBZ)//如果登录者是班长的话，说明还得推送给负责人
-                                sendNotification();
-                            else{//不是的话，说明登录者就是负责人，最后一道审核就不必再推送了
-                                setResult(RETURN_AND_REFRESH);
-                                AllActivitiesHolder.removeAct(WlInVerifyActivity.this);
-                            }
+                            setResult(RETURN_AND_REFRESH);
+                            AllActivitiesHolder.removeAct(WlInVerifyActivity.this);
                             return;
                         }
                     }
                 });
-    }
-
-    private void sendNotification() {
-
-        final NotificationParam notificationParam = new NotificationParam();
-        //根据单号去查找审核人
-        notificationParam.setDh(param.getDh());
-        notificationParam.setStyle(NotificationType.WL_RKD);
-        int personFlag=NotificationParam.FZR;
-        notificationParam.setPersonFlag(personFlag);
-
-        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
-        progressDialog.show();
-
-
-        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
-            @Override
-            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
-                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
-                e.onNext(nr);
-            }
-        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
-                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                .subscribe(new Consumer<ActionResult<ActionResult>>() {
-                    @Override
-                    public void accept(ActionResult<ActionResult> result) throws Exception {
-                        progressDialog.dismiss();
-                        if (result.getCode() != 0) {
-                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
-                        }
-                        setResult(RETURN_AND_REFRESH);
-                        AllActivitiesHolder.removeAct(WlInVerifyActivity.this);
-                    }
-                });
-
     }
 
     class MyAdapter extends BaseAdapter {

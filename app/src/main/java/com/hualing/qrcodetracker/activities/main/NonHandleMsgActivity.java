@@ -28,6 +28,7 @@ import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.MainParams;
 import com.hualing.qrcodetracker.bean.NonCheckBean;
 import com.hualing.qrcodetracker.bean.NonCheckResult;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
@@ -67,6 +68,7 @@ public class NonHandleMsgActivity extends BaseActivity {
     private MainDao mainDao;
     private MyAdapter mAdapter;
     private List<NonCheckBean> mData;
+    private boolean isKG;
     private boolean isBZ;
     private boolean isFZR;
     private boolean isZJY;
@@ -82,7 +84,11 @@ public class NonHandleMsgActivity extends BaseActivity {
         //判断登录角色的身份（领导、质检员）
         String[] checkQXArr = GlobalData.checkQXGroup.split(",");
         for (String checkQX:checkQXArr) {
-            if("bz".equals(checkQX)){
+            if("kg".equals(checkQX)){
+                isKG=true;
+                break;
+            }
+            else if("bz".equals(checkQX)){
                 isBZ=true;
                 break;
             }
@@ -141,7 +147,9 @@ public class NonHandleMsgActivity extends BaseActivity {
         final MainParams params = new MainParams();
         params.setUserId(GlobalData.userId);
         params.setRealName(GlobalData.realName);
-        if(isBZ)
+        if(isKG)
+            params.setCheckQXFlag(MainParams.KG);
+        else if(isBZ)
             params.setCheckQXFlag(MainParams.BZ);
         else if(isFZR)
             params.setCheckQXFlag(MainParams.FZR);
@@ -210,7 +218,7 @@ public class NonHandleMsgActivity extends BaseActivity {
             } else
                 holder = (ViewHolder) convertView.getTag();
 
-            NonCheckBean info = mData.get(position);
+            final NonCheckBean info = mData.get(position);
             final String name = info.getName();
             holder.mName.setText(name);
             final String dh = info.getDh();
@@ -225,13 +233,17 @@ public class NonHandleMsgActivity extends BaseActivity {
                             Intent intent =null;
                             switch (name){
                                 case "物料入库单":
-                                    if(isBZ||isFZR)
+                                    if(isKG||isFZR)
                                         intent = new Intent(NonHandleMsgActivity.this,WlInVerifyActivity.class);
                                     else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,WlInQualityCheckActivity.class);
                                     break;
                                 case "物料出库单":
                                     intent = new Intent(NonHandleMsgActivity.this,WlOutVerifyActivity.class);
+                                    if(GlobalData.userId.equals(info.getFlfzrID()+""))
+                                        intent.putExtra("personFlag", NotificationParam.FLFZR);
+                                    else if(GlobalData.userId.equals(info.getLlfzrID()+""))
+                                        intent.putExtra("personFlag", NotificationParam.LLFZR);
                                     break;
                                 case "物料退库单":
                                     if(isBZ||isFZR)

@@ -40,23 +40,28 @@ public class WLCKDInputActivity extends BaseActivity {
 
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 30;
-    private static final int REQUEST_CODE_SELECT_LLFZR = 31;
+    private static final int REQUEST_CODE_SELECT_KG = 34;
     private static final int REQUEST_CODE_SELECT_FLFZR = 32;
     private static final int REQUEST_CODE_SELECT_BZ = 33;
+    private static final int REQUEST_CODE_SELECT_LLFZR = 31;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.LldwValue)
     TextView mLldwValue;
     //@BindView(R.id.FlrValue)
     //TextView mFlrValue;
-    @BindView(R.id.bzValue)
-    TextView mBzValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
     @BindView(R.id.FlfzrValue)
     TextView mFlfzrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.LlfzrValue)
     TextView mLlfzrValue;
+    private int kgID;
+    private int flfzrID;
     private int bzID;
-    private int fzrID;
+    private int llfzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     private CreateWLCKDParam params;
@@ -139,12 +144,15 @@ public class WLCKDInputActivity extends BaseActivity {
 
     private boolean checkDataIfCompleted() {
         String lldwValue = mLldwValue.getText().toString();
-        //String flrValue = mFlrValue.getText().toString();
+        String kgValue = mKgValue.getText().toString();
         String flfzrValue = mFlfzrValue.getText().toString();
+        String bzValue = mBzValue.getText().toString();
         String llfzrValue = mLlfzrValue.getText().toString();
         String remarkValue = mRemarkValue.getText().toString();
-        if ("请选择部门".equals(lldwValue)
+        if ("请选择领料部门".equals(lldwValue)
+                || "请选择库管".equals(kgValue)
                 || "请选择发料负责人".equals(flfzrValue)
+                || "请选择班长".equals(bzValue)
                 || "请选择领料负责人".equals(llfzrValue)
             //                || TextUtils.isEmpty(remarkValue)
                 ) {
@@ -155,11 +163,14 @@ public class WLCKDInputActivity extends BaseActivity {
         params.setFhFzr(flfzrValue);
         params.setLhR(GlobalData.realName);
         params.setLhFzr(llfzrValue);
+        params.setKgID(kgID);
+        params.setKgStatus(0);
+        params.setFlfzrID(flfzrID);
+        params.setFlfzrStatus(0);
         params.setBzID(bzID);
         params.setBzStatus(0);
-        Log.e("fzrID==========",""+fzrID);
-        params.setFzrID(fzrID);
-        params.setFzrStatus(0);
+        params.setLlfzrID(llfzrID);
+        params.setLlfzrStatus(0);
         params.setRemark(remarkValue);
         return true;
     }
@@ -171,44 +182,49 @@ public class WLCKDInputActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_DEPARTMENT:
                     mLldwValue.setText(data.getStringExtra("groupName"));
                     break;
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_FLFZR:
+                    flfzrID=data.getIntExtra("personID",0);
+                    mFlfzrValue.setText(data.getStringExtra("personName"));
+                    break;
                 case REQUEST_CODE_SELECT_BZ:
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_FLFZR:
-                    fzrID=data.getIntExtra("personID",0);
-                    mFlfzrValue.setText(data.getStringExtra("personName"));
-                    break;
                 case REQUEST_CODE_SELECT_LLFZR:
+                    llfzrID=data.getIntExtra("personID",0);
                     mLlfzrValue.setText(data.getStringExtra("personName"));
                     break;
-                    /*
-                case REQUEST_CODE_SELECT_FLR:
-                    mFlrValue.setText(data.getStringExtra("personName"));
-                    break;
-                    */
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectBZ, R.id.selectFLFZR, R.id.selectLLFZR})
+    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectKG, R.id.selectFLFZR, R.id.selectBZ, R.id.selectLLFZR})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectLLBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
                 break;
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
+                break;
+            case R.id.selectFLFZR:
+                bundle.putString("checkQX", "fzr");//这个是发料负责人标识
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
+                break;
             case R.id.selectBZ:
                 bundle.putString("checkQX", "bz");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
-            case R.id.selectFLFZR:
-                bundle.putString("checkQX", "fzr");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
-                break;
             case R.id.selectLLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
+                bundle.putString("checkQX", "fzr");//这个是领料负责人标识
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LLFZR, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

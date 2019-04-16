@@ -18,8 +18,6 @@ public class CreateWLRKDParam {
     private String Fhr;
     private String ShFzr;
     private String JhFzr;
-    private Integer BzID;
-    private Integer BzStatus;
     private Integer FzrID;
     private Integer FzrStatus;
     private Integer ZjyID;
@@ -113,22 +111,6 @@ public class CreateWLRKDParam {
 
     public void setZjyStatus(Integer zjyStatus) {
         ZjyStatus = zjyStatus;
-    }
-
-    public Integer getBzID() {
-        return BzID;
-    }
-
-    public void setBzID(Integer bzID) {
-        BzID = bzID;
-    }
-
-    public Integer getBzStatus() {
-        return BzStatus;
-    }
-
-    public void setBzStatus(Integer bzStatus) {
-        BzStatus = bzStatus;
     }
 
     public Integer getZjldID() {
