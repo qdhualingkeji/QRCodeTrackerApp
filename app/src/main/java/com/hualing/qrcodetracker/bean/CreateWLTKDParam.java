@@ -21,13 +21,12 @@ public class CreateWLTKDParam {
     private String thFzr ;
     private Integer BzID;
     private Integer BzStatus;
-    private Integer fzrID;
-    private Integer fzrStatus;
-    private Integer zjyID;
-    private Integer zjyStatus;
-    private Integer ZjldID;
-    private Integer ZjldStatus;
-
+    private Integer tlfzrID;
+    private Integer tlfzrStatus;
+    private Integer kgID;
+    private Integer kgStatus;
+    private Integer slfzrID;
+    private Integer slfzrStatus;
     private String remark ;
 
     public String getBackDh() {
@@ -86,38 +85,6 @@ public class CreateWLTKDParam {
         this.thFzr = thFzr;
     }
 
-    public Integer getFzrID() {
-        return fzrID;
-    }
-
-    public void setFzrID(Integer fzrID) {
-        this.fzrID = fzrID;
-    }
-
-    public Integer getFzrStatus() {
-        return fzrStatus;
-    }
-
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
-    }
-
-    public Integer getZjyID() {
-        return zjyID;
-    }
-
-    public void setZjyID(Integer zjyID) {
-        this.zjyID = zjyID;
-    }
-
-    public Integer getZjyStatus() {
-        return zjyStatus;
-    }
-
-    public void setZjyStatus(Integer zjyStatus) {
-        this.zjyStatus = zjyStatus;
-    }
-
     public Integer getBzID() {
         return BzID;
     }
@@ -134,20 +101,52 @@ public class CreateWLTKDParam {
         BzStatus = bzStatus;
     }
 
-    public Integer getZjldID() {
-        return ZjldID;
+    public Integer getTlfzrID() {
+        return tlfzrID;
     }
 
-    public void setZjldID(Integer zjldID) {
-        ZjldID = zjldID;
+    public void setTlfzrID(Integer tlfzrID) {
+        this.tlfzrID = tlfzrID;
     }
 
-    public Integer getZjldStatus() {
-        return ZjldStatus;
+    public Integer getTlfzrStatus() {
+        return tlfzrStatus;
     }
 
-    public void setZjldStatus(Integer zjldStatus) {
-        ZjldStatus = zjldStatus;
+    public void setTlfzrStatus(Integer tlfzrStatus) {
+        this.tlfzrStatus = tlfzrStatus;
+    }
+
+    public Integer getKgID() {
+        return kgID;
+    }
+
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
+    }
+
+    public Integer getKgStatus() {
+        return kgStatus;
+    }
+
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
+    public Integer getSlfzrID() {
+        return slfzrID;
+    }
+
+    public void setSlfzrID(Integer slfzrID) {
+        this.slfzrID = slfzrID;
+    }
+
+    public Integer getSlfzrStatus() {
+        return slfzrStatus;
+    }
+
+    public void setSlfzrStatus(Integer slfzrStatus) {
+        this.slfzrStatus = slfzrStatus;
     }
 
     public String getRemark() {

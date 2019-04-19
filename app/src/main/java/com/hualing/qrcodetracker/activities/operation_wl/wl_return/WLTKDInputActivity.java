@@ -39,12 +39,11 @@ public class WLTKDInputActivity extends BaseActivity {
 
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 30;
-    private static final int REQUEST_CODE_SELECT_TLFZR = 31;
-    private static final int REQUEST_CODE_SELECT_SLFZR = 32;
     private static final int REQUEST_CODE_SELECT_SLR = 33;
-    private static final int REQUEST_CODE_SELECT_ZJY = 34;
     private static final int REQUEST_CODE_SELECT_BZ = 35;
-    private static final int REQUEST_CODE_SELECT_ZJLD = 36;
+    private static final int REQUEST_CODE_SELECT_TLFZR = 31;
+    private static final int REQUEST_CODE_SELECT_KG = 34;
+    private static final int REQUEST_CODE_SELECT_SLFZR = 32;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -54,18 +53,16 @@ public class WLTKDInputActivity extends BaseActivity {
     TextView mShrValue;
     @BindView(R.id.bzValue)
     TextView mBzValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
     @BindView(R.id.thfzrValue)
     TextView mThfzrValue;
-    @BindView(R.id.zjyValue)
-    TextView mZjyValue;
-    @BindView(R.id.zjldValue)
-    TextView mZjldValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.shfzrValue)
+    TextView mShfzrValue;
     private int bzID;
-    private int fzrID;
-    private int zjyID;
-    private int zjldID;
+    private int tlfzrID;
+    private int kgID;
+    private int slfzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     private CreateWLTKDParam params;
@@ -173,13 +170,17 @@ public class WLTKDInputActivity extends BaseActivity {
     private boolean checkDataIfCompleted() {
         String thdwValue = mThdwValue.getText().toString();
         String shrValue = mShrValue.getText().toString();
-        String shfzrValue = mShfzrValue.getText().toString();
+        String bzValue = mBzValue.getText().toString();
         String thfzrValue = mThfzrValue.getText().toString();
+        String kgValue = mKgValue.getText().toString();
+        String shfzrValue = mShfzrValue.getText().toString();
         String remarkValue = mRemarkValue.getText().toString();
-        if ("请选择部门".equals(thdwValue)
+        if ("请选择退料部门".equals(thdwValue)
                 || "请选择收料人".equals(shrValue)
-                || "请选择收料负责人".equals(shfzrValue)
+                || "请选择班长".equals(bzValue)
                 || "请选择退料负责人".equals(thfzrValue)
+                || "请选择库管".equals(kgValue)
+                || "请选择收料负责人".equals(shfzrValue)
             //                || TextUtils.isEmpty(remarkValue)
                 ) {
             return false;
@@ -188,15 +189,16 @@ public class WLTKDInputActivity extends BaseActivity {
         params.setShrr(shrValue);
         params.setShFzr(shfzrValue);
         params.setThr(GlobalData.realName);
-        params.setThFzr(thfzrValue);
         params.setBzID(bzID);
         params.setBzStatus(0);
-        params.setFzrID(fzrID);
-        params.setFzrStatus(0);
-        params.setZjyID(zjyID);
-        params.setZjyStatus(0);
-        params.setZjldID(zjldID);
-        params.setZjldStatus(0);
+        params.setTlfzrID(tlfzrID);
+        params.setTlfzrStatus(0);
+        params.setThFzr(thfzrValue);
+        params.setKgID(kgID);
+        params.setKgStatus(0);
+        params.setSlfzrID(slfzrID);
+        params.setSlfzrStatus(0);
+        params.setShFzr(shfzrValue);
         params.setRemark(remarkValue);
         return true;
     }
@@ -215,27 +217,24 @@ public class WLTKDInputActivity extends BaseActivity {
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_SLFZR:
-                    fzrID=data.getIntExtra("personID",0);
-                    mShfzrValue.setText(data.getStringExtra("personName"));
-                    break;
                 case REQUEST_CODE_SELECT_TLFZR:
+                    tlfzrID=data.getIntExtra("personID",0);
                     mThfzrValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_ZJY:
-                    zjyID=data.getIntExtra("personID",0);
-                    mZjyValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_ZJLD:
-                    zjldID=data.getIntExtra("personID",0);
-                    mZjldValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_SLFZR:
+                    slfzrID=data.getIntExtra("personID",0);
+                    mShfzrValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectLLBM, R.id.commitBtn, R.id.selectSLR, R.id.selectBz, R.id.selectSLFZR, R.id.selectTLFZR, R.id.selectZJY, R.id.selectZJLD})
+    @OnClick({R.id.selectLLBM, R.id.selectSLR, R.id.selectBz, R.id.selectTLFZR, R.id.selectKG, R.id.selectSLFZR, R.id.commitBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -249,20 +248,17 @@ public class WLTKDInputActivity extends BaseActivity {
                 bundle.putString("checkQX", "bz");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
+            case R.id.selectTLFZR:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_TLFZR, bundle);
+                break;
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
+                break;
             case R.id.selectSLFZR:
                 bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
-                break;
-            case R.id.selectTLFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_TLFZR, null);
-                break;
-            case R.id.selectZJY:
-                bundle.putString("checkQX", "zjy");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
-                break;
-            case R.id.selectZJLD:
-                bundle.putString("checkQX", "zjld");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();
