@@ -23,10 +23,10 @@ public class WlTkVerifyResult {
     private Integer bzID;
     private Integer bzStatus;
     private String bzName;
-    private int fzrID;
-    private int fzrStatus;
-    private int zjyID;
-    private int zjyStatus;
+    private Integer fzrID;
+    private Integer fzrStatus;
+    private Integer zjyID;
+    private Integer zjyStatus;
     private String zjyName;
     private Integer zjldID;
     private Integer zjldStatus;
@@ -142,7 +142,7 @@ public class WlTkVerifyResult {
         return fzrID;
     }
 
-    public void setFzrID(int fzrID) {
+    public void setFzrID(Integer fzrID) {
         this.fzrID = fzrID;
     }
 
@@ -150,7 +150,7 @@ public class WlTkVerifyResult {
         return fzrStatus;
     }
 
-    public void setFzrStatus(int fzrStatus) {
+    public void setFzrStatus(Integer fzrStatus) {
         this.fzrStatus = fzrStatus;
     }
 
@@ -158,7 +158,7 @@ public class WlTkVerifyResult {
         return zjyID;
     }
 
-    public void setZjyID(int zjyID) {
+    public void setZjyID(Integer zjyID) {
         this.zjyID = zjyID;
     }
 
@@ -166,7 +166,7 @@ public class WlTkVerifyResult {
         return zjyStatus;
     }
 
-    public void setZjyStatus(int zjyStatus) {
+    public void setZjyStatus(Integer zjyStatus) {
         this.zjyStatus = zjyStatus;
     }
 

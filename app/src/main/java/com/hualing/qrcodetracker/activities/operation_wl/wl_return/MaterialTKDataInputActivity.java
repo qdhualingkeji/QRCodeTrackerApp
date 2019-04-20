@@ -118,7 +118,10 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                         float tkShl = Float.parseFloat(tkShlStr);
                         float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
                         float zhl = Float.parseFloat(mZhlValue.getText().toString());
-                        mTkZhlValue.setText(df.format((tkShl / remainShl)*zhl));
+                        if(remainShl==0)
+                            mTkZhlValue.setText("0.00");
+                        else
+                            mTkZhlValue.setText(df.format((tkShl / remainShl)*zhl));
                     }
                 }
             }
@@ -293,7 +296,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getWlTKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.WL_TKD);
-        notificationParam.setPersonFlag(NotificationParam.ZJY);
+        notificationParam.setPersonFlag(NotificationParam.BZ);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -314,7 +317,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), "已通知班长审核", Toast.LENGTH_SHORT).show();
                         }
                         IntentUtil.openActivity(MaterialTKDataInputActivity.this, EmployeeMainActivity.class);
                         AllActivitiesHolder.removeAct(MaterialTKDataInputActivity.this);

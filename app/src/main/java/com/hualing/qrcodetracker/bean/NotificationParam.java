@@ -18,6 +18,8 @@ public class NotificationParam {
     public static final int KG = 5;
     public static final int FLFZR = 6;
     public static final int LLFZR = 7;
+    public static final int TLFZR = 8;
+    public static final int SLFZR = 9;
 
     private String dh ;
 

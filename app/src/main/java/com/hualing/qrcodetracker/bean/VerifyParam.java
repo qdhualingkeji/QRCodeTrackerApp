@@ -34,6 +34,8 @@ public class VerifyParam {
     public static final Integer FLFZR=4;//发料负责人常量
     public static final Integer LLFZR=5;//领料负责人常量
     public static final Integer KG=6;//仓库管理员常量
+    public static final Integer TLFZR=7;//退料负责人常量
+    public static final Integer SLFZR=8;//收料负责人常量
 
     public String getDh() {
         return dh;

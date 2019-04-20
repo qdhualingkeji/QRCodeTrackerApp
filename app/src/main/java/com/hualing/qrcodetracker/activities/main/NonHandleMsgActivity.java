@@ -246,9 +246,14 @@ public class NonHandleMsgActivity extends BaseActivity {
                                         intent.putExtra("personFlag", NotificationParam.LLFZR);
                                     break;
                                 case "物料退库单":
-                                    if(isBZ||isFZR)
-                                        intent = new Intent(NonHandleMsgActivity.this,WlTkVerifyActivity.class);
-                                    else if(isZJY||isZJLD)
+                                    if(isBZ||isKG||isFZR) {
+                                        intent = new Intent(NonHandleMsgActivity.this, WlTkVerifyActivity.class);
+                                        if(GlobalData.userId.equals(info.getTlfzrID()+""))
+                                            intent.putExtra("personFlag", NotificationParam.TLFZR);
+                                        else if(GlobalData.userId.equals(info.getSlfzrID()+""))
+                                            intent.putExtra("personFlag", NotificationParam.SLFZR);
+                                    }
+                                    else if(isZJY||isZJLD)//物料退库单一般都是由班长、库管、负责人（退料负责人、收料负责人）等审核，没有质检员或质检领导，这里是之前做的，后来改了，至于这个类先留着不删除
                                         intent = new Intent(NonHandleMsgActivity.this,WlTkQualityCheckActivity.class);
                                     break;
                                 case "半成品/成品入库单":

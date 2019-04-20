@@ -68,6 +68,7 @@ public class WlTkVerifyActivity extends BaseActivity {
     private String mDh;
     private VerifyParam param;
     private boolean isBZ=false;
+    private boolean isKG=false;
     private boolean isFZR=false;
     private boolean isZJY=false;
     private boolean isZJLD=false;
@@ -101,6 +102,10 @@ public class WlTkVerifyActivity extends BaseActivity {
                     isBZ=true;
                     break;
                 }
+                else if("kg".equals(checkQX)){
+                    isKG=true;
+                    break;
+                }
                 else if("fzr".equals(checkQX)){
                     isFZR=true;
                     break;
@@ -116,9 +121,16 @@ public class WlTkVerifyActivity extends BaseActivity {
             }
             if(isBZ)
                 param.setCheckQXFlag(VerifyParam.BZ);
-            else if(isFZR)
-                param.setCheckQXFlag(VerifyParam.FZR);
-            else if(isZJY)
+            else if(isKG)
+                param.setCheckQXFlag(VerifyParam.KG);
+            else if(isFZR) {
+                int personFlag = getIntent().getIntExtra("personFlag", -1);
+                if(personFlag==NotificationParam.TLFZR)
+                    param.setCheckQXFlag(VerifyParam.TLFZR);
+                else if(personFlag==NotificationParam.SLFZR)
+                    param.setCheckQXFlag(VerifyParam.SLFZR);
+            }
+            else if(isZJY)//这是质检员身份，物料退库单一般不用质检员质检，这里是之前做的，后来流程改了，先留着不删除
                 param.setCheckQXFlag(VerifyParam.ZJY);
             else if(isZJLD)
                 param.setCheckQXFlag(VerifyParam.ZJLD);
@@ -240,8 +252,8 @@ public class WlTkVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            if(isBZ)//如果登录者是班长的话，说明还得推送给负责人
-                                sendNotification();
+                            if(param.getCheckQXFlag()==VerifyParam.BZ||param.getCheckQXFlag()==VerifyParam.TLFZR||param.getCheckQXFlag()==VerifyParam.KG)//如果登录者是班长的话，说明还得推送给负责人
+                                sendNotification(param.getCheckQXFlag());
                             else{//不是的话，说明登录者就是负责人，最后一道审核就不必再推送了
                                 setResult(RETURN_AND_REFRESH);
                                 AllActivitiesHolder.removeAct(WlTkVerifyActivity.this);
@@ -252,19 +264,32 @@ public class WlTkVerifyActivity extends BaseActivity {
                 });
     }
 
-    private void sendNotification() {
+    private void sendNotification(Integer checkQXFlag) {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
         notificationParam.setDh(param.getDh());
         notificationParam.setStyle(NotificationType.WL_TKD);
-        int personFlag=NotificationParam.FZR;
+        int personFlag=-1;
+        String notifText=null;
+        if(checkQXFlag==VerifyParam.BZ){
+            personFlag=NotificationParam.TLFZR;
+            notifText="已通知退料领导审核";
+        }
+        if(checkQXFlag==VerifyParam.TLFZR){
+            personFlag=NotificationParam.KG;
+            notifText="已通知仓库管理员审核";
+        }
+        else if(checkQXFlag==VerifyParam.KG){
+            personFlag=NotificationParam.SLFZR;
+            notifText="已通知收料领导审核";
+        }
         notificationParam.setPersonFlag(personFlag);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
-
+        final String finalNotifText = notifText;
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
@@ -280,7 +305,7 @@ public class WlTkVerifyActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), finalNotifText, Toast.LENGTH_SHORT).show();
                         }
                         setResult(RETURN_AND_REFRESH);
                         AllActivitiesHolder.removeAct(WlTkVerifyActivity.this);
