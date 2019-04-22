@@ -260,27 +260,37 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "质检已通过", Toast.LENGTH_SHORT).show();
-                            //setResult(RETURN_AND_REFRESH);
-                            //AllActivitiesHolder.removeAct(BcpInQualityCheckActivity.this);
-                            sendNotification();
+                            if(param.getCheckQXFlag()==VerifyParam.ZJY)//如果登录者是班长的话，说明还得推送给领料负责人;如果登录者是发料负责人的话，说明还得推送给质检员;
+                                sendNotification(param.getCheckQXFlag());
+                            else{//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
+                                setResult(RETURN_AND_REFRESH);
+                                AllActivitiesHolder.removeAct(BcpInQualityCheckActivity.this);
+                            }
                             return;
                         }
                     }
                 });
     }
 
-    private void sendNotification() {
+    private void sendNotification(Integer checkQXFlag) {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
         notificationParam.setDh(param.getDh());
         notificationParam.setStyle(NotificationType.BCP_RKD);
-        notificationParam.setPersonFlag(NotificationParam.FZR);
+        int personFlag=-1;
+        String notifText=null;
+        if(checkQXFlag==VerifyParam.ZJY){
+            personFlag=NotificationParam.ZJLD;
+            notifText="已通知质检领导质检";
+        }
+        notificationParam.setPersonFlag(personFlag);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
 
+        final String finalNotifText = notifText;
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
@@ -296,7 +306,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), finalNotifText, Toast.LENGTH_SHORT).show();
                         }
                         setResult(RETURN_AND_REFRESH);
                         AllActivitiesHolder.removeAct(BcpInQualityCheckActivity.this);

@@ -18,10 +18,12 @@ import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpInShowBean;
 import com.hualing.qrcodetracker.bean.BcpInVerifyResult;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
@@ -241,12 +243,66 @@ public class BcpInVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
+                            if(param.getCheckQXFlag()==VerifyParam.BZ||param.getCheckQXFlag()==VerifyParam.FZR)//如果登录者是班长的话，说明还得推送给领料负责人;如果登录者是发料负责人的话，说明还得推送给质检员;
+                                sendNotification(param.getCheckQXFlag());
+                            else{//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
+                                setResult(RETURN_AND_REFRESH);
+                                AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
+                            }
+
+
+
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification(Integer checkQXFlag) {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        notificationParam.setDh(param.getDh());
+        notificationParam.setStyle(NotificationType.BCP_RKD);
+        int personFlag=-1;
+        String notifText=null;
+        if(checkQXFlag==VerifyParam.BZ){
+            personFlag=NotificationParam.FZR;
+            notifText="已通知车间领导审核";
+        }
+        else if(checkQXFlag==VerifyParam.FZR){
+            personFlag=NotificationParam.ZJY;
+            notifText="已通知质检员质检";
+        }
+        notificationParam.setPersonFlag(personFlag);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        final String finalNotifText = notifText;
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), finalNotifText, Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
+                    }
+                });
+
     }
 
     @Override

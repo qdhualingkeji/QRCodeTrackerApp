@@ -52,38 +52,6 @@ public class CreateBCPRKDParam {
         ShRq = shRq;
     }
 
-    public String getShr() {
-        return Shr;
-    }
-
-    public void setShr(String shr) {
-        Shr = shr;
-    }
-
-    public String getShFzr() {
-        return ShFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        ShFzr = shFzr;
-    }
-
-    public String getJhr() {
-        return Jhr;
-    }
-
-    public void setJhr(String jhr) {
-        Jhr = jhr;
-    }
-
-    public String getJhFzr() {
-        return JhFzr;
-    }
-
-    public void setJhFzr(String jhFzr) {
-        JhFzr = jhFzr;
-    }
-
     public Integer getFzrID() {
         return FzrID;
     }
@@ -122,6 +90,38 @@ public class CreateBCPRKDParam {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getShr() {
+        return Shr;
+    }
+
+    public void setShr(String shr) {
+        Shr = shr;
+    }
+
+    public String getShFzr() {
+        return ShFzr;
+    }
+
+    public void setShFzr(String shFzr) {
+        ShFzr = shFzr;
+    }
+
+    public String getJhr() {
+        return Jhr;
+    }
+
+    public void setJhr(String jhr) {
+        Jhr = jhr;
+    }
+
+    public String getJhFzr() {
+        return JhFzr;
+    }
+
+    public void setJhFzr(String jhFzr) {
+        JhFzr = jhFzr;
     }
 
     public Integer getBzID() {

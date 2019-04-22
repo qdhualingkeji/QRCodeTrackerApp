@@ -377,7 +377,7 @@ public class BCPInDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getBCPRKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.BCP_RKD);
-        notificationParam.setPersonFlag(NotificationParam.ZJY);
+        notificationParam.setPersonFlag(NotificationParam.BZ);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -398,7 +398,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), "已通知班长审核", Toast.LENGTH_SHORT).show();
                         }
                         IntentUtil.openActivity(BCPInDataInputActivity.this, EmployeeMainActivity.class);
                         AllActivitiesHolder.removeAct(BCPInDataInputActivity.this);

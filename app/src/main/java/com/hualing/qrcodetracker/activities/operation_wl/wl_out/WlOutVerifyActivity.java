@@ -272,7 +272,7 @@ public class WlOutVerifyActivity extends BaseActivity {
             personFlag=NotificationParam.FLFZR;
             notifText="已通知发料领导审核";
         }
-        if(checkQXFlag==VerifyParam.FLFZR){
+        else if(checkQXFlag==VerifyParam.FLFZR){
             personFlag=NotificationParam.BZ;
             notifText="已通知班长审核";
         }
