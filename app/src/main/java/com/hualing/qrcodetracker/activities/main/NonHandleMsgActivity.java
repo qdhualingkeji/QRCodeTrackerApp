@@ -262,6 +262,7 @@ public class NonHandleMsgActivity extends BaseActivity {
                                         intent = new Intent(NonHandleMsgActivity.this,BcpInVerifyActivity.class);
                                     else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,BcpInQualityCheckActivity.class);
+                                    intent.putExtra("name",name);
                                     break;
                                 case "成品出库单":
                                     intent = new Intent(NonHandleMsgActivity.this,BcpOutVerifyActivity.class);

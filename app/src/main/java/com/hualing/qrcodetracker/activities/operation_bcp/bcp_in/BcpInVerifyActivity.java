@@ -1,6 +1,7 @@
 package com.hualing.qrcodetracker.activities.operation_bcp.bcp_in;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,11 +66,20 @@ public class BcpInVerifyActivity extends BaseActivity {
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
+    @BindView(R.id.shfzrLayout)
+    LinearLayout mShfzrLayout;
+    @BindView(R.id.shfzrView)
+    View mShfzrView;
+    @BindView(R.id.jhfzrLayout)
+    LinearLayout mJhfzrLayout;
+    @BindView(R.id.jhfzrView)
+    View mJhfzrView;
 
     private MainDao mainDao;
     private MyAdapter mAdapter;
     private List<BcpInShowBean> mData;
     private String mDh;
+    private String mName;
     private VerifyParam param;
     private boolean isBZ=false;
     private boolean isFZR=false;
@@ -97,7 +108,8 @@ public class BcpInVerifyActivity extends BaseActivity {
         });
 
         param = new VerifyParam();
-        if (getIntent() != null) {
+        Intent intent = getIntent();
+        if (intent != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
                 if("bz".equals(checkQX)){
@@ -126,8 +138,24 @@ public class BcpInVerifyActivity extends BaseActivity {
             else if(isZJLD)
                 param.setCheckQXFlag(VerifyParam.ZJLD);
 
-            mDh = getIntent().getStringExtra("dh");
+            mDh = intent.getStringExtra("dh");
             param.setDh(mDh);
+            mName = intent.getStringExtra("name");
+            if("半成品录入单".equals(mName)){
+                mTitle.setTitle("半成品录入审核");
+                mShfzrLayout.setVisibility(LinearLayout.GONE);
+                mShfzrView.setVisibility(View.GONE);
+                mJhfzrLayout.setVisibility(LinearLayout.GONE);
+                mJhfzrView.setVisibility(View.GONE);
+            }
+            else{
+                mTitle.setTitle("成品入库审核");
+                mShfzrLayout.setVisibility(LinearLayout.VISIBLE);
+                mShfzrView.setVisibility(View.VISIBLE);
+                mJhfzrLayout.setVisibility(LinearLayout.VISIBLE);
+                mJhfzrView.setVisibility(View.VISIBLE);
+            }
+            param.setName(mName);
         }
 
         mData = new ArrayList<>();

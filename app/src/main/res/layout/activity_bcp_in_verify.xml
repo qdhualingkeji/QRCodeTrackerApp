@@ -134,7 +134,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dividerHeight"
                     android:background="@color/divide_gray_color"/>
+
                 <LinearLayout
+                    android:id="@+id/shfzrLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -162,9 +164,11 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/shfzrView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dividerHeight"
                     android:background="@color/divide_gray_color"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -196,7 +200,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dividerHeight"
                     android:background="@color/divide_gray_color"/>
+
                 <LinearLayout
+                    android:id="@+id/jhfzrLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -224,9 +230,11 @@
                 </LinearLayout>
 
                 <View
+                    android:id="@+id/jhfzrView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dividerHeight"
                     android:background="@color/divide_gray_color"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

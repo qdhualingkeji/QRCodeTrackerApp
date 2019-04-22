@@ -18,6 +18,15 @@ public class VerifyParam {
     private String dh ;
     private Integer checkQXFlag;//审核人身份，1是领导（负责人），0是质检员
     private String bcpInShowJAStr;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getBcpInShowJAStr() {
         return bcpInShowJAStr;
