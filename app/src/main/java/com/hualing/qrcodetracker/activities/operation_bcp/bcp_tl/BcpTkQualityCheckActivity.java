@@ -16,10 +16,12 @@ import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpTkQualityCheckResult;
 import com.hualing.qrcodetracker.bean.BcpTkShowBean;
 import com.hualing.qrcodetracker.bean.BcpTkVerifyResult;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
@@ -222,12 +224,64 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "质检已通过", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(BcpTkQualityCheckActivity.this);
+                            if(param.getCheckQXFlag()==VerifyParam.ZJY||param.getCheckQXFlag()==VerifyParam.ZJLD){
+                                sendNotification(param.getCheckQXFlag());
+                            }
+                            else {
+                                setResult(RETURN_AND_REFRESH);
+                                AllActivitiesHolder.removeAct(BcpTkQualityCheckActivity.this);
+                            }
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification(Integer checkQXFlag) {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        notificationParam.setDh(param.getDh());
+        notificationParam.setStyle(NotificationType.WL_CKD);
+        int personFlag=-1;
+        String notifText=null;
+        if(checkQXFlag==VerifyParam.ZJY){
+            personFlag=NotificationParam.ZJLD;
+            notifText="已通知质检领导质检";
+        }
+        else if(checkQXFlag==VerifyParam.ZJLD){
+            personFlag=NotificationParam.KG;
+            notifText="已通知仓库管理员审核";
+        }
+        notificationParam.setPersonFlag(personFlag);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        final String finalNotifText = notifText;
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), finalNotifText, Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(BcpTkQualityCheckActivity.this);
+                    }
+                });
+
     }
 
     @Override

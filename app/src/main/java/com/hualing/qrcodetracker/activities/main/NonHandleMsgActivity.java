@@ -267,9 +267,14 @@ public class NonHandleMsgActivity extends BaseActivity {
                                 case "成品出库单":
                                     intent = new Intent(NonHandleMsgActivity.this,BcpOutVerifyActivity.class);
                                     break;
-                                case "半成品退库单":
-                                    if(isBZ||isFZR)
-                                        intent = new Intent(NonHandleMsgActivity.this,BcpTkVerifyActivity.class);
+                                case "半成品入库（退库）单":
+                                    if(isBZ||isKG||isFZR) {
+                                        intent = new Intent(NonHandleMsgActivity.this, BcpTkVerifyActivity.class);
+                                        if(GlobalData.userId.equals(info.getTlfzrID()+""))
+                                            intent.putExtra("personFlag", NotificationParam.TLFZR);
+                                        else if(GlobalData.userId.equals(info.getSlfzrID()+""))
+                                            intent.putExtra("personFlag", NotificationParam.SLFZR);
+                                    }
                                     else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,BcpTkQualityCheckActivity.class);
                                     break;

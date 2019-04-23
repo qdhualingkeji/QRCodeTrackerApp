@@ -21,12 +21,17 @@ public class CreateBCPTKDParam {
     private String thFzr ;
     private Integer bzID;
     private Integer bzStatus;
-    private Integer fzrID;
-    private Integer fzrStatus;
+    private Integer tlfzrID;
+    private Integer tlfzrStatus;
     private Integer zjyID;
     private Integer zjyStatus;
     private Integer zjldID;
     private Integer zjldStatus;
+    private Integer kgID;
+    private Integer kgStatus;
+    private Integer slfzrID;
+    private Integer slfzrStatus;
+
     private String remark ;
 
     public String getBackDh() {
@@ -85,20 +90,36 @@ public class CreateBCPTKDParam {
         this.thFzr = thFzr;
     }
 
-    public Integer getFzrID() {
-        return fzrID;
+    public Integer getBzID() {
+        return bzID;
     }
 
-    public void setFzrID(Integer fzrID) {
-        this.fzrID = fzrID;
+    public void setBzID(Integer bzID) {
+        this.bzID = bzID;
     }
 
-    public Integer getFzrStatus() {
-        return fzrStatus;
+    public Integer getBzStatus() {
+        return bzStatus;
     }
 
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
+    public void setBzStatus(Integer bzStatus) {
+        this.bzStatus = bzStatus;
+    }
+
+    public Integer getTlfzrID() {
+        return tlfzrID;
+    }
+
+    public void setTlfzrID(Integer tlfzrID) {
+        this.tlfzrID = tlfzrID;
+    }
+
+    public Integer getTlfzrStatus() {
+        return tlfzrStatus;
+    }
+
+    public void setTlfzrStatus(Integer tlfzrStatus) {
+        this.tlfzrStatus = tlfzrStatus;
     }
 
     public Integer getZjyID() {
@@ -117,30 +138,6 @@ public class CreateBCPTKDParam {
         this.zjyStatus = zjyStatus;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getBzID() {
-        return bzID;
-    }
-
-    public void setBzID(Integer bzID) {
-        this.bzID = bzID;
-    }
-
-    public Integer getBzStatus() {
-        return bzStatus;
-    }
-
-    public void setBzStatus(Integer bzStatus) {
-        this.bzStatus = bzStatus;
-    }
-
     public Integer getZjldID() {
         return zjldID;
     }
@@ -155,5 +152,45 @@ public class CreateBCPTKDParam {
 
     public void setZjldStatus(Integer zjldStatus) {
         this.zjldStatus = zjldStatus;
+    }
+
+    public Integer getKgID() {
+        return kgID;
+    }
+
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
+    }
+
+    public Integer getKgStatus() {
+        return kgStatus;
+    }
+
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
+    public Integer getSlfzrID() {
+        return slfzrID;
+    }
+
+    public void setSlfzrID(Integer slfzrID) {
+        this.slfzrID = slfzrID;
+    }
+
+    public Integer getSlfzrStatus() {
+        return slfzrStatus;
+    }
+
+    public void setSlfzrStatus(Integer slfzrStatus) {
+        this.slfzrStatus = slfzrStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
