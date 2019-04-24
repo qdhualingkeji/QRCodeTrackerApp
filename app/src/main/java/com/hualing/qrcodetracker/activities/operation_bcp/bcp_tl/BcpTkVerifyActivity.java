@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -66,6 +67,7 @@ public class BcpTkVerifyActivity extends BaseActivity {
     private List<BcpTkShowBean> mData;
     private String mDh;
     private VerifyParam param;
+    private boolean isKG=false;
     private boolean isBZ=false;
     private boolean isFZR=false;
     private boolean isZJY=false;
@@ -96,7 +98,11 @@ public class BcpTkVerifyActivity extends BaseActivity {
         if (getIntent() != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
-                if("bz".equals(checkQX)){
+                if("kg".equals(checkQX)){
+                    isKG=true;
+                    break;
+                }
+                else if("bz".equals(checkQX)){
                     isBZ=true;
                     break;
                 }
@@ -113,7 +119,9 @@ public class BcpTkVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isBZ)
+            if(isKG)
+                param.setCheckQXFlag(VerifyParam.KG);
+            else if(isBZ)
                 param.setCheckQXFlag(VerifyParam.BZ);
             else if(isFZR) {
                 int personFlag = getIntent().getIntExtra("personFlag", -1);
@@ -256,7 +264,7 @@ public class BcpTkVerifyActivity extends BaseActivity {
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
         notificationParam.setDh(param.getDh());
-        notificationParam.setStyle(NotificationType.WL_CKD);
+        notificationParam.setStyle(NotificationType.BCP_TKD);
         int personFlag=-1;
         String notifText=null;
         if(checkQXFlag==VerifyParam.BZ){

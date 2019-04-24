@@ -242,7 +242,7 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
         notificationParam.setDh(param.getDh());
-        notificationParam.setStyle(NotificationType.WL_CKD);
+        notificationParam.setStyle(NotificationType.BCP_TKD);
         int personFlag=-1;
         String notifText=null;
         if(checkQXFlag==VerifyParam.ZJY){
