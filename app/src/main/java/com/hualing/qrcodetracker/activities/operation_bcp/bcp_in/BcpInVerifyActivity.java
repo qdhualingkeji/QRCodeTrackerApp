@@ -131,8 +131,13 @@ public class BcpInVerifyActivity extends BaseActivity {
             }
             if(isBZ)
                 param.setCheckQXFlag(VerifyParam.BZ);
-            else if(isFZR)
-                param.setCheckQXFlag(VerifyParam.FZR);
+            else if(isFZR) {
+                int personFlag = getIntent().getIntExtra("personFlag", -1);
+                if(personFlag==NotificationParam.FLFZR)
+                    param.setCheckQXFlag(VerifyParam.FLFZR);
+                else if(personFlag==NotificationParam.LLFZR)
+                    param.setCheckQXFlag(VerifyParam.LLFZR);
+            }
             else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
             else if(isZJLD)
@@ -271,15 +276,22 @@ public class BcpInVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            if(param.getCheckQXFlag()==VerifyParam.BZ||param.getCheckQXFlag()==VerifyParam.FZR)//如果登录者是班长的话，说明还得推送给领料负责人;如果登录者是发料负责人的话，说明还得推送给质检员;
-                                sendNotification(param.getCheckQXFlag());
-                            else{//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
-                                setResult(RETURN_AND_REFRESH);
-                                AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
+                            if("半成品录入单".equals(mName)) {//如果是半成品录入单，需要给以下这几种身份的人推送通知
+                                if (param.getCheckQXFlag() == VerifyParam.BZ || param.getCheckQXFlag() == VerifyParam.FZR)//如果登录者是班长的话，说明还得推送给领料负责人;如果登录者是发料负责人的话，说明还得推送给质检员;
+                                    sendNotification(param.getCheckQXFlag());
+                                else {//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
+                                    setResult(RETURN_AND_REFRESH);
+                                    AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
+                                }
                             }
-
-
-
+                            else{//如果是成品入库单，需要给以下这几种身份的人推送通知
+                                if(param.getCheckQXFlag() == VerifyParam.BZ || param.getCheckQXFlag() == VerifyParam.FLFZR|| param.getCheckQXFlag() == VerifyParam.KG)
+                                    sendNotification(param.getCheckQXFlag());
+                                else {//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
+                                    setResult(RETURN_AND_REFRESH);
+                                    AllActivitiesHolder.removeAct(BcpInVerifyActivity.this);
+                                }
+                            }
                             return;
                         }
                     }
@@ -291,16 +303,33 @@ public class BcpInVerifyActivity extends BaseActivity {
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
         notificationParam.setDh(param.getDh());
-        notificationParam.setStyle(NotificationType.BCP_RKD);
         int personFlag=-1;
         String notifText=null;
-        if(checkQXFlag==VerifyParam.BZ){
-            personFlag=NotificationParam.FZR;
-            notifText="已通知车间领导审核";
+        if("半成品录入单".equals(mName)) {//如果是半成品录入单，需要给以下这几种身份的人推送通知
+            notificationParam.setStyle(NotificationType.BCP_RKD);
+            if (checkQXFlag == VerifyParam.BZ) {
+                personFlag = NotificationParam.FZR;
+                notifText = "已通知车间领导审核";
+            }
+            else if (checkQXFlag == VerifyParam.FZR) {
+                personFlag = NotificationParam.ZJY;
+                notifText = "已通知质检员质检";
+            }
         }
-        else if(checkQXFlag==VerifyParam.FZR){
-            personFlag=NotificationParam.ZJY;
-            notifText="已通知质检员质检";
+        else{//如果是成品入库单，需要给以下这几种身份的人推送通知
+            notificationParam.setStyle(NotificationType.CP_RKD);
+            if (checkQXFlag == VerifyParam.BZ) {
+                personFlag = NotificationParam.FLFZR;
+                notifText = "已通知交货负责人审核";
+            }
+            else if (checkQXFlag == VerifyParam.FLFZR) {
+                personFlag = NotificationParam.ZJY;
+                notifText = "已通知质检员质检";
+            }
+            else if (checkQXFlag == VerifyParam.KG) {
+                personFlag = NotificationParam.LLFZR;
+                notifText = "已通知收货负责人审核";
+            }
         }
         notificationParam.setPersonFlag(personFlag);
 

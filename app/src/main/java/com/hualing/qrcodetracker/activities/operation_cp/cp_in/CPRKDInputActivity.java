@@ -44,12 +44,13 @@ import io.reactivex.schedulers.Schedulers;
 public class CPRKDInputActivity extends BaseActivity {
 
     private static final int GET_DEPARTMENT = 10;
-    private static final int REQUEST_CODE_SELECT_JHFZR = 31;
-    private static final int REQUEST_CODE_SELECT_SHFZR = 32;
-    private static final int REQUEST_CODE_SELECT_SHR = 33;
+    private static final int REQUEST_CODE_SELECT_SHR = 31;
+    private static final int REQUEST_CODE_SELECT_BZ = 32;
+    private static final int REQUEST_CODE_SELECT_JHFZR = 33;
     private static final int REQUEST_CODE_SELECT_ZJY = 34;
-    private static final int REQUEST_CODE_SELECT_BZ = 35;
-    private static final int REQUEST_CODE_SELECT_ZJLD = 36;
+    private static final int REQUEST_CODE_SELECT_ZJLD = 35;
+    private static final int REQUEST_CODE_SELECT_KG = 36;
+    private static final int REQUEST_CODE_SELECT_SHFZR = 37;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.departmentValue)
@@ -58,18 +59,22 @@ public class CPRKDInputActivity extends BaseActivity {
     TextView mShrValue;
     @BindView(R.id.bzValue)
     TextView mBzValue;
-    @BindView(R.id.ShFzrValue)
-    TextView mShFzrValue;
     @BindView(R.id.JhFhrValue)
     TextView mJhFhrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
     @BindView(R.id.zjldValue)
     TextView mZjldValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.ShFzrValue)
+    TextView mShFzrValue;
     private int bzID;
-    private int fzrID;
+    private int flfzrID;
     private int zjyID;
     private int zjldID;
+    private int kgID;
+    private int llfzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
 
@@ -117,7 +122,7 @@ public class CPRKDInputActivity extends BaseActivity {
         return R.layout.activity_cprkdinput;
     }
 
-    @OnClick({R.id.selectBM, R.id.commitBtn, R.id.selectSHR, R.id.selectBZ, R.id.selectSHFZR, R.id.selectJHFZR, R.id.selectZJY, R.id.selectZJLD})
+    @OnClick({R.id.selectBM, R.id.selectSHR, R.id.selectBZ, R.id.selectJHFZR, R.id.selectZJY, R.id.selectZJLD, R.id.selectKG, R.id.selectSHFZR, R.id.commitBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -131,12 +136,9 @@ public class CPRKDInputActivity extends BaseActivity {
                 bundle.putString("checkQX", "bz");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
-            case R.id.selectSHFZR:
-                bundle.putString("checkQX", "fzr");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHFZR, bundle);
-                break;
             case R.id.selectJHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_JHFZR, null);
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_JHFZR, bundle);
                 break;
             case R.id.selectZJY:
                 bundle.putString("checkQX", "zjy");
@@ -145,6 +147,14 @@ public class CPRKDInputActivity extends BaseActivity {
             case R.id.selectZJLD:
                 bundle.putString("checkQX", "zjld");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
+                break;
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
+                break;
+            case R.id.selectSHFZR:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHFZR, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();
@@ -159,19 +169,16 @@ public class CPRKDInputActivity extends BaseActivity {
                 case GET_DEPARTMENT:
                     mDepartmentValue.setText(data.getStringExtra("groupName"));
                     break;
-                case REQUEST_CODE_SELECT_JHFZR:
-                    mJhFhrValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_SHR:
+                    mShrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_BZ:
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_SHFZR:
-                    fzrID=data.getIntExtra("personID",0);
-                    mShFzrValue.setText(data.getStringExtra("personName"));
-                    break;
-                case REQUEST_CODE_SELECT_SHR:
-                    mShrValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_JHFZR:
+                    flfzrID=data.getIntExtra("personID",0);
+                    mJhFhrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_ZJY:
                     zjyID=data.getIntExtra("personID",0);
@@ -181,6 +188,14 @@ public class CPRKDInputActivity extends BaseActivity {
                     zjldID=data.getIntExtra("personID",0);
                     mZjldValue.setText(data.getStringExtra("personName"));
                     break;
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_SHFZR:
+                    llfzrID=data.getIntExtra("personID",0);
+                    mShFzrValue.setText(data.getStringExtra("personName"));
+                    break;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -189,28 +204,40 @@ public class CPRKDInputActivity extends BaseActivity {
     private boolean checkDataIfCompleted() {
         String fhdwValue = mDepartmentValue.getText().toString();
         String shrValue = mShrValue.getText().toString();
-        String shfzrValue = mShFzrValue.getText().toString();
+        String bzValue = mBzValue.getText().toString();
         String jhfzrValue = mJhFhrValue.getText().toString();
+        String zjyValue = mZjyValue.getText().toString();
+        String zjldValue = mZjldValue.getText().toString();
+        String kgValue = mKgValue.getText().toString();
+        String shfzrValue = mShFzrValue.getText().toString();
         if (TextUtils.isEmpty(fhdwValue)
-                || "请选择部门".equals(fhdwValue)
+                || "请选择发货部门".equals(fhdwValue)
                 || "请选择收货人".equals(shrValue)
-                || "请选择收货负责人".equals(shfzrValue)
-                || "请选择交货负责人".equals(jhfzrValue)) {
+                || "请选择班长".equals(bzValue)
+                || "请选择交货负责人".equals(jhfzrValue)
+                || "请选择质检员".equals(zjyValue)
+                || "请选择质检领导".equals(zjldValue)
+                || "请选择仓库管理员".equals(kgValue)
+                || "请选择收货负责人".equals(shfzrValue)) {
             return false;
         }
         params.setJhDw(fhdwValue);
         params.setShr(shrValue);
-        params.setShFzr(shfzrValue);
         params.setJhr(GlobalData.realName);
-        params.setJhFzr(jhfzrValue);
         params.setBzID(bzID);
         params.setBzStatus(0);
-        params.setFzrID(fzrID);
-        params.setFzrStatus(0);
+        params.setFlfzrID(flfzrID);
+        params.setFlfzrStatus(0);
+        params.setJhFzr(jhfzrValue);
         params.setZjyID(zjyID);
         params.setZjyStatus(0);
         params.setZjldID(zjldID);
         params.setZjldStatus(0);
+        params.setKgID(kgID);
+        params.setKgStatus(0);
+        params.setLlfzrID(llfzrID);
+        params.setLlfzrStatus(0);
+        params.setShFzr(shfzrValue);
         params.setRemark(mRemarkValue.getText().toString());
         return true;
     }

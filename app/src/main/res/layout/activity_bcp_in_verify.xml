@@ -214,7 +214,7 @@
                         android:padding="20dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/propertyNameText"
-                        android:text="入库负责人："
+                        android:text="交货负责人："
                         />
 
                     <TextView
