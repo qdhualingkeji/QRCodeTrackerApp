@@ -264,6 +264,7 @@ public class NonHandleMsgActivity extends BaseActivity {
                                             intent.putExtra("personFlag", NotificationParam.FLFZR);
                                         else if(GlobalData.userId.equals(info.getLlfzrID()+""))
                                             intent.putExtra("personFlag", NotificationParam.LLFZR);
+                                        intent.putExtra("name",name);
                                     }
                                     else if(isZJY||isZJLD)
                                         intent = new Intent(NonHandleMsgActivity.this,BcpInQualityCheckActivity.class);

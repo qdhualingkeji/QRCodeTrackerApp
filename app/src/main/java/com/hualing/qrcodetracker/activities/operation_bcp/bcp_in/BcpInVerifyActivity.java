@@ -81,6 +81,7 @@ public class BcpInVerifyActivity extends BaseActivity {
     private String mDh;
     private String mName;
     private VerifyParam param;
+    private boolean isKG=false;
     private boolean isBZ=false;
     private boolean isFZR=false;
     private boolean isZJY=false;
@@ -112,7 +113,11 @@ public class BcpInVerifyActivity extends BaseActivity {
         if (intent != null) {
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
-                if("bz".equals(checkQX)){
+                if("kg".equals(checkQX)){
+                    isKG=true;
+                    break;
+                }
+                else if("bz".equals(checkQX)){
                     isBZ=true;
                     break;
                 }
@@ -129,8 +134,18 @@ public class BcpInVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isBZ)
-                param.setCheckQXFlag(VerifyParam.BZ);
+            mName = intent.getStringExtra("name");
+            if(isKG) {
+                param.setCheckQXFlag(VerifyParam.KG);
+            }
+            else if(isBZ) {
+                if("半成品录入单".equals(mName)){
+                    param.setCheckQXFlag(VerifyParam.BCPBZ);
+                }
+                else{
+                    param.setCheckQXFlag(VerifyParam.CPBZ);
+                }
+            }
             else if(isFZR) {
                 int personFlag = getIntent().getIntExtra("personFlag", -1);
                 if(personFlag==NotificationParam.FLFZR)
@@ -145,7 +160,6 @@ public class BcpInVerifyActivity extends BaseActivity {
 
             mDh = intent.getStringExtra("dh");
             param.setDh(mDh);
-            mName = intent.getStringExtra("name");
             if("半成品录入单".equals(mName)){
                 mTitle.setTitle("半成品录入审核");
                 mShfzrLayout.setVisibility(LinearLayout.GONE);
@@ -277,7 +291,7 @@ public class BcpInVerifyActivity extends BaseActivity {
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
                             if("半成品录入单".equals(mName)) {//如果是半成品录入单，需要给以下这几种身份的人推送通知
-                                if (param.getCheckQXFlag() == VerifyParam.BZ || param.getCheckQXFlag() == VerifyParam.FZR)//如果登录者是班长的话，说明还得推送给领料负责人;如果登录者是发料负责人的话，说明还得推送给质检员;
+                                if (param.getCheckQXFlag() == VerifyParam.BCPBZ || param.getCheckQXFlag() == VerifyParam.FZR)//如果登录者是班长的话，说明还得推送给领料负责人;如果登录者是发料负责人的话，说明还得推送给质检员;
                                     sendNotification(param.getCheckQXFlag());
                                 else {//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
                                     setResult(RETURN_AND_REFRESH);
@@ -285,7 +299,7 @@ public class BcpInVerifyActivity extends BaseActivity {
                                 }
                             }
                             else{//如果是成品入库单，需要给以下这几种身份的人推送通知
-                                if(param.getCheckQXFlag() == VerifyParam.BZ || param.getCheckQXFlag() == VerifyParam.FLFZR|| param.getCheckQXFlag() == VerifyParam.KG)
+                                if(param.getCheckQXFlag() == VerifyParam.CPBZ || param.getCheckQXFlag() == VerifyParam.FLFZR|| param.getCheckQXFlag() == VerifyParam.KG)
                                     sendNotification(param.getCheckQXFlag());
                                 else {//不是的话，说明登录者就是质检领导，最后一道审核就不必再推送了
                                     setResult(RETURN_AND_REFRESH);
@@ -307,7 +321,7 @@ public class BcpInVerifyActivity extends BaseActivity {
         String notifText=null;
         if("半成品录入单".equals(mName)) {//如果是半成品录入单，需要给以下这几种身份的人推送通知
             notificationParam.setStyle(NotificationType.BCP_RKD);
-            if (checkQXFlag == VerifyParam.BZ) {
+            if (checkQXFlag == VerifyParam.BCPBZ) {
                 personFlag = NotificationParam.FZR;
                 notifText = "已通知车间领导审核";
             }
@@ -318,7 +332,7 @@ public class BcpInVerifyActivity extends BaseActivity {
         }
         else{//如果是成品入库单，需要给以下这几种身份的人推送通知
             notificationParam.setStyle(NotificationType.CP_RKD);
-            if (checkQXFlag == VerifyParam.BZ) {
+            if (checkQXFlag == VerifyParam.CPBZ) {
                 personFlag = NotificationParam.FLFZR;
                 notifText = "已通知交货负责人审核";
             }
