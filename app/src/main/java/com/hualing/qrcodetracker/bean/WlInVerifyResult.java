@@ -20,9 +20,6 @@ public class WlInVerifyResult {
     private String shFzr;
     private String jhFzr;
     private String remark;
-    private Integer bzID;
-    private Integer bzStatus;
-    private String bzName;
     private Integer fzrID;
     private Integer fzrStatus;
     private Integer zjyID;
@@ -37,30 +34,6 @@ public class WlInVerifyResult {
 
     public void setZjldName(String zjldName) {
         this.zjldName = zjldName;
-    }
-
-    public Integer getBzID() {
-        return bzID;
-    }
-
-    public void setBzID(Integer bzID) {
-        this.bzID = bzID;
-    }
-
-    public Integer getBzStatus() {
-        return bzStatus;
-    }
-
-    public void setBzStatus(Integer bzStatus) {
-        this.bzStatus = bzStatus;
-    }
-
-    public String getBzName() {
-        return bzName;
-    }
-
-    public void setBzName(String bzName) {
-        this.bzName = bzName;
     }
 
     public Integer getZjldID() {

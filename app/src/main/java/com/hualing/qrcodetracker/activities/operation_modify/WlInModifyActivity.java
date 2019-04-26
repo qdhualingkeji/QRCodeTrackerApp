@@ -66,7 +66,6 @@ public class WlInModifyActivity extends BaseActivity {
     private static final int SELECT_PRODUCT_NAME = 12;
     private static final int SELECT_PERSON = 111;
     private static final int SELECT_ZJY = 112;
-    private static final int SELECT_BZ = 113;
     private static final int SELECT_ZJLD = 114;
 
     @BindView(R.id.title)
@@ -77,8 +76,6 @@ public class WlInModifyActivity extends BaseActivity {
     EditText mJhdwValue;
     @BindView(R.id.shrqValue)
     TextView mShrqValue;
-    @BindView(R.id.bzValue)
-    TextView mBzValue;
     @BindView(R.id.shfzrValue)
     TextView mShfzrValue;
     @BindView(R.id.zjyValue)
@@ -102,7 +99,6 @@ public class WlInModifyActivity extends BaseActivity {
     private WlInVerifyResult updatedParam;
     //记录选择物料编码或者类别的数据位置
     private int mCurrentPosition = -1;
-    private int bzID;
     private int fzrID;
     private int zjyID;
     private int zjldID;
@@ -210,8 +206,6 @@ public class WlInModifyActivity extends BaseActivity {
                                             .show();
                                 }
                             });
-                            bzID=dataResult.getBzID();
-                            mBzValue.setText(dataResult.getBzName());
                             fzrID=dataResult.getFzrID();
                             mShfzrValue.setText(dataResult.getShFzr());
                             mShfzrValue.addTextChangedListener(new TextWatcher() {
@@ -313,6 +307,7 @@ public class WlInModifyActivity extends BaseActivity {
                     ||TextUtils.isEmpty(mJhdwValue.getText().toString())
                     ||"请选择仓库负责人".equals(mShfzrValue.getText().toString())
                     ||"请选择质检员".equals(mZjyValue.getText().toString())
+                    ||"请选择质检领导".equals(mZjldValue.getText().toString())
 //                    ||TextUtils.isEmpty(mJhRValue.getText().toString())
 //                    ||TextUtils.isEmpty(mJhfzrValue.getText().toString())
                     ) {
@@ -322,9 +317,11 @@ public class WlInModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
-        updatedParam.setBzStatus(0);
+        updatedParam.setFzrID(fzrID);
         updatedParam.setFzrStatus(0);
+        updatedParam.setZjyID(zjyID);
         updatedParam.setZjyStatus(0);
+        updatedParam.setZjldID(zjldID);
         updatedParam.setZjldStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
@@ -401,16 +398,12 @@ public class WlInModifyActivity extends BaseActivity {
         return R.layout.activity_wl_in_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectBz,R.id.selectPerson,R.id.selectZJY,R.id.selectZJLD})
+    @OnClick({R.id.confirmBtn,R.id.selectPerson,R.id.selectZJY,R.id.selectZJLD})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.confirmBtn:
                 toCommit();
-                break;
-            case R.id.selectBz:
-                bundle.putString("checkQX", "bz");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_BZ, bundle);
                 break;
             case R.id.selectPerson:
                 bundle.putString("checkQX", "fzr");
@@ -717,10 +710,6 @@ public class WlInModifyActivity extends BaseActivity {
                         mData.add(mCurrentPosition,item);
                         mAdapter.notifyDataSetChanged();
                     }
-                    break;
-                case SELECT_BZ:
-                    bzID=data.getIntExtra("personID",0);
-                    mBzValue.setText(data.getStringExtra("personName"));
                     break;
                 case SELECT_PERSON:
                     fzrID=data.getIntExtra("personID",0);
