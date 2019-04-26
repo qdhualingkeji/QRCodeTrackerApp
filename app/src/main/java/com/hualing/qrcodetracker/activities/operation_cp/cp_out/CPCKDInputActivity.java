@@ -42,26 +42,18 @@ import io.reactivex.schedulers.Schedulers;
 public class CPCKDInputActivity extends BaseActivity {
 
     private static final int GET_DEPARTMENT = 10;
-    private static final int REQUEST_CODE_SELECT_JHFZR = 31;
-    private static final int REQUEST_CODE_SELECT_SHFZR = 32;
-    private static final int REQUEST_CODE_SELECT_SHR = 33;
-    private static final int REQUEST_CODE_SELECT_BZ = 34;
+    private static final int REQUEST_CODE_SELECT_FZR = 31;
+    private static final int REQUEST_CODE_SELECT_KG = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.departmentValue)
     TextView mDepartmentValue;
-    @BindView(R.id.ShrValue)
-    TextView mShrValue;
-    @BindView(R.id.bzValue)
-    TextView mBzValue;
-    @BindView(R.id.ShFzrValue)
-    TextView mShFzrValue;
-    @BindView(R.id.JhFhrValue)
-    TextView mJhFhrValue;
-    @BindView(R.id.shdwValue)
-    EditText mShdwValue;
-    private int bzID;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.fzrValue)
+    TextView mFzrValue;
+    private int kgID;
     private int fzrID;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
@@ -117,19 +109,13 @@ public class CPCKDInputActivity extends BaseActivity {
                 case GET_DEPARTMENT:
                     mDepartmentValue.setText(data.getStringExtra("groupName"));
                     break;
-                case REQUEST_CODE_SELECT_JHFZR:
-                    mJhFhrValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_BZ:
-                    bzID=data.getIntExtra("personID",0);
-                    mBzValue.setText(data.getStringExtra("personName"));
-                    break;
-                case REQUEST_CODE_SELECT_SHFZR:
+                case REQUEST_CODE_SELECT_FZR:
                     fzrID=data.getIntExtra("personID",0);
-                    mShFzrValue.setText(data.getStringExtra("personName"));
-                    break;
-                case REQUEST_CODE_SELECT_SHR:
-                    mShrValue.setText(data.getStringExtra("personName"));
+                    mFzrValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }
@@ -137,31 +123,21 @@ public class CPCKDInputActivity extends BaseActivity {
     }
 
     private boolean checkDataIfCompleted() {
-        //工厂内部产品出库的部门
         String jhdwValue = mDepartmentValue.getText().toString();
-        //收货客户的单位
-        String shdwValue = mShdwValue.getText().toString();
-        String shrValue = mShrValue.getText().toString();
-        String shfzrValue = mShFzrValue.getText().toString();
-        String jhfzrValue = mJhFhrValue.getText().toString();
-        if (TextUtils.isEmpty(shdwValue)
-                || "请选择部门".equals(jhdwValue)
-                || "请选择收货人".equals(shrValue)
-                || "请选择收货负责人".equals(shfzrValue)
-                || "请选择交货负责人".equals(jhfzrValue)) {
+        String kgValue = mKgValue.getText().toString();
+        String fzrValue = mFzrValue.getText().toString();
+        if ("请选择出库部门".equals(jhdwValue)
+                || "请选择库管".equals(kgValue)
+                || "请选择负责人".equals(fzrValue)) {
             return false;
         }
         params.setJhDw(jhdwValue);
-        params.setLhDw(shdwValue);
-        params.setLhr(shrValue);
-        params.setLhFzr(shfzrValue);
-        //当前用户提交
         params.setFhr(GlobalData.realName);
-        params.setFhFzr(jhfzrValue);
-        params.setBzID(bzID);
-        params.setBzStatus(0);
+        params.setKgID(kgID);
+        params.setKgStatus(0);
         params.setFzrID(fzrID);
         params.setFzrStatus(0);
+        params.setFhFzr(fzrValue);
         params.setRemark(mRemarkValue.getText().toString());
         return true;
     }
@@ -213,26 +189,20 @@ public class CPCKDInputActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.selectBM, R.id.commitBtn,R.id.selectSHR,R.id.selectBZ,R.id.selectSHFZR,R.id.selectJHFZR})
+    @OnClick({R.id.selectBM, R.id.commitBtn,R.id.selectKG,R.id.selectFZR})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, GET_DEPARTMENT, null);
                 break;
-            case R.id.selectSHR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHR, null);
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
                 break;
-            case R.id.selectBZ:
-                bundle.putString("checkQX", "bz");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
-                break;
-            case R.id.selectSHFZR:
+            case R.id.selectFZR:
                 bundle.putString("checkQX", "fzr");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHFZR, bundle);
-                break;
-            case R.id.selectJHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_JHFZR, null);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FZR, bundle);
                 break;
             case R.id.commitBtn:
                 commitDataToWeb();

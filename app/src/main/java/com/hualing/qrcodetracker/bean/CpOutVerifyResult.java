@@ -14,14 +14,11 @@ import java.util.List;
 public class CpOutVerifyResult {
 
     private String outDh;
-    private String lhDw;
     private String lhRq;
-    private String lhR;
-    private String lhFzr;
     private String fhFzr;
     private String remark;
-    private Integer bzID;
-    private Integer bzStatus;
+    private Integer kgID;
+    private Integer kgStatus;
     private Integer fzrID;
     private Integer fzrStatus;
 
@@ -35,36 +32,12 @@ public class CpOutVerifyResult {
         this.outDh = outDh;
     }
 
-    public String getLhDw() {
-        return lhDw;
-    }
-
-    public void setLhDw(String lhDw) {
-        this.lhDw = lhDw;
-    }
-
     public String getLhRq() {
         return lhRq;
     }
 
     public void setLhRq(String lhRq) {
         this.lhRq = lhRq;
-    }
-
-    public String getLhR() {
-        return lhR;
-    }
-
-    public void setLhR(String lhR) {
-        this.lhR = lhR;
-    }
-
-    public String getLhFzr() {
-        return lhFzr;
-    }
-
-    public void setLhFzr(String lhFzr) {
-        this.lhFzr = lhFzr;
     }
 
     public String getFhFzr() {
@@ -83,6 +56,22 @@ public class CpOutVerifyResult {
         this.remark = remark;
     }
 
+    public Integer getKgID() {
+        return kgID;
+    }
+
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
+    }
+
+    public Integer getKgStatus() {
+        return kgStatus;
+    }
+
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
     public Integer getFzrID() {
         return fzrID;
     }
@@ -97,22 +86,6 @@ public class CpOutVerifyResult {
 
     public void setFzrStatus(Integer fzrStatus) {
         this.fzrStatus = fzrStatus;
-    }
-
-    public Integer getBzID() {
-        return bzID;
-    }
-
-    public void setBzID(Integer bzID) {
-        this.bzID = bzID;
-    }
-
-    public Integer getBzStatus() {
-        return bzStatus;
-    }
-
-    public void setBzStatus(Integer bzStatus) {
-        this.bzStatus = bzStatus;
     }
 
     public List<CpOutShowBean> getBeans() {

@@ -18,10 +18,12 @@ import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.CpOutShowBean;
 import com.hualing.qrcodetracker.bean.CpOutVerifyResult;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
@@ -47,16 +49,10 @@ public class BcpOutVerifyActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.outdhValue)
     TextView mOutdhValue;
-    @BindView(R.id.lhdwValue)
-    TextView mLhdwValue;
     @BindView(R.id.lhrqValue)
     TextView mLhrqValue;
     @BindView(R.id.jhfzrValue)
     TextView mJhfzrValue;
-    @BindView(R.id.lhRValue)
-    TextView mLhRValue;
-    @BindView(R.id.lhfzrValue)
-    TextView mLhfzrValue;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
@@ -67,10 +63,8 @@ public class BcpOutVerifyActivity extends BaseActivity {
     private List<CpOutShowBean> mData;
     private String mDh;
     private VerifyParam param;
-    private boolean isBZ=false;
+    private boolean isKG=false;
     private boolean isFZR=false;
-    private boolean isZJY=false;
-    private boolean isZJLD=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,31 +92,19 @@ public class BcpOutVerifyActivity extends BaseActivity {
             Log.e("checkQX==========",""+GlobalData.checkQXGroup);
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
-                if("bz".equals(checkQX)){
-                    isBZ=true;
+                if("kg".equals(checkQX)){
+                    isKG=true;
                     break;
                 }
                 else if("fzr".equals(checkQX)){
                     isFZR=true;
                     break;
                 }
-                else if("zjy".equals(checkQX)){
-                    isZJY=true;
-                    break;
-                }
-                else if("zjld".equals(checkQX)){
-                    isZJLD=true;
-                    break;
-                }
             }
-            if(isBZ)
-                param.setCheckQXFlag(VerifyParam.BZ);
+            if(isKG)
+                param.setCheckQXFlag(VerifyParam.KG);
             else if(isFZR)
                 param.setCheckQXFlag(VerifyParam.FZR);
-            else if(isZJY)
-                param.setCheckQXFlag(VerifyParam.ZJY);
-            else if(isZJLD)
-                param.setCheckQXFlag(VerifyParam.ZJLD);
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
@@ -157,10 +139,7 @@ public class BcpOutVerifyActivity extends BaseActivity {
                         } else {
                             CpOutVerifyResult dataResult = result.getResult();
                             mOutdhValue.setText(dataResult.getOutDh());
-                            mLhdwValue.setText(dataResult.getLhDw());
                             mLhrqValue.setText(dataResult.getLhRq());
-                            mLhRValue.setText(dataResult.getLhR());
-                            mLhfzrValue.setText(dataResult.getLhFzr());
                             mJhfzrValue.setText(dataResult.getFhFzr());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());
 
@@ -241,12 +220,61 @@ public class BcpOutVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(BcpOutVerifyActivity.this);
+                            if(param.getCheckQXFlag() == VerifyParam.KG) {
+                                sendNotification(param.getCheckQXFlag());
+                            }
+                            else {
+                                setResult(RETURN_AND_REFRESH);
+                                AllActivitiesHolder.removeAct(BcpOutVerifyActivity.this);
+                            }
                             return;
                         }
                     }
                 });
+    }
+
+
+    private void sendNotification(Integer checkQXFlag) {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        notificationParam.setDh(param.getDh());
+        int personFlag=-1;
+        String notifText=null;
+        notificationParam.setStyle(NotificationType.CP_CKD);
+        if (checkQXFlag == VerifyParam.KG) {
+            personFlag = NotificationParam.FZR;
+            notifText = "已通知交货负责人审核";
+        }
+        notificationParam.setPersonFlag(personFlag);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        final String finalNotifText = notifText;
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), finalNotifText, Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(BcpOutVerifyActivity.this);
+                    }
+                });
+
     }
 
     @Override

@@ -198,6 +198,7 @@ public class BigCPOutDataInputActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getBCPCKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.CP_CKD);
+        notificationParam.setPersonFlag(NotificationParam.KG);
 
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");

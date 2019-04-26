@@ -12,16 +12,13 @@ package com.hualing.qrcodetracker.bean;
 public class CreateBCPCKDParam {
 
     private String outDh;
-    private String lhDw;
     private String lhRq;
     private String fhr;
-    private String fhFzr;
-    private String lhr;
-    private String lhFzr;
-    private Integer bzID;
-    private Integer bzStatus;
+    private Integer kgID;
+    private Integer kgStatus;
     private Integer fzrID;
     private Integer fzrStatus;
+    private String fhFzr;
     private String remark;
     private String jhDw;
 
@@ -31,14 +28,6 @@ public class CreateBCPCKDParam {
 
     public void setOutDh(String outDh) {
         this.outDh = outDh;
-    }
-
-    public String getLhDw() {
-        return lhDw;
-    }
-
-    public void setLhDw(String lhDw) {
-        this.lhDw = lhDw;
     }
 
     public String getLhRq() {
@@ -57,28 +46,20 @@ public class CreateBCPCKDParam {
         this.fhr = fhr;
     }
 
-    public String getFhFzr() {
-        return fhFzr;
+    public Integer getKgID() {
+        return kgID;
     }
 
-    public void setFhFzr(String fhFzr) {
-        this.fhFzr = fhFzr;
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
     }
 
-    public String getLhr() {
-        return lhr;
+    public Integer getKgStatus() {
+        return kgStatus;
     }
 
-    public void setLhr(String lhr) {
-        this.lhr = lhr;
-    }
-
-    public String getLhFzr() {
-        return lhFzr;
-    }
-
-    public void setLhFzr(String lhFzr) {
-        this.lhFzr = lhFzr;
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
     }
 
     public Integer getFzrID() {
@@ -97,6 +78,14 @@ public class CreateBCPCKDParam {
         this.fzrStatus = fzrStatus;
     }
 
+    public String getFhFzr() {
+        return fhFzr;
+    }
+
+    public void setFhFzr(String fhFzr) {
+        this.fhFzr = fhFzr;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -113,19 +102,4 @@ public class CreateBCPCKDParam {
         this.jhDw = jhDw;
     }
 
-    public Integer getBzID() {
-        return bzID;
-    }
-
-    public void setBzID(Integer bzID) {
-        this.bzID = bzID;
-    }
-
-    public Integer getBzStatus() {
-        return bzStatus;
-    }
-
-    public void setBzStatus(Integer bzStatus) {
-        this.bzStatus = bzStatus;
-    }
 }
