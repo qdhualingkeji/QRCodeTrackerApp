@@ -66,17 +66,17 @@ public class WLInRKDInputActivity extends BaseActivity {
     //    EditText mInDhValue;
 //    @BindView(R.id.ShrValue)
 //    EditText mShrValue;
-    @BindView(R.id.ShFzrValue)
-    TextView mShFzrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
     @BindView(R.id.zjldValue)
     TextView mZjldValue;
-    private int fzrID;
+    @BindView(R.id.ShFzrValue)
+    TextView mShFzrValue;
+    @BindView(R.id.remarkValue)
+    EditText mRemarkValue;
     private int zjyID;
     private int zjldID;
-//    @BindView(R.id.JhFzrValue)
-//    EditText mJhFzrValue;
+    private int fzrID;
     private MainDao mainDao;
 
     private CreateWLRKDParam params;
@@ -125,33 +125,32 @@ public class WLInRKDInputActivity extends BaseActivity {
         String fhdwValue = mFhDwValue.getText().toString();
         String shrqValue = mShRqValue.getText().toString();
         String shsjValue = mShSjValue.getText().toString();
-        //        String indhValue = mInDhValue.getText().toString();
-//        String shrValue = mShrValue.getText().toString();
+        String zjyValue = mZjyValue.getText().toString();
+        String zjldValue = mZjldValue.getText().toString();
         String shfzrValue = mShFzrValue.getText().toString();
-//        String jhfzrValue = mJhFzrValue.getText().toString();
+        String remarkValue = mRemarkValue.getText().toString();
         if (TextUtils.isEmpty(fhdwValue)
                 || "请选择收货日期".equals(shrqValue)
                 || "请选择收货时间".equals(shsjValue)
-                //                || TextUtils.isEmpty(indhValue)
-//                || TextUtils.isEmpty(shrValue)
-//                || TextUtils.isEmpty(jhfzrValue)
+                || "请选择质检员".equals(zjyValue)
+                || "请选择质检领导".equals(zjldValue)
                 || "请选择仓库负责人".equals(shfzrValue)) {
             return false;
         }
         params.setFhDw(fhdwValue);
         params.setShRq(shrqValue+" "+shsjValue);
-        //        params.setInDh(indhValue);
         //收货人改为当前用户（操作者是仓库管理员）
         params.setShr(GlobalData.realName);
-        params.setShFzr(shfzrValue);
-//        params.setFhr(GlobalData.realName);
-//        params.setJhFzr(jhfzrValue);
-        params.setFzrID(fzrID);
-        params.setFzrStatus(0);
         params.setZjyID(zjyID);
+        params.setZjy(zjyValue);
         params.setZjyStatus(0);
         params.setZjldID(zjldID);
+        params.setZjld(zjldValue);
         params.setZjldStatus(0);
+        params.setFzrID(fzrID);
+        params.setShFzr(shfzrValue);
+        params.setFzrStatus(0);
+        params.setRemark(remarkValue);
         return true;
     }
 
@@ -227,10 +226,6 @@ public class WLInRKDInputActivity extends BaseActivity {
             int personID = data.getIntExtra("personID",0);
             String personName = data.getStringExtra("personName");
             switch (requestCode) {
-                case SELECT_PERSON:
-                    fzrID =personID;
-                    mShFzrValue.setText(personName);
-                    break;
                 case SELECT_PERSON1:
                     zjyID =personID;
                     mZjyValue.setText(personName);
@@ -238,6 +233,10 @@ public class WLInRKDInputActivity extends BaseActivity {
                 case SELECT_ZJLD:
                     zjldID =personID;
                     mZjldValue.setText(personName);
+                    break;
+                case SELECT_PERSON:
+                    fzrID =personID;
+                    mShFzrValue.setText(personName);
                     break;
             }
         }

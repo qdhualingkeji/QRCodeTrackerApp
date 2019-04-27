@@ -17,40 +17,17 @@ public class WlInVerifyResult {
     private String shRq;
     private String inDh;
     private String fhR;
-    private String shFzr;
-    private String jhFzr;
-    private String remark;
-    private Integer fzrID;
-    private Integer fzrStatus;
     private Integer zjyID;
+    private String zjy;
     private Integer zjyStatus;
-    private String zjyName;
     private Integer zjldID;
+    private String zjld;
     private Integer zjldStatus;
-    private String zjldName;
-    public String getZjldName() {
-        return zjldName;
-    }
-
-    public void setZjldName(String zjldName) {
-        this.zjldName = zjldName;
-    }
-
-    public Integer getZjldID() {
-        return zjldID;
-    }
-
-    public void setZjldID(Integer zjldID) {
-        this.zjldID = zjldID;
-    }
-
-    public Integer getZjldStatus() {
-        return zjldStatus;
-    }
-
-    public void setZjldStatus(Integer zjldStatus) {
-        this.zjldStatus = zjldStatus;
-    }
+    private Integer fzrID;
+    private String shFzr;
+    private Integer fzrStatus;
+    private String remark;
+    private List<WLINShowBean> beans;
 
     public String getFhDw() {
         return fhDw;
@@ -84,54 +61,20 @@ public class WlInVerifyResult {
         this.fhR = fhR;
     }
 
-    public String getShFzr() {
-        return shFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
-    }
-
-    public String getJhFzr() {
-        return jhFzr;
-    }
-
-    public void setJhFzr(String jhFzr) {
-        this.jhFzr = jhFzr;
-    }
-
-    private List<WLINShowBean> beans;
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getFzrID() {
-        return fzrID;
-    }
-
-    public void setFzrID(Integer fzrID) {
-        this.fzrID = fzrID;
-    }
-
-    public Integer getFzrStatus() {
-        return fzrStatus;
-    }
-
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
-    }
-
     public Integer getZjyID() {
         return zjyID;
     }
 
     public void setZjyID(Integer zjyID) {
         this.zjyID = zjyID;
+    }
+
+    public String getZjy() {
+        return zjy;
+    }
+
+    public void setZjy(String zjy) {
+        this.zjy = zjy;
     }
 
     public Integer getZjyStatus() {
@@ -142,12 +85,60 @@ public class WlInVerifyResult {
         this.zjyStatus = zjyStatus;
     }
 
-    public String getZjyName() {
-        return zjyName;
+    public Integer getZjldID() {
+        return zjldID;
     }
 
-    public void setZjyName(String zjyName) {
-        this.zjyName = zjyName;
+    public void setZjldID(Integer zjldID) {
+        this.zjldID = zjldID;
+    }
+
+    public String getZjld() {
+        return zjld;
+    }
+
+    public void setZjld(String zjld) {
+        this.zjld = zjld;
+    }
+
+    public Integer getZjldStatus() {
+        return zjldStatus;
+    }
+
+    public void setZjldStatus(Integer zjldStatus) {
+        this.zjldStatus = zjldStatus;
+    }
+
+    public Integer getFzrID() {
+        return fzrID;
+    }
+
+    public void setFzrID(Integer fzrID) {
+        this.fzrID = fzrID;
+    }
+
+    public String getShFzr() {
+        return shFzr;
+    }
+
+    public void setShFzr(String shFzr) {
+        this.shFzr = shFzr;
+    }
+
+    public Integer getFzrStatus() {
+        return fzrStatus;
+    }
+
+    public void setFzrStatus(Integer fzrStatus) {
+        this.fzrStatus = fzrStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public List<WLINShowBean> getBeans() {

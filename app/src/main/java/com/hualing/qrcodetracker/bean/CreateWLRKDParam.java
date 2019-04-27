@@ -15,15 +15,16 @@ public class CreateWLRKDParam {
     private String ShRq;
     private String InDh;
     private String Shr;
-    private String Fhr;
-    private String ShFzr;
-    private String JhFzr;
-    private Integer FzrID;
-    private Integer FzrStatus;
     private Integer ZjyID;
+    private String Zjy;
     private Integer ZjyStatus;
     private Integer ZjldID;
+    private String Zjld;
     private Integer ZjldStatus;
+    private Integer FzrID;
+    private String ShFzr;
+    private Integer FzrStatus;
+    private String Remark;
 
     public String getShFzr() {
         return ShFzr;
@@ -31,14 +32,6 @@ public class CreateWLRKDParam {
 
     public void setShFzr(String shFzr) {
         ShFzr = shFzr;
-    }
-
-    public String getJhFzr() {
-        return JhFzr;
-    }
-
-    public void setJhFzr(String jhFzr) {
-        JhFzr = jhFzr;
     }
 
     public String getFhDw() {
@@ -73,36 +66,20 @@ public class CreateWLRKDParam {
         Shr = shr;
     }
 
-    public String getFhr() {
-        return Fhr;
-    }
-
-    public void setFhr(String fhr) {
-        Fhr = fhr;
-    }
-
-    public Integer getFzrID() {
-        return FzrID;
-    }
-
-    public void setFzrID(Integer fzrID) {
-        FzrID = fzrID;
-    }
-
-    public Integer getFzrStatus() {
-        return FzrStatus;
-    }
-
-    public void setFzrStatus(Integer fzrStatus) {
-        FzrStatus = fzrStatus;
-    }
-
     public Integer getZjyID() {
         return ZjyID;
     }
 
     public void setZjyID(Integer zjyID) {
         ZjyID = zjyID;
+    }
+
+    public String getZjy() {
+        return Zjy;
+    }
+
+    public void setZjy(String zjy) {
+        Zjy = zjy;
     }
 
     public Integer getZjyStatus() {
@@ -121,11 +98,43 @@ public class CreateWLRKDParam {
         ZjldID = zjldID;
     }
 
+    public String getZjld() {
+        return Zjld;
+    }
+
+    public void setZjld(String zjld) {
+        Zjld = zjld;
+    }
+
     public Integer getZjldStatus() {
         return ZjldStatus;
     }
 
     public void setZjldStatus(Integer zjldStatus) {
         ZjldStatus = zjldStatus;
+    }
+
+    public Integer getFzrID() {
+        return FzrID;
+    }
+
+    public void setFzrID(Integer fzrID) {
+        FzrID = fzrID;
+    }
+
+    public Integer getFzrStatus() {
+        return FzrStatus;
+    }
+
+    public void setFzrStatus(Integer fzrStatus) {
+        FzrStatus = fzrStatus;
+    }
+
+    public String getRemark() {
+        return Remark;
+    }
+
+    public void setRemark(String remark) {
+        Remark = remark;
     }
 }

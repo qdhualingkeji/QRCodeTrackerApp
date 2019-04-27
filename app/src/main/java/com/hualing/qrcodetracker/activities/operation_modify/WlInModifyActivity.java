@@ -225,7 +225,7 @@ public class WlInModifyActivity extends BaseActivity {
                                 }
                             });
                             zjyID=dataResult.getZjyID();
-                            mZjyValue.setText(dataResult.getZjyName());
+                            mZjyValue.setText(dataResult.getZjy());
 //                            mJhRValue.setText(dataResult.getFhR());
 //                            mJhRValue.addTextChangedListener(new TextWatcher() {
 //                                @Override
@@ -261,7 +261,7 @@ public class WlInModifyActivity extends BaseActivity {
 //                                }
 //                            });
                             zjldID=dataResult.getZjldID();
-                            mZjldValue.setText(dataResult.getZjldName());
+                            mZjldValue.setText(dataResult.getZjld());
                             mRemarkValue.setText(dataResult.getRemark());
                             mRemarkValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -291,25 +291,23 @@ public class WlInModifyActivity extends BaseActivity {
     }
 
     private void toCommit() {
-
+        String zjyValue = mZjyValue.getText().toString();
+        String zjldValue = mZjldValue.getText().toString();
+        String shfzrValue = mShfzrValue.getText().toString();
         for (int i = 0; i < mData.size(); i++) {
 
             if (TextUtils.isEmpty(mData.get(i).getProductName())
                     ||TextUtils.isEmpty(mData.get(i).getcHD())
                     ||TextUtils.isEmpty(mData.get(i).getUnit())
-                    //||TextUtils.isEmpty(mData.get(i).getgG())
-                    //||TextUtils.isEmpty(mData.get(i).getwLCode())
                     ||TextUtils.isEmpty(mData.get(i).getyLPC())
                     ||mData.get(i).getSortID()<0
                     ||mData.get(i).getdWZL()==-1
                     ||mData.get(i).getShl()==-1
                     ||"请选择收获日期".equals(mShrqValue.getText().toString())
                     ||TextUtils.isEmpty(mJhdwValue.getText().toString())
-                    ||"请选择仓库负责人".equals(mShfzrValue.getText().toString())
-                    ||"请选择质检员".equals(mZjyValue.getText().toString())
-                    ||"请选择质检领导".equals(mZjldValue.getText().toString())
-//                    ||TextUtils.isEmpty(mJhRValue.getText().toString())
-//                    ||TextUtils.isEmpty(mJhfzrValue.getText().toString())
+                    ||"请选择质检员".equals(zjyValue)
+                    ||"请选择质检领导".equals(zjldValue)
+                    ||"请选择仓库负责人".equals(shfzrValue)
                     ) {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
                 return;
@@ -317,12 +315,15 @@ public class WlInModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
-        updatedParam.setFzrID(fzrID);
-        updatedParam.setFzrStatus(0);
         updatedParam.setZjyID(zjyID);
+        updatedParam.setZjy(zjyValue);
         updatedParam.setZjyStatus(0);
         updatedParam.setZjldID(zjldID);
+        updatedParam.setZjld(zjldValue);
         updatedParam.setZjldStatus(0);
+        updatedParam.setFzrID(fzrID);
+        updatedParam.setShFzr(shfzrValue);
+        updatedParam.setFzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -379,7 +380,7 @@ public class WlInModifyActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), "已通知质检员质检", Toast.LENGTH_SHORT).show();
                         }
                         setResult(RETURN_AND_REFRESH);
                         AllActivitiesHolder.removeAct(WlInModifyActivity.this);
