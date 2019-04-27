@@ -17,13 +17,19 @@ public class WlOutVerifyResult {
     private String lhDw;
     private String lhRq;
     private String lhR;
-    private String lhFzr;
-    private String fhFzr;
     private String remark;
+    private Integer kgID;
+    private String kg;
+    private Integer kgStatus;
+    private Integer flfzrID;
+    private String fhFzr;
+    private Integer flfzrStatus;
     private Integer bzID;
+    private String bz;
     private Integer bzStatus;
-    private Integer fzrID;
-    private Integer fzrStatus;
+    private Integer llfzrID;
+    private String lhFzr;
+    private Integer llfzrStatus;
 
     private List<WLOutShowBean> beans;
 
@@ -59,12 +65,44 @@ public class WlOutVerifyResult {
         this.lhR = lhR;
     }
 
-    public String getLhFzr() {
-        return lhFzr;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setLhFzr(String lhFzr) {
-        this.lhFzr = lhFzr;
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getKgID() {
+        return kgID;
+    }
+
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
+    }
+
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
+    }
+
+    public Integer getKgStatus() {
+        return kgStatus;
+    }
+
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
+    public Integer getFlfzrID() {
+        return flfzrID;
+    }
+
+    public void setFlfzrID(Integer flfzrID) {
+        this.flfzrID = flfzrID;
     }
 
     public String getFhFzr() {
@@ -75,12 +113,12 @@ public class WlOutVerifyResult {
         this.fhFzr = fhFzr;
     }
 
-    public String getRemark() {
-        return remark;
+    public Integer getFlfzrStatus() {
+        return flfzrStatus;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setFlfzrStatus(Integer flfzrStatus) {
+        this.flfzrStatus = flfzrStatus;
     }
 
     public Integer getBzID() {
@@ -91,6 +129,14 @@ public class WlOutVerifyResult {
         this.bzID = bzID;
     }
 
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
+    }
+
     public Integer getBzStatus() {
         return bzStatus;
     }
@@ -99,20 +145,28 @@ public class WlOutVerifyResult {
         this.bzStatus = bzStatus;
     }
 
-    public Integer getFzrID() {
-        return fzrID;
+    public Integer getLlfzrID() {
+        return llfzrID;
     }
 
-    public void setFzrID(Integer fzrID) {
-        this.fzrID = fzrID;
+    public void setLlfzrID(Integer llfzrID) {
+        this.llfzrID = llfzrID;
     }
 
-    public Integer getFzrStatus() {
-        return fzrStatus;
+    public String getLhFzr() {
+        return lhFzr;
     }
 
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
+    public void setLhFzr(String lhFzr) {
+        this.lhFzr = lhFzr;
+    }
+
+    public Integer getLlfzrStatus() {
+        return llfzrStatus;
+    }
+
+    public void setLlfzrStatus(Integer llfzrStatus) {
+        this.llfzrStatus = llfzrStatus;
     }
 
     public List<WLOutShowBean> getBeans() {

@@ -42,8 +42,8 @@ import io.reactivex.schedulers.Schedulers;
 public class CPCKDInputActivity extends BaseActivity {
 
     private static final int GET_DEPARTMENT = 10;
-    private static final int REQUEST_CODE_SELECT_FZR = 31;
-    private static final int REQUEST_CODE_SELECT_KG = 34;
+    private static final int REQUEST_CODE_SELECT_KG = 31;
+    private static final int REQUEST_CODE_SELECT_FZR = 32;
 
     @BindView(R.id.title)
     TitleBar mTitle;

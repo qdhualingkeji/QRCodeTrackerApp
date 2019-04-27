@@ -18,6 +18,7 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.SelectDepartmentActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -51,9 +52,10 @@ import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RET
 public class WlOutModifyActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 12;
-    private static final int REQUEST_CODE_SELECT_LLFZR = 31;
+    private static final int REQUEST_CODE_SELECT_KG = 31;
     private static final int REQUEST_CODE_SELECT_FLFZR = 32;
-    private static final int REQUEST_CODE_SELECT_FLR = 33;
+    private static final int REQUEST_CODE_SELECT_BZ = 33;
+    private static final int REQUEST_CODE_SELECT_LLFZR = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -63,16 +65,22 @@ public class WlOutModifyActivity extends BaseActivity {
     TextView mLldwValue;
     @BindView(R.id.selectLLBM)
     LinearLayout mSelectLLBM;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
     @BindView(R.id.flfzrValue)
     TextView mFlfzrValue;
-    @BindView(R.id.flRValue)
-    TextView mFlRValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.llfzrValue)
     TextView mLlfzrValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
+    private int kgID;
+    private int flfzrID;
+    private int bzID;
+    private int llfzrID;
 
     private MainDao mainDao;
     private MyAdapter mAdapter;
@@ -146,6 +154,27 @@ public class WlOutModifyActivity extends BaseActivity {
                                     IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
                                 }
                             });
+
+                            kgID = dataResult.getKgID();
+                            mKgValue.setText(dataResult.getKg());
+                            mKgValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setKg("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            flfzrID = dataResult.getFlfzrID();
                             mFlfzrValue.setText(dataResult.getFhFzr());
                             mFlfzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -163,8 +192,10 @@ public class WlOutModifyActivity extends BaseActivity {
 
                                 }
                             });
-                            mFlRValue.setText(dataResult.getLhR());
-                            mFlRValue.addTextChangedListener(new TextWatcher() {
+
+                            bzID = dataResult.getBzID();
+                            mBzValue.setText(dataResult.getBz());
+                            mBzValue.addTextChangedListener(new TextWatcher() {
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -172,7 +203,7 @@ public class WlOutModifyActivity extends BaseActivity {
 
                                 @Override
                                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setLhR("" + s);
+                                    updatedParam.setBz("" + s);
                                 }
 
                                 @Override
@@ -180,6 +211,8 @@ public class WlOutModifyActivity extends BaseActivity {
 
                                 }
                             });
+
+                            llfzrID = dataResult.getLlfzrID();
                             mLlfzrValue.setText(dataResult.getLhFzr());
                             mLlfzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -235,17 +268,25 @@ public class WlOutModifyActivity extends BaseActivity {
         return R.layout.activity_wl_out_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectFLFZR,R.id.selectFLR,R.id.selectLLFZR})
+    @OnClick({R.id.selectKG,R.id.selectFLFZR,R.id.selectBZ,R.id.selectLLFZR,R.id.confirmBtn})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()){
-            case R.id.selectFLFZR:
-                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLFZR, null);
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
                 break;
-            case R.id.selectFLR:
-                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonActivity.class, REQUEST_CODE_SELECT_FLR, null);
+            case R.id.selectFLFZR:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FLFZR, bundle);
+                break;
+            case R.id.selectBZ:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
             case R.id.selectLLFZR:
-                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonActivity.class, REQUEST_CODE_SELECT_LLFZR, null);
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(WlOutModifyActivity.this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LLFZR, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -258,10 +299,11 @@ public class WlOutModifyActivity extends BaseActivity {
 
         for (int i = 0; i < mData.size(); i++) {
 
-            if (mData.get(i).getShl() == -1
+            if (mData.get(i).getdWZL() == -1
                     || "请选择部门".equals(mLldwValue.getText().toString())
+                    || "请选择仓库管理员".equals(mKgValue.getText().toString())
                     || "请选择发料负责人".equals(mFlfzrValue.getText().toString())
-                    || "请选择发料人".equals(mFlRValue.getText().toString())
+                    || "请选择班长".equals(mBzValue.getText().toString())
                     || "请选择领料负责人".equals(mLlfzrValue.getText().toString())
                     ) {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
@@ -270,8 +312,14 @@ public class WlOutModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setKgID(kgID);
+        updatedParam.setKgStatus(0);
+        updatedParam.setFlfzrID(flfzrID);
+        updatedParam.setFlfzrStatus(0);
+        updatedParam.setBzID(bzID);
         updatedParam.setBzStatus(0);
-        updatedParam.setFzrStatus(0);
+        updatedParam.setLlfzrID(llfzrID);
+        updatedParam.setLlfzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -303,11 +351,9 @@ public class WlOutModifyActivity extends BaseActivity {
     private void sendNotification() {
 
         final NotificationParam notificationParam = new NotificationParam();
-        //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getWlCKDNumber();
-        notificationParam.setDh(dh);
+        notificationParam.setDh(mDh);
         notificationParam.setStyle(NotificationType.WL_CKD);
-        notificationParam.setPersonFlag(NotificationParam.BZ);
+        notificationParam.setPersonFlag(NotificationParam.KG);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -356,7 +402,7 @@ public class WlOutModifyActivity extends BaseActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = View.inflate(WlOutModifyActivity.this, R.layout.item_wlout_modify, null);
                 viewHolder = new ViewHolder(convertView);
@@ -375,8 +421,10 @@ public class WlOutModifyActivity extends BaseActivity {
             viewHolder.mGgValue.setText(bean.getgG());
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
-            viewHolder.mSlValue.setText(bean.getShl() + "");
-            viewHolder.mSlValue.addTextChangedListener(new TextWatcher() {
+            viewHolder.shl = bean.getShl();
+            viewHolder.pCZL = bean.getpCZL();
+            viewHolder.mZhlValue.setText(bean.getdWZL() + "");
+            viewHolder.mZhlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -386,9 +434,10 @@ public class WlOutModifyActivity extends BaseActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (!TextUtils.isEmpty(s)) {
                         float num = Float.parseFloat("" + s);
-                        bean.setShl(num);
+                        bean.setdWZL(num);
+                        bean.setShl(num/viewHolder.pCZL);
                     } else {
-                        bean.setShl(-1);
+                        bean.setdWZL(-1);
                     }
 
                 }
@@ -416,10 +465,12 @@ public class WlOutModifyActivity extends BaseActivity {
             TextView mYlpcValue;
             @BindView(R.id.sldwValue)
             TextView mSldwValue;
-            @BindView(R.id.slValue)
-            EditText mSlValue;
+            @BindView(R.id.zhlValue)
+            EditText mZhlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            Float shl;
+            Float pCZL;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
@@ -437,14 +488,21 @@ public class WlOutModifyActivity extends BaseActivity {
                     mLldwValue.setText(data.getStringExtra("groupName"));
                     updatedParam.setLhDw(data.getStringExtra("groupName"));
                     break;
-                case REQUEST_CODE_SELECT_LLFZR:
-                    mLlfzrValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_KG:
+                    kgID = data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_FLFZR:
+                    flfzrID = data.getIntExtra("personID",0);
                     mFlfzrValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_FLR:
-                    mFlRValue.setText(data.getStringExtra("personName"));
+                case REQUEST_CODE_SELECT_BZ:
+                    bzID = data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_LLFZR:
+                    llfzrID = data.getIntExtra("personID",0);
+                    mLlfzrValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

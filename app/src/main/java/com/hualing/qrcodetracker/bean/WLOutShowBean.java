@@ -23,6 +23,8 @@ public class WLOutShowBean {
     private String sortName;
     //原料批次
     private String yLPC;
+    //批次总量
+    private float pCZL;
     //数量
     private float shl ;
     //单位重量
@@ -84,6 +86,14 @@ public class WLOutShowBean {
 
     public void setyLPC(String yLPC) {
         this.yLPC = yLPC;
+    }
+
+    public float getpCZL() {
+        return pCZL;
+    }
+
+    public void setpCZL(float pCZL) {
+        this.pCZL = pCZL;
     }
 
     public float getShl() {
