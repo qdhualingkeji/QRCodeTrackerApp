@@ -39,11 +39,11 @@ public class WLTKDInputActivity extends BaseActivity {
 
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 30;
-    private static final int REQUEST_CODE_SELECT_SLR = 33;
-    private static final int REQUEST_CODE_SELECT_BZ = 35;
-    private static final int REQUEST_CODE_SELECT_TLFZR = 31;
+    private static final int REQUEST_CODE_SELECT_SLR = 31;
+    private static final int REQUEST_CODE_SELECT_BZ = 32;
+    private static final int REQUEST_CODE_SELECT_TLFZR = 33;
     private static final int REQUEST_CODE_SELECT_KG = 34;
-    private static final int REQUEST_CODE_SELECT_SLFZR = 32;
+    private static final int REQUEST_CODE_SELECT_SLFZR = 35;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -187,18 +187,19 @@ public class WLTKDInputActivity extends BaseActivity {
         }
         params.setThDw(thdwValue);
         params.setShrr(shrValue);
-        params.setShFzr(shfzrValue);
         params.setThr(GlobalData.realName);
         params.setBzID(bzID);
+        params.setBz(bzValue);
         params.setBzStatus(0);
         params.setTlfzrID(tlfzrID);
-        params.setTlfzrStatus(0);
         params.setThFzr(thfzrValue);
+        params.setTlfzrStatus(0);
         params.setKgID(kgID);
+        params.setKg(kgValue);
         params.setKgStatus(0);
         params.setSlfzrID(slfzrID);
-        params.setSlfzrStatus(0);
         params.setShFzr(shfzrValue);
+        params.setSlfzrStatus(0);
         params.setRemark(remarkValue);
         return true;
     }

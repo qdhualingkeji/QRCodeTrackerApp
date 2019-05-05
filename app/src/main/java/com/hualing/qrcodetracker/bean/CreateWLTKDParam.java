@@ -12,20 +12,21 @@ package com.hualing.qrcodetracker.bean;
 public class CreateWLTKDParam {
 
     private String backDh;
-
     private String thDw ;
     private String thRq ;
     private String shrr ;
-    private String shFzr ;
     private String thr ;
-    private String thFzr ;
-    private Integer BzID;
-    private Integer BzStatus;
+    private Integer bzID;
+    private String bz ;
+    private Integer bzStatus;
     private Integer tlfzrID;
+    private String thFzr ;
     private Integer tlfzrStatus;
     private Integer kgID;
+    private String kg ;
     private Integer kgStatus;
     private Integer slfzrID;
+    private String shFzr ;
     private Integer slfzrStatus;
     private String remark ;
 
@@ -61,14 +62,6 @@ public class CreateWLTKDParam {
         this.shrr = shrr;
     }
 
-    public String getShFzr() {
-        return shFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
-    }
-
     public String getThr() {
         return thr;
     }
@@ -77,28 +70,28 @@ public class CreateWLTKDParam {
         this.thr = thr;
     }
 
-    public String getThFzr() {
-        return thFzr;
-    }
-
-    public void setThFzr(String thFzr) {
-        this.thFzr = thFzr;
-    }
-
     public Integer getBzID() {
-        return BzID;
+        return bzID;
     }
 
     public void setBzID(Integer bzID) {
-        BzID = bzID;
+        this.bzID = bzID;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
     }
 
     public Integer getBzStatus() {
-        return BzStatus;
+        return bzStatus;
     }
 
     public void setBzStatus(Integer bzStatus) {
-        BzStatus = bzStatus;
+        this.bzStatus = bzStatus;
     }
 
     public Integer getTlfzrID() {
@@ -107,6 +100,14 @@ public class CreateWLTKDParam {
 
     public void setTlfzrID(Integer tlfzrID) {
         this.tlfzrID = tlfzrID;
+    }
+
+    public String getThFzr() {
+        return thFzr;
+    }
+
+    public void setThFzr(String thFzr) {
+        this.thFzr = thFzr;
     }
 
     public Integer getTlfzrStatus() {
@@ -125,6 +126,14 @@ public class CreateWLTKDParam {
         this.kgID = kgID;
     }
 
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
+    }
+
     public Integer getKgStatus() {
         return kgStatus;
     }
@@ -139,6 +148,14 @@ public class CreateWLTKDParam {
 
     public void setSlfzrID(Integer slfzrID) {
         this.slfzrID = slfzrID;
+    }
+
+    public String getShFzr() {
+        return shFzr;
+    }
+
+    public void setShFzr(String shFzr) {
+        this.shFzr = shFzr;
     }
 
     public Integer getSlfzrStatus() {

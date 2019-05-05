@@ -16,21 +16,23 @@ public class WlTkVerifyResult {
     private String backDh;
     private String thDw;
     private String thRq;
+    private String shR;
     private String thR;
-    private String thFzr;
-    private String shFzr;
-    private String remark;
     private Integer bzID;
+    private String bz;
     private Integer bzStatus;
-    private String bzName;
+    private Integer tlfzrID;
+    private String thFzr ;
+    private Integer tlfzrStatus;
+    private Integer kgID;
+    private String kg ;
+    private Integer kgStatus;
+    private Integer slfzrID;
+    private String shFzr ;
+    private Integer slfzrStatus;
     private Integer fzrID;
     private Integer fzrStatus;
-    private Integer zjyID;
-    private Integer zjyStatus;
-    private String zjyName;
-    private Integer zjldID;
-    private Integer zjldStatus;
-    private String zjldName;
+    private String remark;
 
     public Integer getBzID() {
         return bzID;
@@ -38,6 +40,14 @@ public class WlTkVerifyResult {
 
     public void setBzID(Integer bzID) {
         this.bzID = bzID;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
     }
 
     public Integer getBzStatus() {
@@ -48,36 +58,68 @@ public class WlTkVerifyResult {
         this.bzStatus = bzStatus;
     }
 
-    public String getBzName() {
-        return bzName;
+    public Integer getTlfzrID() {
+        return tlfzrID;
     }
 
-    public void setBzName(String bzName) {
-        this.bzName = bzName;
+    public void setTlfzrID(Integer tlfzrID) {
+        this.tlfzrID = tlfzrID;
     }
 
-    public Integer getZjldID() {
-        return zjldID;
+    public String getThFzr() {
+        return thFzr;
     }
 
-    public void setZjldID(Integer zjldID) {
-        this.zjldID = zjldID;
+    public void setThFzr(String thFzr) {
+        this.thFzr = thFzr;
     }
 
-    public Integer getZjldStatus() {
-        return zjldStatus;
+    public Integer getTlfzrStatus() {
+        return tlfzrStatus;
     }
 
-    public void setZjldStatus(Integer zjldStatus) {
-        this.zjldStatus = zjldStatus;
+    public void setTlfzrStatus(Integer tlfzrStatus) {
+        this.tlfzrStatus = tlfzrStatus;
     }
 
-    public String getZjldName() {
-        return zjldName;
+    public Integer getKgID() {
+        return kgID;
     }
 
-    public void setZjldName(String zjldName) {
-        this.zjldName = zjldName;
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
+    }
+
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
+    }
+
+    public Integer getKgStatus() {
+        return kgStatus;
+    }
+
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
+    public Integer getSlfzrID() {
+        return slfzrID;
+    }
+
+    public void setSlfzrID(Integer slfzrID) {
+        this.slfzrID = slfzrID;
+    }
+
+    public Integer getSlfzrStatus() {
+        return slfzrStatus;
+    }
+
+    public void setSlfzrStatus(Integer slfzrStatus) {
+        this.slfzrStatus = slfzrStatus;
     }
 
     private List<WLTkShowBean> beans;
@@ -106,20 +148,20 @@ public class WlTkVerifyResult {
         this.thRq = thRq;
     }
 
+    public String getShR() {
+        return shR;
+    }
+
+    public void setShR(String shR) {
+        this.shR = shR;
+    }
+
     public String getThR() {
         return thR;
     }
 
     public void setThR(String thR) {
         this.thR = thR;
-    }
-
-    public String getThFzr() {
-        return thFzr;
-    }
-
-    public void setThFzr(String thFzr) {
-        this.thFzr = thFzr;
     }
 
     public String getShFzr() {
@@ -138,7 +180,7 @@ public class WlTkVerifyResult {
         this.remark = remark;
     }
 
-    public int getFzrID() {
+    public Integer getFzrID() {
         return fzrID;
     }
 
@@ -146,36 +188,12 @@ public class WlTkVerifyResult {
         this.fzrID = fzrID;
     }
 
-    public int getFzrStatus() {
+    public Integer getFzrStatus() {
         return fzrStatus;
     }
 
     public void setFzrStatus(Integer fzrStatus) {
         this.fzrStatus = fzrStatus;
-    }
-
-    public int getZjyID() {
-        return zjyID;
-    }
-
-    public void setZjyID(Integer zjyID) {
-        this.zjyID = zjyID;
-    }
-
-    public int getZjyStatus() {
-        return zjyStatus;
-    }
-
-    public void setZjyStatus(Integer zjyStatus) {
-        this.zjyStatus = zjyStatus;
-    }
-
-    public String getZjyName() {
-        return zjyName;
-    }
-
-    public void setZjyName(String zjyName) {
-        this.zjyName = zjyName;
     }
 
     public List<WLTkShowBean> getBeans() {

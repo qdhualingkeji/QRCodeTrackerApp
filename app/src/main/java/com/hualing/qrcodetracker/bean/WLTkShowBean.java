@@ -24,6 +24,8 @@ public class WLTkShowBean {
     private String yLPC;
     //数量
     private float shl ;
+    //批次总量
+    private float pCZL;
     //单位重量
     private float dWZL;
     //单位
@@ -91,6 +93,14 @@ public class WLTkShowBean {
 
     public void setShl(float shl) {
         this.shl = shl;
+    }
+
+    public float getpCZL() {
+        return pCZL;
+    }
+
+    public void setpCZL(float pCZL) {
+        this.pCZL = pCZL;
     }
 
     public float getdWZL() {
