@@ -24,6 +24,7 @@ import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActi
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpInShowBean;
@@ -60,12 +61,14 @@ public class BcpInModifyActivity extends BaseActivity {
     //private static final int GET_WLSORT_CODE = 30;
     private static final int SELECT_LEI_BIE = 11;
     private static final int SELECT_PRODUCT_NAME = 12;
-    private static final int REQUEST_CODE_SELECT_SHFZR = 31;
-    private static final int REQUEST_CODE_SELECT_JHFZR = 32;
-    private static final int REQUEST_CODE_SELECT_SHR = 33;
-    private static final int REQUEST_CODE_SELECT_ZJY = 34;
-    private static final int REQUEST_CODE_SELECT_BZ = 35;
+    private static final int REQUEST_CODE_SELECT_SHR = 31;
+    private static final int REQUEST_CODE_SELECT_BZ = 32;
+    private static final int REQUEST_CODE_SELECT_FZR = 33;
+    private static final int REQUEST_CODE_SELECT_JHFZR = 34;
+    private static final int REQUEST_CODE_SELECT_ZJY = 35;
     private static final int REQUEST_CODE_SELECT_ZJLD = 36;
+    private static final int REQUEST_CODE_SELECT_KG = 37;
+    private static final int REQUEST_CODE_SELECT_SHFZR = 38;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.indhValue)
@@ -78,31 +81,55 @@ public class BcpInModifyActivity extends BaseActivity {
     TextView mShrValue;
     @BindView(R.id.bzValue)
     TextView mBzValue;
-    @BindView(R.id.ShFzrValue)
-    TextView mShFzrValue;
+    @BindView(R.id.fzrValue)
+    TextView mFzrValue;
     @BindView(R.id.JhFhrValue)
     TextView mJhFhrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
     @BindView(R.id.zjldValue)
     TextView mZjldValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.ShFzrValue)
+    TextView mShFzrValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
+    @BindView(R.id.fzrLayout)
+    LinearLayout mFzrLayout;
+    @BindView(R.id.fzrView)
+    View mFzrView;
+    @BindView(R.id.jhfzrLayout)
+    LinearLayout mJhfzrLayout;
+    @BindView(R.id.jhfzrView)
+    View mJhfzrView;
+    @BindView(R.id.kgLayout)
+    LinearLayout mKgLayout;
+    @BindView(R.id.kgView)
+    View mKgView;
+    @BindView(R.id.shfzrLayout)
+    LinearLayout mShfzrLayout;
+    @BindView(R.id.shfzrView)
+    View mShfzrView;
 
     private MainDao mainDao;
     private MyAdapter mAdapter;
     private List<BcpInShowBean> mData;
     private String mDh;
+    private String mName;
     private VerifyParam param;
     private BcpInVerifyResult updatedParam;
     //记录选择物料编码或者类别的数据位置
     private int mCurrentPosition = -1;
     private int bzID;
     private int fzrID;
+    private int flfzrID;
     private int zjyID;
     private int zjldID;
+    private int kgID;
+    private int llfzrID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,10 +154,36 @@ public class BcpInModifyActivity extends BaseActivity {
 
         updatedParam = new BcpInVerifyResult();
         param = new VerifyParam();
-        if (getIntent() != null) {
-            mDh = getIntent().getStringExtra("dh");
+        Intent intent = getIntent();
+        if (intent != null) {
+            mName = intent.getStringExtra("name");
+            mDh = intent.getStringExtra("dh");
             param.setDh(mDh);
         }
+
+        if("半成品录入单".equals(mName)){
+            mTitle.setTitle("半成品录入数据修改");
+            mFzrLayout.setVisibility(LinearLayout.VISIBLE);
+            mFzrView.setVisibility(View.VISIBLE);
+            mJhfzrLayout.setVisibility(LinearLayout.GONE);
+            mJhfzrView.setVisibility(View.GONE);
+            mKgLayout.setVisibility(LinearLayout.GONE);
+            mKgView.setVisibility(View.GONE);
+            mShfzrLayout.setVisibility(LinearLayout.GONE);
+            mShfzrView.setVisibility(View.GONE);
+        }
+        else{
+            mTitle.setTitle("成品入库数据修改");
+            mFzrLayout.setVisibility(LinearLayout.GONE);
+            mFzrView.setVisibility(View.GONE);
+            mJhfzrLayout.setVisibility(LinearLayout.VISIBLE);
+            mJhfzrView.setVisibility(View.VISIBLE);
+            mKgLayout.setVisibility(LinearLayout.VISIBLE);
+            mKgView.setVisibility(View.VISIBLE);
+            mShfzrLayout.setVisibility(LinearLayout.VISIBLE);
+            mShfzrView.setVisibility(View.VISIBLE);
+        }
+        param.setName(mName);
 
         mData = new ArrayList<>();
         mAdapter = new MyAdapter();
@@ -180,35 +233,7 @@ public class BcpInModifyActivity extends BaseActivity {
                                 }
                             });
 
-                            bzID=dataResult.getBzID();
-                            mBzValue.setText(dataResult.getBzName());
-
-                            mShFzrValue.setText(dataResult.getShFzr());
-                            mShFzrValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setShFzr("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
-                            fzrID=dataResult.getFzrID();
-                            zjyID=dataResult.getZjyID();
-                            mZjyValue.setText(dataResult.getZjyName());
-
-                            zjldID=dataResult.getZjldID();
-                            mZjldValue.setText(dataResult.getZjldName());
-
-                            mShrValue.setText(dataResult.getJhR());
+                            mShrValue.setText(dataResult.getShR());
                             mShrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -217,7 +242,7 @@ public class BcpInModifyActivity extends BaseActivity {
 
                                 @Override
                                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setJhR("" + s);
+                                    updatedParam.setShR("" + s);
                                 }
 
                                 @Override
@@ -225,8 +250,10 @@ public class BcpInModifyActivity extends BaseActivity {
 
                                 }
                             });
-                            mJhFhrValue.setText(dataResult.getJhFzr());
-                            mJhFhrValue.addTextChangedListener(new TextWatcher() {
+
+                            bzID=dataResult.getBzID();
+                            mBzValue.setText(dataResult.getBz());
+                            mBzValue.addTextChangedListener(new TextWatcher() {
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -234,7 +261,7 @@ public class BcpInModifyActivity extends BaseActivity {
 
                                 @Override
                                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setJhFzr("" + s);
+                                    updatedParam.setBz("" + s);
                                 }
 
                                 @Override
@@ -242,6 +269,125 @@ public class BcpInModifyActivity extends BaseActivity {
 
                                 }
                             });
+
+                            if("半成品录入单".equals(mName)) {
+                                fzrID = dataResult.getFzrID();
+                                mFzrValue.setText(dataResult.getFzr());
+                                mFzrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedParam.setFzr("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+                            }
+                            else{
+                                flfzrID=dataResult.getFlfzrID();
+                                mJhFhrValue.setText(dataResult.getJhFzr());
+                                mJhFhrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedParam.setJhFzr("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                kgID=dataResult.getKgID();
+                                mKgValue.setText(dataResult.getKg());
+                                mKgValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedParam.setKg("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                llfzrID=dataResult.getLlfzrID();
+                                mShFzrValue.setText(dataResult.getShFzr());
+                                mShFzrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedParam.setShFzr("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                            }
+
+                            zjyID=dataResult.getZjyID();
+                            mZjyValue.setText(dataResult.getZjy());
+                            mZjyValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setZjy("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            zjldID=dataResult.getZjldID();
+                            mZjldValue.setText(dataResult.getZjld());
+                            mZjldValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setZjld("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
                             mRemarkValue.setText(dataResult.getRemark());
                             mRemarkValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -271,31 +417,76 @@ public class BcpInModifyActivity extends BaseActivity {
     }
 
     private void toCommit() {
+        if("半成品录入单".equals(mName)) {
+            for (int i = 0; i < mData.size(); i++) {
 
-        for (int i = 0; i < mData.size(); i++) {
-
-            if (TextUtils.isEmpty(mData.get(i).getProductName())
-                    || TextUtils.isEmpty(mData.get(i).getdW())
-                    //|| TextUtils.isEmpty(mData.get(i).getgG())
-                    //|| "请选择编码".equals(mData.get(i).getwLCode())
-                    || TextUtils.isEmpty(mData.get(i).getyLPC())
-                    || mData.get(i).getSortID() < 0
-                    || mData.get(i).getdWZL() == -1
-                    || mData.get(i).getShl() == -1
-                    || "请选择收货人".equals(mShrValue.getText().toString())
-                    || "请选择收货负责人".equals(mShFzrValue.getText().toString())
-                    || "请选择入库负责人".equals(mJhFhrValue.getText().toString())
-                    ) {
-                Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
-                return;
+                if (TextUtils.isEmpty(mData.get(i).getProductName())
+                        || TextUtils.isEmpty(mData.get(i).getdW())
+                        //|| TextUtils.isEmpty(mData.get(i).getgG())
+                        //|| "请选择编码".equals(mData.get(i).getwLCode())
+                        || TextUtils.isEmpty(mData.get(i).getyLPC())
+                        || mData.get(i).getSortID() < 0
+                        || mData.get(i).getdWZL() == -1
+                        //|| mData.get(i).getShl() == -1
+                        || "请选择收货人".equals(mShrValue.getText().toString())
+                        || "请选择班长".equals(mBzValue.getText().toString())
+                        || "请选择车间领导".equals(mFzrValue.getText().toString())
+                        || "请选择质检员".equals(mZjyValue.getText().toString())
+                        || "请选择质检领导".equals(mZjldValue.getText().toString())
+                        ) {
+                    Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
-        }
 
-        updatedParam.setBeans(mData);
-        updatedParam.setBzStatus(0);
-        updatedParam.setFzrStatus(0);
-        updatedParam.setZjyStatus(0);
-        updatedParam.setZjldStatus(0);
+            updatedParam.setBeans(mData);
+            updatedParam.setBzID(bzID);
+            updatedParam.setBzStatus(0);
+            updatedParam.setFzrID(fzrID);
+            updatedParam.setFzrStatus(0);
+            updatedParam.setZjyID(zjyID);
+            updatedParam.setZjyStatus(0);
+            updatedParam.setZjldID(zjldID);
+            updatedParam.setZjldStatus(0);
+        }
+        else{
+            for (int i = 0; i < mData.size(); i++) {
+
+                if (TextUtils.isEmpty(mData.get(i).getProductName())
+                        || TextUtils.isEmpty(mData.get(i).getdW())
+                        //|| TextUtils.isEmpty(mData.get(i).getgG())
+                        //|| "请选择编码".equals(mData.get(i).getwLCode())
+                        || TextUtils.isEmpty(mData.get(i).getyLPC())
+                        || mData.get(i).getSortID() < 0
+                        || mData.get(i).getdWZL() == -1
+                        //|| mData.get(i).getShl() == -1
+                        || "请选择收货人".equals(mShrValue.getText().toString())
+                        || "请选择班长".equals(mBzValue.getText().toString())
+                        || "请选择入库负责人".equals(mJhFhrValue.getText().toString())
+                        || "请选择质检员".equals(mZjyValue.getText().toString())
+                        || "请选择质检领导".equals(mZjldValue.getText().toString())
+                        || "请选择仓库管理员".equals(mKgValue.getText().toString())
+                        || "请选择收货负责人".equals(mShFzrValue.getText().toString())
+                        ) {
+                    Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            updatedParam.setBeans(mData);
+            updatedParam.setBzID(bzID);
+            updatedParam.setBzStatus(0);
+            updatedParam.setFlfzrID(flfzrID);
+            updatedParam.setFlfzrStatus(0);
+            updatedParam.setZjyID(zjyID);
+            updatedParam.setZjyStatus(0);
+            updatedParam.setZjldID(zjldID);
+            updatedParam.setZjldStatus(0);
+            updatedParam.setKgID(kgID);
+            updatedParam.setKgStatus(0);
+            updatedParam.setLlfzrID(llfzrID);
+            updatedParam.setLlfzrStatus(0);
+        }
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -331,7 +522,7 @@ public class BcpInModifyActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getBCPRKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.BCP_RKD);
-        notificationParam.setPersonFlag(NotificationParam.ZJY);
+        notificationParam.setPersonFlag(NotificationParam.BZ);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -371,31 +562,40 @@ public class BcpInModifyActivity extends BaseActivity {
         return R.layout.activity_bcp_in_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectSHR,R.id.selectBZ,R.id.selectSHFZR,R.id.selectJHFZR,R.id.selectZJY,R.id.selectZJLD})
+    @OnClick({R.id.selectSHR,R.id.selectBZ,R.id.selectFZR,R.id.selectJHFZR,R.id.selectZJY,R.id.selectZJLD,R.id.selectKG,R.id.selectSHFZR,R.id.confirmBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
             case R.id.selectSHR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_SHR,null);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class,REQUEST_CODE_SELECT_SHR,null);
                 break;
             case R.id.selectBZ:
                 bundle.putString("checkQX", "bz");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_BZ,bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class,REQUEST_CODE_SELECT_BZ,bundle);
                 break;
-            case R.id.selectSHFZR:
+            case R.id.selectFZR:
                 bundle.putString("checkQX", "fzr");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_SHFZR,bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class,REQUEST_CODE_SELECT_FZR,bundle);
                 break;
             case R.id.selectJHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class,REQUEST_CODE_SELECT_JHFZR,null);
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class,REQUEST_CODE_SELECT_JHFZR,bundle);
                 break;
             case R.id.selectZJY:
                 bundle.putString("checkQX", "zjy");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
                 break;
             case R.id.selectZJLD:
                 bundle.putString("checkQX", "zjld");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
+                break;
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class,REQUEST_CODE_SELECT_KG,bundle);
+                break;
+            case R.id.selectSHFZR:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class,REQUEST_CODE_SELECT_SHFZR,bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -510,6 +710,7 @@ public class BcpInModifyActivity extends BaseActivity {
 
                 }
             });
+            /*
             viewHolder.mShlValue.setText(bean.getShl() + "");
             viewHolder.mShlValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -533,6 +734,7 @@ public class BcpInModifyActivity extends BaseActivity {
 
                 }
             });
+            */
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
             viewHolder.mDwzlValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -617,8 +819,9 @@ public class BcpInModifyActivity extends BaseActivity {
             EditText mYlpcValue;
             @BindView(R.id.ggValue)
             EditText mGgValue;
-            @BindView(R.id.shlValue)
-            EditText mShlValue;
+            //@BindView(R.id.shlValue)
+            //EditText mShlValue;
+            Float shl;
             @BindView(R.id.dwzlValue)
             EditText mDwzlValue;
             @BindView(R.id.dwValue)
@@ -680,11 +883,12 @@ public class BcpInModifyActivity extends BaseActivity {
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_SHFZR:
+                case REQUEST_CODE_SELECT_FZR:
                     fzrID=data.getIntExtra("personID",0);
-                    mShFzrValue.setText(data.getStringExtra("personName"));
+                    mFzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_JHFZR:
+                    flfzrID=data.getIntExtra("personID",0);
                     mJhFhrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_ZJY:
@@ -694,6 +898,14 @@ public class BcpInModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_ZJLD:
                     zjldID=data.getIntExtra("personID",0);
                     mZjldValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_SHFZR:
+                    llfzrID=data.getIntExtra("personID",0);
+                    mShFzrValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

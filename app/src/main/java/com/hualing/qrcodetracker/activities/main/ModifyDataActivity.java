@@ -192,8 +192,10 @@ public class ModifyDataActivity extends BaseActivity {
                                 case "物料退库单":
                                     intent = new Intent(ModifyDataActivity.this,WlTkModifyActivity.class);
                                     break;
-                                case "半成品/成品入库单":
+                                case "半成品录入单":
+                                case "成品入库单":
                                     intent = new Intent(ModifyDataActivity.this,BcpInModifyActivity.class);
+                                    intent.putExtra("name",name);
                                     break;
                                 case "成品出库单":
                                     intent = new Intent(ModifyDataActivity.this,BcpOutModifyActivity.class);
