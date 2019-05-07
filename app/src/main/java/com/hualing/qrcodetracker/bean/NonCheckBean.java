@@ -14,6 +14,7 @@ public class NonCheckBean {
     private String dh;
     private String name;
     private String time;
+    private Integer fzrID;
     private Integer flfzrID;
     private Integer llfzrID;
     private Integer tlfzrID;//退料负责人ID
@@ -41,6 +42,14 @@ public class NonCheckBean {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Integer getFzrID() {
+        return fzrID;
+    }
+
+    public void setFzrID(Integer fzrID) {
+        this.fzrID = fzrID;
     }
 
     public Integer getFlfzrID() {

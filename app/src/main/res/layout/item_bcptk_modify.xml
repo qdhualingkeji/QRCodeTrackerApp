@@ -190,15 +190,15 @@
                     android:textSize="@dimen/propertyNameText"
                     />
 
-                <TextView
+                <EditText
                     android:id="@+id/dwZhlValue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/divide_dark_gray_color"
-                    android:textSize="16sp"
-                    />
+                    android:inputType="numberDecimal"
+                    android:maxLength="75"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"/>
 
             </LinearLayout>
 
@@ -207,6 +207,7 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
 
+            <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -238,6 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@color/divide_gray_color"/>
+                -->
 
             <LinearLayout
                 android:layout_width="match_parent"

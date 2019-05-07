@@ -35,6 +35,8 @@ public class BcpTkShowBean {
     private String czy	;
     //单位重量
     private float dWZL;
+    //批次总量
+    private float pCZL;
     //出库单号
     private String backDh;
     private String remark;
@@ -149,6 +151,14 @@ public class BcpTkShowBean {
 
     public void setdWZL(float dWZL) {
         this.dWZL = dWZL;
+    }
+
+    public float getpCZL() {
+        return pCZL;
+    }
+
+    public void setpCZL(float pCZL) {
+        this.pCZL = pCZL;
     }
 
     public String getBackDh() {

@@ -19,6 +19,7 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.SelectDepartmentActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpTkShowBean;
@@ -52,12 +53,13 @@ import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RET
 public class BcpTkModifyActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 12;
-    private static final int REQUEST_CODE_SELECT_TLFZR = 31;
-    private static final int REQUEST_CODE_SELECT_SLFZR = 32;
-    private static final int REQUEST_CODE_SELECT_SLR = 33;
+    private static final int REQUEST_CODE_SELECT_SLR = 31;
+    private static final int REQUEST_CODE_SELECT_BZ = 32;
+    private static final int REQUEST_CODE_SELECT_TLFZR = 33;
     private static final int REQUEST_CODE_SELECT_ZJY = 34;
-    private static final int REQUEST_CODE_SELECT_BZ = 35;
-    private static final int REQUEST_CODE_SELECT_ZJLD = 36;
+    private static final int REQUEST_CODE_SELECT_ZJLD = 35;
+    private static final int REQUEST_CODE_SELECT_KG = 36;
+    private static final int REQUEST_CODE_SELECT_SLFZR = 37;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -67,18 +69,20 @@ public class BcpTkModifyActivity extends BaseActivity {
     TextView mTkdwValue;
     @BindView(R.id.selectLLBM)
     LinearLayout mSelectLLBM;
-    @BindView(R.id.tkfzrValue)
-    TextView mTkfzrValue;
     @BindView(R.id.shRValue)
     TextView mShRValue;
     @BindView(R.id.bzValue)
     TextView mBzValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
+    @BindView(R.id.tkfzrValue)
+    TextView mTkfzrValue;
     @BindView(R.id.zjyValue)
     TextView mZjyValue;
     @BindView(R.id.zjldValue)
     TextView mZjldValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.shfzrValue)
+    TextView mShfzrValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
@@ -91,9 +95,11 @@ public class BcpTkModifyActivity extends BaseActivity {
     private VerifyParam param;
     private BcpTkVerifyResult updatedParam;
     private Integer bzID;
-    private Integer fzrID;
+    private Integer tlfzrID;
     private Integer zjyID;
     private Integer zjldID;
+    private Integer kgID;
+    private Integer slfzrID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,10 +167,120 @@ public class BcpTkModifyActivity extends BaseActivity {
                                 }
                             });
 
-                            bzID=dataResult.getBzID();
-                            mBzValue.setText(dataResult.getBzName());
+                            mShRValue.setText(dataResult.getShR());
+                            mShRValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                            fzrID=dataResult.getFzrID();
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setShR("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            bzID=dataResult.getBzID();
+                            mBzValue.setText(dataResult.getBz());
+                            mBzValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setBz("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            tlfzrID=dataResult.getTlfzrID();
+                            mTkfzrValue.setText(dataResult.getThFzr());
+                            mTkfzrValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setThFzr("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            zjyID=dataResult.getZjyID();
+                            mZjyValue.setText(dataResult.getZjy());
+                            mZjyValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setZjy("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            zjldID=dataResult.getZjldID();
+                            mZjldValue.setText(dataResult.getZjld());
+                            mZjldValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setZjld("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            kgID=dataResult.getKgID();
+                            mKgValue.setText(dataResult.getKg());
+                            mKgValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setKg("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            slfzrID=dataResult.getSlfzrID();
                             mShfzrValue.setText(dataResult.getShFzr());
                             mShfzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -183,46 +299,6 @@ public class BcpTkModifyActivity extends BaseActivity {
                                 }
                             });
 
-                            zjyID=dataResult.getZjyID();
-                            mZjyValue.setText(dataResult.getZjyName());
-
-                            zjldID=dataResult.getZjldID();
-                            mZjldValue.setText(dataResult.getZjldName());
-
-                            mShRValue.setText(dataResult.getThR());
-                            mShRValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setThR("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-                            mTkfzrValue.setText(dataResult.getThFzr());
-                            mTkfzrValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setThFzr("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
                             mRemarkValue.setText(dataResult.getRemark());
                             mRemarkValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -261,31 +337,36 @@ public class BcpTkModifyActivity extends BaseActivity {
         return R.layout.activity_bcp_tk_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectTHFZR,R.id.selectSHR,R.id.selectBZ,R.id.selectSHFZR,R.id.selectZJY})
+    @OnClick({R.id.selectSHR,R.id.selectBZ,R.id.selectTHFZR,R.id.selectZJY,R.id.selectZJLD,R.id.selectKG,R.id.selectSHFZR,R.id.confirmBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
-            case R.id.selectTHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_TLFZR, null);
-                break;
             case R.id.selectSHR:
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLR, null);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SLR, null);
                 break;
             case R.id.selectBZ:
                 bundle.putString("checkQX", "bz");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
                 break;
-            case R.id.selectSHFZR:
+            case R.id.selectTHFZR:
                 bundle.putString("checkQX", "fzr");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_TLFZR, bundle);
                 break;
             case R.id.selectZJY:
                 bundle.putString("checkQX", "zjy");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJY, bundle);
                 break;
             case R.id.selectZJLD:
                 bundle.putString("checkQX", "zjld");
-                IntentUtil.openActivityForResult(this, SelectPersonActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_ZJLD, bundle);
+                break;
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
+                break;
+            case R.id.selectSHFZR:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SLFZR, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -300,10 +381,14 @@ public class BcpTkModifyActivity extends BaseActivity {
         for (int i = 0; i < mData.size(); i++) {
 
             if ("请选择部门".equals(mTkdwValue.getText().toString())
-                    || "请选择退库负责人".equals(mTkfzrValue.getText().toString())
                     || "请选择收货人".equals(mShRValue.getText().toString())
+                    || "请选择班长".equals(mBzValue.getText().toString())
+                    || "请选择退库负责人".equals(mTkfzrValue.getText().toString())
+                    || "请选择质检员".equals(mZjyValue.getText().toString())
+                    || "请选择质检领导".equals(mZjldValue.getText().toString())
+                    || "请选择仓库管理员".equals(mKgValue.getText().toString())
                     || "请选择收货负责人".equals(mShfzrValue.getText().toString())
-                    || mData.get(i).getShl()==-1
+                    || mData.get(i).getdWZL()==-1
                     ) {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
                 return;
@@ -311,10 +396,18 @@ public class BcpTkModifyActivity extends BaseActivity {
         }
 
         updatedParam.setBeans(mData);
+        updatedParam.setBzID(bzID);
         updatedParam.setBzStatus(0);
-        updatedParam.setFzrStatus(0);
+        updatedParam.setTlfzrID(tlfzrID);
+        updatedParam.setTlfzrStatus(0);
+        updatedParam.setZjyID(zjyID);
         updatedParam.setZjyStatus(0);
+        updatedParam.setZjldID(zjldID);
         updatedParam.setZjldStatus(0);
+        updatedParam.setKgID(kgID);
+        updatedParam.setKgStatus(0);
+        updatedParam.setSlfzrID(slfzrID);
+        updatedParam.setSlfzrStatus(0);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -350,7 +443,7 @@ public class BcpTkModifyActivity extends BaseActivity {
         String dh = SharedPreferenceUtil.getBCPTKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.BCP_TKD);
-        notificationParam.setPersonFlag(NotificationParam.ZJY);
+        notificationParam.setPersonFlag(NotificationParam.BZ);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -371,7 +464,7 @@ public class BcpTkModifyActivity extends BaseActivity {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(TheApplication.getContext(), "已通知班长审核", Toast.LENGTH_SHORT).show();
                         }
                         setResult(RETURN_AND_REFRESH);
                         AllActivitiesHolder.removeAct(BcpTkModifyActivity.this);
@@ -413,9 +506,9 @@ public class BcpTkModifyActivity extends BaseActivity {
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mScpcValue.setText(bean.getsCPC());
             viewHolder.mScTimeValue.setText(bean.getScTime());
+            viewHolder.mShl=bean.getShl();
             viewHolder.mDwZhlValue.setText(bean.getdWZL() + "");
-            viewHolder.mTkShlValue.setText(bean.getShl() + "");
-            viewHolder.mTkShlValue.addTextChangedListener(new TextWatcher() {
+            viewHolder.mDwZhlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -423,10 +516,13 @@ public class BcpTkModifyActivity extends BaseActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (TextUtils.isEmpty(s)) {
-                        bean.setShl(-1);
-                    } else
-                        bean.setShl(Float.parseFloat("" + s));
+                    if (!TextUtils.isEmpty(s)) {
+                        float num = Float.parseFloat("" + s);
+                        bean.setdWZL(num);
+                        bean.setShl(num/bean.getpCZL());//单位重量变了，必须计算出相对数量
+                    } else {
+                        bean.setdWZL(-1);
+                    }
                 }
 
                 @Override
@@ -468,9 +564,10 @@ public class BcpTkModifyActivity extends BaseActivity {
             @BindView(R.id.scTimeValue)
             TextView mScTimeValue;
             @BindView(R.id.dwZhlValue)
-            TextView mDwZhlValue;
-            @BindView(R.id.tkShlValue)
-            EditText mTkShlValue;
+            EditText mDwZhlValue;
+            //@BindView(R.id.tkShlValue)
+            //EditText mTkShlValue;
+            Float mShl;
             @BindView(R.id.remarkValue)
             EditText mRemarkValue;
 
@@ -497,11 +594,8 @@ public class BcpTkModifyActivity extends BaseActivity {
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
                     break;
-                case REQUEST_CODE_SELECT_SLFZR:
-                    fzrID=data.getIntExtra("personID",0);
-                    mShfzrValue.setText(data.getStringExtra("personName"));
-                    break;
                 case REQUEST_CODE_SELECT_TLFZR:
+                    tlfzrID=data.getIntExtra("personID",0);
                     mTkfzrValue.setText(data.getStringExtra("personName"));
                     break;
                 case REQUEST_CODE_SELECT_ZJY:
@@ -511,6 +605,14 @@ public class BcpTkModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_ZJLD:
                     zjldID=data.getIntExtra("personID",0);
                     mZjldValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_SLFZR:
+                    slfzrID=data.getIntExtra("personID",0);
+                    mShfzrValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

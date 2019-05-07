@@ -17,21 +17,26 @@ public class BcpTkVerifyResult {
     private String thDw;
     private String thRq;
     private String thR;
-    private String thFzr;
-    private String shFzr;
-    private String remark;
+    private String shR;
     private Integer bzID;
+    private String bz;
     private Integer bzStatus;
-    private String bzName;
-    private Integer fzrID;
-    private Integer fzrStatus;
+    private Integer tlfzrID;
+    private String thFzr;
+    private Integer tlfzrStatus;
     private Integer zjyID;
+    private String zjy;
     private Integer zjyStatus;
-    private String zjyName;
     private Integer zjldID;
+    private String zjld;
     private Integer zjldStatus;
-    private String zjldName;
-
+    private Integer kgID;
+    private String kg;
+    private Integer kgStatus;
+    private Integer slfzrID;
+    private String shFzr;
+    private Integer slfzrStatus;
+    private String remark;
     private List<BcpTkShowBean> beans;
 
     public String getBackDh() {
@@ -66,76 +71,12 @@ public class BcpTkVerifyResult {
         this.thR = thR;
     }
 
-    public String getThFzr() {
-        return thFzr;
+    public String getShR() {
+        return shR;
     }
 
-    public void setThFzr(String thFzr) {
-        this.thFzr = thFzr;
-    }
-
-    public String getShFzr() {
-        return shFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public Integer getFzrID() {
-        return fzrID;
-    }
-
-    public void setFzrID(Integer fzrID) {
-        this.fzrID = fzrID;
-    }
-
-    public Integer getFzrStatus() {
-        return fzrStatus;
-    }
-
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
-    }
-
-    public Integer getZjyID() {
-        return zjyID;
-    }
-
-    public void setZjyID(Integer zjyID) {
-        this.zjyID = zjyID;
-    }
-
-    public Integer getZjyStatus() {
-        return zjyStatus;
-    }
-
-    public void setZjyStatus(Integer zjyStatus) {
-        this.zjyStatus = zjyStatus;
-    }
-
-    public String getZjyName() {
-        return zjyName;
-    }
-
-    public void setZjyName(String zjyName) {
-        this.zjyName = zjyName;
-    }
-
-    public List<BcpTkShowBean> getBeans() {
-        return beans;
-    }
-
-    public void setBeans(List<BcpTkShowBean> beans) {
-        this.beans = beans;
+    public void setShR(String shR) {
+        this.shR = shR;
     }
 
     public Integer getBzID() {
@@ -146,6 +87,14 @@ public class BcpTkVerifyResult {
         this.bzID = bzID;
     }
 
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
+    }
+
     public Integer getBzStatus() {
         return bzStatus;
     }
@@ -154,12 +103,52 @@ public class BcpTkVerifyResult {
         this.bzStatus = bzStatus;
     }
 
-    public String getBzName() {
-        return bzName;
+    public Integer getTlfzrID() {
+        return tlfzrID;
     }
 
-    public void setBzName(String bzName) {
-        this.bzName = bzName;
+    public void setTlfzrID(Integer tlfzrID) {
+        this.tlfzrID = tlfzrID;
+    }
+
+    public String getThFzr() {
+        return thFzr;
+    }
+
+    public void setThFzr(String thFzr) {
+        this.thFzr = thFzr;
+    }
+
+    public Integer getTlfzrStatus() {
+        return tlfzrStatus;
+    }
+
+    public void setTlfzrStatus(Integer tlfzrStatus) {
+        this.tlfzrStatus = tlfzrStatus;
+    }
+
+    public Integer getZjyID() {
+        return zjyID;
+    }
+
+    public void setZjyID(Integer zjyID) {
+        this.zjyID = zjyID;
+    }
+
+    public String getZjy() {
+        return zjy;
+    }
+
+    public void setZjy(String zjy) {
+        this.zjy = zjy;
+    }
+
+    public Integer getZjyStatus() {
+        return zjyStatus;
+    }
+
+    public void setZjyStatus(Integer zjyStatus) {
+        this.zjyStatus = zjyStatus;
     }
 
     public Integer getZjldID() {
@@ -170,6 +159,14 @@ public class BcpTkVerifyResult {
         this.zjldID = zjldID;
     }
 
+    public String getZjld() {
+        return zjld;
+    }
+
+    public void setZjld(String zjld) {
+        this.zjld = zjld;
+    }
+
     public Integer getZjldStatus() {
         return zjldStatus;
     }
@@ -178,11 +175,67 @@ public class BcpTkVerifyResult {
         this.zjldStatus = zjldStatus;
     }
 
-    public String getZjldName() {
-        return zjldName;
+    public Integer getKgID() {
+        return kgID;
     }
 
-    public void setZjldName(String zjldName) {
-        this.zjldName = zjldName;
+    public void setKgID(Integer kgID) {
+        this.kgID = kgID;
+    }
+
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
+    }
+
+    public Integer getKgStatus() {
+        return kgStatus;
+    }
+
+    public void setKgStatus(Integer kgStatus) {
+        this.kgStatus = kgStatus;
+    }
+
+    public Integer getSlfzrID() {
+        return slfzrID;
+    }
+
+    public void setSlfzrID(Integer slfzrID) {
+        this.slfzrID = slfzrID;
+    }
+
+    public String getShFzr() {
+        return shFzr;
+    }
+
+    public void setShFzr(String shFzr) {
+        this.shFzr = shFzr;
+    }
+
+    public Integer getSlfzrStatus() {
+        return slfzrStatus;
+    }
+
+    public void setSlfzrStatus(Integer slfzrStatus) {
+        this.slfzrStatus = slfzrStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public List<BcpTkShowBean> getBeans() {
+        return beans;
+    }
+
+    public void setBeans(List<BcpTkShowBean> beans) {
+        this.beans = beans;
     }
 }

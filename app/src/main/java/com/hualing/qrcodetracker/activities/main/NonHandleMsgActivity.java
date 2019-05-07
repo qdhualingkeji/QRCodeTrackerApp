@@ -260,7 +260,9 @@ public class NonHandleMsgActivity extends BaseActivity {
                                 case "成品入库单":
                                     if(isBZ||isKG||isFZR) {
                                         intent = new Intent(NonHandleMsgActivity.this, BcpInVerifyActivity.class);
-                                        if(GlobalData.userId.equals(info.getFlfzrID()+""))
+                                        if(GlobalData.userId.equals(info.getFzrID()+""))
+                                            intent.putExtra("personFlag", NotificationParam.FZR);
+                                        else if(GlobalData.userId.equals(info.getFlfzrID()+""))
                                             intent.putExtra("personFlag", NotificationParam.FLFZR);
                                         else if(GlobalData.userId.equals(info.getLlfzrID()+""))
                                             intent.putExtra("personFlag", NotificationParam.LLFZR);

@@ -148,7 +148,9 @@ public class BcpInVerifyActivity extends BaseActivity {
             }
             else if(isFZR) {
                 int personFlag = getIntent().getIntExtra("personFlag", -1);
-                if(personFlag==NotificationParam.FLFZR)
+                if(personFlag==NotificationParam.FZR)
+                    param.setCheckQXFlag(VerifyParam.FZR);
+                else if(personFlag==NotificationParam.FLFZR)
                     param.setCheckQXFlag(VerifyParam.FLFZR);
                 else if(personFlag==NotificationParam.LLFZR)
                     param.setCheckQXFlag(VerifyParam.LLFZR);
