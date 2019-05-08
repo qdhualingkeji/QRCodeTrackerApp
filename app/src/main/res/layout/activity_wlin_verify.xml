@@ -146,11 +146,11 @@
                         android:padding="20dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/propertyNameText"
-                        android:text="收货负责人："
+                        android:text="录入人："
                         />
 
                     <TextView
-                        android:id="@+id/shfzrValue"
+                        android:id="@+id/llrValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"

@@ -2,11 +2,13 @@ package com.hualing.qrcodetracker.activities.operation_wl.wl_out;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,12 +54,20 @@ public class WlOutVerifyActivity extends BaseActivity {
     TextView mLhdwValue;
     @BindView(R.id.lhrqValue)
     TextView mLhrqValue;
-    @BindView(R.id.lhfzrValue)
-    TextView mLhfzrValue;
     @BindView(R.id.lhRValue)
     TextView mLhRValue;
-    @BindView(R.id.jhfzrValue)
-    TextView mJhfzrValue;
+    @BindView(R.id.kgLayout)
+    LinearLayout mKgLayout;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.kgView)
+    View mKgView;
+    @BindView(R.id.bzLayout)
+    LinearLayout mBzLayout;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
+    @BindView(R.id.bzView)
+    View mBzView;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
@@ -120,16 +130,28 @@ public class WlOutVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isKG)
+            if(isKG) {
                 param.setCheckQXFlag(VerifyParam.KG);
-            else if(isBZ)
+                mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                mKgView.setVisibility(View.VISIBLE);
+            }
+            else if(isBZ) {
                 param.setCheckQXFlag(VerifyParam.BZ);
+                mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                mBzView.setVisibility(View.VISIBLE);
+            }
             else if(isFZR) {
                 int personFlag = getIntent().getIntExtra("personFlag", -1);
-                if(personFlag==NotificationParam.FLFZR)
+                if(personFlag==NotificationParam.FLFZR) {
                     param.setCheckQXFlag(VerifyParam.FLFZR);
-                else if(personFlag==NotificationParam.LLFZR)
+                    mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                    mKgView.setVisibility(View.VISIBLE);
+                }
+                else if(personFlag==NotificationParam.LLFZR) {
                     param.setCheckQXFlag(VerifyParam.LLFZR);
+                    mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                    mBzView.setVisibility(View.VISIBLE);
+                }
             }
             else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
@@ -172,8 +194,8 @@ public class WlOutVerifyActivity extends BaseActivity {
                             mLhdwValue.setText(dataResult.getLhDw());
                             mLhrqValue.setText(dataResult.getLhRq());
                             mLhRValue.setText(dataResult.getLhR());
-                            mLhfzrValue.setText(dataResult.getLhFzr());
-                            mJhfzrValue.setText(dataResult.getFhFzr());
+                            mKgValue.setText(dataResult.getKg());
+                            mBzValue.setText(dataResult.getBz());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark())?"无备注信息":dataResult.getRemark());
 
                             if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {

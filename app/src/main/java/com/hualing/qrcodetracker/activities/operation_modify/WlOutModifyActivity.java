@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -411,11 +412,6 @@ public class WlOutModifyActivity extends BaseActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
 
             final WLOutShowBean bean = mData.get(position);
-            /*
-            if (!TextUtils.isEmpty(bean.getwLCode())) {
-                viewHolder.mWlbmValue.setText(bean.getwLCode());
-            }
-            */
             viewHolder.mNameValue.setText(bean.getProductName());
             viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mGgValue.setText(bean.getgG());
@@ -423,8 +419,8 @@ public class WlOutModifyActivity extends BaseActivity {
             viewHolder.mSldwValue.setText(bean.getdW());
             viewHolder.shl = bean.getShl();
             viewHolder.pCZL = bean.getpCZL();
-            viewHolder.mZhlValue.setText(bean.getdWZL() + "");
-            viewHolder.mZhlValue.addTextChangedListener(new TextWatcher() {
+            viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+            viewHolder.mDwzlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -447,7 +443,6 @@ public class WlOutModifyActivity extends BaseActivity {
 
                 }
             });
-            viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
 
             return convertView;
         }
@@ -465,8 +460,6 @@ public class WlOutModifyActivity extends BaseActivity {
             TextView mYlpcValue;
             @BindView(R.id.sldwValue)
             TextView mSldwValue;
-            @BindView(R.id.zhlValue)
-            EditText mZhlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
             Float shl;

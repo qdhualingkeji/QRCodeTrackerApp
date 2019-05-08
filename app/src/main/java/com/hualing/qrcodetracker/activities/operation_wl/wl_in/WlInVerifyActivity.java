@@ -50,8 +50,8 @@ public class WlInVerifyActivity extends BaseActivity {
     TextView mJhdwValue;
     @BindView(R.id.shrqValue)
     TextView mShrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
+    @BindView(R.id.llrValue)
+    TextView mLlrValue;
 //    @BindView(R.id.jhRValue)
 //    TextView mJhRValue;
 //    @BindView(R.id.jhfzrValue)
@@ -150,7 +150,7 @@ public class WlInVerifyActivity extends BaseActivity {
                             mIndhValue.setText(dataResult.getInDh());
                             mJhdwValue.setText(dataResult.getFhDw());
                             mShrqValue.setText(dataResult.getShRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
+                            mLlrValue.setText(dataResult.getShR());
 //                            mJhRValue.setText(dataResult.getFhR());
 //                            mJhfzrValue.setText(dataResult.getJhFzr());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());

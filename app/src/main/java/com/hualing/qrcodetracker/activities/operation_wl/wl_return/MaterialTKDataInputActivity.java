@@ -68,7 +68,6 @@ public class MaterialTKDataInputActivity extends BaseActivity {
     private WLTKParam params;
     private WLTKGetShowDataParam getParam;
     private String mQrcodeId;
-    private float pczl;
     private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
@@ -182,7 +181,6 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                             mGgValue.setText(gg);
                             mSldwValue.setText(dataResult.getDw());
                             mRemainShlValue.setText(dataResult.getShl() + "");
-                            pczl = dataResult.getPczl();
                             mZhlValue.setText(dataResult.getDwzl() + "");
                         }
                     }

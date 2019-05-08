@@ -15,6 +15,7 @@ public class WlInVerifyResult {
 
     private String fhDw;
     private String shRq;
+    private String shR;
     private String inDh;
     private String fhR;
     private Integer zjyID;
@@ -43,6 +44,14 @@ public class WlInVerifyResult {
 
     public void setShRq(String shRq) {
         this.shRq = shRq;
+    }
+
+    public String getShR() {
+        return shR;
+    }
+
+    public void setShR(String shR) {
+        this.shR = shR;
     }
 
     public String getInDh() {

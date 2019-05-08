@@ -8,7 +8,7 @@ public class WlInQualityCheckResult {
     private String shRq;
     private String inDh;
     private String fhR;
-    private String shFzr;
+    private String zjy;
     private String jhFzr;
     private String remark;
 
@@ -44,12 +44,12 @@ public class WlInQualityCheckResult {
         this.fhR = fhR;
     }
 
-    public String getShFzr() {
-        return shFzr;
+    public String getZjy() {
+        return zjy;
     }
 
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
+    public void setZjy(String zjy) {
+        this.zjy = zjy;
     }
 
     public String getJhFzr() {

@@ -49,9 +49,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class WLInRKDInputActivity extends BaseActivity {
 
-    private static final int SELECT_PERSON = 111;
-    private static final int SELECT_PERSON1 = 112;
-    private static final int SELECT_ZJLD = 114;
+    private static final int SELECT_PERSON1 = 111;
+    private static final int SELECT_ZJLD = 112;
+    private static final int SELECT_PERSON = 113;
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.FhDwValue)
@@ -154,7 +154,7 @@ public class WLInRKDInputActivity extends BaseActivity {
         return true;
     }
 
-    @OnClick({R.id.ShRqValue, R.id.ShSjValue, R.id.commitBtn,R.id.selectPerson,R.id.selectPerson1,R.id.selectZjld})
+    @OnClick({R.id.ShRqValue, R.id.ShSjValue,R.id.selectPerson1,R.id.selectZjld,R.id.selectPerson, R.id.commitBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
@@ -199,10 +199,6 @@ public class WLInRKDInputActivity extends BaseActivity {
                         .show();
 
                 break;
-            case R.id.selectPerson:
-                bundle.putString("checkQX", "fzr");
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
-                break;
             case R.id.selectPerson1:
                 bundle.putString("checkQX", "zjy");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON1, bundle);
@@ -211,10 +207,12 @@ public class WLInRKDInputActivity extends BaseActivity {
                 bundle.putString("checkQX", "zjld");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_ZJLD, bundle);
                 break;
+            case R.id.selectPerson:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, SELECT_PERSON, bundle);
+                break;
             case R.id.commitBtn:
-
                 commitDataToWeb();
-
                 break;
         }
     }

@@ -53,8 +53,8 @@ public class WlInQualityCheckActivity extends BaseActivity {
     TextView mJhdwValue;
     @BindView(R.id.shrqValue)
     TextView mShrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
@@ -140,7 +140,7 @@ public class WlInQualityCheckActivity extends BaseActivity {
                             mIndhValue.setText(dataResult.getInDh());
                             mJhdwValue.setText(dataResult.getFhDw());
                             mShrqValue.setText(dataResult.getShRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
+                            mZjyValue.setText(dataResult.getZjy());
 //                            mJhRValue.setText(dataResult.getFhR());
 //                            mJhfzrValue.setText(dataResult.getJhFzr());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());

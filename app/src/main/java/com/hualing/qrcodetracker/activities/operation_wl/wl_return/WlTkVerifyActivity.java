@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,12 +52,20 @@ public class WlTkVerifyActivity extends BaseActivity {
     TextView mThdwValue;
     @BindView(R.id.thrqValue)
     TextView mThrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
+    @BindView(R.id.kgLayout)
+    LinearLayout mKgLayout;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.kgView)
+    View mKgView;
     @BindView(R.id.thRValue)
     TextView mThRValue;
-    @BindView(R.id.thfzrValue)
-    TextView mThfzrValue;
+    @BindView(R.id.bzLayout)
+    LinearLayout mBzLayout;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
+    @BindView(R.id.bzView)
+    View mBzView;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
@@ -119,16 +128,28 @@ public class WlTkVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isBZ)
+            if(isBZ) {
                 param.setCheckQXFlag(VerifyParam.BZ);
-            else if(isKG)
+                mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                mBzView.setVisibility(View.VISIBLE);
+            }
+            else if(isKG) {
                 param.setCheckQXFlag(VerifyParam.KG);
+                mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                mKgView.setVisibility(View.VISIBLE);
+            }
             else if(isFZR) {
                 int personFlag = getIntent().getIntExtra("personFlag", -1);
-                if(personFlag==NotificationParam.TLFZR)
+                if(personFlag==NotificationParam.TLFZR) {
                     param.setCheckQXFlag(VerifyParam.TLFZR);
-                else if(personFlag==NotificationParam.SLFZR)
+                    mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                    mBzView.setVisibility(View.VISIBLE);
+                }
+                else if(personFlag==NotificationParam.SLFZR) {
                     param.setCheckQXFlag(VerifyParam.SLFZR);
+                    mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                    mKgView.setVisibility(View.VISIBLE);
+                }
             }
             else if(isZJY)//这是质检员身份，物料退库单一般不用质检员质检，这里是之前做的，后来流程改了，先留着不删除
                 param.setCheckQXFlag(VerifyParam.ZJY);
@@ -170,9 +191,9 @@ public class WlTkVerifyActivity extends BaseActivity {
                             mBackdhValue.setText(dataResult.getBackDh());
                             mThdwValue.setText(dataResult.getThDw());
                             mThrqValue.setText(dataResult.getThRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
-                            mThfzrValue.setText(dataResult.getThFzr());
                             mThRValue.setText(dataResult.getThR());
+                            mBzValue.setText(dataResult.getBz());
+                            mKgValue.setText(dataResult.getKg());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark())?"无备注信息":dataResult.getRemark());
 
                             if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
