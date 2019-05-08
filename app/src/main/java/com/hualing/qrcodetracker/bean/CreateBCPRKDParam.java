@@ -14,23 +14,27 @@ public class CreateBCPRKDParam {
     private String InDh;
     private String JhDw;
     private String ShRq;
-    private String Shr;
-    private String ShFzr;
     private String Jhr;
-    private String JhFzr;
+    private String Shr;
     private Integer BzID;
+    private String Bz;
     private Integer BzStatus;
     private Integer FzrID;//半成品录入时的负责人
     private Integer FzrStatus;
     private Integer ZjyID;
+    private String Zjy;
     private Integer ZjyStatus;
     private Integer ZjldID;
+    private String Zjld;
     private Integer ZjldStatus;
     private Integer FlfzrID;//成品入库时的发料负责人
+    private String JhFzr;
     private Integer FlfzrStatus;
     private Integer KgID;
+    private String Kg;
     private Integer KgStatus;
     private Integer LlfzrID;//成品入库时的仓库负责人
+    private String ShFzr;
     private Integer LlfzrStatus;
     private String remark;
 
@@ -58,6 +62,46 @@ public class CreateBCPRKDParam {
         ShRq = shRq;
     }
 
+    public String getShr() {
+        return Shr;
+    }
+
+    public void setShr(String shr) {
+        Shr = shr;
+    }
+
+    public String getJhr() {
+        return Jhr;
+    }
+
+    public void setJhr(String jhr) {
+        Jhr = jhr;
+    }
+
+    public Integer getBzID() {
+        return BzID;
+    }
+
+    public void setBzID(Integer bzID) {
+        BzID = bzID;
+    }
+
+    public String getBz() {
+        return Bz;
+    }
+
+    public void setBz(String bz) {
+        Bz = bz;
+    }
+
+    public Integer getBzStatus() {
+        return BzStatus;
+    }
+
+    public void setBzStatus(Integer bzStatus) {
+        BzStatus = bzStatus;
+    }
+
     public Integer getFzrID() {
         return FzrID;
     }
@@ -82,6 +126,14 @@ public class CreateBCPRKDParam {
         ZjyID = zjyID;
     }
 
+    public String getZjy() {
+        return Zjy;
+    }
+
+    public void setZjy(String zjy) {
+        Zjy = zjy;
+    }
+
     public Integer getZjyStatus() {
         return ZjyStatus;
     }
@@ -90,68 +142,20 @@ public class CreateBCPRKDParam {
         ZjyStatus = zjyStatus;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getShr() {
-        return Shr;
-    }
-
-    public void setShr(String shr) {
-        Shr = shr;
-    }
-
-    public String getShFzr() {
-        return ShFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        ShFzr = shFzr;
-    }
-
-    public String getJhr() {
-        return Jhr;
-    }
-
-    public void setJhr(String jhr) {
-        Jhr = jhr;
-    }
-
-    public String getJhFzr() {
-        return JhFzr;
-    }
-
-    public void setJhFzr(String jhFzr) {
-        JhFzr = jhFzr;
-    }
-
-    public Integer getBzID() {
-        return BzID;
-    }
-
-    public void setBzID(Integer bzID) {
-        BzID = bzID;
-    }
-
-    public Integer getBzStatus() {
-        return BzStatus;
-    }
-
-    public void setBzStatus(Integer bzStatus) {
-        BzStatus = bzStatus;
-    }
-
     public Integer getZjldID() {
         return ZjldID;
     }
 
     public void setZjldID(Integer zjldID) {
         ZjldID = zjldID;
+    }
+
+    public String getZjld() {
+        return Zjld;
+    }
+
+    public void setZjld(String zjld) {
+        Zjld = zjld;
     }
 
     public Integer getZjldStatus() {
@@ -170,6 +174,14 @@ public class CreateBCPRKDParam {
         FlfzrID = flfzrID;
     }
 
+    public String getJhFzr() {
+        return JhFzr;
+    }
+
+    public void setJhFzr(String jhFzr) {
+        JhFzr = jhFzr;
+    }
+
     public Integer getFlfzrStatus() {
         return FlfzrStatus;
     }
@@ -184,6 +196,14 @@ public class CreateBCPRKDParam {
 
     public void setKgID(Integer kgID) {
         KgID = kgID;
+    }
+
+    public String getKg() {
+        return Kg;
+    }
+
+    public void setKg(String kg) {
+        Kg = kg;
     }
 
     public Integer getKgStatus() {
@@ -202,12 +222,28 @@ public class CreateBCPRKDParam {
         LlfzrID = llfzrID;
     }
 
+    public String getShFzr() {
+        return ShFzr;
+    }
+
+    public void setShFzr(String shFzr) {
+        ShFzr = shFzr;
+    }
+
     public Integer getLlfzrStatus() {
         return LlfzrStatus;
     }
 
     public void setLlfzrStatus(Integer llfzrStatus) {
         LlfzrStatus = llfzrStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
 }

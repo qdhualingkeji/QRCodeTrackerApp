@@ -210,6 +210,7 @@ public class CPRKDInputActivity extends BaseActivity {
         String zjldValue = mZjldValue.getText().toString();
         String kgValue = mKgValue.getText().toString();
         String shfzrValue = mShFzrValue.getText().toString();
+        String remarkValue = mRemarkValue.getText().toString();
         if (TextUtils.isEmpty(fhdwValue)
                 || "请选择发货部门".equals(fhdwValue)
                 || "请选择收货人".equals(shrValue)
@@ -222,23 +223,27 @@ public class CPRKDInputActivity extends BaseActivity {
             return false;
         }
         params.setJhDw(fhdwValue);
-        params.setShr(shrValue);
         params.setJhr(GlobalData.realName);
+        params.setShr(shrValue);
         params.setBzID(bzID);
+        params.setBz(bzValue);
         params.setBzStatus(0);
         params.setFlfzrID(flfzrID);
-        params.setFlfzrStatus(0);
         params.setJhFzr(jhfzrValue);
+        params.setFlfzrStatus(0);
         params.setZjyID(zjyID);
+        params.setZjy(zjyValue);
         params.setZjyStatus(0);
         params.setZjldID(zjldID);
+        params.setZjld(zjldValue);
         params.setZjldStatus(0);
         params.setKgID(kgID);
+        params.setKg(kgValue);
         params.setKgStatus(0);
         params.setLlfzrID(llfzrID);
-        params.setLlfzrStatus(0);
         params.setShFzr(shfzrValue);
-        params.setRemark(mRemarkValue.getText().toString());
+        params.setLlfzrStatus(0);
+        params.setRemark(remarkValue);
         return true;
     }
 

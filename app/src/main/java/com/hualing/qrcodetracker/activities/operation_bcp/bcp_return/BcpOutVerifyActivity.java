@@ -51,6 +51,8 @@ public class BcpOutVerifyActivity extends BaseActivity {
     TextView mOutdhValue;
     @BindView(R.id.lhrqValue)
     TextView mLhrqValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
     @BindView(R.id.jhfzrValue)
     TextView mJhfzrValue;
     @BindView(R.id.remarkValue)
@@ -140,6 +142,7 @@ public class BcpOutVerifyActivity extends BaseActivity {
                             CpOutVerifyResult dataResult = result.getResult();
                             mOutdhValue.setText(dataResult.getOutDh());
                             mLhrqValue.setText(dataResult.getLhRq());
+                            mKgValue.setText(dataResult.getKg());
                             mJhfzrValue.setText(dataResult.getFhFzr());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());
 

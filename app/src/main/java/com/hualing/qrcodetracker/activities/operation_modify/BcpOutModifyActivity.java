@@ -22,11 +22,14 @@ import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.CpOutShowBean;
 import com.hualing.qrcodetracker.bean.CpOutVerifyResult;
+import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -47,12 +50,15 @@ import static com.hualing.qrcodetracker.activities.main.NonHandleMsgActivity.RET
 
 public class BcpOutModifyActivity extends BaseActivity {
 
-    private static final int REQUEST_CODE_SELECT_FHFZR = 31;
+    private static final int REQUEST_CODE_SELECT_KG = 31;
+    private static final int REQUEST_CODE_SELECT_FHFZR = 32;
 
     @BindView(R.id.title)
     TitleBar mTitle;
     @BindView(R.id.outdhValue)
     TextView mOutdhValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
     @BindView(R.id.fhfzrValue)
     TextView mFhfzrValue;
     @BindView(R.id.remarkValue)
@@ -66,6 +72,8 @@ public class BcpOutModifyActivity extends BaseActivity {
     private String mDh;
     private VerifyParam param;
     private CpOutVerifyResult updatedParam;
+    private Integer kgID;
+    private Integer fzrID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +133,27 @@ public class BcpOutModifyActivity extends BaseActivity {
                             CpOutVerifyResult dataResult = result.getResult();
                             updatedParam = dataResult;
                             mOutdhValue.setText(dataResult.getOutDh());
+
+                            kgID = dataResult.getKgID();
+                            mKgValue.setText(dataResult.getKg());
+                            mKgValue.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                    updatedParam.setKg("" + s);
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                }
+                            });
+
+                            fzrID = dataResult.getFzrID();
                             mFhfzrValue.setText(dataResult.getFhFzr());
                             mFhfzrValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -142,6 +171,7 @@ public class BcpOutModifyActivity extends BaseActivity {
 
                                 }
                             });
+
                             mRemarkValue.setText(dataResult.getRemark());
                             mRemarkValue.addTextChangedListener(new TextWatcher() {
                                 @Override
@@ -180,11 +210,17 @@ public class BcpOutModifyActivity extends BaseActivity {
         return R.layout.activity_bcp_out_modify;
     }
 
-    @OnClick({R.id.confirmBtn,R.id.selectFHFZR})
+    @OnClick({R.id.selectKG,R.id.selectFHFZR,R.id.confirmBtn})
     public void onViewClicked(View view) {
+        Bundle bundle = new Bundle();
         switch (view.getId()){
+            case R.id.selectKG:
+                bundle.putString("checkQX", "kg");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_KG, bundle);
+                break;
             case R.id.selectFHFZR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FHFZR, null);
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FHFZR, bundle);
                 break;
             case R.id.confirmBtn:
                 toCommit();
@@ -195,14 +231,18 @@ public class BcpOutModifyActivity extends BaseActivity {
 
     private void toCommit() {
 
-        if ("请选择发货负责人".equals(mFhfzrValue.getText().toString())
+        if ("请选择仓库管理员".equals(mKgValue.getText().toString())
+                ||"请选择发货负责人".equals(mFhfzrValue.getText().toString())
                 ) {
             Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
             return;
         }
         updatedParam.setBeans(mData);
+        updatedParam.setKgID(kgID);
         updatedParam.setKgStatus(0);
+        updatedParam.setFzrID(fzrID);
         updatedParam.setFzrStatus(0);
+        updatedParam.setRemark(mRemarkValue.getText().toString());
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -224,12 +264,48 @@ public class BcpOutModifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                            setResult(RETURN_AND_REFRESH);
-                            AllActivitiesHolder.removeAct(BcpOutModifyActivity.this);
+                            sendNotification();
                             return;
                         }
                     }
                 });
+    }
+
+    private void sendNotification() {
+
+        final NotificationParam notificationParam = new NotificationParam();
+        //根据单号去查找审核人
+        String dh = SharedPreferenceUtil.getBCPCKDNumber();
+        notificationParam.setDh(dh);
+        notificationParam.setStyle(NotificationType.CP_CKD);
+        notificationParam.setPersonFlag(NotificationParam.KG);
+
+        final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
+        progressDialog.show();
+
+
+        Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
+            @Override
+            public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
+                ActionResult<ActionResult> nr = mainDao.sendNotification(notificationParam);
+                e.onNext(nr);
+            }
+        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                .subscribe(new Consumer<ActionResult<ActionResult>>() {
+                    @Override
+                    public void accept(ActionResult<ActionResult> result) throws Exception {
+                        progressDialog.dismiss();
+                        if (result.getCode() != 0) {
+                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(TheApplication.getContext(), "已通知仓库管理员审核", Toast.LENGTH_SHORT).show();
+                        }
+                        setResult(RETURN_AND_REFRESH);
+                        AllActivitiesHolder.removeAct(BcpOutModifyActivity.this);
+                    }
+                });
+
     }
 
     class MyAdapter extends BaseAdapter {
@@ -293,7 +369,12 @@ public class BcpOutModifyActivity extends BaseActivity {
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
+                case REQUEST_CODE_SELECT_KG:
+                    kgID=data.getIntExtra("personID",0);
+                    mKgValue.setText(data.getStringExtra("personName"));
+                    break;
                 case REQUEST_CODE_SELECT_FHFZR:
+                    fzrID=data.getIntExtra("personID",0);
                     mFhfzrValue.setText(data.getStringExtra("personName"));
                     break;
             }

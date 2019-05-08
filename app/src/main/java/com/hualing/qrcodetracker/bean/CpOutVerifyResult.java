@@ -15,13 +15,13 @@ public class CpOutVerifyResult {
 
     private String outDh;
     private String lhRq;
-    private String fhFzr;
-    private String remark;
     private Integer kgID;
+    private String kg;
     private Integer kgStatus;
     private Integer fzrID;
+    private String fhFzr;
     private Integer fzrStatus;
-
+    private String remark;
     private List<CpOutShowBean> beans;
 
     public String getOutDh() {
@@ -40,28 +40,20 @@ public class CpOutVerifyResult {
         this.lhRq = lhRq;
     }
 
-    public String getFhFzr() {
-        return fhFzr;
-    }
-
-    public void setFhFzr(String fhFzr) {
-        this.fhFzr = fhFzr;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     public Integer getKgID() {
         return kgID;
     }
 
     public void setKgID(Integer kgID) {
         this.kgID = kgID;
+    }
+
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
     }
 
     public Integer getKgStatus() {
@@ -80,12 +72,28 @@ public class CpOutVerifyResult {
         this.fzrID = fzrID;
     }
 
+    public String getFhFzr() {
+        return fhFzr;
+    }
+
+    public void setFhFzr(String fhFzr) {
+        this.fhFzr = fhFzr;
+    }
+
     public Integer getFzrStatus() {
         return fzrStatus;
     }
 
     public void setFzrStatus(Integer fzrStatus) {
         this.fzrStatus = fzrStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public List<CpOutShowBean> getBeans() {
