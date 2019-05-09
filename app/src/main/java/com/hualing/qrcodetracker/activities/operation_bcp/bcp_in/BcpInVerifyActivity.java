@@ -56,24 +56,24 @@ public class BcpInVerifyActivity extends BaseActivity {
     TextView mJhdwValue;
     @BindView(R.id.shrqValue)
     TextView mShrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
     @BindView(R.id.jhRValue)
     TextView mJhRValue;
-    @BindView(R.id.jhfzrValue)
-    TextView mJhfzrValue;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
-    @BindView(R.id.shfzrLayout)
-    LinearLayout mShfzrLayout;
-    @BindView(R.id.shfzrView)
-    View mShfzrView;
-    @BindView(R.id.jhfzrLayout)
-    LinearLayout mJhfzrLayout;
-    @BindView(R.id.jhfzrView)
-    View mJhfzrView;
+    @BindView(R.id.bzLayout)
+    LinearLayout mBzLayout;
+    @BindView(R.id.bzView)
+    View mBzView;
+    @BindView(R.id.kgLayout)
+    LinearLayout mKgLayout;
+    @BindView(R.id.kgView)
+    View mKgView;
 
     private MainDao mainDao;
     private MyAdapter mAdapter;
@@ -164,17 +164,21 @@ public class BcpInVerifyActivity extends BaseActivity {
             param.setDh(mDh);
             if("半成品录入单".equals(mName)){
                 mTitle.setTitle("半成品录入审核");
-                mShfzrLayout.setVisibility(LinearLayout.GONE);
-                mShfzrView.setVisibility(View.GONE);
-                mJhfzrLayout.setVisibility(LinearLayout.GONE);
-                mJhfzrView.setVisibility(View.GONE);
+                if(param.getCheckQXFlag()==VerifyParam.BCPBZ||param.getCheckQXFlag()==VerifyParam.FZR){
+                    mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                    mBzView.setVisibility(View.VISIBLE);
+                }
             }
             else{
                 mTitle.setTitle("成品入库审核");
-                mShfzrLayout.setVisibility(LinearLayout.VISIBLE);
-                mShfzrView.setVisibility(View.VISIBLE);
-                mJhfzrLayout.setVisibility(LinearLayout.VISIBLE);
-                mJhfzrView.setVisibility(View.VISIBLE);
+                if(param.getCheckQXFlag()==VerifyParam.CPBZ||param.getCheckQXFlag()==VerifyParam.FLFZR) {
+                    mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                    mBzView.setVisibility(View.VISIBLE);
+                }
+                else if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.LLFZR) {
+                    mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                    mKgView.setVisibility(View.VISIBLE);
+                }
             }
             param.setName(mName);
         }
@@ -210,9 +214,21 @@ public class BcpInVerifyActivity extends BaseActivity {
                             mIndhValue.setText(dataResult.getInDh());
                             mJhdwValue.setText(dataResult.getJhDw());
                             mShrqValue.setText(dataResult.getShRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
-                            mJhfzrValue.setText(dataResult.getJhFzr());
                             mJhRValue.setText(dataResult.getJhR());
+
+                            if("半成品录入单".equals(mName)){
+                                if(param.getCheckQXFlag()==VerifyParam.BCPBZ||param.getCheckQXFlag()==VerifyParam.FZR)
+                                    mBzValue.setText(dataResult.getBz());
+                            }
+                            else {
+                                if(param.getCheckQXFlag()==VerifyParam.CPBZ||param.getCheckQXFlag()==VerifyParam.FLFZR){
+                                    mBzValue.setText(dataResult.getBz());
+                                }
+                                else if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.LLFZR){
+                                    mKgValue.setText(dataResult.getKg());
+                                }
+                            }
+
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark())?"无备注信息":dataResult.getRemark());
 
                             if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {

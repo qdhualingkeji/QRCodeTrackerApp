@@ -66,24 +66,18 @@ public class BcpInQualityCheckActivity extends BaseActivity {
     TextView mJhdwValue;
     @BindView(R.id.shrqValue)
     TextView mShrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
     @BindView(R.id.jhRValue)
     TextView mJhRValue;
-    @BindView(R.id.jhfzrValue)
-    TextView mJhfzrValue;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
-    @BindView(R.id.shfzrLayout)
-    LinearLayout mShfzrLayout;
-    @BindView(R.id.shfzrView)
-    View mShfzrView;
-    @BindView(R.id.jhfzrLayout)
-    LinearLayout mJhfzrLayout;
-    @BindView(R.id.jhfzrView)
-    View mJhfzrView;
+    @BindView(R.id.zjyLayout)
+    LinearLayout mZjyLayout;
+    @BindView(R.id.zjyView)
+    View mZjyView;
 
     private MainDao mainDao;
     private BcpInQualityCheckActivity.MyAdapter mAdapter;
@@ -142,17 +136,9 @@ public class BcpInQualityCheckActivity extends BaseActivity {
             mName = intent.getStringExtra("name");
             if("半成品录入单".equals(mName)){
                 mTitle.setTitle("半成品录入质检");
-                mShfzrLayout.setVisibility(LinearLayout.GONE);
-                mShfzrView.setVisibility(View.GONE);
-                mJhfzrLayout.setVisibility(LinearLayout.GONE);
-                mJhfzrView.setVisibility(View.GONE);
             }
             else{
                 mTitle.setTitle("半成品入库质检");
-                mShfzrLayout.setVisibility(LinearLayout.VISIBLE);
-                mShfzrView.setVisibility(View.VISIBLE);
-                mJhfzrLayout.setVisibility(LinearLayout.VISIBLE);
-                mJhfzrView.setVisibility(View.VISIBLE);
             }
             param.setName(mName);
         }
@@ -188,8 +174,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                             mIndhValue.setText(dataResult.getInDh());
                             mJhdwValue.setText(dataResult.getJhDw());
                             mShrqValue.setText(dataResult.getShRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
-                            mJhfzrValue.setText(dataResult.getJhFzr());
+                            mZjyValue.setText(dataResult.getZjy());
                             mJhRValue.setText(dataResult.getJhR());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark())?"无备注信息":dataResult.getRemark());
 

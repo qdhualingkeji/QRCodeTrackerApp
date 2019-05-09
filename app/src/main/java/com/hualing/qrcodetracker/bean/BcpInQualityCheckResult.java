@@ -8,8 +8,7 @@ public class BcpInQualityCheckResult {
     private String jhDw;
     private String shRq;
     private String jhR;
-    private String jhFzr;
-    private String shFzr;
+    private String zjy;
     private String remark;
 
     private List<BcpInShowBean> beans;
@@ -46,20 +45,12 @@ public class BcpInQualityCheckResult {
         this.jhR = jhR;
     }
 
-    public String getJhFzr() {
-        return jhFzr;
+    public String getZjy() {
+        return zjy;
     }
 
-    public void setJhFzr(String jhFzr) {
-        this.jhFzr = jhFzr;
-    }
-
-    public String getShFzr() {
-        return shFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
+    public void setZjy(String zjy) {
+        this.zjy = zjy;
     }
 
     public String getRemark() {

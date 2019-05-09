@@ -50,13 +50,13 @@ public class BcpInShowBean implements Serializable {
     //检验状态
     private String jyzt;
     //质检状态
-    private int zjzt;
+    private Integer zjzt;
 
-    public int getZjzt() {
+    public Integer getZjzt() {
         return zjzt;
     }
 
-    public void setZjzt(int zjzt) {
+    public void setZjzt(Integer zjzt) {
         this.zjzt = zjzt;
     }
 

@@ -192,12 +192,16 @@ public class BCPInRKDInputActivity extends BaseActivity {
         params.setJhr(GlobalData.realName);
         params.setShr(shrValue);
         params.setBzID(bzID);
+        params.setBz(bzValue);
         params.setBzStatus(0);
         params.setFzrID(fzrID);
+        params.setFzr(fzrValue);
         params.setFzrStatus(0);
         params.setZjyID(zjyID);
+        params.setZjy(zjyValue);
         params.setZjyStatus(0);
         params.setZjldID(zjldID);
+        params.setZjld(zjldValue);
         params.setZjldStatus(0);
         params.setRemark(mRemarkValue.getText().toString());
         return true;

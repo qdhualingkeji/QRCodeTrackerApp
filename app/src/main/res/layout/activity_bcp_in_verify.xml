@@ -136,40 +136,6 @@
                     android:background="@color/divide_gray_color"/>
 
                 <LinearLayout
-                    android:id="@+id/shfzrLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:padding="20dp"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/propertyNameText"
-                        android:text="收货负责人："
-                        />
-
-                    <TextView
-                        android:id="@+id/shfzrValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:textColor="@color/divide_dark_gray_color"
-                        android:textSize="16sp"
-                        android:gravity="center_vertical"
-                        />
-
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/shfzrView"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dividerHeight"
-                    android:background="@color/divide_gray_color"/>
-
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -202,10 +168,11 @@
                     android:background="@color/divide_gray_color"/>
 
                 <LinearLayout
-                    android:id="@+id/jhfzrLayout"
+                    android:id="@+id/bzLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -214,11 +181,11 @@
                         android:padding="20dp"
                         android:textColor="@color/black"
                         android:textSize="@dimen/propertyNameText"
-                        android:text="交货负责人："
+                        android:text="班长："
                         />
 
                     <TextView
-                        android:id="@+id/jhfzrValue"
+                        android:id="@+id/bzValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
@@ -230,10 +197,47 @@
                 </LinearLayout>
 
                 <View
-                    android:id="@+id/jhfzrView"
+                    android:id="@+id/bzView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dividerHeight"
-                    android:background="@color/divide_gray_color"/>
+                    android:background="@color/divide_gray_color"
+                    android:visibility="gone"/>
+
+                <LinearLayout
+                    android:id="@+id/kgLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:padding="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/propertyNameText"
+                        android:text="仓库管理员："
+                        />
+
+                    <TextView
+                        android:id="@+id/kgValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/divide_dark_gray_color"
+                        android:textSize="16sp"
+                        android:gravity="center_vertical"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/kgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:background="@color/divide_gray_color"
+                    android:visibility="gone"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

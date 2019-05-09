@@ -20,6 +20,7 @@ public class CreateBCPRKDParam {
     private String Bz;
     private Integer BzStatus;
     private Integer FzrID;//半成品录入时的负责人
+    private String Fzr;
     private Integer FzrStatus;
     private Integer ZjyID;
     private String Zjy;
@@ -108,6 +109,14 @@ public class CreateBCPRKDParam {
 
     public void setFzrID(Integer fzrID) {
         FzrID = fzrID;
+    }
+
+    public String getFzr() {
+        return Fzr;
+    }
+
+    public void setFzr(String fzr) {
+        Fzr = fzr;
     }
 
     public Integer getFzrStatus() {
