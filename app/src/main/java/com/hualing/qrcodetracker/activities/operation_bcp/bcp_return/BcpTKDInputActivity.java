@@ -216,19 +216,23 @@ public class BcpTKDInputActivity extends BaseActivity {
         params.setShrr(shrValue);
         params.setThr(GlobalData.realName);
         params.setBzID(bzID);
+        params.setBz(bzValue);
         params.setBzStatus(0);
         params.setTlfzrID(tlfzrID);
-        params.setTlfzrStatus(0);
         params.setThFzr(thfzrValue);
+        params.setTlfzrStatus(0);
         params.setZjyID(zjyID);
+        params.setZjy(zjyValue);
         params.setZjyStatus(0);
         params.setZjldID(zjldID);
+        params.setZjld(zjldValue);
         params.setZjldStatus(0);
         params.setKgID(kgID);
+        params.setKg(kgValue);
         params.setKgStatus(0);
         params.setSlfzrID(slfzrID);
-        params.setSlfzrStatus(0);
         params.setShFzr(shfzrValue);
+        params.setSlfzrStatus(0);
         params.setRemark(remarkValue);
         return true;
     }

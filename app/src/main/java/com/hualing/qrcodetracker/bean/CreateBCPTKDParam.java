@@ -16,20 +16,24 @@ public class CreateBCPTKDParam {
     private String thDw ;
     private String thRq ;
     private String shrr ;
-    private String shFzr ;
     private String thr ;
-    private String thFzr ;
     private Integer bzID;
+    private String bz;
     private Integer bzStatus;
     private Integer tlfzrID;
+    private String thFzr ;
     private Integer tlfzrStatus;
     private Integer zjyID;
+    private String zjy;
     private Integer zjyStatus;
     private Integer zjldID;
+    private String zjld;
     private Integer zjldStatus;
     private Integer kgID;
+    private String kg;
     private Integer kgStatus;
     private Integer slfzrID;
+    private String shFzr;
     private Integer slfzrStatus;
 
     private String remark ;
@@ -66,14 +70,6 @@ public class CreateBCPTKDParam {
         this.shrr = shrr;
     }
 
-    public String getShFzr() {
-        return shFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
-    }
-
     public String getThr() {
         return thr;
     }
@@ -82,20 +78,20 @@ public class CreateBCPTKDParam {
         this.thr = thr;
     }
 
-    public String getThFzr() {
-        return thFzr;
-    }
-
-    public void setThFzr(String thFzr) {
-        this.thFzr = thFzr;
-    }
-
     public Integer getBzID() {
         return bzID;
     }
 
     public void setBzID(Integer bzID) {
         this.bzID = bzID;
+    }
+
+    public String getBz() {
+        return bz;
+    }
+
+    public void setBz(String bz) {
+        this.bz = bz;
     }
 
     public Integer getBzStatus() {
@@ -114,6 +110,14 @@ public class CreateBCPTKDParam {
         this.tlfzrID = tlfzrID;
     }
 
+    public String getThFzr() {
+        return thFzr;
+    }
+
+    public void setThFzr(String thFzr) {
+        this.thFzr = thFzr;
+    }
+
     public Integer getTlfzrStatus() {
         return tlfzrStatus;
     }
@@ -128,6 +132,14 @@ public class CreateBCPTKDParam {
 
     public void setZjyID(Integer zjyID) {
         this.zjyID = zjyID;
+    }
+
+    public String getZjy() {
+        return zjy;
+    }
+
+    public void setZjy(String zjy) {
+        this.zjy = zjy;
     }
 
     public Integer getZjyStatus() {
@@ -146,6 +158,14 @@ public class CreateBCPTKDParam {
         this.zjldID = zjldID;
     }
 
+    public String getZjld() {
+        return zjld;
+    }
+
+    public void setZjld(String zjld) {
+        this.zjld = zjld;
+    }
+
     public Integer getZjldStatus() {
         return zjldStatus;
     }
@@ -162,6 +182,14 @@ public class CreateBCPTKDParam {
         this.kgID = kgID;
     }
 
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
+    }
+
     public Integer getKgStatus() {
         return kgStatus;
     }
@@ -176,6 +204,14 @@ public class CreateBCPTKDParam {
 
     public void setSlfzrID(Integer slfzrID) {
         this.slfzrID = slfzrID;
+    }
+
+    public String getShFzr() {
+        return shFzr;
+    }
+
+    public void setShFzr(String shFzr) {
+        this.shFzr = shFzr;
     }
 
     public Integer getSlfzrStatus() {
