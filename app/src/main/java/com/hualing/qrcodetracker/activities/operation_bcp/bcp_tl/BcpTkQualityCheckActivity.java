@@ -51,12 +51,10 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
     TextView mThdwValue;
     @BindView(R.id.thrqValue)
     TextView mThrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
     @BindView(R.id.thRValue)
     TextView mThRValue;
-    @BindView(R.id.thfzrValue)
-    TextView mThfzrValue;
+    @BindView(R.id.zjyValue)
+    TextView mZjyValue;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
@@ -147,8 +145,7 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
                             mBackdhValue.setText(dataResult.getBackDh());
                             mThdwValue.setText(dataResult.getThDw());
                             mThrqValue.setText(dataResult.getThRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
-                            mThfzrValue.setText(dataResult.getThFzr());
+                            mZjyValue.setText(dataResult.getZjy());
                             mThRValue.setText(dataResult.getThR());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark())?"无备注信息":dataResult.getRemark());
 

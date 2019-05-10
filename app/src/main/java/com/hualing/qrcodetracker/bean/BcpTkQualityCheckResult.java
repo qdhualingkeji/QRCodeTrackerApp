@@ -8,8 +8,7 @@ public class BcpTkQualityCheckResult {
     private String thDw;
     private String thRq;
     private String thR;
-    private String thFzr;
-    private String shFzr;
+    private String zjy;
     private String remark;
 
     private List<BcpTkShowBean> beans;
@@ -46,20 +45,12 @@ public class BcpTkQualityCheckResult {
         this.thR = thR;
     }
 
-    public String getThFzr() {
-        return thFzr;
+    public String getZjy() {
+        return zjy;
     }
 
-    public void setThFzr(String thFzr) {
-        this.thFzr = thFzr;
-    }
-
-    public String getShFzr() {
-        return shFzr;
-    }
-
-    public void setShFzr(String shFzr) {
-        this.shFzr = shFzr;
+    public void setZjy(String zjy) {
+        this.zjy = zjy;
     }
 
     public String getRemark() {

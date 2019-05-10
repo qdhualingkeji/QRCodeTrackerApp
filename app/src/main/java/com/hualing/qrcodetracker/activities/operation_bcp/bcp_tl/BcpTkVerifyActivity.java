@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,12 +52,20 @@ public class BcpTkVerifyActivity extends BaseActivity {
     TextView mThdwValue;
     @BindView(R.id.thrqValue)
     TextView mThrqValue;
-    @BindView(R.id.shfzrValue)
-    TextView mShfzrValue;
     @BindView(R.id.thRValue)
     TextView mThRValue;
-    @BindView(R.id.thfzrValue)
-    TextView mThfzrValue;
+    @BindView(R.id.bzLayout)
+    LinearLayout mBzLayout;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
+    @BindView(R.id.bzView)
+    View mBzView;
+    @BindView(R.id.kgLayout)
+    LinearLayout mKgLayout;
+    @BindView(R.id.kgValue)
+    TextView mKgValue;
+    @BindView(R.id.kgView)
+    View mKgView;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
@@ -119,16 +128,28 @@ public class BcpTkVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isKG)
+            if(isKG) {
                 param.setCheckQXFlag(VerifyParam.KG);
-            else if(isBZ)
+                mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                mKgView.setVisibility(View.VISIBLE);
+            }
+            else if(isBZ) {
                 param.setCheckQXFlag(VerifyParam.BZ);
+                mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                mBzView.setVisibility(View.VISIBLE);
+            }
             else if(isFZR) {
                 int personFlag = getIntent().getIntExtra("personFlag", -1);
-                if(personFlag== NotificationParam.TLFZR)
+                if(personFlag== NotificationParam.TLFZR) {
                     param.setCheckQXFlag(VerifyParam.TLFZR);
-                else if(personFlag==NotificationParam.SLFZR)
+                    mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                    mBzView.setVisibility(View.VISIBLE);
+                }
+                else if(personFlag==NotificationParam.SLFZR) {
                     param.setCheckQXFlag(VerifyParam.SLFZR);
+                    mKgLayout.setVisibility(LinearLayout.VISIBLE);
+                    mKgView.setVisibility(View.VISIBLE);
+                }
             }
             else if(isZJY)
                 param.setCheckQXFlag(VerifyParam.ZJY);
@@ -170,9 +191,11 @@ public class BcpTkVerifyActivity extends BaseActivity {
                             mBackdhValue.setText(dataResult.getBackDh());
                             mThdwValue.setText(dataResult.getThDw());
                             mThrqValue.setText(dataResult.getThRq());
-                            mShfzrValue.setText(dataResult.getShFzr());
-                            mThfzrValue.setText(dataResult.getThFzr());
                             mThRValue.setText(dataResult.getThR());
+                            if(param.getCheckQXFlag()==VerifyParam.BZ||param.getCheckQXFlag()==VerifyParam.TLFZR)
+                                mBzValue.setText(dataResult.getBz());
+                            else if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.SLFZR)
+                                mKgValue.setText(dataResult.getKg());
                             mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark())?"无备注信息":dataResult.getRemark());
 
                             if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
