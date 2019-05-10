@@ -429,7 +429,8 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                 String bcpInShowJAStr = param.getBcpInShowJAStr();
                 JSONArray bcpInShowJA = JSONArray.parseArray(bcpInShowJAStr);
                 JSONObject bcpInShowJO = (JSONObject) bcpInShowJA.get(position);
-                viewHolder.mZjztSpinner.setSelection(1-bcpInShowJO.getInteger("zjzt"));
+                Integer zjzt = bcpInShowJO.getInteger("zjzt");
+                viewHolder.mZjztSpinner.setSelection(1-(zjzt==null?0:zjzt));
                 viewHolder.mZjztSpinner.setEnabled(false);
             }
 

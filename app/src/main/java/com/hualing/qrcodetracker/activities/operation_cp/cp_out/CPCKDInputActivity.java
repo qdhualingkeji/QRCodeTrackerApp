@@ -134,10 +134,11 @@ public class CPCKDInputActivity extends BaseActivity {
         params.setJhDw(jhdwValue);
         params.setFhr(GlobalData.realName);
         params.setKgID(kgID);
+        params.setKg(kgValue);
         params.setKgStatus(0);
         params.setFzrID(fzrID);
-        params.setFzrStatus(0);
         params.setFhFzr(fzrValue);
+        params.setFzrStatus(0);
         params.setRemark(mRemarkValue.getText().toString());
         return true;
     }

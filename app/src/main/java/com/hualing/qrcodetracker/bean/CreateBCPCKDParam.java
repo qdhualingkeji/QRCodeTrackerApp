@@ -15,10 +15,11 @@ public class CreateBCPCKDParam {
     private String lhRq;
     private String fhr;
     private Integer kgID;
+    private String kg;
     private Integer kgStatus;
     private Integer fzrID;
-    private Integer fzrStatus;
     private String fhFzr;
+    private Integer fzrStatus;
     private String remark;
     private String jhDw;
 
@@ -54,6 +55,14 @@ public class CreateBCPCKDParam {
         this.kgID = kgID;
     }
 
+    public String getKg() {
+        return kg;
+    }
+
+    public void setKg(String kg) {
+        this.kg = kg;
+    }
+
     public Integer getKgStatus() {
         return kgStatus;
     }
@@ -70,20 +79,20 @@ public class CreateBCPCKDParam {
         this.fzrID = fzrID;
     }
 
-    public Integer getFzrStatus() {
-        return fzrStatus;
-    }
-
-    public void setFzrStatus(Integer fzrStatus) {
-        this.fzrStatus = fzrStatus;
-    }
-
     public String getFhFzr() {
         return fhFzr;
     }
 
     public void setFhFzr(String fhFzr) {
         this.fhFzr = fhFzr;
+    }
+
+    public Integer getFzrStatus() {
+        return fzrStatus;
+    }
+
+    public void setFzrStatus(Integer fzrStatus) {
+        this.fzrStatus = fzrStatus;
     }
 
     public String getRemark() {
