@@ -25,6 +25,7 @@ import com.hualing.qrcodetracker.bean.BigCpOutParam;
 import com.hualing.qrcodetracker.bean.BigCpResult;
 import com.hualing.qrcodetracker.bean.BigCpTrackResult;
 import com.hualing.qrcodetracker.bean.CJResult;
+import com.hualing.qrcodetracker.bean.CheckExistParam;
 import com.hualing.qrcodetracker.bean.CpOutVerifyResult;
 import com.hualing.qrcodetracker.bean.CreateBCPCKDParam;
 import com.hualing.qrcodetracker.bean.CreateBCPRKDParam;
@@ -32,6 +33,7 @@ import com.hualing.qrcodetracker.bean.CreateBCPTKDParam;
 import com.hualing.qrcodetracker.bean.CreateWLCKDParam;
 import com.hualing.qrcodetracker.bean.CreateWLRKDParam;
 import com.hualing.qrcodetracker.bean.CreateWLTKDParam;
+import com.hualing.qrcodetracker.bean.DataBean;
 import com.hualing.qrcodetracker.bean.DataInputParams;
 import com.hualing.qrcodetracker.bean.DataResult;
 import com.hualing.qrcodetracker.bean.GXResult;
@@ -88,6 +90,8 @@ import com.hualing.qrcodetracker.bean.WlTrackParam;
 import com.hualing.qrcodetracker.bean.WlTrackResult;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.model.User;
+
+import org.json.JSONObject;
 
 /**
  * @author 马鹏昊
@@ -360,4 +364,7 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.DELETE_USER)
     ActionResult<ActionResult> deleteUser(PersonParam personParam);
+
+    @ActionRequest(func = GlobalData.Service.CHECK_EXIST_BY_QRCODEID)
+    ActionResult<ActionResult> checkExistByQrCodeId(CheckExistParam param);
 }
