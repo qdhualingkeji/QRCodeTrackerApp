@@ -237,7 +237,8 @@ public class SmallCpDataTrackActivity extends BaseActivity {
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finalIntent.putExtra("qrCodeId", bean.getQrCodeId());
+                    //finalIntent.putExtra("qrCodeId", bean.getQrCodeId());
+                    SharedPreferenceUtil.setQrCodeId(bean.getQrCodeId());
                     startActivity(finalIntent);
                 }
             });

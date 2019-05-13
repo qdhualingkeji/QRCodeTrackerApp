@@ -201,6 +201,7 @@
         android:background="@color/divide_gray_color"/>
 
     <LinearLayout
+        android:id="@+id/slLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -228,6 +229,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/slView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dividerHeight"
         android:background="@color/divide_gray_color"/>

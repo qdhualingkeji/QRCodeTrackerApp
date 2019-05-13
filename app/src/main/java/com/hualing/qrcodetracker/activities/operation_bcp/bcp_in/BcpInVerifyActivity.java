@@ -436,14 +436,16 @@ public class BcpInVerifyActivity extends BaseActivity {
             viewHolder.mGgValue.setText(gg);
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mSldwValue.setText(bean.getdW());
-            if (bean.getShl()==-1) {
-                viewHolder.mSlValue.setVisibility(View.GONE);
+            final String qRCodeID = bean.getqRCodeID();
+            if ("4".equals(qRCodeID.substring(8,9))) {
+                viewHolder.mSlLayout.setVisibility(View.GONE);
+                viewHolder.mSlView.setVisibility(View.GONE);
             }else {
-                viewHolder.mSlValue.setVisibility(View.VISIBLE);
+                viewHolder.mSlLayout.setVisibility(View.VISIBLE);
+                viewHolder.mSlView.setVisibility(View.VISIBLE);
                 viewHolder.mSlValue.setText(bean.getShl() + "");
             }
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
-            final String qRCodeID = bean.getqRCodeID();
             if("4".equals(qRCodeID.substring(8,9))){
                 viewHolder.goSmallBtn.setVisibility(View.VISIBLE);
                 viewHolder.goSmallBtn.setOnClickListener(new View.OnClickListener() {
@@ -451,7 +453,7 @@ public class BcpInVerifyActivity extends BaseActivity {
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
                         bundle.putString("qRCodeID",qRCodeID);
-                        IntentUtil.openActivityForResult(BcpInVerifyActivity.this, SmallCPInQualityCheckActivity.class, -1, bundle);
+                        IntentUtil.openActivityForResult(BcpInVerifyActivity.this, SmallCPInVerifyActivity.class, -1, bundle);
                     }
                 });
 
@@ -478,8 +480,12 @@ public class BcpInVerifyActivity extends BaseActivity {
             TextView mYlpcValue;
             @BindView(R.id.sldwValue)
             TextView mSldwValue;
+            @BindView(R.id.slLayout)
+            LinearLayout mSlLayout;
             @BindView(R.id.slValue)
             TextView mSlValue;
+            @BindView(R.id.slView)
+            View mSlView;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
             @BindView(R.id.goSmallBtn)

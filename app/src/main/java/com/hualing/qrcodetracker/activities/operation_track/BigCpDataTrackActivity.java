@@ -164,7 +164,8 @@ public class BigCpDataTrackActivity extends BaseActivity {
     @OnClick(R.id.lookSmallBtn)
     public void onViewClicked() {
         Intent intent = new Intent(this, SmallCpDataTrackActivity.class);
-        intent.putExtra("qrCodeId", mSmallQrcodeId);
+        //intent.putExtra("qrCodeId", mSmallQrcodeId);
+        SharedPreferenceUtil.setQrCodeId(mSmallQrcodeId);
         startActivity(intent);
     }
 

@@ -78,8 +78,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     TextView mCjValue;
     @BindView(R.id.gxValue)
     TextView mGxValue;
-    //@BindView(R.id.sxylValue)
-    //TextView mSxylValue;
+    @BindView(R.id.sxylValue)
+    TextView mSxylValue;
 //    @BindView(R.id.zjyValue)
 //    EditText mZjyValue;
 //    @BindView(R.id.jyztValue)
@@ -101,7 +101,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private static final int SELECT_PRODUCT_NAME = 12;
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
-    //private static final int SELECT_SXYL = 40;
+    private static final int SELECT_SXYL = 40;
     private static final int SELECT_BIG_CP = 41;
 
     private MainDao mainDao;
@@ -115,7 +115,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private int mSelectedCheJianId;
     private String mCJHasGongXuId;
     private int mSelectedGxId = -1;
-    //private String mSXYLQrcodeStr = null;
+    private String mSXYLQrcodeStr = null;
     private int mSelectedLeiBieId = -1;
     private String mSelectedBigCpQrCodeId;
 
@@ -192,7 +192,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     }
 
     //@OnClick({R.id.selectBCPCode, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn, R.id.selectLB})
-    @OnClick({R.id.selectLB, R.id.selectName, R.id.selectCJ, R.id.selectGX, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectLB, R.id.selectName, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.selectBigCp, R.id.scTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
 
         Bundle bundle = new Bundle();
@@ -223,7 +223,6 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 bundle.putString("cjGXIds", mCJHasGongXuId);
                 IntentUtil.openActivityForResult(this, SelectGXActivity.class, SELECT_GONG_XU, bundle);
                 break;
-                /*
             case R.id.selectSXYL:
                 if ("请选择工序".equals(mGxValue.getText().toString())) {
                     Toast.makeText(this, "请先选择工序", Toast.LENGTH_SHORT).show();
@@ -233,7 +232,6 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 bundle2.putInt("selectedGxId", mSelectedGxId);
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
-                */
             case R.id.scTimeValue:
                 customDatePicker.show(mNowTime);
                 break;
@@ -291,7 +289,6 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                     mGxValue.setText(s1);
                     mSelectedGxId = data.getIntExtra("gxId", -1);
                     break;
-                    /*
                 case SELECT_SXYL:
                     String allYlStr = data.getStringExtra("allYlStr");
                     if (TextUtils.isEmpty(allYlStr))
@@ -301,7 +298,6 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                     mSXYLQrcodeStr = data.getStringExtra("allYlQrCode");
                     Log.d("Test", "get: " + mSXYLQrcodeStr);
                     break;
-                    */
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -405,7 +401,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         String dwValue = mDwValue.getText().toString();
 //        String zjyValue = mZjyValue.getText().toString();
 //        String jyztValue = mJyztValue.getText().toString();
-        //String sxylValue = mSxylValue.getText().toString();
+        String sxylValue = mSxylValue.getText().toString();
         String scTimeValue = mScTimeValue.getText().toString();
         if (//TextUtils.isEmpty(tsValue)
                 //|| "请选择成品编码".equals(cpCodeValue)
@@ -420,7 +416,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 || TextUtils.isEmpty(dwValue)
 //                || TextUtils.isEmpty(zjyValue)
 //                || TextUtils.isEmpty(jyztValue)
-                //|| "请选择所需原料".equals(sxylValue)
+                || "请选择所需原料".equals(sxylValue)
                 || "请选择生产时间".equals(scTimeValue)
                 ) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
@@ -454,12 +450,11 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         //params.setIndh(SharedPreferenceUtil.getBCPRKDNumber());
 
         //填充所需原料数据
-        //addSXYLData();
+        addSXYLData();
 
         return true;
     }
 
-    /*
     private void addSXYLData() {
         if (TextUtils.isEmpty(mSXYLQrcodeStr))
             return;
@@ -499,6 +494,5 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         }
 
     }
-    */
 
 }

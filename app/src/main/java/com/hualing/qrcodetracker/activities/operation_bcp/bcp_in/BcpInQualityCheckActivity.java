@@ -138,7 +138,7 @@ public class BcpInQualityCheckActivity extends BaseActivity {
                 mTitle.setTitle("半成品录入质检");
             }
             else{
-                mTitle.setTitle("半成品入库质检");
+                mTitle.setTitle("成品入库质检");
             }
             param.setName(mName);
         }
