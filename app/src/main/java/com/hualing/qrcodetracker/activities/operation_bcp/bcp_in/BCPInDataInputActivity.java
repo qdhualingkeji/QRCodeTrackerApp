@@ -56,7 +56,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     private static final int SELECT_HL_SORT = 10;
     private static final int SELECT_CHE_JIAN = 20;
     private static final int SELECT_GONG_XU = 30;
-    //private static final int SELECT_SXYL = 40;
+    private static final int SELECT_SXYL = 40;
     private static final int SELECT_LEI_BIE = 11;
     private static final int SELECT_PRODUCT_NAME = 12;
     @BindView(R.id.title)
@@ -83,8 +83,8 @@ public class BCPInDataInputActivity extends BaseActivity {
     TextView mCjValue;
     @BindView(R.id.gxValue)
     TextView mGxValue;
-    //@BindView(R.id.sxylValue)
-    //TextView mSxylValue;
+    @BindView(R.id.sxylValue)
+    TextView mSxylValue;
 //    @BindView(R.id.zjyValue)
 //    EditText mZjyValue;
     @BindView(R.id.scTimeValue)
@@ -110,7 +110,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     private int mSelectedCheJianId;
     private String mCJHasGongXuId;
     private int mSelectedGxId = -1;
-    //private String mSXYLQrcodeStr = null;
+    private String mSXYLQrcodeStr = null;
 
     private CustomDatePicker customDatePicker1, customDatePicker2, customDatePicker3;
     private String mNowTime;
@@ -276,12 +276,11 @@ public class BCPInDataInputActivity extends BaseActivity {
         params.setBz(1);
 
         //填充所需原料数据
-        //addSXYLData();
+        addSXYLData();
 
         return true;
     }
 
-    /*
     private void addSXYLData() {
         if (TextUtils.isEmpty(mSXYLQrcodeStr))
             return;
@@ -321,8 +320,6 @@ public class BCPInDataInputActivity extends BaseActivity {
         }
 
     }
-    */
-
 
     private void commitDataToWeb() {
 
@@ -429,7 +426,6 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mGxValue.setText(s1);
                     mSelectedGxId = data.getIntExtra("gxId", -1);
                     break;
-                    /*
                 case SELECT_SXYL:
                     String allYlStr = data.getStringExtra("allYlStr");
                     if (TextUtils.isEmpty(allYlStr))
@@ -439,7 +435,6 @@ public class BCPInDataInputActivity extends BaseActivity {
                     mSXYLQrcodeStr = data.getStringExtra("allYlQrCode");
                     Log.d("Test", "get: "+mSXYLQrcodeStr);
                     break;
-                    */
                 case SELECT_LEI_BIE:
                     String lbName = data.getStringExtra("sortName");
                     mLbValue.setText(lbName);
@@ -461,7 +456,7 @@ public class BCPInDataInputActivity extends BaseActivity {
     }
 
     //@OnClick({R.id.selectBCPCode,R.id.selectLB, R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
-    @OnClick({R.id.selectLB,R.id.selectName ,R.id.selectCJ, R.id.selectGX, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
+    @OnClick({R.id.selectLB,R.id.selectName ,R.id.selectCJ, R.id.selectGX, R.id.selectSXYL, R.id.scTimeValue, R.id.ksTimeValue, R.id.wcTimeValue, R.id.commitBtn})
     public void onViewClicked(View view) {
 
         Bundle bundle = new Bundle();
@@ -489,7 +484,6 @@ public class BCPInDataInputActivity extends BaseActivity {
                 bundle.putString("cjGXIds", mCJHasGongXuId);
                 IntentUtil.openActivityForResult(this, SelectGXActivity.class, SELECT_GONG_XU, bundle);
                 break;
-                /*
             case R.id.selectSXYL:
                 if ("请选择工序".equals(mGxValue.getText().toString())) {
                     Toast.makeText(this, "请先选择工序", Toast.LENGTH_SHORT).show();
@@ -499,7 +493,6 @@ public class BCPInDataInputActivity extends BaseActivity {
                 bundle2.putInt("selectedGxId", mSelectedGxId);
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
-                */
             case R.id.scTimeValue:
                 customDatePicker1.show(mNowTime);
                 break;

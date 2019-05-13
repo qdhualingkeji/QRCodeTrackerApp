@@ -386,6 +386,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         final CheckExistParam param = new CheckExistParam();
         param.setQrCodeId(qrCodeId);
         param.setCurrentFunctionType(GlobalData.currentFunctionType);
+        Log.e("currentFunctionType===",""+GlobalData.currentFunctionType);
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
