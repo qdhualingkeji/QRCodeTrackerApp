@@ -50,7 +50,11 @@ public class SelectIdentityActivity extends BaseActivity {
         map.put("id", "bz");
         list.add(map);
         map = new HashMap<String, String>();
-        map.put("name", "负责人");
+        map.put("name", "库管");
+        map.put("id", "kg");
+        list.add(map);
+        map = new HashMap<String, String>();
+        map.put("name", "(车间/仓库)负责人");
         map.put("id", "fzr");
         list.add(map);
         mAdapter=new SimpleAdapter(this,list,R.layout.item_shen_fen,new String[]{"name","id"},new int[]{R.id.nameValue,R.id.idValue});

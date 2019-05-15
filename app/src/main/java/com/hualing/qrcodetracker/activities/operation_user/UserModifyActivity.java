@@ -126,7 +126,11 @@ public class UserModifyActivity extends BaseActivity {
                                 sfId="bz";
                                 sfName = "班长";
                             }
-                            else if(checkQXGroup.contains("zjy")) {
+                            else if(checkQXGroup.contains("kg")) {
+                                sfId="kg";
+                                sfName = "库管";
+                            }
+                            else if(checkQXGroup.contains("fzr")) {
                                 sfId="fzr";
                                 sfName = "负责人";
                             }
@@ -257,9 +261,12 @@ public class UserModifyActivity extends BaseActivity {
                     mQxValue.setText("");
                     break;
                 case SELECT_QUAN_XIAN:
-                    checkQXGroup = data.getStringExtra("allQxId");
+                    String allQxId = data.getStringExtra("allQxId");
+                    if(!TextUtils.isEmpty(allQxId))
+                        checkQXGroup = allQxId;
                     String allQxName = data.getStringExtra("allQxNameStr");
-                    mQxValue.setText(allQxName);
+                    if(!TextUtils.isEmpty(allQxName))
+                        mQxValue.setText(allQxName);
                     break;
             }
         }

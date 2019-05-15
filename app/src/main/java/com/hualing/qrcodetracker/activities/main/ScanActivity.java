@@ -243,28 +243,49 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         Intent intent = null;
         switch (GlobalData.currentFunctionType) {
             case FunctionType.MATERIAL_IN:
-            case FunctionType.MATERIAL_OUT:
-            case FunctionType.MATERIAL_RETURN:
             case FunctionType.HALF_PRODUCT_IN:
-            case FunctionType.HALF_PRODUCT_RETURN:
             case FunctionType.PRODUCT_IN:
             case FunctionType.PRODUCT_OUT:
                 checkExistByQrCodeId(result);//这几个条件下是对原料进行入库、出库、退库等操作，必须验证下是否已入出退库，已经操作过的直接显示信息就行
               break;
+            case FunctionType.MATERIAL_OUT:
+                if(isFirst)
+                    intent = new Intent(this, WLCKDInputActivity.class);
+                else
+                    intent = new Intent(this, MaterialOutDataInputActivity.class);
+                break;
+            case FunctionType.MATERIAL_RETURN:
+                if(isFirst)
+                    intent = new Intent(this, WLTKDInputActivity.class);
+                else
+                    intent = new Intent(this, MaterialTKDataInputActivity.class);
+                break;
             case FunctionType.MATERIAL_THROW:
                 intent = new Intent(this, MaterialThrowActivity.class);
-                SharedPreferenceUtil.setQrCodeId(result);
-                startActivity(intent);
-                AllActivitiesHolder.removeAct(this);
+                break;
+            case FunctionType.HALF_PRODUCT_RETURN:
+                if(isFirst)
+                    intent = new Intent(this, BcpTKDInputActivity.class);
+                else
+                    intent = new Intent(this, BcpTKDataInputActivity.class);
                 break;
             case FunctionType.HALF_PRODUCT_THROW:
                 intent = new Intent(this, BcpThrowActivity.class);
-                SharedPreferenceUtil.setQrCodeId(result);
-                startActivity(intent);
-                AllActivitiesHolder.removeAct(this);
                 break;
             case FunctionType.DATA_TRACK:
                 dataTrackByQrCodeId(result);
+                break;
+        }
+
+        switch (GlobalData.currentFunctionType) {
+            case FunctionType.MATERIAL_OUT:
+            case FunctionType.MATERIAL_RETURN:
+            case FunctionType.MATERIAL_THROW:
+            case FunctionType.HALF_PRODUCT_RETURN:
+            case FunctionType.HALF_PRODUCT_THROW:
+                SharedPreferenceUtil.setQrCodeId(result);
+                startActivity(intent);
+                AllActivitiesHolder.removeAct(this);
                 break;
         }
 
@@ -444,29 +465,11 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                         else
                             intent = new Intent(ScanActivity.this, MaterialInDataInputActivity.class);
                         break;
-                    case FunctionType.MATERIAL_OUT:
-                        if(isFirst)
-                            intent = new Intent(ScanActivity.this, WLCKDInputActivity.class);
-                        else
-                            intent = new Intent(ScanActivity.this, MaterialOutDataInputActivity.class);
-                        break;
-                    case FunctionType.MATERIAL_RETURN:
-                        if(isFirst)
-                            intent = new Intent(ScanActivity.this, WLTKDInputActivity.class);
-                        else
-                            intent = new Intent(ScanActivity.this, MaterialTKDataInputActivity.class);
-                        break;
                     case FunctionType.HALF_PRODUCT_IN:
                         if(isFirst)
                             intent = new Intent(ScanActivity.this, BCPInRKDInputActivity.class);
                         else
                             intent = new Intent(ScanActivity.this, BCPInDataInputActivity.class);
-                        break;
-                    case FunctionType.HALF_PRODUCT_RETURN:
-                        if(isFirst)
-                            intent = new Intent(ScanActivity.this, BcpTKDInputActivity.class);
-                        else
-                            intent = new Intent(ScanActivity.this, BcpTKDataInputActivity.class);
                         break;
                     case FunctionType.PRODUCT_IN:
                         switch (GlobalData.currentCPInType) {

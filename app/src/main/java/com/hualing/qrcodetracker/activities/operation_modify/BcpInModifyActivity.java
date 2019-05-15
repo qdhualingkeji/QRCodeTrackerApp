@@ -788,7 +788,7 @@ public class BcpInModifyActivity extends BaseActivity {
 
             final String qRCodeID = bean.getqRCodeID();
             if("4".equals(qRCodeID.substring(8,9))){
-                viewHolder.goSmallBtn.setVisibility(View.VISIBLE);
+                viewHolder.goSmallLayout.setVisibility(View.VISIBLE);
                 viewHolder.goSmallBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -797,6 +797,9 @@ public class BcpInModifyActivity extends BaseActivity {
                         IntentUtil.openActivityForResult(BcpInModifyActivity.this, SmallCPInVerifyActivity.class, -1, bundle);
                     }
                 });
+            }
+            else{
+                viewHolder.goSmallLayout.setVisibility(View.GONE);
             }
 
             return convertView;
@@ -826,8 +829,12 @@ public class BcpInModifyActivity extends BaseActivity {
             EditText mDwzlValue;
             @BindView(R.id.dwValue)
             EditText mDwValue;
+            @BindView(R.id.goSmallLayout)
+            LinearLayout goSmallLayout;
             @BindView(R.id.goSmallBtn)
             Button goSmallBtn;
+            @BindView(R.id.goSmallView)
+            View goSmallView;
             int mSelectedLeiBieId = -1;
 
             ViewHolder(View view) {

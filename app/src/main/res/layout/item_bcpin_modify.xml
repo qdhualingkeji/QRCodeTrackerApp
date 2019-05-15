@@ -263,13 +263,15 @@
                 android:background="@color/divide_gray_color"/>
 
             <LinearLayout
+                android:id="@+id/goSmallLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/goSmallBtn"
@@ -282,9 +284,11 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/goSmallView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dividerHeight"
-                android:background="@color/divide_gray_color"/>
+                android:background="@color/divide_gray_color"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

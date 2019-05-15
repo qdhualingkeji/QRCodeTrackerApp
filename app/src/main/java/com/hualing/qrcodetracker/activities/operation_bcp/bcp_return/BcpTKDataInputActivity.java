@@ -213,15 +213,17 @@ public class BcpTKDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
-        String value = mTkShlValue.getText().toString();
         float dwZhl = Float.parseFloat(mDwZhlValue.getText().toString());
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
-        float tkZhl = Float.parseFloat(mTkZhlValue.getText().toString());
-        float tkShL = Float.parseFloat(value);
-        if (TextUtils.isEmpty(value)) {
+        String tkZhlValue = mTkZhlValue.getText().toString();
+        String tkShLValue = mTkShlValue.getText().toString();
+        if (TextUtils.isEmpty(tkZhlValue)
+                ||TextUtils.isEmpty(tkShLValue)) {
             Toast.makeText(this, "录入信息不完整", Toast.LENGTH_SHORT).show();
             return false;
         }
+        float tkZhl = Float.parseFloat(tkZhlValue);
+        float tkShL = Float.parseFloat(tkShLValue);
         if(tkZhl==0){
             Toast.makeText(this, "退库重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
