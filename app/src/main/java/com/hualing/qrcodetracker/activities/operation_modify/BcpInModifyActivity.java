@@ -97,6 +97,10 @@ public class BcpInModifyActivity extends BaseActivity {
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
+    @BindView(R.id.shrLayout)
+    LinearLayout mShrLayout;
+    @BindView(R.id.shrView)
+    View mShrView;
     @BindView(R.id.fzrLayout)
     LinearLayout mFzrLayout;
     @BindView(R.id.fzrView)
@@ -163,6 +167,8 @@ public class BcpInModifyActivity extends BaseActivity {
 
         if("半成品录入单".equals(mName)){
             mTitle.setTitle("半成品录入数据修改");
+            mShrLayout.setVisibility(LinearLayout.VISIBLE);
+            mShrView.setVisibility(LinearLayout.VISIBLE);
             mFzrLayout.setVisibility(LinearLayout.VISIBLE);
             mFzrView.setVisibility(View.VISIBLE);
             mJhfzrLayout.setVisibility(LinearLayout.GONE);
@@ -174,6 +180,8 @@ public class BcpInModifyActivity extends BaseActivity {
         }
         else{
             mTitle.setTitle("成品入库数据修改");
+            mShrLayout.setVisibility(LinearLayout.GONE);
+            mShrView.setVisibility(LinearLayout.GONE);
             mFzrLayout.setVisibility(LinearLayout.GONE);
             mFzrView.setVisibility(View.GONE);
             mJhfzrLayout.setVisibility(LinearLayout.VISIBLE);
@@ -233,24 +241,6 @@ public class BcpInModifyActivity extends BaseActivity {
                                 }
                             });
 
-                            mShrValue.setText(dataResult.getShR());
-                            mShrValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setShR("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
                             bzID=dataResult.getBzID();
                             mBzValue.setText(dataResult.getBz());
                             mBzValue.addTextChangedListener(new TextWatcher() {
@@ -271,6 +261,24 @@ public class BcpInModifyActivity extends BaseActivity {
                             });
 
                             if("半成品录入单".equals(mName)) {
+                                mShrValue.setText(dataResult.getShR());
+                                mShrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedParam.setShR("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
                                 fzrID = dataResult.getFzrID();
                                 mFzrValue.setText(dataResult.getFzr());
                                 mFzrValue.addTextChangedListener(new TextWatcher() {
@@ -460,7 +468,6 @@ public class BcpInModifyActivity extends BaseActivity {
                         || mData.get(i).getSortID() < 0
                         || mData.get(i).getdWZL() == -1
                         //|| mData.get(i).getShl() == -1
-                        || "请选择收货人".equals(mShrValue.getText().toString())
                         || "请选择班长".equals(mBzValue.getText().toString())
                         || "请选择入库负责人".equals(mJhFhrValue.getText().toString())
                         || "请选择质检员".equals(mZjyValue.getText().toString())
@@ -519,8 +526,8 @@ public class BcpInModifyActivity extends BaseActivity {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getBCPRKDNumber();
-        notificationParam.setDh(dh);
+        //String dh = SharedPreferenceUtil.getBCPRKDNumber();
+        notificationParam.setDh(mDh);
         notificationParam.setStyle(NotificationType.BCP_RKD);
         notificationParam.setPersonFlag(NotificationParam.BZ);
 

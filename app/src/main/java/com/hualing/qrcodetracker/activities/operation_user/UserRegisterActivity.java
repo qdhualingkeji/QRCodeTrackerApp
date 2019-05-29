@@ -18,12 +18,16 @@ import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActi
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.LoginParams;
+import com.hualing.qrcodetracker.bean.LoginResult;
 import com.hualing.qrcodetracker.bean.PersonBean;
 import com.hualing.qrcodetracker.bean.PersonParam;
 import com.hualing.qrcodetracker.dao.MainDao;
+import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
+import com.hualing.qrcodetracker.util.JPushUtil;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
 import butterknife.BindView;

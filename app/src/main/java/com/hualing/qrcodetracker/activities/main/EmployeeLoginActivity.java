@@ -3,6 +3,7 @@ package com.hualing.qrcodetracker.activities.main;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -153,7 +154,14 @@ public class EmployeeLoginActivity extends BaseActivity {
 
                             //设置JPush别名
                             //JPushUtil.setAlias(EmployeeLoginActivity.this,GlobalData.realName);
-                            JPushUtil.setAlias(EmployeeLoginActivity.this,GlobalData.userId);
+                            //Log.e("userId===",""+GlobalData.userId);
+                            if(GlobalData.checkQXGroup.contains("bz")
+                                ||GlobalData.checkQXGroup.contains("fzr")
+                                ||GlobalData.checkQXGroup.contains("zjy")
+                                ||GlobalData.checkQXGroup.contains("zjld")
+                                ||GlobalData.checkQXGroup.contains("kg")) {
+                                JPushUtil.setAlias(EmployeeLoginActivity.this, GlobalData.userId);
+                            }
 
                             //之后获取和用户相关的服务就不需要额外传userId了
                             YoniClient.getInstance().setUser(GlobalData.userId);
