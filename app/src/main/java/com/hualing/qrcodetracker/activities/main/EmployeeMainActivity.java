@@ -668,6 +668,7 @@ public class EmployeeMainActivity extends BaseActivity {
             wlIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /*
                     for (Module2 module2 : mCanUseList) {
                         if ("物料入库".equals(module2.getMname())) {
                             GlobalData.currentFunctionType = FunctionType.MATERIAL_IN;
@@ -675,7 +676,14 @@ public class EmployeeMainActivity extends BaseActivity {
                             return;
                         }
                     }
-                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
+                    */
+                    if(GlobalData.checkQXGroup.contains("kg")){
+                        GlobalData.currentFunctionType = FunctionType.MATERIAL_IN;
+                        toWhere(GlobalData.currentFunctionType);
+                        return;
+                    }
+                    else
+                        Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
             CardView wlOut = view1.findViewById(R.id.wlOut);

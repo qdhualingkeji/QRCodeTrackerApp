@@ -500,10 +500,10 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                         }
                         break;
                 }
+                SharedPreferenceUtil.setQrCodeId(qrCodeId);
+                startActivity(intent);
+                AllActivitiesHolder.removeAct(ScanActivity.this);
             }
-            SharedPreferenceUtil.setQrCodeId(qrCodeId);
-            startActivity(intent);
-            AllActivitiesHolder.removeAct(ScanActivity.this);
             super.handleMessage(msg);
         }
     };

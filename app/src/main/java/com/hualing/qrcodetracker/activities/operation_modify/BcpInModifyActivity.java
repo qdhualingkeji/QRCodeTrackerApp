@@ -528,7 +528,10 @@ public class BcpInModifyActivity extends BaseActivity {
         //根据单号去查找审核人
         //String dh = SharedPreferenceUtil.getBCPRKDNumber();
         notificationParam.setDh(mDh);
-        notificationParam.setStyle(NotificationType.BCP_RKD);
+        if("半成品录入单".equals(mName))
+            notificationParam.setStyle(NotificationType.BCP_RKD);
+        else
+            notificationParam.setStyle(NotificationType.CP_RKD);
         notificationParam.setPersonFlag(NotificationParam.BZ);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");

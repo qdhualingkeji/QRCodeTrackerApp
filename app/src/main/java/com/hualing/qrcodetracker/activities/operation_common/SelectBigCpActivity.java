@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -185,9 +186,11 @@ public class SelectBigCpActivity extends BaseActivity {
                     } else {
                         List<BigCpBean> filteredList = new ArrayList<>();
                         for (BigCpBean bean : mData) {
-                            //这里根据需求，添加匹配规则
-                            if (bean.getcPName().contains(charString)) {
-                                filteredList.add(bean);
+                            if(!TextUtils.isEmpty(bean.getcPName())) {
+                                //这里根据需求，添加匹配规则
+                                if (bean.getcPName().contains(charString)) {
+                                    filteredList.add(bean);
+                                }
                             }
                         }
 
