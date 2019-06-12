@@ -14,7 +14,6 @@ public class CreateWLTKDParam {
     private String backDh;
     private String thDw ;
     private String thRq ;
-    private String shrr ;
     private String thr ;
     private Integer bzID;
     private String bz ;
@@ -52,14 +51,6 @@ public class CreateWLTKDParam {
 
     public void setThRq(String thRq) {
         this.thRq = thRq;
-    }
-
-    public String getShrr() {
-        return shrr;
-    }
-
-    public void setShrr(String shrr) {
-        this.shrr = shrr;
     }
 
     public String getThr() {

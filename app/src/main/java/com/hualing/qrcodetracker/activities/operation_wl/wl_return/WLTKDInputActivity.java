@@ -39,7 +39,6 @@ public class WLTKDInputActivity extends BaseActivity {
 
 
     private static final int REQUEST_CODE_SELECT_DEPARTMENT = 30;
-    private static final int REQUEST_CODE_SELECT_SLR = 31;
     private static final int REQUEST_CODE_SELECT_BZ = 32;
     private static final int REQUEST_CODE_SELECT_TLFZR = 33;
     private static final int REQUEST_CODE_SELECT_KG = 34;
@@ -49,8 +48,6 @@ public class WLTKDInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.thdwValue)
     TextView mThdwValue;
-    @BindView(R.id.shrValue)
-    TextView mShrValue;
     @BindView(R.id.bzValue)
     TextView mBzValue;
     @BindView(R.id.thfzrValue)
@@ -169,14 +166,12 @@ public class WLTKDInputActivity extends BaseActivity {
 
     private boolean checkDataIfCompleted() {
         String thdwValue = mThdwValue.getText().toString();
-        String shrValue = mShrValue.getText().toString();
         String bzValue = mBzValue.getText().toString();
         String thfzrValue = mThfzrValue.getText().toString();
         String kgValue = mKgValue.getText().toString();
         String shfzrValue = mShfzrValue.getText().toString();
         String remarkValue = mRemarkValue.getText().toString();
         if ("请选择退料部门".equals(thdwValue)
-                || "请选择收料人".equals(shrValue)
                 || "请选择班长".equals(bzValue)
                 || "请选择退料负责人".equals(thfzrValue)
                 || "请选择库管".equals(kgValue)
@@ -186,7 +181,6 @@ public class WLTKDInputActivity extends BaseActivity {
             return false;
         }
         params.setThDw(thdwValue);
-        params.setShrr(shrValue);
         params.setThr(GlobalData.realName);
         params.setBzID(bzID);
         params.setBz(bzValue);
@@ -211,9 +205,6 @@ public class WLTKDInputActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_DEPARTMENT:
                     mThdwValue.setText(data.getStringExtra("groupName"));
                     break;
-                case REQUEST_CODE_SELECT_SLR:
-                    mShrValue.setText(data.getStringExtra("personName"));
-                    break;
                 case REQUEST_CODE_SELECT_BZ:
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
@@ -235,15 +226,12 @@ public class WLTKDInputActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick({R.id.selectLLBM, R.id.selectSLR, R.id.selectBz, R.id.selectTLFZR, R.id.selectKG, R.id.selectSLFZR, R.id.commitBtn})
+    @OnClick({R.id.selectLLBM, R.id.selectBz, R.id.selectTLFZR, R.id.selectKG, R.id.selectSLFZR, R.id.commitBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectLLBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, REQUEST_CODE_SELECT_DEPARTMENT, null);
-                break;
-            case R.id.selectSLR:
-                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SLR, null);
                 break;
             case R.id.selectBz:
                 bundle.putString("checkQX", "bz");

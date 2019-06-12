@@ -4,6 +4,7 @@ import com.hualing.qrcodetracker.aframework.yoni.ActionRequest;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.bean.BCPCKDResult;
 import com.hualing.qrcodetracker.bean.BCPINParam;
+import com.hualing.qrcodetracker.bean.BCPOutShowDataResult;
 import com.hualing.qrcodetracker.bean.BCPRKDResult;
 import com.hualing.qrcodetracker.bean.BCPTKDResult;
 import com.hualing.qrcodetracker.bean.BCPTKGetShowDataParam;
@@ -12,6 +13,8 @@ import com.hualing.qrcodetracker.bean.BCPTKShowDataResult;
 import com.hualing.qrcodetracker.bean.BcpInQualityCheckResult;
 import com.hualing.qrcodetracker.bean.BcpInShowBean;
 import com.hualing.qrcodetracker.bean.BcpInVerifyResult;
+import com.hualing.qrcodetracker.bean.BcpOutGetShowDataParam;
+import com.hualing.qrcodetracker.bean.BcpOutParam;
 import com.hualing.qrcodetracker.bean.BcpThrowGetShowDataParam;
 import com.hualing.qrcodetracker.bean.BcpThrowParam;
 import com.hualing.qrcodetracker.bean.BcpThrowShowDataResult;
@@ -149,8 +152,14 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.GET_WL_OUT_SHOW_DATA)
     ActionResult<WLOutShowDataResult> getWlOutShowData(WLOutGetShowDataParam getParam);
 
+    @ActionRequest(func = GlobalData.Service.GET_BCP_OUT_SHOW_DATA)
+    ActionResult<BCPOutShowDataResult> getBcpOutShowData(BcpOutGetShowDataParam getParam);
+
     @ActionRequest(func = GlobalData.Service.WL_OUT)
     ActionResult<ActionResult> wlOut(WLOutParam params);
+
+    @ActionRequest(func = GlobalData.Service.BCP_OUT)
+    ActionResult<ActionResult> bcpOut(BcpOutParam params);
 
     @ActionRequest(func = GlobalData.Service.GET_DEPARTMENT_DATA)
     ActionResult<UserGroupResult> getDepartmentData();

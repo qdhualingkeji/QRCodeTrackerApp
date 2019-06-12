@@ -619,6 +619,10 @@ public class EmployeeMainActivity extends BaseActivity {
                 IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
                 //IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanHWActivity.class,-1,bundle);
                 break;
+            case FunctionType.HALF_PRODUCT_OUT:
+                bundle.putBoolean("isFirst", true);
+                IntentUtil.openActivityForResult(EmployeeMainActivity.this, ScanActivity.class,-1,bundle);
+                break;
             case FunctionType.PRODUCT_IN:
                 //                IntentUtil.openActivity(EmployeeMainActivity.this, CPInMainActivity.class);
                 //IntentUtil.openActivity(EmployeeMainActivity.this, CPRKDInputActivity.class);
@@ -780,14 +784,14 @@ public class EmployeeMainActivity extends BaseActivity {
                     Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
                 }
             });
-            CardView track = view2.findViewById(R.id.track);
-            track.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-            track.setOnClickListener(new View.OnClickListener() {
+            CardView bcpOut = view2.findViewById(R.id.bcpOut);
+            bcpOut.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+            bcpOut.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     for (Module2 module2 : mCanUseList) {
-                        if ("追溯".equals(module2.getMname())) {
-                            GlobalData.currentFunctionType = FunctionType.DATA_TRACK;
+                        if ("半成品出库".equals(module2.getMname())) {
+                            GlobalData.currentFunctionType = FunctionType.HALF_PRODUCT_OUT;
                             toWhere(GlobalData.currentFunctionType);
                             return;
                         }
@@ -865,6 +869,22 @@ public class EmployeeMainActivity extends BaseActivity {
                     for (Module2 module2 : mCanUseList) {
                         if ("成品出库".equals(module2.getMname())) {
                             GlobalData.currentFunctionType = FunctionType.PRODUCT_OUT;
+                            toWhere(GlobalData.currentFunctionType);
+                            return;
+                        }
+                    }
+                    Toast.makeText(EmployeeMainActivity.this, "当前用户无此权限", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            CardView track = view3.findViewById(R.id.track);
+            track.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+            track.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (Module2 module2 : mCanUseList) {
+                        if ("追溯".equals(module2.getMname())) {
+                            GlobalData.currentFunctionType = FunctionType.DATA_TRACK;
                             toWhere(GlobalData.currentFunctionType);
                             return;
                         }

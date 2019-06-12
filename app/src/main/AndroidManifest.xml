@@ -218,7 +218,9 @@
         <activity android:name=".activities.operation_user.UserSearchActivity" />
         <activity android:name=".activities.operation_user.UserInfoActivity" />
         <activity android:name=".activities.operation_user.UserModifyActivity" />
-        <activity android:name=".activities.operation_user.SelectIdentityActivity"></activity>
+        <activity android:name=".activities.operation_user.SelectIdentityActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_out.BCPCKDInputActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_out.BCPOutDataInputActivity"></activity>
     </application>
 
 </manifest>

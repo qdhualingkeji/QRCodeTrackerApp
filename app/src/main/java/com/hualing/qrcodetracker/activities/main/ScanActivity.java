@@ -20,6 +20,7 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BCPInDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BCPInRKDInputActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_out.BCPCKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpTKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpTKDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpThrowActivity;
@@ -269,6 +270,12 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                 else
                     intent = new Intent(this, BcpTKDataInputActivity.class);
                 break;
+            case FunctionType.HALF_PRODUCT_OUT:
+                if(isFirst)
+                    intent = new Intent(this, BCPCKDInputActivity.class);
+                else
+                    intent = new Intent(this, BcpTKDataInputActivity.class);
+                    break;
             case FunctionType.HALF_PRODUCT_THROW:
                 intent = new Intent(this, BcpThrowActivity.class);
                 break;
@@ -282,6 +289,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
             case FunctionType.MATERIAL_RETURN:
             case FunctionType.MATERIAL_THROW:
             case FunctionType.HALF_PRODUCT_RETURN:
+            case FunctionType.HALF_PRODUCT_OUT:
             case FunctionType.HALF_PRODUCT_THROW:
                 SharedPreferenceUtil.setQrCodeId(result);
                 startActivity(intent);
@@ -407,7 +415,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
         final CheckExistParam param = new CheckExistParam();
         param.setQrCodeId(qrCodeId);
         param.setCurrentFunctionType(GlobalData.currentFunctionType);
-        Log.e("currentFunctionType===",""+GlobalData.currentFunctionType);
+        //Log.e("currentFunctionType===",""+GlobalData.currentFunctionType);
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
@@ -423,7 +431,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                         if (result.getCode() != 0) {
                             Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                             exist[0] = true;
-                            Log.e("11111111","11111111");
+                            //Log.e("11111111","11111111");
                         } else {
                             exist[0] = false;
                         }

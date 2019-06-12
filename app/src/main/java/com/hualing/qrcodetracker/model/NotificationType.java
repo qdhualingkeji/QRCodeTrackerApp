@@ -18,5 +18,6 @@ public class NotificationType {
     public static final int BCP_TKD = 5;
     public static final int CP_RKD = 6;
     public static final int CP_CKD = 7;
+    public static final int BCP_CKD = 8;
 
 }

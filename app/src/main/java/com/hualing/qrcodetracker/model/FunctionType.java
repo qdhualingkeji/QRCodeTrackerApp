@@ -56,4 +56,7 @@ public class FunctionType {
     //用户管理线
     public static final int USER_MANAGER = 43;
 
+    //半成品出库业务线
+    public static final int HALF_PRODUCT_OUT = 44;
+
 }
