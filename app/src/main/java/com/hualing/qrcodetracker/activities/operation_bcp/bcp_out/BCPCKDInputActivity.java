@@ -124,7 +124,7 @@ public class BCPCKDInputActivity extends BaseActivity {
                             //保存物料出库单号
                             //                            SharedPreferenceUtil.setWlRKDNumber(mInDhValue.getText().toString());
                             BCPCKDResult ckdResult = result.getResult();
-                            SharedPreferenceUtil.setWlCKDNumber(String.valueOf(ckdResult.getOutDh()));
+                            SharedPreferenceUtil.setBCPCKDNumber(String.valueOf(ckdResult.getOutDh()));
                             //IntentUtil.openActivity(WLCKDInputActivity.this, ScanActivity.class);
                             IntentUtil.openActivity(BCPCKDInputActivity.this, BCPOutDataInputActivity.class);
                             AllActivitiesHolder.removeAct(BCPCKDInputActivity.this);
