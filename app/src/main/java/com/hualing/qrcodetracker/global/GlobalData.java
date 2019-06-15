@@ -333,7 +333,9 @@ public class GlobalData {
         public static final String AGREE_BCP_IN = "agreeBcpIn";
         public static final String REFUSE_BCP_IN = "refuseBcpIn";
         public static final String REFUSE_BCP_OUT = "refuseBcpOut";
+        public static final String REFUSE_CP_OUT = "refuseCpOut";
         public static final String AGREE_BCP_OUT = "agreeBcpOut";
+        public static final String AGREE_CP_OUT = "agreeCpOut";
         public static final String AGREE_BCP_TK = "agreeBcpTk";
         public static final String REFUSE_BCP_TK = "refuseBcpTk";
         public static final String GET_QUALITY_DATA = "getQualityData";

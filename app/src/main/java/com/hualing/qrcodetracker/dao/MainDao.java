@@ -318,8 +318,14 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.REFUSE_BCP_OUT)
     ActionResult<ActionResult> toRefuseBcpOut(VerifyParam param);
 
+    @ActionRequest(func = GlobalData.Service.REFUSE_CP_OUT)
+    ActionResult<ActionResult> toRefuseCpOut(VerifyParam param);
+
     @ActionRequest(func = GlobalData.Service.AGREE_BCP_OUT)
     ActionResult<ActionResult> toAgreeBcpOut(VerifyParam param);
+
+    @ActionRequest(func = GlobalData.Service.AGREE_CP_OUT)
+    ActionResult<ActionResult> toAgreeCpOut(VerifyParam param);
 
     @ActionRequest(func = GlobalData.Service.AGREE_BCP_TK)
     ActionResult<ActionResult> toAgreeBcpTk(VerifyParam param);

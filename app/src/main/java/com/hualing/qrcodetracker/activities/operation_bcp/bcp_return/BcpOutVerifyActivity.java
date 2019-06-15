@@ -253,7 +253,13 @@ public class BcpOutVerifyActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
-                ActionResult<ActionResult> nr = mainDao.toRefuseBcpOut(param);
+                ActionResult<ActionResult> nr = null;
+                if("半成品出库单".equals(mName)) {
+                    nr = mainDao.toRefuseBcpOut(param);
+                }
+                else{
+                    nr = mainDao.toRefuseCpOut(param);
+                }
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
@@ -282,7 +288,13 @@ public class BcpOutVerifyActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
-                ActionResult<ActionResult> nr = mainDao.toAgreeBcpOut(param);
+                ActionResult<ActionResult> nr = null;
+                if("半成品出库单".equals(mName)) {
+                    nr = mainDao.toAgreeBcpOut(param);
+                }
+                else{
+                    nr = mainDao.toAgreeCpOut(param);
+                }
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
@@ -296,12 +308,23 @@ public class BcpOutVerifyActivity extends BaseActivity {
                             return;
                         } else {
                             Toast.makeText(TheApplication.getContext(), "审核已通过", Toast.LENGTH_SHORT).show();
-                            if(param.getCheckQXFlag() == VerifyParam.KG) {
-                                sendNotification(param.getCheckQXFlag());
+                            if("半成品出库单".equals(mName)){
+                                if(param.getCheckQXFlag() == VerifyParam.KG||param.getCheckQXFlag() == VerifyParam.FLFZR||param.getCheckQXFlag() == VerifyParam.BCPBZ) {
+                                    sendNotification(param.getCheckQXFlag());
+                                }
+                                else {
+                                    setResult(RETURN_AND_REFRESH);
+                                    AllActivitiesHolder.removeAct(BcpOutVerifyActivity.this);
+                                }
                             }
-                            else {
-                                setResult(RETURN_AND_REFRESH);
-                                AllActivitiesHolder.removeAct(BcpOutVerifyActivity.this);
+                            else{
+                                if(param.getCheckQXFlag() == VerifyParam.KG) {
+                                    sendNotification(param.getCheckQXFlag());
+                                }
+                                else {
+                                    setResult(RETURN_AND_REFRESH);
+                                    AllActivitiesHolder.removeAct(BcpOutVerifyActivity.this);
+                                }
                             }
                             return;
                         }
@@ -317,10 +340,23 @@ public class BcpOutVerifyActivity extends BaseActivity {
         notificationParam.setDh(param.getDh());
         int personFlag=-1;
         String notifText=null;
-        notificationParam.setStyle(NotificationType.CP_CKD);
-        if (checkQXFlag == VerifyParam.KG) {
-            personFlag = NotificationParam.FZR;
-            notifText = "已通知交货负责人审核";
+        if("半成品出库单".equals(mName)) {
+            notificationParam.setStyle(NotificationType.BCP_CKD);
+            if (checkQXFlag == VerifyParam.KG) {
+                personFlag = NotificationParam.FLFZR;
+                notifText = "已通知发料负责人审核";
+            }
+            else if (checkQXFlag == VerifyParam.FLFZR) {
+                personFlag = NotificationParam.BZ;
+                notifText = "已通知班长审核";
+            }
+        }
+        else{
+            notificationParam.setStyle(NotificationType.CP_CKD);
+            if (checkQXFlag == VerifyParam.KG) {
+                personFlag = NotificationParam.FZR;
+                notifText = "已通知交货负责人审核";
+            }
         }
         notificationParam.setPersonFlag(personFlag);
 
