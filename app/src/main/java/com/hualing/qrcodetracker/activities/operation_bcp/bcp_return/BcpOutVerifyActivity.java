@@ -1,6 +1,7 @@
 package com.hualing.qrcodetracker.activities.operation_bcp.bcp_return;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,8 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInVerifyActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.BcpOutShowBean;
+import com.hualing.qrcodetracker.bean.BcpOutVerifyResult;
 import com.hualing.qrcodetracker.bean.CpOutShowBean;
 import com.hualing.qrcodetracker.bean.CpOutVerifyResult;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -53,17 +57,27 @@ public class BcpOutVerifyActivity extends BaseActivity {
     TextView mLhrqValue;
     @BindView(R.id.kgValue)
     TextView mKgValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
     @BindView(R.id.remarkValue)
     TextView mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
+    @BindView(R.id.bzLayout)
+    LinearLayout mBzLayout;
+    @BindView(R.id.bzView)
+    View mBzView;
 
     private MainDao mainDao;
-    private MyAdapter mAdapter;
-    private List<CpOutShowBean> mData;
+    private MyBcpAdapter mBcpAdapter;
+    private List<BcpOutShowBean> mBcpData;
+    private MyCpAdapter mCpAdapter;
+    private List<CpOutShowBean> mCpData;
     private String mDh;
+    private String mName;
     private VerifyParam param;
     private boolean isKG=false;
+    private boolean isBZ=false;
     private boolean isFZR=false;
 
     @Override
@@ -88,7 +102,8 @@ public class BcpOutVerifyActivity extends BaseActivity {
         });
 
         param = new VerifyParam();
-        if (getIntent() != null) {
+        Intent intent = getIntent();
+        if (intent != null) {
             Log.e("checkQX==========",""+GlobalData.checkQXGroup);
             String[] checkQXArr = GlobalData.checkQXGroup.split(",");
             for (String checkQX:checkQXArr) {
@@ -101,18 +116,44 @@ public class BcpOutVerifyActivity extends BaseActivity {
                     break;
                 }
             }
-            if(isKG)
+            mName = intent.getStringExtra("name");
+            if(isKG) {
                 param.setCheckQXFlag(VerifyParam.KG);
-            else if(isFZR)
+            }
+            else if(isBZ) {
+                if("半成品出库单".equals(mName)){
+                    param.setCheckQXFlag(VerifyParam.BCPBZ);
+                }
+                else{
+                    param.setCheckQXFlag(VerifyParam.CPBZ);
+                }
+            }
+            else if(isFZR) {
                 param.setCheckQXFlag(VerifyParam.FZR);
+            }
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
+            if("半成品出库单".equals(mName)){
+                mTitle.setTitle("半成品出库审核");
+                if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.BCPBZ||param.getCheckQXFlag()==VerifyParam.FZR){
+                    mBzLayout.setVisibility(LinearLayout.VISIBLE);
+                    mBzView.setVisibility(View.VISIBLE);
+                }
+            }
+            param.setName(mName);
         }
 
-        mData = new ArrayList<>();
-        mAdapter = new MyAdapter();
-        mChildDataList.setAdapter(mAdapter);
+        if("半成品出库单".equals(mName)) {
+            mBcpData = new ArrayList<>();
+            mBcpAdapter = new MyBcpAdapter();
+            mChildDataList.setAdapter(mBcpAdapter);
+        }
+        else{
+            mCpData = new ArrayList<>();
+            mCpAdapter = new MyCpAdapter();
+            mChildDataList.setAdapter(mCpAdapter);
+        }
         mChildDataList.setFocusable(false);
     }
 
@@ -121,36 +162,71 @@ public class BcpOutVerifyActivity extends BaseActivity {
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
-        Observable.create(new ObservableOnSubscribe<ActionResult<CpOutVerifyResult>>() {
-            @Override
-            public void subscribe(ObservableEmitter<ActionResult<CpOutVerifyResult>> e) throws Exception {
-                ActionResult<CpOutVerifyResult> nr = mainDao.getCpOutVerifyData(param);
-                e.onNext(nr);
-            }
-        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
-                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                .subscribe(new Consumer<ActionResult<CpOutVerifyResult>>() {
-                    @Override
-                    public void accept(ActionResult<CpOutVerifyResult> result) throws Exception {
-                        progressDialog.dismiss();
-                        if (result.getCode() != 0) {
-                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            CpOutVerifyResult dataResult = result.getResult();
-                            mOutdhValue.setText(dataResult.getOutDh());
-                            mLhrqValue.setText(dataResult.getLhRq());
-                            mKgValue.setText(dataResult.getKg());
-                            mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());
+        if("半成品出库单".equals(mName)){
+            Observable.create(new ObservableOnSubscribe<ActionResult<BcpOutVerifyResult>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ActionResult<BcpOutVerifyResult>> e) throws Exception {
+                    ActionResult<BcpOutVerifyResult> nr = mainDao.getBcpOutVerifyData(param);
+                    e.onNext(nr);
+                }
+            }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                    .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                    .subscribe(new Consumer<ActionResult<BcpOutVerifyResult>>() {
+                        @Override
+                        public void accept(ActionResult<BcpOutVerifyResult> result) throws Exception {
+                            progressDialog.dismiss();
+                            if (result.getCode() != 0) {
+                                Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                BcpOutVerifyResult dataResult = result.getResult();
+                                mOutdhValue.setText(dataResult.getOutDh());
+                                mLhrqValue.setText(dataResult.getLhRq());
+                                mKgValue.setText(dataResult.getKg());
+                                mBzValue.setText(dataResult.getBz());
+                                mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());
 
-                            if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
-                                mData.clear();
-                                mData.addAll(dataResult.getBeans());
-                                mAdapter.notifyDataSetChanged();
+                                if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
+                                    mBcpData.clear();
+                                    mBcpData.addAll(dataResult.getBeans());
+                                    mBcpAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
+        else {
+            Observable.create(new ObservableOnSubscribe<ActionResult<CpOutVerifyResult>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ActionResult<CpOutVerifyResult>> e) throws Exception {
+                    ActionResult<CpOutVerifyResult> nr = mainDao.getCpOutVerifyData(param);
+                    e.onNext(nr);
+                }
+            }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                    .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                    .subscribe(new Consumer<ActionResult<CpOutVerifyResult>>() {
+                        @Override
+                        public void accept(ActionResult<CpOutVerifyResult> result) throws Exception {
+                            progressDialog.dismiss();
+                            if (result.getCode() != 0) {
+                                Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                CpOutVerifyResult dataResult = result.getResult();
+                                mOutdhValue.setText(dataResult.getOutDh());
+                                mLhrqValue.setText(dataResult.getLhRq());
+                                mKgValue.setText(dataResult.getKg());
+                                mRemarkValue.setText(TextUtils.isEmpty(dataResult.getRemark()) ? "无备注信息" : dataResult.getRemark());
+
+                                if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
+                                    mCpData.clear();
+                                    mCpData.addAll(dataResult.getBeans());
+                                    mCpAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
@@ -282,11 +358,66 @@ public class BcpOutVerifyActivity extends BaseActivity {
         return R.layout.activity_bcp_out_verify;
     }
 
-    class MyAdapter extends BaseAdapter {
+    class MyBcpAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return mData.size();
+            return mBcpData.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(BcpOutVerifyActivity.this, R.layout.item_bcpout_verify, null);
+                viewHolder = new ViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            } else
+                viewHolder = (ViewHolder) convertView.getTag();
+
+            BcpOutShowBean bean = mBcpData.get(position);
+            viewHolder.mNameValue.setText(bean.getProductName());
+            viewHolder.mLbValue.setText(bean.getSortName());
+            viewHolder.mYlpcValue.setText(bean.getyLPC());
+            viewHolder.mRkzlValue.setText(bean.getrKZL() + "");
+            viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+
+            return convertView;
+        }
+
+        class ViewHolder {
+            @BindView(R.id.lbValue)
+            TextView mLbValue;
+            @BindView(R.id.nameValue)
+            TextView mNameValue;
+            @BindView(R.id.ylpcValue)
+            TextView mYlpcValue;
+            @BindView(R.id.rkzlValue)
+            TextView mRkzlValue;
+            @BindView(R.id.dwzlValue)
+            TextView mDwzlValue;
+
+            ViewHolder(View view) {
+                ButterKnife.bind(this, view);
+            }
+        }
+    }
+
+    class MyCpAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mCpData.size();
         }
 
         @Override
@@ -309,7 +440,7 @@ public class BcpOutVerifyActivity extends BaseActivity {
             } else
                 viewHolder = (ViewHolder) convertView.getTag();
 
-            CpOutShowBean bean = mData.get(position);
+            CpOutShowBean bean = mCpData.get(position);
             //viewHolder.mWlbmValue.setText(bean.getCpCode());
             viewHolder.mNameValue.setText(bean.getCpName());
             viewHolder.mLbValue.setText(bean.getSortName());

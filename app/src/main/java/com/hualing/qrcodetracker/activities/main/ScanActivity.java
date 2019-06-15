@@ -21,6 +21,7 @@ import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BCPInDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BCPInRKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_out.BCPCKDInputActivity;
+import com.hualing.qrcodetracker.activities.operation_bcp.bcp_out.BCPOutDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpTKDInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_return.BcpTKDataInputActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_tl.BcpThrowActivity;
@@ -274,7 +275,7 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
                 if(isFirst)
                     intent = new Intent(this, BCPCKDInputActivity.class);
                 else
-                    intent = new Intent(this, BcpTKDataInputActivity.class);
+                    intent = new Intent(this, BCPOutDataInputActivity.class);
                     break;
             case FunctionType.HALF_PRODUCT_THROW:
                 intent = new Intent(this, BcpThrowActivity.class);

@@ -15,6 +15,7 @@ import com.hualing.qrcodetracker.bean.BcpInShowBean;
 import com.hualing.qrcodetracker.bean.BcpInVerifyResult;
 import com.hualing.qrcodetracker.bean.BcpOutGetShowDataParam;
 import com.hualing.qrcodetracker.bean.BcpOutParam;
+import com.hualing.qrcodetracker.bean.BcpOutVerifyResult;
 import com.hualing.qrcodetracker.bean.BcpThrowGetShowDataParam;
 import com.hualing.qrcodetracker.bean.BcpThrowParam;
 import com.hualing.qrcodetracker.bean.BcpThrowShowDataResult;
@@ -278,6 +279,9 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.GET_BCPIN_QUALITY_CHECK_DATA)
     ActionResult<BcpInQualityCheckResult> getBcpInQualityCheckData(VerifyParam param);
 
+    @ActionRequest(func = GlobalData.Service.GET_BCPOUT_VERIFY_DATA)
+    ActionResult<BcpOutVerifyResult> getBcpOutVerifyData(VerifyParam param);
+
     @ActionRequest(func = GlobalData.Service.GET_CPOUT_VERIFY_DATA)
     ActionResult<CpOutVerifyResult> getCpOutVerifyData(VerifyParam param);
 
@@ -376,4 +380,5 @@ public interface MainDao {
 
     @ActionRequest(func = GlobalData.Service.CHECK_EXIST_BY_QRCODEID)
     ActionResult<ActionResult> checkExistByQrCodeId(CheckExistParam param);
+
 }

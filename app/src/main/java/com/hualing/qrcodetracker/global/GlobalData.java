@@ -320,6 +320,7 @@ public class GlobalData {
         public static final String GET_BCPIN_VERIFY_DATA = "getBcpInVerifyData";
         public static final String GET_SMALL_CP_IN_VERIFY_DATA = "getSmallCPInVerifyData";
         public static final String GET_BCPIN_QUALITY_CHECK_DATA = "getBcpInQualityCheckData";
+        public static final String GET_BCPOUT_VERIFY_DATA = "getBcpOutVerifyData";
         public static final String GET_CPOUT_VERIFY_DATA = "getCpOutVerifyData";
         public static final String GET_BCPTK_VERIFY_DATA = "getBcpTkVerifyData";
         public static final String GET_BCPTK_QUALITY_CHECK_DATA = "getBcpTkQualityCheckData";
