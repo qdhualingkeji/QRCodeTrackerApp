@@ -232,7 +232,7 @@ public class BCPOutDataInputActivity extends BaseActivity {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getWlCKDNumber();
+        String dh = SharedPreferenceUtil.getBCPCKDNumber();
         notificationParam.setDh(dh);
         notificationParam.setStyle(NotificationType.BCP_CKD);
         notificationParam.setPersonFlag(NotificationParam.KG);
