@@ -344,6 +344,7 @@ public class GlobalData {
         public static final String UPDATA_WLOUT_DATA = "updateWlOutData";
         public static final String UPDATA_WLTK_DATA = "updateWlTkData";
         public static final String UPDATA_BCPIN_DATA = "updateBcpInData";
+        public static final String UPDATA_BCPOUT_DATA = "updateBcpOutData";
         public static final String UPDATA_CPOUT_DATA = "updateCpOutData";
         public static final String UPDATA_BCPTK_DATA = "updateBcpTkData";
         public static final String GET_PERSON_INFO = "getAllPerson";

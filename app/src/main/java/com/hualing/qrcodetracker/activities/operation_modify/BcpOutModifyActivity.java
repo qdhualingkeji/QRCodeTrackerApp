@@ -20,6 +20,8 @@ import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivit
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
+import com.hualing.qrcodetracker.bean.BcpOutShowBean;
+import com.hualing.qrcodetracker.bean.BcpOutVerifyResult;
 import com.hualing.qrcodetracker.bean.CpOutShowBean;
 import com.hualing.qrcodetracker.bean.CpOutVerifyResult;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -52,6 +54,8 @@ public class BcpOutModifyActivity extends BaseActivity {
 
     private static final int REQUEST_CODE_SELECT_KG = 31;
     private static final int REQUEST_CODE_SELECT_FHFZR = 32;
+    private static final int REQUEST_CODE_SELECT_BZ = 33;
+    private static final int REQUEST_CODE_SELECT_LHFZR = 34;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -61,19 +65,37 @@ public class BcpOutModifyActivity extends BaseActivity {
     TextView mKgValue;
     @BindView(R.id.fhfzrValue)
     TextView mFhfzrValue;
+    @BindView(R.id.bzValue)
+    TextView mBzValue;
+    @BindView(R.id.lhfzrValue)
+    TextView mLhfzrValue;
     @BindView(R.id.remarkValue)
     EditText mRemarkValue;
     @BindView(R.id.childDataList)
     MyListView mChildDataList;
+    @BindView(R.id.bzLayout)
+    LinearLayout mBzLayout;
+    @BindView(R.id.bzView)
+    View mBzView;
+    @BindView(R.id.lhfzrLayout)
+    LinearLayout mLhfzrLayout;
+    @BindView(R.id.lhfzrView)
+    View mLhfzrView;
 
     private MainDao mainDao;
-    private MyAdapter mAdapter;
-    private List<CpOutShowBean> mData;
+    private MyBcpAdapter mBcpAdapter;
+    private List<BcpOutShowBean> mBcpData;
+    private MyCpAdapter mCpAdapter;
+    private List<CpOutShowBean> mCpData;
     private String mDh;
+    private String mName;
     private VerifyParam param;
-    private CpOutVerifyResult updatedParam;
+    private BcpOutVerifyResult updatedBcpParam;
+    private CpOutVerifyResult updatedCpParam;
     private Integer kgID;
     private Integer fzrID;
+    private Integer bzID;
+    private Integer llfzrID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,16 +118,38 @@ public class BcpOutModifyActivity extends BaseActivity {
             }
         });
 
-        updatedParam = new CpOutVerifyResult();
         param = new VerifyParam();
-        if (getIntent() != null) {
+        Intent intent = getIntent();
+        if (intent != null) {
+            mName = intent.getStringExtra("name");
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
         }
 
-        mData = new ArrayList<>();
-        mAdapter = new BcpOutModifyActivity.MyAdapter();
-        mChildDataList.setAdapter(mAdapter);
+        if("半成品出库单".equals(mName)){
+            updatedBcpParam = new BcpOutVerifyResult();
+            mTitle.setTitle("半成品出库数据修改");
+            mBzLayout.setVisibility(View.VISIBLE);
+            mBzView.setVisibility(View.VISIBLE);
+            mLhfzrLayout.setVisibility(View.VISIBLE);
+            mLhfzrView.setVisibility(View.VISIBLE);
+
+            mBcpData = new ArrayList<>();
+            mBcpAdapter = new BcpOutModifyActivity.MyBcpAdapter();
+            mChildDataList.setAdapter(mBcpAdapter);
+        }
+        else{
+            updatedCpParam = new CpOutVerifyResult();
+            mTitle.setTitle("成品出库数据修改");
+            mBzLayout.setVisibility(View.GONE);
+            mBzView.setVisibility(View.GONE);
+            mLhfzrLayout.setVisibility(View.GONE);
+            mLhfzrView.setVisibility(View.GONE);
+
+            mCpData = new ArrayList<>();
+            mCpAdapter = new BcpOutModifyActivity.MyCpAdapter();
+            mChildDataList.setAdapter(mCpAdapter);
+        }
         mChildDataList.setFocusable(false);
     }
 
@@ -114,90 +158,216 @@ public class BcpOutModifyActivity extends BaseActivity {
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
-        Observable.create(new ObservableOnSubscribe<ActionResult<CpOutVerifyResult>>() {
-            @Override
-            public void subscribe(ObservableEmitter<ActionResult<CpOutVerifyResult>> e) throws Exception {
-                ActionResult<CpOutVerifyResult> nr = mainDao.getCpOutVerifyData(param);
-                e.onNext(nr);
-            }
-        }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
-                .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
-                .subscribe(new Consumer<ActionResult<CpOutVerifyResult>>() {
-                    @Override
-                    public void accept(ActionResult<CpOutVerifyResult> result) throws Exception {
-                        progressDialog.dismiss();
-                        if (result.getCode() != 0) {
-                            Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            CpOutVerifyResult dataResult = result.getResult();
-                            updatedParam = dataResult;
-                            mOutdhValue.setText(dataResult.getOutDh());
+        if("半成品出库单".equals(mName)){
+            Observable.create(new ObservableOnSubscribe<ActionResult<BcpOutVerifyResult>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ActionResult<BcpOutVerifyResult>> e) throws Exception {
+                    ActionResult<BcpOutVerifyResult> nr = mainDao.getBcpOutVerifyData(param);
+                    e.onNext(nr);
+                }
+            }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                    .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                    .subscribe(new Consumer<ActionResult<BcpOutVerifyResult>>() {
+                        @Override
+                        public void accept(ActionResult<BcpOutVerifyResult> result) throws Exception {
+                            progressDialog.dismiss();
+                            if (result.getCode() != 0) {
+                                Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                BcpOutVerifyResult dataResult = result.getResult();
+                                updatedBcpParam = dataResult;
+                                mOutdhValue.setText(dataResult.getOutDh());
 
-                            kgID = dataResult.getKgID();
-                            mKgValue.setText(dataResult.getKg());
-                            mKgValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                                kgID = dataResult.getKgID();
+                                mKgValue.setText(dataResult.getKg());
+                                mKgValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedBcpParam.setKg("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                fzrID = dataResult.getFzrID();
+                                mFhfzrValue.setText(dataResult.getFhFzr());
+                                mFhfzrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedBcpParam.setFhFzr("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                bzID = dataResult.getBzID();
+                                mBzValue.setText(dataResult.getBz());
+                                mBzValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedBcpParam.setBz("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                llfzrID = dataResult.getLlfzrID();
+                                mLhfzrValue.setText(dataResult.getLhFzr());
+                                mLhfzrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedBcpParam.setLhFzr("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                mRemarkValue.setText(dataResult.getRemark());
+                                mRemarkValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedBcpParam.setRemark("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
+                                    mBcpData.clear();
+                                    mBcpData.addAll(dataResult.getBeans());
+                                    mBcpAdapter.notifyDataSetChanged();
                                 }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setKg("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
-                            fzrID = dataResult.getFzrID();
-                            mFhfzrValue.setText(dataResult.getFhFzr());
-                            mFhfzrValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setFhFzr("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
-                            mRemarkValue.setText(dataResult.getRemark());
-                            mRemarkValue.addTextChangedListener(new TextWatcher() {
-                                @Override
-                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                                }
-
-                                @Override
-                                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                                    updatedParam.setRemark("" + s);
-                                }
-
-                                @Override
-                                public void afterTextChanged(Editable s) {
-
-                                }
-                            });
-
-                            if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
-                                mData.clear();
-                                mData.addAll(dataResult.getBeans());
-                                mAdapter.notifyDataSetChanged();
                             }
                         }
-                    }
-                });
+                    });
+        }
+        else {
+            Observable.create(new ObservableOnSubscribe<ActionResult<CpOutVerifyResult>>() {
+                @Override
+                public void subscribe(ObservableEmitter<ActionResult<CpOutVerifyResult>> e) throws Exception {
+                    ActionResult<CpOutVerifyResult> nr = mainDao.getCpOutVerifyData(param);
+                    e.onNext(nr);
+                }
+            }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
+                    .observeOn(AndroidSchedulers.mainThread()) // 指定 Subscriber 的回调发生在主线程
+                    .subscribe(new Consumer<ActionResult<CpOutVerifyResult>>() {
+                        @Override
+                        public void accept(ActionResult<CpOutVerifyResult> result) throws Exception {
+                            progressDialog.dismiss();
+                            if (result.getCode() != 0) {
+                                Toast.makeText(TheApplication.getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                                return;
+                            } else {
+                                CpOutVerifyResult dataResult = result.getResult();
+                                updatedCpParam = dataResult;
+                                mOutdhValue.setText(dataResult.getOutDh());
+
+                                kgID = dataResult.getKgID();
+                                mKgValue.setText(dataResult.getKg());
+                                mKgValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedCpParam.setKg("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                fzrID = dataResult.getFzrID();
+                                mFhfzrValue.setText(dataResult.getFhFzr());
+                                mFhfzrValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedCpParam.setFhFzr("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                mRemarkValue.setText(dataResult.getRemark());
+                                mRemarkValue.addTextChangedListener(new TextWatcher() {
+                                    @Override
+                                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    }
+
+                                    @Override
+                                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                        updatedCpParam.setRemark("" + s);
+                                    }
+
+                                    @Override
+                                    public void afterTextChanged(Editable s) {
+
+                                    }
+                                });
+
+                                if (dataResult.getBeans() != null && dataResult.getBeans().size() > 0) {
+                                    mCpData.clear();
+                                    mCpData.addAll(dataResult.getBeans());
+                                    mCpAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     @Override
@@ -210,7 +380,7 @@ public class BcpOutModifyActivity extends BaseActivity {
         return R.layout.activity_bcp_out_modify;
     }
 
-    @OnClick({R.id.selectKG,R.id.selectFHFZR,R.id.confirmBtn})
+    @OnClick({R.id.selectKG,R.id.selectFHFZR,R.id.selectBz,R.id.selectLHFZR,R.id.confirmBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()){
@@ -222,6 +392,14 @@ public class BcpOutModifyActivity extends BaseActivity {
                 bundle.putString("checkQX", "fzr");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_FHFZR, bundle);
                 break;
+            case R.id.selectBz:
+                bundle.putString("checkQX", "bz");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
+                break;
+            case R.id.selectLHFZR:
+                bundle.putString("checkQX", "fzr");
+                IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_LHFZR, bundle);
+                break;
             case R.id.confirmBtn:
                 toCommit();
                 break;
@@ -231,18 +409,40 @@ public class BcpOutModifyActivity extends BaseActivity {
 
     private void toCommit() {
 
-        if ("请选择仓库管理员".equals(mKgValue.getText().toString())
-                ||"请选择发货负责人".equals(mFhfzrValue.getText().toString())
-                ) {
-            Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
-            return;
+        if("半成品出库单".equals(mName)) {
+            if ("请选择仓库管理员".equals(mKgValue.getText().toString())
+                    || "请选择发货负责人".equals(mFhfzrValue.getText().toString())
+                    || "请选择班长".equals(mBzValue.getText().toString())
+                    || "请选择领货负责人".equals(mLhfzrValue.getText().toString())
+                    ) {
+                Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            updatedBcpParam.setBeans(mBcpData);
+            updatedBcpParam.setKgID(kgID);
+            updatedBcpParam.setKgStatus(0);
+            updatedBcpParam.setFzrID(fzrID);
+            updatedBcpParam.setFzrStatus(0);
+            updatedBcpParam.setBzID(bzID);
+            updatedBcpParam.setBzStatus(0);
+            updatedBcpParam.setLlfzrID(llfzrID);
+            updatedBcpParam.setLlfzrStatus(0);
+            updatedBcpParam.setRemark(mRemarkValue.getText().toString());
         }
-        updatedParam.setBeans(mData);
-        updatedParam.setKgID(kgID);
-        updatedParam.setKgStatus(0);
-        updatedParam.setFzrID(fzrID);
-        updatedParam.setFzrStatus(0);
-        updatedParam.setRemark(mRemarkValue.getText().toString());
+        else{
+            if ("请选择仓库管理员".equals(mKgValue.getText().toString())
+                    || "请选择发货负责人".equals(mFhfzrValue.getText().toString())
+                    ) {
+                Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            updatedCpParam.setBeans(mCpData);
+            updatedCpParam.setKgID(kgID);
+            updatedCpParam.setKgStatus(0);
+            updatedCpParam.setFzrID(fzrID);
+            updatedCpParam.setFzrStatus(0);
+            updatedCpParam.setRemark(mRemarkValue.getText().toString());
+        }
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
@@ -250,7 +450,13 @@ public class BcpOutModifyActivity extends BaseActivity {
         Observable.create(new ObservableOnSubscribe<ActionResult<ActionResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<ActionResult>> e) throws Exception {
-                ActionResult<ActionResult> nr = mainDao.toUpdateCpOutData(updatedParam);
+                ActionResult<ActionResult> nr = null;
+                if("半成品出库单".equals(mName)) {
+                    nr = mainDao.toUpdateBcpOutData(updatedBcpParam);
+                }
+                else{
+                    nr = mainDao.toUpdateCpOutData(updatedCpParam);
+                }
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
@@ -275,9 +481,14 @@ public class BcpOutModifyActivity extends BaseActivity {
 
         final NotificationParam notificationParam = new NotificationParam();
         //根据单号去查找审核人
-        String dh = SharedPreferenceUtil.getBCPCKDNumber();
-        notificationParam.setDh(dh);
-        notificationParam.setStyle(NotificationType.CP_CKD);
+        //String dh = SharedPreferenceUtil.getBCPCKDNumber();
+        notificationParam.setDh(mDh);
+        if("半成品出库单".equals(mName)) {
+            notificationParam.setStyle(NotificationType.BCP_CKD);
+        }
+        else {
+            notificationParam.setStyle(NotificationType.CP_CKD);
+        }
         notificationParam.setPersonFlag(NotificationParam.KG);
 
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
@@ -308,11 +519,66 @@ public class BcpOutModifyActivity extends BaseActivity {
 
     }
 
-    class MyAdapter extends BaseAdapter {
+    class MyBcpAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
-            return mData.size();
+            return mBcpData.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = View.inflate(BcpOutModifyActivity.this, R.layout.item_bcpout_modify, null);
+                viewHolder = new ViewHolder(convertView);
+                convertView.setTag(viewHolder);
+            } else
+                viewHolder = (ViewHolder) convertView.getTag();
+
+            final BcpOutShowBean bean = mBcpData.get(position);
+            viewHolder.mNameValue.setText(bean.getProductName());
+            //viewHolder.mLbValue.setText(bean.getSortID() + "");
+            viewHolder.mYlpcValue.setText(bean.getyLPC());
+            viewHolder.mRkzlValue.setText(bean.getrKZL()+"");
+            viewHolder.mDwzlValue.setText(bean.getdWZL()+"");
+
+            return convertView;
+        }
+
+        class ViewHolder {
+            @BindView(R.id.nameValue)
+            TextView mNameValue;
+            //@BindView(R.id.lbValue)
+            //TextView mLbValue;
+            @BindView(R.id.ylpcValue)
+            TextView mYlpcValue;
+            @BindView(R.id.rkzlValue)
+            TextView mRkzlValue;
+            @BindView(R.id.dwzlValue)
+            TextView mDwzlValue;
+
+            ViewHolder(View view) {
+                ButterKnife.bind(this, view);
+            }
+        }
+    }
+
+    class MyCpAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mCpData.size();
         }
 
         @Override
@@ -335,7 +601,7 @@ public class BcpOutModifyActivity extends BaseActivity {
             } else
                 viewHolder = (ViewHolder) convertView.getTag();
 
-            final CpOutShowBean bean = mData.get(position);
+            final CpOutShowBean bean = mCpData.get(position);
             viewHolder.mNameValue.setText(bean.getCpName());
             //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mYlpcValue.setText(bean.getyLPC());
@@ -363,7 +629,6 @@ public class BcpOutModifyActivity extends BaseActivity {
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -376,6 +641,14 @@ public class BcpOutModifyActivity extends BaseActivity {
                 case REQUEST_CODE_SELECT_FHFZR:
                     fzrID=data.getIntExtra("personID",0);
                     mFhfzrValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_BZ:
+                    bzID=data.getIntExtra("personID",0);
+                    mBzValue.setText(data.getStringExtra("personName"));
+                    break;
+                case REQUEST_CODE_SELECT_LHFZR:
+                    llfzrID=data.getIntExtra("personID",0);
+                    mLhfzrValue.setText(data.getStringExtra("personName"));
                     break;
             }
         }

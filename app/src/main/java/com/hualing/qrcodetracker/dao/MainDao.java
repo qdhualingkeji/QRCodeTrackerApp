@@ -351,6 +351,9 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.UPDATA_BCPIN_DATA)
     ActionResult<ActionResult> toUpdateBcpInData(BcpInVerifyResult updatedParam);
 
+    @ActionRequest(func = GlobalData.Service.UPDATA_BCPOUT_DATA)
+    ActionResult<ActionResult> toUpdateBcpOutData(BcpOutVerifyResult updatedBcpParam);
+
     @ActionRequest(func = GlobalData.Service.UPDATA_CPOUT_DATA)
     ActionResult<ActionResult> toUpdateCpOutData(CpOutVerifyResult updatedParam);
 

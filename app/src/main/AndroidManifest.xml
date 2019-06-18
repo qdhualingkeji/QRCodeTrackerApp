@@ -176,7 +176,7 @@
         <activity android:name=".activities.operation_wl.wl_return.WlTkQualityCheckActivity" />
         <activity android:name=".activities.operation_bcp.bcp_in.BcpInVerifyActivity" />
         <activity android:name=".activities.operation_bcp.bcp_in.BcpInQualityCheckActivity" />
-        <activity android:name=".activities.operation_bcp.bcp_return.BcpOutVerifyActivity" />
+        <activity android:name=".activities.operation_bcp.bcp_out.BcpOutVerifyActivity" />
         <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkVerifyActivity" />
         <activity android:name=".activities.operation_bcp.bcp_tl.BcpTkQualityCheckActivity" />
         <activity android:name=".activities.main.ModifyDataActivity" />

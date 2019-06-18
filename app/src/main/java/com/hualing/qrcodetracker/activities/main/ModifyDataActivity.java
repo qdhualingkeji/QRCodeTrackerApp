@@ -197,8 +197,10 @@ public class ModifyDataActivity extends BaseActivity {
                                     intent = new Intent(ModifyDataActivity.this,BcpInModifyActivity.class);
                                     intent.putExtra("name",name);
                                     break;
+                                case "半成品出库单":
                                 case "成品出库单":
                                     intent = new Intent(ModifyDataActivity.this,BcpOutModifyActivity.class);
+                                    intent.putExtra("name",name);
                                     break;
                                 case "半成品入库（退库）单":
                                     intent = new Intent(ModifyDataActivity.this,BcpTkModifyActivity.class);

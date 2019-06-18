@@ -1,9 +1,8 @@
-package com.hualing.qrcodetracker.activities.operation_bcp.bcp_return;
+package com.hualing.qrcodetracker.activities.operation_bcp.bcp_out;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +14,6 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInVerifyActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpOutShowBean;
@@ -111,6 +109,10 @@ public class BcpOutVerifyActivity extends BaseActivity {
                     isKG=true;
                     break;
                 }
+                else if("bz".equals(checkQX)){
+                    isBZ=true;
+                    break;
+                }
                 else if("fzr".equals(checkQX)){
                     isFZR=true;
                     break;
@@ -129,14 +131,20 @@ public class BcpOutVerifyActivity extends BaseActivity {
                 }
             }
             else if(isFZR) {
-                param.setCheckQXFlag(VerifyParam.FZR);
+                int personFlag = getIntent().getIntExtra("personFlag", -1);
+                if(personFlag==NotificationParam.FLFZR) {
+                    param.setCheckQXFlag(VerifyParam.FLFZR);
+                }
+                else if(personFlag==NotificationParam.LLFZR) {
+                    param.setCheckQXFlag(VerifyParam.LLFZR);
+                }
             }
 
             mDh = getIntent().getStringExtra("dh");
             param.setDh(mDh);
             if("半成品出库单".equals(mName)){
                 mTitle.setTitle("半成品出库审核");
-                if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.BCPBZ||param.getCheckQXFlag()==VerifyParam.FZR){
+                if(param.getCheckQXFlag()==VerifyParam.KG||param.getCheckQXFlag()==VerifyParam.FLFZR||param.getCheckQXFlag()==VerifyParam.BCPBZ||param.getCheckQXFlag()==VerifyParam.LLFZR){
                     mBzLayout.setVisibility(LinearLayout.VISIBLE);
                     mBzView.setVisibility(View.VISIBLE);
                 }
@@ -349,6 +357,10 @@ public class BcpOutVerifyActivity extends BaseActivity {
             else if (checkQXFlag == VerifyParam.FLFZR) {
                 personFlag = NotificationParam.BZ;
                 notifText = "已通知班长审核";
+            }
+            else if (checkQXFlag == VerifyParam.BCPBZ) {
+                personFlag = NotificationParam.LLFZR;
+                notifText = "已通知领料负责人审核";
             }
         }
         else{
