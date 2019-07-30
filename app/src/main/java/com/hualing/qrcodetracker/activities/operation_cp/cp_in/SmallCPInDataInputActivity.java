@@ -202,7 +202,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 break;
                 */
             case R.id.selectLB:
-                IntentUtil.openActivityForResult(this, SelectParentHlSortActivity.class, SELECT_LEI_BIE, null);
+                bundle.putString("qrcodeId",mQrcodeId);
+                IntentUtil.openActivityForResult(this, SelectParentHlSortActivity.class, SELECT_LEI_BIE, bundle);
                 break;
             case R.id.selectName:
                 bundle.putInt("sortID",mSelectedLeiBieId);

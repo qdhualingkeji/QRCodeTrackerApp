@@ -113,6 +113,8 @@ public class SelectChildHlSortActivity extends BaseActivity {
         final HlSortBean params = new HlSortBean();
         int parentID=getIntent().getIntExtra("parentID",0);
         params.setParentID(parentID);
+        String qrcodeId=getIntent().getStringExtra("qrcodeId");
+        params.setMemo(qrcodeId);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<HlSortResult>>() {
             @Override

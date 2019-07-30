@@ -60,6 +60,7 @@ public class SelectParentHlSortActivity extends BaseActivity {
     //模糊过滤后的数据
     private List<HlSortBean> mFilterData ;
     private MainDao mainDao;
+    private String mQrcodeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,7 @@ public class SelectParentHlSortActivity extends BaseActivity {
             }
         });
 
+        mQrcodeId=getIntent().getStringExtra("qrcodeId");
     }
 
     @Override
@@ -137,8 +139,7 @@ public class SelectParentHlSortActivity extends BaseActivity {
         progressDialog.show();
 
         final HlSortBean params = new HlSortBean();
-        String qrcodeId=getIntent().getStringExtra("qrcodeId");
-        params.setMemo(qrcodeId);
+        params.setMemo(mQrcodeId);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<HlSortResult>>() {
             @Override
@@ -202,6 +203,7 @@ public class SelectParentHlSortActivity extends BaseActivity {
 
                     Bundle bundle1 = new Bundle();
                     bundle1.putInt("parentID", bean.getSortID());
+                    bundle1.putString("qrcodeId",mQrcodeId);
                     IntentUtil.openActivityForResult(SelectParentHlSortActivity.this, SelectChildHlSortActivity.class, SELECT_HL_SORT, bundle1);
                 }
             });

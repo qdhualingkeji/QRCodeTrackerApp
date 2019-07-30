@@ -50,8 +50,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.tsValue)
     EditText mTsValue;
-    //@BindView(R.id.wlbmValue)
-    //TextView mWlbmValue;
+    @BindView(R.id.wlbmValue)
+    TextView mWlbmValue;
     //    @BindView(R.id.wlbmValue)
     //    EditText mWlbmValue;
     @BindView(R.id.nameValue)
@@ -187,6 +187,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
                 case SELECT_PRODUCT_NAME:
                     String productName = data.getStringExtra("productName");
                     mNameValue.setText(productName);
+                    String productCode = data.getStringExtra("productCode");
+                    mWlbmValue.setText(productCode);
                     String model = data.getStringExtra("model");
                     if("".equals(model))
                         model=getString(R.string.no_gg);
@@ -202,7 +204,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
 
     private boolean checkIfInfoPerfect() {
         String tsValue = mTsValue.getText().toString();
-        //String wlbmValue = mWlbmValue.getText().toString();
+        String wlbmValue = mWlbmValue.getText().toString();
         String nameValue = mNameValue.getText().toString();
         String cdValue = mCdValue.getText().toString();
         String lbValue = mLbValue.getText().toString();
@@ -228,7 +230,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         }
 
         params.settS(Integer.parseInt(tsValue));
-        params.setwLCode(mSelectedWLBM);
+        params.setwLCode(wlbmValue);
         params.setProductName(nameValue);
         params.setcHD(cdValue);
         params.setLb(mSelectedLeiBieId);
