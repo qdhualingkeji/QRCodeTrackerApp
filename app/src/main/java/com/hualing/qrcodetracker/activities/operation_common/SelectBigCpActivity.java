@@ -154,7 +154,7 @@ public class SelectBigCpActivity extends BaseActivity {
         @Override
         public void onBindViewHolder(MyAdapter.MyViewHolder holder, int position) {
             final BigCpBean bean = mFilterData.get(position);
-            holder.gxName.setText(bean.getcPName());
+            holder.gxName.setText(bean.getcPName()+"("+bean.getqRCodeID()+")");
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
