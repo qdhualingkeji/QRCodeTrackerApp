@@ -19,6 +19,7 @@ public class HlSortBean {
     private String sortName;
     private Timestamp addTime;
     private String sortCode;
+    private String memo;
 
     public int getSortID() {
         return sortID;
@@ -66,5 +67,13 @@ public class HlSortBean {
 
     public void setSortCode(String sortCode) {
         this.sortCode = sortCode;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

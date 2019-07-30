@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,12 +17,9 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
-import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.BcpInQualityCheckActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.SmallCPInVerifyActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectParentHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
@@ -31,13 +27,11 @@ import com.hualing.qrcodetracker.bean.BcpInShowBean;
 import com.hualing.qrcodetracker.bean.BcpInVerifyResult;
 import com.hualing.qrcodetracker.bean.NotificationParam;
 import com.hualing.qrcodetracker.bean.VerifyParam;
-import com.hualing.qrcodetracker.bean.WLINShowBean;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.NotificationType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
-import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -772,7 +766,7 @@ public class BcpInModifyActivity extends BaseActivity {
             viewHolder.mSelectBCPCode.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectHlSortActivity.class, GET_WLSORT_CODE, null);
+                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectParentHlSortActivity.class, GET_WLSORT_CODE, null);
                     mCurrentPosition = position;
                 }
             });
@@ -781,7 +775,7 @@ public class BcpInModifyActivity extends BaseActivity {
             viewHolder.mSelectLB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
+                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectParentHlSortActivity.class, SELECT_LEI_BIE, null);
                     mCurrentPosition = position;
                 }
             });

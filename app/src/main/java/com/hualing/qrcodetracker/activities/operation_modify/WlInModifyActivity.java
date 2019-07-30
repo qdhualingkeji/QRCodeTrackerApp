@@ -8,7 +8,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +20,9 @@ import android.widget.Toast;
 
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
-import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectPersonActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectParentHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.MaterialInDataInputActivity;
-import com.hualing.qrcodetracker.activities.operation_wl.wl_in.WlInQualityCheckActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -611,7 +605,7 @@ public class WlInModifyActivity extends BaseActivity {
             viewHolder.mSelectWLBM.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectHlSortActivity.class, GET_WLSORT_CODE, null);
+                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectParentHlSortActivity.class, GET_WLSORT_CODE, null);
                     mCurrentPosition = position;
                 }
             });
@@ -620,7 +614,7 @@ public class WlInModifyActivity extends BaseActivity {
             viewHolder.mSelectLB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
+                    IntentUtil.openActivityForResult(WlInModifyActivity.this, SelectParentHlSortActivity.class, SELECT_LEI_BIE, null);
                     mCurrentPosition = position;
                 }
             });

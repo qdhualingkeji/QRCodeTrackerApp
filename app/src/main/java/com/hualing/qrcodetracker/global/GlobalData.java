@@ -275,7 +275,8 @@ public class GlobalData {
         public static final String CREATE_WL_RKD = "createWL_RKD";
         public static final String CREATE_WL_CKD = "createWL_CKD";
         public static final String GET_PDT_SORT = "getPdtSort";
-        public static final String GET_HL_SORT = "getHlSort";
+        public static final String GET_PARENT_HL_SORT = "getParentHlSort";
+        public static final String GET_Child_HL_SORT = "getChildHlSort";
         public static final String GET_HL_PRODUCT = "getHlProduct";
         public static final String GET_WL_OUT_SHOW_DATA = "getWlOutShowData";
         public static final String GET_BCP_OUT_SHOW_DATA = "getBcpOutShowData";

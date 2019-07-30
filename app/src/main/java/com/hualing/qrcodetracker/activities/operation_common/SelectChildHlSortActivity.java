@@ -1,5 +1,6 @@
-package com.hualing.qrcodetracker.activities.operation_wl.wl_in;
+package com.hualing.qrcodetracker.activities.operation_common;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,11 +40,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-
-/**
- * @desc 选择物料编码
- */
-public class SelectHlSortActivity extends BaseActivity {
+public class SelectChildHlSortActivity extends BaseActivity {
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -68,7 +65,7 @@ public class SelectHlSortActivity extends BaseActivity {
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
-                AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
+                AllActivitiesHolder.removeAct(SelectChildHlSortActivity.this);
             }
 
             @Override
@@ -82,7 +79,7 @@ public class SelectHlSortActivity extends BaseActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new MyRecycleViewDivider(
-                                this, LinearLayoutManager.HORIZONTAL, 1, getResources().getColor(R.color.divide_gray_color)));
+                this, LinearLayoutManager.HORIZONTAL, 1, getResources().getColor(R.color.divide_gray_color)));
         mAdapter = new MyAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
@@ -114,13 +111,13 @@ public class SelectHlSortActivity extends BaseActivity {
         progressDialog.show();
 
         final HlSortBean params = new HlSortBean();
-        String qrcodeId=getIntent().getStringExtra("qrcodeId");
-        params.setMemo(qrcodeId);
+        int parentID=getIntent().getIntExtra("parentID",0);
+        params.setParentID(parentID);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<HlSortResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<HlSortResult>> e) throws Exception {
-                ActionResult<HlSortResult> nr = mainDao.getParentHlSort(params);
+                ActionResult<HlSortResult> nr = mainDao.getChildHlSort(params);
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
@@ -152,13 +149,12 @@ public class SelectHlSortActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_select_parent_hl_sort;
+        return R.layout.activity_select_child_hl_sort;
     }
-
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v =  LayoutInflater.from(SelectHlSortActivity.this).inflate(R.layout.adapter_single,parent,false);
+            View v =  LayoutInflater.from(SelectChildHlSortActivity.this).inflate(R.layout.adapter_single,parent,false);
             return new MyViewHolder(v);
         }
 
@@ -173,7 +169,7 @@ public class SelectHlSortActivity extends BaseActivity {
                     ii.putExtra("sortName",bean.getSortName());
                     ii.putExtra("sortID",bean.getSortID());
                     setResult(RESULT_OK,ii);
-                    AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
+                    AllActivitiesHolder.removeAct(SelectChildHlSortActivity.this);
                 }
             });
         }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,9 +15,8 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.EmployeeMainActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
-import com.hualing.qrcodetracker.activities.main.ScanHWActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectParentHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.NotificationParam;
@@ -152,7 +150,8 @@ public class MaterialInDataInputActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectLB:
-                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
+                bundle.putString("qrcodeId",mQrcodeId);
+                IntentUtil.openActivityForResult(this, SelectParentHlSortActivity.class, SELECT_LEI_BIE, bundle);
                 break;
             case R.id.selectName:
                 bundle.putInt("sortID",mSelectedLeiBieId);

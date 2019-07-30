@@ -46,6 +46,7 @@ import com.hualing.qrcodetracker.bean.GetNeedInputedDataParams;
 import com.hualing.qrcodetracker.bean.GetSXYLParam;
 import com.hualing.qrcodetracker.bean.HlProductParam;
 import com.hualing.qrcodetracker.bean.HlProductResult;
+import com.hualing.qrcodetracker.bean.HlSortBean;
 import com.hualing.qrcodetracker.bean.HlSortResult;
 import com.hualing.qrcodetracker.bean.LoginParams;
 import com.hualing.qrcodetracker.bean.LoginResult;
@@ -144,8 +145,11 @@ public interface MainDao {
     @ActionRequest(func = GlobalData.Service.GET_PDT_SORT)
     ActionResult<PdtSortResult> getPdtSort();
 
-    @ActionRequest(func = GlobalData.Service.GET_HL_SORT)
-    ActionResult<HlSortResult> getHlSort();
+    @ActionRequest(func = GlobalData.Service.GET_PARENT_HL_SORT)
+    ActionResult<HlSortResult> getParentHlSort(HlSortBean params);
+
+    @ActionRequest(func = GlobalData.Service.GET_Child_HL_SORT)
+    ActionResult<HlSortResult> getChildHlSort(HlSortBean params);
 
     @ActionRequest(func = GlobalData.Service.GET_HL_PRODUCT)
     ActionResult<HlProductResult> getHlProduct(HlProductParam param);

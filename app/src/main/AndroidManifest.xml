@@ -83,7 +83,7 @@
             android:name=".activities.operation_wl.wl_out.WLCKDInputActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.operation_common.SelectHlSortActivity"
+            android:name=".activities.operation_common.SelectParentHlSortActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".activities.operation_common.SelectHlProductActivity"
@@ -220,7 +220,8 @@
         <activity android:name=".activities.operation_user.UserModifyActivity" />
         <activity android:name=".activities.operation_user.SelectIdentityActivity" />
         <activity android:name=".activities.operation_bcp.bcp_out.BCPCKDInputActivity" />
-        <activity android:name=".activities.operation_bcp.bcp_out.BCPOutDataInputActivity"></activity>
+        <activity android:name=".activities.operation_bcp.bcp_out.BCPOutDataInputActivity" />
+        <activity android:name=".activities.operation_common.SelectChildHlSortActivity"></activity>
     </application>
 
 </manifest>

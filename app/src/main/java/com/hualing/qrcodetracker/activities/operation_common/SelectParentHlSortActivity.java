@@ -25,6 +25,7 @@ import com.hualing.qrcodetracker.bean.HlSortResult;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
+import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 import com.hualing.qrcodetracker.widget.TitleBar;
 
@@ -43,7 +44,9 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * @desc 选择物料编码
  */
-public class SelectHlSortActivity extends BaseActivity {
+public class SelectParentHlSortActivity extends BaseActivity {
+
+    private static final int SELECT_HL_SORT = 111;
 
     @BindView(R.id.title)
     TitleBar mTitle;
@@ -68,7 +71,7 @@ public class SelectHlSortActivity extends BaseActivity {
         mTitle.setEvents(new TitleBar.AddClickEvents() {
             @Override
             public void clickLeftButton() {
-                AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
+                AllActivitiesHolder.removeAct(SelectParentHlSortActivity.this);
             }
 
             @Override
@@ -106,6 +109,26 @@ public class SelectHlSortActivity extends BaseActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case SELECT_HL_SORT:
+                    String sortName = data.getStringExtra("sortName");
+                    int sortID = data.getIntExtra("sortID",0);
+                    Intent ii = new Intent();
+                    ii.putExtra("sortName", sortName);
+                    ii.putExtra("sortID", sortID);
+                    setResult(RESULT_OK,ii);
+                    AllActivitiesHolder.removeAct(SelectParentHlSortActivity.this);
+                    break;
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void getDataFormWeb() {
 
         mainDao = YoniClient.getInstance().create(MainDao.class);
@@ -113,11 +136,14 @@ public class SelectHlSortActivity extends BaseActivity {
         final Dialog progressDialog = TheApplication.createLoadingDialog(this, "");
         progressDialog.show();
 
+        final HlSortBean params = new HlSortBean();
+        String qrcodeId=getIntent().getStringExtra("qrcodeId");
+        params.setMemo(qrcodeId);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<HlSortResult>>() {
             @Override
             public void subscribe(ObservableEmitter<ActionResult<HlSortResult>> e) throws Exception {
-                ActionResult<HlSortResult> nr = mainDao.getHlSort();
+                ActionResult<HlSortResult> nr = mainDao.getParentHlSort(params);
                 e.onNext(nr);
             }
         }).subscribeOn(Schedulers.io()) // 指定 subscribe() 发生在 IO 线程
@@ -149,13 +175,13 @@ public class SelectHlSortActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.activity_select_wlsort;
+        return R.layout.activity_select_parent_hl_sort;
     }
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v =  LayoutInflater.from(SelectHlSortActivity.this).inflate(R.layout.adapter_single,parent,false);
+            View v =  LayoutInflater.from(SelectParentHlSortActivity.this).inflate(R.layout.adapter_single,parent,false);
             return new MyViewHolder(v);
         }
 
@@ -166,11 +192,17 @@ public class SelectHlSortActivity extends BaseActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /*
                     Intent ii = new Intent();
                     ii.putExtra("sortName",bean.getSortName());
                     ii.putExtra("sortID",bean.getSortID());
                     setResult(RESULT_OK,ii);
-                    AllActivitiesHolder.removeAct(SelectHlSortActivity.this);
+                    AllActivitiesHolder.removeAct(SelectParentHlSortActivity.this);
+                    */
+
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putInt("parentID", bean.getSortID());
+                    IntentUtil.openActivityForResult(SelectParentHlSortActivity.this, SelectChildHlSortActivity.class, SELECT_HL_SORT, bundle1);
                 }
             });
         }

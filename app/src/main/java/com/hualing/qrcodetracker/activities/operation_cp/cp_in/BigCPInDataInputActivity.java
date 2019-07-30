@@ -15,8 +15,7 @@ import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.main.ScanActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectHlSortActivity;
-import com.hualing.qrcodetracker.activities.operation_common.SelectLBActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectParentHlSortActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BigCPINParam;
@@ -167,11 +166,11 @@ public class BigCPInDataInputActivity extends BaseActivity {
         switch (view.getId()) {
                 /*
             case R.id.selectBCPCode:
-                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_HL_SORT, null);
+                IntentUtil.openActivityForResult(this, SelectParentHlSortActivity.class, SELECT_HL_SORT, null);
                 break;
                 */
             case R.id.selectLB:
-                IntentUtil.openActivityForResult(this, SelectHlSortActivity.class, SELECT_LEI_BIE, null);
+                IntentUtil.openActivityForResult(this, SelectParentHlSortActivity.class, SELECT_LEI_BIE, null);
                 break;
             case R.id.selectName:
                 bundle.putInt("sortID",mSelectedLeiBieId);
