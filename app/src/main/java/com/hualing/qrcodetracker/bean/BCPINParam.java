@@ -22,6 +22,7 @@ public class BCPINParam {
     private String gg;
     private float shl;
     private String scTime;
+    private float rkzl;
     private float dwzl;
     private String ksTime;
     private String wcTime;
@@ -127,6 +128,14 @@ public class BCPINParam {
 
     public void setScTime(String scTime) {
         this.scTime = scTime;
+    }
+
+    public float getRkzl() {
+        return rkzl;
+    }
+
+    public void setRkzl(float rkzl) {
+        this.rkzl = rkzl;
     }
 
     public float getDwzl() {

@@ -26,7 +26,8 @@ public class BcpTrackResult {
     private String gg	;
     private String czy	;
     private String zjy	;
-    private String jyzt	;
+    private Integer zjzt;
+    private String jyzt;
 
     //组成成分
     private List<ComponentBean> componentBeans ;
@@ -133,6 +134,14 @@ public class BcpTrackResult {
 
     public void setZjy(String zjy) {
         this.zjy = zjy;
+    }
+
+    public Integer getZjzt() {
+        return zjzt;
+    }
+
+    public void setZjzt(Integer zjzt) {
+        this.zjzt = zjzt;
     }
 
     public String getJyzt() {

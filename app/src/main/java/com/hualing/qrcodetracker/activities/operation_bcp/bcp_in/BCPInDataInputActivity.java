@@ -257,6 +257,7 @@ public class BCPInDataInputActivity extends BaseActivity {
             ggValue="";
         params.setGg(ggValue);
         params.setShl(1);
+        params.setRkzl(Float.parseFloat(dwzlValue));
         params.setDwzl(Float.parseFloat(dwzlValue));
         params.setDw(dwValue);
 //        params.setZjy(zjyValue);
