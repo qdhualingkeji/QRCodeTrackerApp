@@ -273,7 +273,9 @@ public class NonHandleMsgActivity extends BaseActivity {
                                 case "半成品出库单":
                                 case "成品出库单":
                                     intent = new Intent(NonHandleMsgActivity.this,BcpOutVerifyActivity.class);
-                                    if(GlobalData.userId.equals(info.getFlfzrID()+""))
+                                    if(GlobalData.userId.equals(info.getFzrID()+""))
+                                        intent.putExtra("personFlag", NotificationParam.FZR);
+                                    else if(GlobalData.userId.equals(info.getFlfzrID()+""))
                                         intent.putExtra("personFlag", NotificationParam.FLFZR);
                                     else if(GlobalData.userId.equals(info.getLlfzrID()+""))
                                         intent.putExtra("personFlag", NotificationParam.LLFZR);
