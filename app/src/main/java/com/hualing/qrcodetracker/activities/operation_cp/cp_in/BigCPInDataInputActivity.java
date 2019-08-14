@@ -49,8 +49,8 @@ public class BigCPInDataInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.tsValue)
     EditText mTsValue;
-    //@BindView(R.id.bcpCodeValue)
-    //TextView mBcpCodeValue;
+    @BindView(R.id.bcpCodeValue)
+    TextView mBcpCodeValue;
     @BindView(R.id.productNameValue)
     TextView mProductNameValue;
     @BindView(R.id.lbValue)
@@ -208,6 +208,8 @@ public class BigCPInDataInputActivity extends BaseActivity {
                 case SELECT_PRODUCT_NAME:
                     String productName = data.getStringExtra("productName");
                     mProductNameValue.setText(productName);
+                    String productCode = data.getStringExtra("productCode");
+                    mBcpCodeValue.setText(productCode);
                     String model = data.getStringExtra("model");
                     if("".equals(model))
                         model=getString(R.string.no_gg);
@@ -304,7 +306,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
 
     private boolean checkIfInfoPerfect() {
         String tsValue = mTsValue.getText().toString();
-        //String cpCodeValue = mBcpCodeValue.getText().toString();
+        String cpCodeValue = mBcpCodeValue.getText().toString();
         String nameValue = mProductNameValue.getText().toString();
         String lbValue = mLbValue.getText().toString();
         String ylpcValue = mYlpcValue.getText().toString();
@@ -334,7 +336,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
         }
 
         params.settS(Integer.parseInt(tsValue));
-        params.setCpCode(mSelectedBcpCode);
+        params.setCpCode(cpCodeValue);
         params.setProductName(nameValue);
         params.setSortID(mSelectedLeiBieId);
         params.setYlpc(ylpcValue);

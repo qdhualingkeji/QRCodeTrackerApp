@@ -39,7 +39,7 @@ import io.reactivex.schedulers.Schedulers;
 public class BCPInRKDInputActivity extends BaseActivity {
 
     private static final int GET_DEPARTMENT = 10;
-    private static final int REQUEST_CODE_SELECT_SHR = 31;
+    //private static final int REQUEST_CODE_SELECT_SHR = 31;
     private static final int REQUEST_CODE_SELECT_BZ = 32;
     private static final int REQUEST_CODE_SELECT_FZR = 33;
     private static final int REQUEST_CODE_SELECT_ZJY = 34;
@@ -48,8 +48,8 @@ public class BCPInRKDInputActivity extends BaseActivity {
     TitleBar mTitle;
     @BindView(R.id.departmentValue)
     TextView mDepartmentValue;
-    @BindView(R.id.ShrValue)
-    TextView mShrValue;
+    //@BindView(R.id.ShrValue)
+    //TextView mShrValue;
     @BindView(R.id.bzValue)
     TextView mBzValue;
     @BindView(R.id.fzrValue)
@@ -109,16 +109,18 @@ public class BCPInRKDInputActivity extends BaseActivity {
         return R.layout.activity_bcpin_rkdinput;
     }
 
-    @OnClick({R.id.selectBM, R.id.selectSHR, R.id.selectBz, R.id.selectFZR, R.id.selectZJY, R.id.selectZJLD, R.id.commitBtn})
+    @OnClick({R.id.selectBM, R.id.selectBz, R.id.selectFZR, R.id.selectZJY, R.id.selectZJLD, R.id.commitBtn})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.selectBM:
                 IntentUtil.openActivityForResult(this, SelectDepartmentActivity.class, GET_DEPARTMENT, null);
                 break;
+                /*
             case R.id.selectSHR:
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_SHR, null);
                 break;
+                */
             case R.id.selectBz:
                 bundle.putString("checkQX", "bz");
                 IntentUtil.openActivityForResult(this, SelectPersonGroupActivity.class, REQUEST_CODE_SELECT_BZ, bundle);
@@ -148,9 +150,11 @@ public class BCPInRKDInputActivity extends BaseActivity {
                 case GET_DEPARTMENT:
                     mDepartmentValue.setText(data.getStringExtra("groupName"));
                     break;
+                    /*
                 case REQUEST_CODE_SELECT_SHR:
                     mShrValue.setText(data.getStringExtra("personName"));
                     break;
+                    */
                 case REQUEST_CODE_SELECT_BZ:
                     bzID=data.getIntExtra("personID",0);
                     mBzValue.setText(data.getStringExtra("personName"));
@@ -174,14 +178,14 @@ public class BCPInRKDInputActivity extends BaseActivity {
 
     private boolean checkDataIfCompleted() {
         String fhdwValue = mDepartmentValue.getText().toString();
-        String shrValue = mShrValue.getText().toString();
+        //String shrValue = mShrValue.getText().toString();
         String bzValue = mBzValue.getText().toString();
         String fzrValue = mFzrValue.getText().toString();
         String zjyValue = mZjyValue.getText().toString();
         String zjldValue = mZjldValue.getText().toString();
         if (TextUtils.isEmpty(fhdwValue)
                 || "请选择部门".equals(fhdwValue)
-                || "请选择收货人".equals(shrValue)
+                //|| "请选择收货人".equals(shrValue)
                 || "请选择班长".equals(bzValue)
                 || "请选择车间领导".equals(fzrValue)
                 || "请选择质检员".equals(zjyValue)
@@ -190,7 +194,7 @@ public class BCPInRKDInputActivity extends BaseActivity {
         }
         params.setJhDw(fhdwValue);
         params.setJhr(GlobalData.realName);
-        params.setShr(shrValue);
+        //params.setShr(shrValue);
         params.setBzID(bzID);
         params.setBz(bzValue);
         params.setBzStatus(0);
