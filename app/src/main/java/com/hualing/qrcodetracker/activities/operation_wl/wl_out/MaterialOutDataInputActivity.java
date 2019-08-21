@@ -150,7 +150,7 @@ public class MaterialOutDataInputActivity extends BaseActivity {
                             mZzlValue.setText(dataResult.getPczl() + "");
                             mSldwValue.setText(dataResult.getDw());
                             mRemainShlValue.setText(dataResult.getShl() + "");
-                            mZhlValue.setText(dataResult.getDwzl() + "");
+                            mZhlValue.setText(dataResult.getSyzl() + "");
                         }
                     }
                 });
@@ -175,7 +175,7 @@ public class MaterialOutDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
-        float dwzl = Float.parseFloat(mZhlValue.getText().toString());
+        float syzl = Float.parseFloat(mZhlValue.getText().toString());
         String value = mNeedZhlValue.getText().toString();
         //        String llbm = mLlbmValue.getText().toString();
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
@@ -190,16 +190,16 @@ public class MaterialOutDataInputActivity extends BaseActivity {
             Toast.makeText(this, "出库重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if (ckZhl > dwzl) {
-            Toast.makeText(this, "出库重量不得大于单位重量", Toast.LENGTH_SHORT).show();
+        else if (ckZhl > syzl) {
+            Toast.makeText(this, "出库重量不得大于剩余重量", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         params.setQrCodeId(mQrcodeId);
         DecimalFormat df = new DecimalFormat("0.00");
         //params.setCkShL(Float.parseFloat(df.format(remainShL - (dwzl - Float.parseFloat(value)) / dwzl)));
-        params.setCkShL(Float.parseFloat(value)*remainShL/dwzl);
-        params.setDwzl(Float.parseFloat(value));
+        params.setCkShL(Float.parseFloat(value)*remainShL/syzl);
+        params.setCkzl(Float.parseFloat(value));
         //        params.setLlbm(llbm);
         params.setOutDh(SharedPreferenceUtil.getWlCKDNumber());
 

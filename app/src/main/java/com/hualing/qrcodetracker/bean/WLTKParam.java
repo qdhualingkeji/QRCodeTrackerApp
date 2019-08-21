@@ -18,6 +18,8 @@ public class WLTKParam {
     private String ylpc;
     private String gg;
     private float dwzl;
+    private float syzl;
+    private float tkzl;
     private String time;
     private String flr;
     private String llr;
@@ -91,6 +93,22 @@ public class WLTKParam {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(float syzl) {
+        this.syzl = syzl;
+    }
+
+    public float getTkzl() {
+        return tkzl;
+    }
+
+    public void setTkzl(float tkzl) {
+        this.tkzl = tkzl;
     }
 
     public String getTime() {

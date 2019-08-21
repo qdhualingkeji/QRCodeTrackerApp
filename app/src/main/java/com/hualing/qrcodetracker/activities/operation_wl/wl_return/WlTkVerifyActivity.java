@@ -361,7 +361,7 @@ public class WlTkVerifyActivity extends BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = View.inflate(WlTkVerifyActivity.this, R.layout.item_wlout_verify, null);
+                convertView = View.inflate(WlTkVerifyActivity.this, R.layout.item_wlreturn_verify, null);
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
             } else
@@ -379,6 +379,7 @@ public class WlTkVerifyActivity extends BaseActivity {
             viewHolder.mSldwValue.setText(bean.getdW());
             viewHolder.mSlValue.setText(bean.getShl() + "");
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+            viewHolder.mTkzlValue.setText(bean.gettKZL() + "");
 
             return convertView;
         }
@@ -400,6 +401,8 @@ public class WlTkVerifyActivity extends BaseActivity {
             TextView mSlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.tkzlValue)
+            TextView mTkzlValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

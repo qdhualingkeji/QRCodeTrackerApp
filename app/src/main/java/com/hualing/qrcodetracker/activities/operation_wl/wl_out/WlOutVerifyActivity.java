@@ -382,6 +382,7 @@ public class WlOutVerifyActivity extends BaseActivity {
             viewHolder.mSldwValue.setText(bean.getdW());
             viewHolder.mSlValue.setText(bean.getShl() + "");
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+            viewHolder.mCkzlValue.setText(bean.getcKZL() + "");
 
             return convertView;
         }
@@ -403,6 +404,8 @@ public class WlOutVerifyActivity extends BaseActivity {
             TextView mSlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.ckzlValue)
+            TextView mCkzlValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

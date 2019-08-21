@@ -181,7 +181,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
                             mGgValue.setText(gg);
                             mSldwValue.setText(dataResult.getDw());
                             mRemainShlValue.setText(dataResult.getShl() + "");
-                            mZhlValue.setText(dataResult.getDwzl() + "");
+                            mZhlValue.setText(dataResult.getSyzl() + "");
                         }
                     }
                 });
@@ -226,7 +226,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
             return false;
         }
         if(tkZhl>zhl){
-            Toast.makeText(this, "退库重量不能大于单位重量", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "退库重量不能大于剩余重量", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (tkShL > remainShL) {
@@ -236,7 +236,7 @@ public class MaterialTKDataInputActivity extends BaseActivity {
 
         params.setQrCodeId(mQrcodeId);
         params.setTkShL(tkShL);
-        params.setDwzl(tkZhl);
+        params.setTkzl(tkZhl);
         params.setBz(remark);
         //        params.setLlbm(llbm);
         params.setOutDh(SharedPreferenceUtil.getWlTKDNumber());

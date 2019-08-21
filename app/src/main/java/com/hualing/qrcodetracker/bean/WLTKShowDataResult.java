@@ -16,6 +16,7 @@ public class WLTKShowDataResult {
     private String sortName;
     private float pczl;
     private float dwzl;
+    private float syzl;
     private float shl;
     private String chd;
     private String gg;
@@ -51,6 +52,14 @@ public class WLTKShowDataResult {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(float syzl) {
+        this.syzl = syzl;
     }
 
     public float getShl() {

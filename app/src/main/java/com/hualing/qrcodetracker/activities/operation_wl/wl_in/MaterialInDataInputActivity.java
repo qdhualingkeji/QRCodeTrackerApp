@@ -242,6 +242,7 @@ public class MaterialInDataInputActivity extends BaseActivity {
         params.setShl(Float.parseFloat(slValue));
         params.setpCZL(Float.parseFloat(zhlValue) * Float.parseFloat(slValue));
         params.setdWZL(Float.parseFloat(zhlValue));
+        params.setsYZL(Float.parseFloat(zhlValue) * Float.parseFloat(slValue));
         params.setRemark(beizhuValue);
 
         params.setcZY(GlobalData.realName);

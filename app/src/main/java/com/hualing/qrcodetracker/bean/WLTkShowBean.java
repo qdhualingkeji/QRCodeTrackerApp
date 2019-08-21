@@ -28,6 +28,8 @@ public class WLTkShowBean {
     private float pCZL;
     //单位重量
     private float dWZL;
+    //退库重量
+    private float tKZL;
     //单位
     private String dW ;
     //规格
@@ -109,6 +111,14 @@ public class WLTkShowBean {
 
     public void setdWZL(float dWZL) {
         this.dWZL = dWZL;
+    }
+
+    public float gettKZL() {
+        return tKZL;
+    }
+
+    public void settKZL(float tKZL) {
+        this.tKZL = tKZL;
     }
 
     public String getdW() {

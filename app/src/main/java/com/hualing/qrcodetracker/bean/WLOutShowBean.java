@@ -29,6 +29,8 @@ public class WLOutShowBean {
     private float shl ;
     //单位重量
     private float dWZL;
+    //出库重量
+    private float cKZL;
     //单位
     private String dW ;
     //规格
@@ -110,6 +112,14 @@ public class WLOutShowBean {
 
     public void setdWZL(float dWZL) {
         this.dWZL = dWZL;
+    }
+
+    public float getcKZL() {
+        return cKZL;
+    }
+
+    public void setcKZL(float cKZL) {
+        this.cKZL = cKZL;
     }
 
     public String getdW() {

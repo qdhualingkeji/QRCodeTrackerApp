@@ -16,7 +16,9 @@ public class WLINParam {
 	private String yLPC;
 	//数量
     private float shl ;
-    //单位重量
+    //剩余重量
+    private float sYZL;
+	//单位重量
     private float dWZL;
 	//批次重量
 	private float pCZL;
@@ -75,6 +77,14 @@ public class WLINParam {
 
 	public void setShl(float shl) {
 		this.shl = shl;
+	}
+
+	public float getsYZL() {
+		return sYZL;
+	}
+
+	public void setsYZL(float sYZL) {
+		this.sYZL = sYZL;
 	}
 
 	public float getdWZL() {
