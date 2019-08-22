@@ -9,6 +9,8 @@ public class BcpOutParam {
     private String ylpc;
     private String gg;
     private float dwzl;
+    private float syzl;
+    private float ckzl;
     private String time;
     private String flr;
     private String llr;
@@ -74,6 +76,22 @@ public class BcpOutParam {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(float syzl) {
+        this.syzl = syzl;
+    }
+
+    public float getCkzl() {
+        return ckzl;
+    }
+
+    public void setCkzl(float ckzl) {
+        this.ckzl = ckzl;
     }
 
     public String getTime() {
