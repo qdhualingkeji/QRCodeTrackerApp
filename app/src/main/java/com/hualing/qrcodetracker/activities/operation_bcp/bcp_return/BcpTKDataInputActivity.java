@@ -63,6 +63,8 @@ public class BcpTKDataInputActivity extends BaseActivity {
     TextView mShlDwValue;
     @BindView(R.id.dwZhlValue)
     TextView mDwZhlValue;
+    @BindView(R.id.syzlValue)
+    TextView mSyzlValue;
     @BindView(R.id.tkShlValue)
     EditText mTkShlValue;
     @BindView(R.id.tkZhlValue)
@@ -123,8 +125,8 @@ public class BcpTKDataInputActivity extends BaseActivity {
                     if(!TextUtils.isEmpty(tkShlStr)){
                         float tkShl = Float.parseFloat(tkShlStr);
                         float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
-                        float zhl = Float.parseFloat(mDwZhlValue.getText().toString());
-                        mTkZhlValue.setText(df.format((tkShl / remainShl)*zhl));
+                        float syzl = Float.parseFloat(mSyzlValue.getText().toString());
+                        mTkZhlValue.setText(df.format((tkShl / remainShl)*syzl));
                     }
                 }
             }
@@ -143,8 +145,8 @@ public class BcpTKDataInputActivity extends BaseActivity {
                     if(!TextUtils.isEmpty(tkZhlStr)){
                         float tkZhl = Float.parseFloat(tkZhlStr);
                         float remainShl = Float.parseFloat(mRemainShlValue.getText().toString());
-                        float zhl = Float.parseFloat(mDwZhlValue.getText().toString());
-                        mTkShlValue.setText(df.format(tkZhl*remainShl/zhl));
+                        float syzl = Float.parseFloat(mSyzlValue.getText().toString());
+                        mTkShlValue.setText(df.format(tkZhl*remainShl/syzl));
                     }
                 }
             }
@@ -189,6 +191,7 @@ public class BcpTKDataInputActivity extends BaseActivity {
                             mRemainShlValue.setText(dataResult.getShl() + "");
                             mShlDwValue.setText(dataResult.getDw());
                             mDwZhlValue.setText(dataResult.getDwzl()+"");
+                            mSyzlValue.setText(dataResult.getSyzl()+"");
                         }
                     }
                 });
@@ -213,7 +216,7 @@ public class BcpTKDataInputActivity extends BaseActivity {
     }
 
     private boolean checkIfInfoPerfect() {
-        float dwZhl = Float.parseFloat(mDwZhlValue.getText().toString());
+        float syzl = Float.parseFloat(mSyzlValue.getText().toString());
         float remainShL = Float.parseFloat(mRemainShlValue.getText().toString());
         String tkZhlValue = mTkZhlValue.getText().toString();
         String tkShLValue = mTkShlValue.getText().toString();
@@ -228,8 +231,8 @@ public class BcpTKDataInputActivity extends BaseActivity {
             Toast.makeText(this, "退库重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(tkZhl>dwZhl){
-            Toast.makeText(this, "退库重量不能大于单位重量", Toast.LENGTH_SHORT).show();
+        if(tkZhl>syzl){
+            Toast.makeText(this, "退库重量不能大于剩余重量", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (tkShL > remainShL) {
@@ -239,7 +242,7 @@ public class BcpTKDataInputActivity extends BaseActivity {
 
         params.setQrCodeId(mQrcodeId);
         params.setShl(tkShL);
-        params.setDwzl(tkZhl);
+        params.setTkzl(tkZhl);
         params.setCzy(GlobalData.realName);
         params.setRemark(mRemarkValue.getText().toString());
         params.setBackDh(SharedPreferenceUtil.getBCPTKDNumber());

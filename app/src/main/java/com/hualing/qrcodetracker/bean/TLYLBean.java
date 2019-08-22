@@ -14,6 +14,9 @@ public class TLYLBean {
     private int ID;
     private String qrcodeID;
     private String ProductName;
+    private Float syzl;
+    private String dw;
+    private boolean flag ;
 
     public int getID() {
         return ID;
@@ -37,5 +40,29 @@ public class TLYLBean {
 
     public void setProductName(String productName) {
         ProductName = productName;
+    }
+
+    public Float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(Float syzl) {
+        this.syzl = syzl;
+    }
+
+    public String getDw() {
+        return dw;
+    }
+
+    public void setDw(String dw) {
+        this.dw = dw;
+    }
+
+    public boolean getFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 }

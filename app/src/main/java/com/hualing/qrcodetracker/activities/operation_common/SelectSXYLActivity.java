@@ -28,7 +28,6 @@ import com.hualing.qrcodetracker.bean.SXYLResult;
 import com.hualing.qrcodetracker.bean.TLYLBean;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
-import com.hualing.qrcodetracker.model.LocalShowBean;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 
@@ -55,9 +54,9 @@ public class SelectSXYLActivity extends BaseActivity {
 
     private MyAdapter mAdapter;
     private List<TLYLBean> mData;
-    private List<LocalShowBean> mLocalData;
+    private List<TLYLBean> mLocalData;
     //模糊过滤后的数据
-    private List<LocalShowBean> mFilterData;
+    private List<TLYLBean> mFilterData;
     private MainDao mainDao;
 
     //车间包含的工序id
@@ -148,10 +147,12 @@ public class SelectSXYLActivity extends BaseActivity {
                             mData.addAll(beans);
                             mLocalData.clear();
                             for (int i = 0; i < mData.size(); i++) {
-                                LocalShowBean b = new LocalShowBean();
+                                TLYLBean b = new TLYLBean();
                                 b.setID(mData.get(i).getID());
                                 b.setProductName(mData.get(i).getProductName());
-                                b.setQRCodeID(mData.get(i).getQrcodeID());
+                                b.setQrcodeID(mData.get(i).getQrcodeID());
+                                b.setDw(mData.get(i).getDw());
+                                b.setSyzl(mData.get(i).getSyzl());
                                 b.setFlag(false);
                                 mLocalData.add(b);
                             }
@@ -180,7 +181,7 @@ public class SelectSXYLActivity extends BaseActivity {
         for (int i = 0; i < mFilterData.size(); i++) {
             if (mFilterData.get(i).getFlag()) {
                 nameBuffer.append(mFilterData.get(i).getProductName() + ",");
-                qrcodeBuffer.append(mFilterData.get(i).getQRCodeID() + ",");
+                qrcodeBuffer.append(mFilterData.get(i).getQrcodeID() + ",");
             }
         }
         //如果有选中的则去掉最后一个逗号
@@ -202,14 +203,18 @@ public class SelectSXYLActivity extends BaseActivity {
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(SelectSXYLActivity.this).inflate(R.layout.tlyl_adapter_single, parent, false);
+            View v = LayoutInflater.from(SelectSXYLActivity.this).inflate(R.layout.sxyl_adapter_single, parent, false);
             return new MyViewHolder(v);
         }
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
-            final LocalShowBean bean = mFilterData.get(position);
+            final TLYLBean bean = mFilterData.get(position);
             holder.ylName.setText(bean.getProductName());
+            holder.qrcodeID.setText(bean.getQrcodeID());
+            holder.syzlValue.setText(String.valueOf(bean.getSyzl()));
+            holder.syzlDwValue.setText(bean.getDw());
+            holder.tlZhlDwValue.setText(bean.getDw());
             if (bean.getFlag()) {
                 holder.flag.setChecked(true);
             } else {
@@ -255,8 +260,8 @@ public class SelectSXYLActivity extends BaseActivity {
                         //没有过滤的内容，则使用源数据
                         mFilterData = mLocalData;
                     } else {
-                        List<LocalShowBean> filteredList = new ArrayList<>();
-                        for (LocalShowBean bean : mLocalData) {
+                        List<TLYLBean> filteredList = new ArrayList<>();
+                        for (TLYLBean bean : mLocalData) {
                             //这里根据需求，添加匹配规则
                             if (bean.getProductName().contains(charString)) {
                                 filteredList.add(bean);
@@ -274,7 +279,7 @@ public class SelectSXYLActivity extends BaseActivity {
                 //把过滤后的值返回出来
                 @Override
                 protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                    mFilterData = (ArrayList<LocalShowBean>) filterResults.values;
+                    mFilterData = (ArrayList<TLYLBean>) filterResults.values;
                     notifyDataSetChanged();
                 }
             };
@@ -283,11 +288,21 @@ public class SelectSXYLActivity extends BaseActivity {
         class MyViewHolder extends RecyclerView.ViewHolder {
 
             TextView ylName;
+            TextView qrcodeID;
+            TextView syzlValue;
+            EditText tlZhlValue;
+            TextView syzlDwValue;
+            TextView tlZhlDwValue;
             CheckBox flag;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
                 ylName = itemView.findViewById(R.id.ylName);
+                qrcodeID = itemView.findViewById(R.id.qrcodeID);
+                syzlValue = itemView.findViewById(R.id.syzlValue);
+                tlZhlValue = itemView.findViewById(R.id.tlZhlValue);
+                syzlDwValue = itemView.findViewById(R.id.syzlDwValue);
+                tlZhlDwValue = itemView.findViewById(R.id.tlZhlDwValue);
                 flag = itemView.findViewById(R.id.checkFlag);
             }
         }
@@ -301,7 +316,7 @@ public class SelectSXYLActivity extends BaseActivity {
         for (int i = 0; i < mFilterData.size(); i++) {
             if (mFilterData.get(i).getFlag()) {
                 nameBuffer.append(mFilterData.get(i).getProductName() + ",");
-                qrcodeBuffer.append(mFilterData.get(i).getQRCodeID() + ",");
+                qrcodeBuffer.append(mFilterData.get(i).getQrcodeID() + ",");
             }
         }
         //如果有选中的则去掉最后一个逗号

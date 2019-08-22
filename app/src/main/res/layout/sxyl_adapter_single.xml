@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="原料名称："
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            />
+
+        <TextView
+            android:id="@+id/ylName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:textSize="17sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="二维码编号："
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            />
+
+        <TextView
+            android:id="@+id/qrcodeID"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:textSize="17sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="剩余重量："
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            />
+
+        <TextView
+            android:id="@+id/syzlValue"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="11"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/syzlDwValue"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="投料重量："
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            />
+
+        <EditText
+            android:id="@+id/tlZhlValue"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/black"
+            android:text="11"
+            android:textSize="17sp"
+            android:maxLength="75"/>
+
+        <TextView
+            android:id="@+id/tlZhlDwValue"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="是否投料："
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            />
+
+        <CheckBox
+            android:id="@+id/checkFlag"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

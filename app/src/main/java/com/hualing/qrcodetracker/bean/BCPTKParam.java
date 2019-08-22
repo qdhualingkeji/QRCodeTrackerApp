@@ -20,6 +20,7 @@ public class BCPTKParam {
     private float shl;
     private String scTime;
     private float dwzl;
+    private float tkzl;
     private String ksTime;
     private String wcTime;
     private String gx;
@@ -145,6 +146,14 @@ public class BCPTKParam {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getTkzl() {
+        return tkzl;
+    }
+
+    public void setTkzl(float tkzl) {
+        this.tkzl = tkzl;
     }
 
     public String getKsTime() {
