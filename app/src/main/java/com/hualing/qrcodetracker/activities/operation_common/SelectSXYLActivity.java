@@ -213,6 +213,23 @@ public class SelectSXYLActivity extends BaseActivity {
             holder.ylName.setText(bean.getProductName());
             holder.qrcodeID.setText(bean.getQrcodeID());
             holder.syzlValue.setText(String.valueOf(bean.getSyzl()));
+            holder.tlZhlValue.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    bean.setTlzl(Float.parseFloat(s.toString()));
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
             holder.syzlDwValue.setText(bean.getDw());
             holder.tlZhlDwValue.setText(bean.getDw());
             if (bean.getFlag()) {
@@ -313,10 +330,12 @@ public class SelectSXYLActivity extends BaseActivity {
     public void onBackPressed() {
         StringBuffer nameBuffer = new StringBuffer();
         StringBuffer qrcodeBuffer = new StringBuffer();
+        StringBuffer tlzlBuffer = new StringBuffer();
         for (int i = 0; i < mFilterData.size(); i++) {
             if (mFilterData.get(i).getFlag()) {
                 nameBuffer.append(mFilterData.get(i).getProductName() + ",");
                 qrcodeBuffer.append(mFilterData.get(i).getQrcodeID() + ",");
+                tlzlBuffer.append(mFilterData.get(i).getTlzl() + ",");
             }
         }
         //如果有选中的则去掉最后一个逗号
@@ -327,9 +346,15 @@ public class SelectSXYLActivity extends BaseActivity {
         if (qrcodeBuffer.length()>0) {
             qrcodeBuffer.deleteCharAt(qrcodeBuffer.length()-1);
         }
+        //如果有选中的则去掉最后一个逗号
+        if (tlzlBuffer.length()>0) {
+            tlzlBuffer.deleteCharAt(tlzlBuffer.length()-1);
+        }
         Intent intent = new Intent();
         intent.putExtra("allYlStr",nameBuffer.toString());
         intent.putExtra("allYlQrCode",qrcodeBuffer.toString());
+        intent.putExtra("allYlTlzl",tlzlBuffer.toString());
+        Log.e("allYlTlzl===",""+tlzlBuffer.toString());
         setResult(RESULT_OK,intent);
         super.onBackPressed();
     }
