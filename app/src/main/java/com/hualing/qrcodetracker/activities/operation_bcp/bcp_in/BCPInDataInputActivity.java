@@ -509,6 +509,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                 Bundle bundle2 = new Bundle();
                 bundle2.putInt("selectedGxId", mSelectedGxId);
                 bundle2.putString("trackType", TrackType.BCP);
+                bundle2.putFloat("dwzl",Float.valueOf(mDwzlValue.getText().toString()));
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
             case R.id.scTimeValue:

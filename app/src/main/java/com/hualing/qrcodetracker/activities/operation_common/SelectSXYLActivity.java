@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,6 +64,7 @@ public class SelectSXYLActivity extends BaseActivity {
     //车间包含的工序id
     private int mSelectedGxId;
     private String mTrackType;
+    private float dwzl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +103,7 @@ public class SelectSXYLActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         mSelectedGxId = bundle.getInt("selectedGxId");
         mTrackType = bundle.getString("trackType");
+        dwzl = bundle.getFloat("dwzl",0);
 
         mSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -180,6 +183,9 @@ public class SelectSXYLActivity extends BaseActivity {
 
     @OnClick(R.id.lastButton)
     public void onViewClicked() {
+        if (!checkIfInfoPerfect()) {
+            return;
+        }
         StringBuffer nameBuffer = new StringBuffer();
         StringBuffer qrcodeBuffer = new StringBuffer();
         StringBuffer tlzlBuffer = new StringBuffer();
@@ -212,6 +218,27 @@ public class SelectSXYLActivity extends BaseActivity {
         AllActivitiesHolder.removeAct(this);
     }
 
+    private boolean checkIfInfoPerfect() {
+        float tlzlSum=(float) 0.0;
+        for (int i = 0; i < mFilterData.size(); i++) {
+            if (mFilterData.get(i).getFlag()) {
+                Float syzl = mFilterData.get(i).getSyzl();
+                Float tlzl = mFilterData.get(i).getTlzl();
+                tlzlSum+=tlzl;
+                if(tlzl>syzl){
+                    Toast.makeText(this, "投料重量不能大于剩余重量", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+
+        if(tlzlSum<dwzl){
+            Toast.makeText(this, "投料重量不能小于单位重量", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -233,7 +260,8 @@ public class SelectSXYLActivity extends BaseActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    bean.setTlzl(Float.parseFloat(s.toString()));
+                    if(!TextUtils.isEmpty(s.toString()))
+                        bean.setTlzl(Float.parseFloat(s.toString()));
                 }
 
                 @Override
