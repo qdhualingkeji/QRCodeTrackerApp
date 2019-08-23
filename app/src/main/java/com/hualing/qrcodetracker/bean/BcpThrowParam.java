@@ -20,6 +20,7 @@ public class BcpThrowParam {
     private String gg ;
     private String scTime ;
     private float dwzl ;
+    private float tlzl ;
     private String ksTime ;
     private String wcTime ;
         private int gxId ;
@@ -118,6 +119,14 @@ public class BcpThrowParam {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getTlzl() {
+        return tlzl;
+    }
+
+    public void setTlzl(float tlzl) {
+        this.tlzl = tlzl;
     }
 
     public String getKsTime() {

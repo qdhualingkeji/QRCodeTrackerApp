@@ -67,6 +67,8 @@ public class BcpThrowActivity extends BaseActivity {
     TextView mShlDwValue;
     @BindView(R.id.zhlValue)
     TextView mZhlValue;
+    @BindView(R.id.syzlValue)
+    TextView mSyzlValue;
     //@BindView(R.id.tlShlValue)
     //EditText mTlShlValue;
     @BindView(R.id.tlZhlValue)
@@ -171,8 +173,8 @@ public class BcpThrowActivity extends BaseActivity {
         String tlZhlStr = mTlZhlValue.getText().toString();
         if(!TextUtils.isEmpty(tlZhlStr)){
             float tlZhl = Float.parseFloat(tlZhlStr);
-            float zhl = Float.parseFloat(mZhlValue.getText().toString());
-            tlShl=tlZhl*remainShl/zhl;
+            float syzl = Float.parseFloat(mSyzlValue.getText().toString());
+            tlShl=tlZhl*remainShl/syzl;
         }
     }
 
@@ -211,6 +213,7 @@ public class BcpThrowActivity extends BaseActivity {
                             remainShl = dataResult.getShl();
                             mShlDwValue.setText(dataResult.getDw());
                             mZhlValue.setText(dataResult.getDwzl() + "");
+                            mSyzlValue.setText(dataResult.getSyzl() + "");
                         }
                     }
                 });
@@ -282,19 +285,19 @@ public class BcpThrowActivity extends BaseActivity {
             return false;
         }
         float tlZhL = Float.parseFloat(tlZhlStr);
-        float zhL = Float.parseFloat(mZhlValue.getText().toString());
+        float syzl = Float.parseFloat(mSyzlValue.getText().toString());
         if (tlZhL==0) {
             Toast.makeText(this, "投料重量不能为0", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (tlZhL > zhL) {
-            Toast.makeText(this, "投料重量不得大于重量", Toast.LENGTH_SHORT).show();
+        if (tlZhL > syzl) {
+            Toast.makeText(this, "投料重量不得大于剩余重量", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         params.setQrcodeId(mQrcodeId);
         params.setTlShl(tlShl);
-        params.setDwzl(tlZhL);
+        params.setTlzl(tlZhL);
         params.setCjId(mSelectedCJId);
         params.setCheJian(mCjValue.getText().toString());
         params.setGxId(mSelectedGxId);

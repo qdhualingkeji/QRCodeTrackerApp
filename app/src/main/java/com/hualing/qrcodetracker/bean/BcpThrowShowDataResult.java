@@ -19,6 +19,8 @@ public class BcpThrowShowDataResult {
     private float shl;
     private String scTime;
     private float dwzl;
+    private float syzl;
+
     private String dw ;
 
     public String getProductName() {
@@ -83,6 +85,14 @@ public class BcpThrowShowDataResult {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(float syzl) {
+        this.syzl = syzl;
     }
 
     public String getDw() {

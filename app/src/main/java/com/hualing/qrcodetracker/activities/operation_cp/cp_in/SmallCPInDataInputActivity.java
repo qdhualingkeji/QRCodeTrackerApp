@@ -115,6 +115,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
     private String mCJHasGongXuId;
     private int mSelectedGxId = -1;
     private String mSXYLQrcodeStr = null;
+    private String mSXYLTlzlStr = null;
     private int mSelectedLeiBieId = -1;
     private String mSelectedBigCpQrCodeId;
 
@@ -461,37 +462,48 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         if (TextUtils.isEmpty(mSXYLQrcodeStr))
             return;
         Log.d("Test", "mSXYLQrcodeStr: " + mSXYLQrcodeStr);
-        String[] array = mSXYLQrcodeStr.split(",");
-        if (array != null) {
-            if (array.length > 0 && !TextUtils.isEmpty(array[0])) {
-                params.setYl1(array[0]);
+        String[] qrcodeArray = mSXYLQrcodeStr.split(",");
+        String[] tlzlArray = mSXYLTlzlStr.split(",");
+        if (qrcodeArray != null) {
+            if (qrcodeArray.length > 0 && !TextUtils.isEmpty(qrcodeArray[0])) {
+                params.setYl1(qrcodeArray[0]);
+                params.setTlzl1(Float.valueOf(tlzlArray[0]));
             }
-            if (array.length > 1 && !TextUtils.isEmpty(array[1])) {
-                params.setYl2(array[1]);
+            if (qrcodeArray.length > 1 && !TextUtils.isEmpty(qrcodeArray[1])) {
+                params.setYl2(qrcodeArray[1]);
+                params.setTlzl2(Float.valueOf(tlzlArray[1]));
             }
-            if (array.length > 2 && !TextUtils.isEmpty(array[2])) {
-                params.setYl3(array[2]);
+            if (qrcodeArray.length > 2 && !TextUtils.isEmpty(qrcodeArray[2])) {
+                params.setYl3(qrcodeArray[2]);
+                params.setTlzl3(Float.valueOf(tlzlArray[2]));
             }
-            if (array.length > 3 && !TextUtils.isEmpty(array[3])) {
-                params.setYl4(array[3]);
+            if (qrcodeArray.length > 3 && !TextUtils.isEmpty(qrcodeArray[3])) {
+                params.setYl4(qrcodeArray[3]);
+                params.setTlzl4(Float.valueOf(tlzlArray[3]));
             }
-            if (array.length > 4 && !TextUtils.isEmpty(array[4])) {
-                params.setYl5(array[4]);
+            if (qrcodeArray.length > 4 && !TextUtils.isEmpty(qrcodeArray[4])) {
+                params.setYl5(qrcodeArray[4]);
+                params.setTlzl5(Float.valueOf(tlzlArray[4]));
             }
-            if (array.length > 5 && !TextUtils.isEmpty(array[5])) {
-                params.setYl6(array[5]);
+            if (qrcodeArray.length > 5 && !TextUtils.isEmpty(qrcodeArray[5])) {
+                params.setYl6(qrcodeArray[5]);
+                params.setTlzl6(Float.valueOf(tlzlArray[5]));
             }
-            if (array.length > 6 && !TextUtils.isEmpty(array[6])) {
-                params.setYl7(array[6]);
+            if (qrcodeArray.length > 6 && !TextUtils.isEmpty(qrcodeArray[6])) {
+                params.setYl7(qrcodeArray[6]);
+                params.setTlzl7(Float.valueOf(tlzlArray[6]));
             }
-            if (array.length > 7 && !TextUtils.isEmpty(array[7])) {
-                params.setYl8(array[7]);
+            if (qrcodeArray.length > 7 && !TextUtils.isEmpty(qrcodeArray[7])) {
+                params.setYl8(qrcodeArray[7]);
+                params.setTlzl8(Float.valueOf(tlzlArray[7]));
             }
-            if (array.length > 8 && !TextUtils.isEmpty(array[8])) {
-                params.setYl9(array[8]);
+            if (qrcodeArray.length > 8 && !TextUtils.isEmpty(qrcodeArray[8])) {
+                params.setYl9(qrcodeArray[8]);
+                params.setTlzl9(Float.valueOf(tlzlArray[8]));
             }
-            if (array.length > 9 && !TextUtils.isEmpty(array[9])) {
-                params.setYl10(array[9]);
+            if (qrcodeArray.length > 9 && !TextUtils.isEmpty(qrcodeArray[9])) {
+                params.setYl10(qrcodeArray[9]);
+                params.setTlzl10(Float.valueOf(tlzlArray[9]));
             }
         }
 
