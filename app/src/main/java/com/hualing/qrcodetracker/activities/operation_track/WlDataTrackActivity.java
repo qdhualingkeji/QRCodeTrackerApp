@@ -52,6 +52,8 @@ public class WlDataTrackActivity extends BaseActivity {
     TextView mSldwValue;
     @BindView(R.id.zhlValue)
     TextView mZhlValue;
+    @BindView(R.id.syzlValue)
+    TextView mSyzlValue;
 
     private MainDao mainDao;
     private WlTrackParam param ;
@@ -128,6 +130,7 @@ public class WlDataTrackActivity extends BaseActivity {
                             mCzyValue.setText(dataResult.getCzy());
                             mSldwValue.setText(dataResult.getDw());
                             mZhlValue.setText(dataResult.getDwzl() + "");
+                            mSyzlValue.setText(dataResult.getSyzl() + "");
                         }
                     }
                 });

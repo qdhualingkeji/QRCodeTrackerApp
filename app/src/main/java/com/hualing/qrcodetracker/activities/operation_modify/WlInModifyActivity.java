@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -573,6 +574,7 @@ public class WlInModifyActivity extends BaseActivity {
                         float num = Float.parseFloat(""+s);
                         bean.setdWZL(num);
                         bean.setpCZL(num);
+                        bean.setShl(1);
                     }else {
                         bean.setShl(-1);
                     }

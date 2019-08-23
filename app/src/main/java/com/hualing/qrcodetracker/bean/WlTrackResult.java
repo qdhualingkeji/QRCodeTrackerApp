@@ -19,6 +19,7 @@ public class WlTrackResult {
     private String llTime	;
     private String dw	;
     private float dwzl	;
+    private float syzl	;
     private String chd	;
     private String gg	;
     private String czy	;
@@ -85,6 +86,14 @@ public class WlTrackResult {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(float syzl) {
+        this.syzl = syzl;
     }
 
     public String getChd() {
