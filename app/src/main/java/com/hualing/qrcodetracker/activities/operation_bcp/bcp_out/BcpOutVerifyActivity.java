@@ -442,6 +442,7 @@ public class BcpOutVerifyActivity extends BaseActivity {
             viewHolder.mYlpcValue.setText(bean.getyLPC());
             viewHolder.mRkzlValue.setText(bean.getrKZL() + "");
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+            viewHolder.mCkzlValue.setText(bean.getcKZL() + "");
 
             return convertView;
         }
@@ -457,6 +458,8 @@ public class BcpOutVerifyActivity extends BaseActivity {
             TextView mRkzlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.ckzlValue)
+            TextView mCkzlValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

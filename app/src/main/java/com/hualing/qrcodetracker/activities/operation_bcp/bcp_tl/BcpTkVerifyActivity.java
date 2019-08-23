@@ -378,6 +378,7 @@ public class BcpTkVerifyActivity extends BaseActivity {
             viewHolder.mRemarkValue.setText(TextUtils.isEmpty(bean.getRemark())?"无备注信息":bean.getRemark());
             viewHolder.mSlValue.setText(bean.getShl() + "");
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
+            viewHolder.mTkzlValue.setText(bean.gettKZL() + "");
 
             return convertView;
         }
@@ -397,6 +398,8 @@ public class BcpTkVerifyActivity extends BaseActivity {
             TextView mSlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.tkzlValue)
+            TextView mTkzlValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
