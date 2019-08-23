@@ -29,6 +29,7 @@ import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.NotificationType;
+import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
@@ -231,6 +232,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 }
                 Bundle bundle2 = new Bundle();
                 bundle2.putInt("selectedGxId", mSelectedGxId);
+                bundle2.putString("trackType", TrackType.SMALL_CP);
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
             case R.id.scTimeValue:
@@ -299,6 +301,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                     mSxylValue.setText(allYlStr);
                     //所有所需原料的二维码id字符串
                     mSXYLQrcodeStr = data.getStringExtra("allYlQrCode");
+                    mSXYLTlzlStr = data.getStringExtra("allYlTlzl");
                     Log.d("Test", "get: " + mSXYLQrcodeStr);
                     break;
             }

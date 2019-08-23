@@ -28,6 +28,7 @@ import com.hualing.qrcodetracker.bean.SXYLResult;
 import com.hualing.qrcodetracker.bean.TLYLBean;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
+import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 
@@ -61,6 +62,7 @@ public class SelectSXYLActivity extends BaseActivity {
 
     //车间包含的工序id
     private int mSelectedGxId;
+    private String mTrackType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class SelectSXYLActivity extends BaseActivity {
 
         Bundle bundle = getIntent().getExtras();
         mSelectedGxId = bundle.getInt("selectedGxId");
+        mTrackType = bundle.getString("trackType");
 
         mSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -125,6 +128,7 @@ public class SelectSXYLActivity extends BaseActivity {
 
         final GetSXYLParam param = new GetSXYLParam();
         param.setGxId(mSelectedGxId);
+        param.setTrackType(mTrackType);
 
         Observable.create(new ObservableOnSubscribe<ActionResult<SXYLResult>>() {
             @Override
@@ -178,10 +182,12 @@ public class SelectSXYLActivity extends BaseActivity {
     public void onViewClicked() {
         StringBuffer nameBuffer = new StringBuffer();
         StringBuffer qrcodeBuffer = new StringBuffer();
+        StringBuffer tlzlBuffer = new StringBuffer();
         for (int i = 0; i < mFilterData.size(); i++) {
             if (mFilterData.get(i).getFlag()) {
                 nameBuffer.append(mFilterData.get(i).getProductName() + ",");
                 qrcodeBuffer.append(mFilterData.get(i).getQrcodeID() + ",");
+                tlzlBuffer.append(mFilterData.get(i).getTlzl() + ",");
             }
         }
         //如果有选中的则去掉最后一个逗号
@@ -192,9 +198,15 @@ public class SelectSXYLActivity extends BaseActivity {
         if (qrcodeBuffer.length()>0) {
             qrcodeBuffer.deleteCharAt(qrcodeBuffer.length()-1);
         }
+        //如果有选中的则去掉最后一个逗号
+        if (tlzlBuffer.length()>0) {
+            tlzlBuffer.deleteCharAt(tlzlBuffer.length()-1);
+        }
         Intent intent = new Intent();
         intent.putExtra("allYlStr",nameBuffer.toString());
         intent.putExtra("allYlQrCode",qrcodeBuffer.toString());
+        intent.putExtra("allYlTlzl",tlzlBuffer.toString());
+        Log.e("allYlTlzl===",""+tlzlBuffer.toString());
         Log.d("Test", "send: "+qrcodeBuffer.toString());
         setResult(RESULT_OK,intent);
         AllActivitiesHolder.removeAct(this);
@@ -222,7 +234,6 @@ public class SelectSXYLActivity extends BaseActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     bean.setTlzl(Float.parseFloat(s.toString()));
-                    notifyDataSetChanged();
                 }
 
                 @Override

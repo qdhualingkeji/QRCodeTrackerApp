@@ -29,6 +29,7 @@ import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.GlobalData;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.NotificationType;
+import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.util.SharedPreferenceUtil;
@@ -507,6 +508,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                 }
                 Bundle bundle2 = new Bundle();
                 bundle2.putInt("selectedGxId", mSelectedGxId);
+                bundle2.putString("trackType", TrackType.BCP);
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
             case R.id.scTimeValue:

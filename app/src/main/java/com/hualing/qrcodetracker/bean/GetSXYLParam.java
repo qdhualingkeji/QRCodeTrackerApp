@@ -12,6 +12,7 @@ package com.hualing.qrcodetracker.bean;
 public class GetSXYLParam {
 
     private int gxId;
+    private String trackType;
 
     public int getGxId() {
         return gxId;
@@ -19,5 +20,13 @@ public class GetSXYLParam {
 
     public void setGxId(int gxId) {
         this.gxId = gxId;
+    }
+
+    public String getTrackType() {
+        return trackType;
+    }
+
+    public void setTrackType(String trackType) {
+        this.trackType = trackType;
     }
 }
