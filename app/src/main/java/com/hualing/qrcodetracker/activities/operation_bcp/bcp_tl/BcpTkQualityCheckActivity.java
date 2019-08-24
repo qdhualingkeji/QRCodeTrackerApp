@@ -329,6 +329,7 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
             viewHolder.mBcpCzyValue.setText(bean.getCzy());
             viewHolder.mBcpZhlValue.setText(bean.getdWZL() + "");
             viewHolder.mTkzlValue.setText(bean.gettKZL() + "");
+            viewHolder.mRemarkValue.setText(bean.getRemark());
 
             return convertView;
         }
@@ -354,6 +355,8 @@ public class BcpTkQualityCheckActivity extends BaseActivity {
             TextView mBcpZhlValue;
             @BindView(R.id.tkzlValue)
             TextView mTkzlValue;
+            @BindView(R.id.remarkValue)
+            TextView mRemarkValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

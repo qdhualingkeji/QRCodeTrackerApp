@@ -328,6 +328,7 @@ public class WlInQualityCheckActivity extends BaseActivity {
             viewHolder.mCzyValue.setText(bean.getcZY());
             viewHolder.mSldwValue.setText(bean.getUnit());
             viewHolder.mZhlValue.setText(bean.getdWZL() + "");
+            viewHolder.mRemarkValue.setText(bean.getRemark());
 
             return convertView;
         }
@@ -353,6 +354,8 @@ public class WlInQualityCheckActivity extends BaseActivity {
             TextView mSldwValue;
             @BindView(R.id.zhlValue)
             TextView mZhlValue;
+            @BindView(R.id.remarkValue)
+            TextView mRemarkValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

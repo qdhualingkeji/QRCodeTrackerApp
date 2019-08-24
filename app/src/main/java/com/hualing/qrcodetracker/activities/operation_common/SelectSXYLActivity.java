@@ -232,7 +232,7 @@ public class SelectSXYLActivity extends BaseActivity {
             }
         }
 
-        if(tlzlSum<dwzl){
+        if(tlzlSum>0&&tlzlSum<dwzl){
             Toast.makeText(this, "投料重量不能小于单位重量", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -367,6 +367,9 @@ public class SelectSXYLActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if (!checkIfInfoPerfect()) {
+            return;
+        }
         StringBuffer nameBuffer = new StringBuffer();
         StringBuffer qrcodeBuffer = new StringBuffer();
         StringBuffer tlzlBuffer = new StringBuffer();
