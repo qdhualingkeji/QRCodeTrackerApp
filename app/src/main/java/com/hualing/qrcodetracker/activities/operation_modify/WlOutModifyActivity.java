@@ -300,7 +300,7 @@ public class WlOutModifyActivity extends BaseActivity {
 
         for (int i = 0; i < mData.size(); i++) {
 
-            if (mData.get(i).getdWZL() == -1
+            if (mData.get(i).getcKZL() == -1
                     || "请选择部门".equals(mLldwValue.getText().toString())
                     || "请选择仓库管理员".equals(mKgValue.getText().toString())
                     || "请选择发料负责人".equals(mFlfzrValue.getText().toString())
@@ -308,6 +308,10 @@ public class WlOutModifyActivity extends BaseActivity {
                     || "请选择领料负责人".equals(mLlfzrValue.getText().toString())
                     ) {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(mData.get(i).getcKZL() > mData.get(i).getsYZL() ){
+                Toast.makeText(this, "出库重量不能大于剩余重量", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -419,7 +423,9 @@ public class WlOutModifyActivity extends BaseActivity {
             viewHolder.shl = bean.getShl();
             viewHolder.pCZL = bean.getpCZL();
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
-            viewHolder.mDwzlValue.addTextChangedListener(new TextWatcher() {
+            viewHolder.mSyzlValue.setText(bean.getsYZL() + "");
+            viewHolder.mCkzlValue.setText(bean.getcKZL() + "");
+            viewHolder.mCkzlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -429,10 +435,11 @@ public class WlOutModifyActivity extends BaseActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (!TextUtils.isEmpty(s)) {
                         float num = Float.parseFloat("" + s);
-                        bean.setdWZL(num);
+                        bean.setcKZL(num);
                         bean.setShl(num/viewHolder.pCZL);
                     } else {
-                        bean.setdWZL(-1);
+                        Log.e("1111","111111111");
+                        bean.setcKZL(-1);
                     }
 
                 }
@@ -461,6 +468,10 @@ public class WlOutModifyActivity extends BaseActivity {
             TextView mSldwValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.syzlValue)
+            TextView mSyzlValue;
+            @BindView(R.id.ckzlValue)
+            EditText mCkzlValue;
             Float shl;
             Float pCZL;
 

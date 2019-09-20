@@ -29,6 +29,8 @@ public class WLINShowBean {
     private float dWZL;
     //批次重量
     private float pCZL;
+    //剩余重量
+    private float sYZL;
     //单位
     private String unit ;
     //规格
@@ -116,6 +118,14 @@ public class WLINShowBean {
 
     public void setpCZL(float pCZL) {
         this.pCZL = pCZL;
+    }
+
+    public float getsYZL() {
+        return sYZL;
+    }
+
+    public void setsYZL(float sYZL) {
+        this.sYZL = sYZL;
     }
 
     public String getUnit() {

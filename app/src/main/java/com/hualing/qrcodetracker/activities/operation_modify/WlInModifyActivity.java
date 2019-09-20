@@ -574,6 +574,7 @@ public class WlInModifyActivity extends BaseActivity {
                         float num = Float.parseFloat(""+s);
                         bean.setdWZL(num);
                         bean.setpCZL(num);
+                        bean.setsYZL(num);
                         bean.setShl(1);
                     }else {
                         bean.setShl(-1);
