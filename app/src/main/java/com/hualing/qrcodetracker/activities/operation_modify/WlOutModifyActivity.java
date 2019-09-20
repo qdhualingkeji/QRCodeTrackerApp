@@ -310,8 +310,8 @@ public class WlOutModifyActivity extends BaseActivity {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(mData.get(i).getcKZL() > mData.get(i).getsYZL() ){
-                Toast.makeText(this, "出库重量不能大于剩余重量", Toast.LENGTH_SHORT).show();
+            if(mData.get(i).getcKZL() > mData.get(i).getsYZL()+mData.get(i).getcKZL1() ){
+                Toast.makeText(this, "出库重量不能大于库存重量"+(mData.get(i).getsYZL()+mData.get(i).getcKZL1())+mData.get(i).getdW(), Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -438,7 +438,6 @@ public class WlOutModifyActivity extends BaseActivity {
                         bean.setcKZL(num);
                         bean.setShl(num/viewHolder.pCZL);
                     } else {
-                        Log.e("1111","111111111");
                         bean.setcKZL(-1);
                     }
 
