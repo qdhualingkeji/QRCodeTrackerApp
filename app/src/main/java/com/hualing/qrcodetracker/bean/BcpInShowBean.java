@@ -39,6 +39,10 @@ public class BcpInShowBean implements Serializable {
     private float shl ;
     //单位重量
     private float dWZL;
+    //入库重量
+    private float rKZL;
+    //剩余重量
+    private float sYZL;
     //单位
     private String dW ;
     //规格
@@ -170,6 +174,22 @@ public class BcpInShowBean implements Serializable {
 
     public void setdWZL(float dWZL) {
         this.dWZL = dWZL;
+    }
+
+    public float getrKZL() {
+        return rKZL;
+    }
+
+    public void setrKZL(float rKZL) {
+        this.rKZL = rKZL;
+    }
+
+    public float getsYZL() {
+        return sYZL;
+    }
+
+    public void setsYZL(float sYZL) {
+        this.sYZL = sYZL;
     }
 
     public String getdW() {

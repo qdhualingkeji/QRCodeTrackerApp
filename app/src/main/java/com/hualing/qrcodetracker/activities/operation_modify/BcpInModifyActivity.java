@@ -751,6 +751,9 @@ public class BcpInModifyActivity extends BaseActivity {
                     if (!TextUtils.isEmpty(s)) {
                         float num = Float.parseFloat("" + s);
                         bean.setdWZL(num);
+                        bean.setrKZL(num);
+                        bean.setsYZL(num);
+                        bean.setShl(1);
                     } else {
                         bean.setShl(-1);
                     }

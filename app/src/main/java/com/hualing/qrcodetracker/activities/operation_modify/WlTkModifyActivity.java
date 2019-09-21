@@ -341,6 +341,10 @@ public class WlTkModifyActivity extends BaseActivity {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if(mData.get(i).gettKZL() > mData.get(i).getsYZL()+mData.get(i).gettKZL1() ){
+                Toast.makeText(this, "退库重量不能大于车间的物料重量"+(mData.get(i).getsYZL()+mData.get(i).gettKZL1())+mData.get(i).getdW(), Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         updatedParam.setBeans(mData);
@@ -434,7 +438,7 @@ public class WlTkModifyActivity extends BaseActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             ViewHolder viewHolder;
             if (convertView == null) {
-                convertView = View.inflate(WlTkModifyActivity.this, R.layout.item_wlout_modify, null);
+                convertView = View.inflate(WlTkModifyActivity.this, R.layout.item_wlreturn_modify, null);
                 viewHolder = new ViewHolder(convertView);
                 convertView.setTag(viewHolder);
             } else
@@ -478,7 +482,9 @@ public class WlTkModifyActivity extends BaseActivity {
             */
             viewHolder.mShl = bean.getShl();
             viewHolder.mDwzlValue.setText(bean.getdWZL() + "");
-            viewHolder.mDwzlValue.addTextChangedListener(new TextWatcher() {
+            viewHolder.mSyzlValue.setText(bean.getsYZL() + "");
+            viewHolder.mTkzlValue.setText(bean.gettKZL() + "");
+            viewHolder.mTkzlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -488,10 +494,10 @@ public class WlTkModifyActivity extends BaseActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (!TextUtils.isEmpty(s)) {
                         float num = Float.parseFloat("" + s);
-                        bean.setdWZL(num);
-                        bean.setShl(num/bean.getpCZL());//单位重量变了，必须计算出相对数量
+                        bean.settKZL(num);
+                        bean.setShl(num/bean.getpCZL());//退库重量变了，必须计算出相对数量
                     } else {
-                        bean.setdWZL(-1);
+                        bean.settKZL(-1);
                     }
 
                 }
@@ -520,7 +526,11 @@ public class WlTkModifyActivity extends BaseActivity {
             //EditText mSlValue;
             Float mShl;
             @BindView(R.id.dwzlValue)
-            EditText mDwzlValue;
+            TextView mDwzlValue;
+            @BindView(R.id.syzlValue)
+            TextView mSyzlValue;
+            @BindView(R.id.tkzlValue)
+            EditText mTkzlValue;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
