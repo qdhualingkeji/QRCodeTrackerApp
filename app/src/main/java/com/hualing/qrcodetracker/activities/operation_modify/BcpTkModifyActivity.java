@@ -388,9 +388,13 @@ public class BcpTkModifyActivity extends BaseActivity {
                     || "请选择质检领导".equals(mZjldValue.getText().toString())
                     || "请选择仓库管理员".equals(mKgValue.getText().toString())
                     || "请选择收货负责人".equals(mShfzrValue.getText().toString())
-                    || mData.get(i).getdWZL()==-1
+                    || mData.get(i).gettKZL()==-1
                     ) {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(mData.get(i).gettKZL() > mData.get(i).getsYZL()+mData.get(i).gettKZL1() ){
+                Toast.makeText(this, "退库重量不能大于车间的半成品重量"+(mData.get(i).getsYZL()+mData.get(i).gettKZL1())+mData.get(i).getdW(), Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -508,7 +512,9 @@ public class BcpTkModifyActivity extends BaseActivity {
             viewHolder.mScTimeValue.setText(bean.getScTime());
             viewHolder.mShl=bean.getShl();
             viewHolder.mDwZhlValue.setText(bean.getdWZL() + "");
-            viewHolder.mDwZhlValue.addTextChangedListener(new TextWatcher() {
+            viewHolder.mSyzlValue.setText(bean.getsYZL() + "");
+            viewHolder.mTkzlValue.setText(bean.gettKZL() + "");
+            viewHolder.mTkzlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -518,10 +524,10 @@ public class BcpTkModifyActivity extends BaseActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (!TextUtils.isEmpty(s)) {
                         float num = Float.parseFloat("" + s);
-                        bean.setdWZL(num);
+                        bean.settKZL(num);
                         bean.setShl(num/bean.getpCZL());//单位重量变了，必须计算出相对数量
                     } else {
-                        bean.setdWZL(-1);
+                        bean.settKZL(-1);
                     }
                 }
 
@@ -564,7 +570,11 @@ public class BcpTkModifyActivity extends BaseActivity {
             @BindView(R.id.scTimeValue)
             TextView mScTimeValue;
             @BindView(R.id.dwZhlValue)
-            EditText mDwZhlValue;
+            TextView mDwZhlValue;
+            @BindView(R.id.syzlValue)
+            TextView mSyzlValue;
+            @BindView(R.id.tkzlValue)
+            EditText mTkzlValue;
             //@BindView(R.id.tkShlValue)
             //EditText mTkShlValue;
             Float mShl;

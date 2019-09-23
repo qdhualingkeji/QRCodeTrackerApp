@@ -11,6 +11,8 @@ package com.hualing.qrcodetracker.bean;
 
 public class BcpTkShowBean {
 
+    //主键
+    private Integer id;
     //二维码编号
     private String qRCodeID;
     //物料编码
@@ -25,6 +27,8 @@ public class BcpTkShowBean {
     private String yLPC;
     private String sCPC;
     private String scTime;
+    private String ksTime;
+    private String wcTime;
     //数量
     private float shl ;
     //车间
@@ -35,13 +39,27 @@ public class BcpTkShowBean {
     private String czy	;
     //单位重量
     private float dWZL;
+    //剩余重量
+    private float sYZL;
     //退库重量
     private float tKZL;
+    //原来的退库重量
+    private float tKZL1;
     //批次总量
     private float pCZL;
     //出库单号
     private String backDh;
     private String remark;
+    //单位
+    private String dW;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getRemark() {
         return remark;
@@ -115,6 +133,22 @@ public class BcpTkShowBean {
         this.scTime = scTime;
     }
 
+    public String getKsTime() {
+        return ksTime;
+    }
+
+    public void setKsTime(String ksTime) {
+        this.ksTime = ksTime;
+    }
+
+    public String getWcTime() {
+        return wcTime;
+    }
+
+    public void setWcTime(String wcTime) {
+        this.wcTime = wcTime;
+    }
+
     public float getShl() {
         return shl;
     }
@@ -155,12 +189,28 @@ public class BcpTkShowBean {
         this.dWZL = dWZL;
     }
 
+    public float getsYZL() {
+        return sYZL;
+    }
+
+    public void setsYZL(float sYZL) {
+        this.sYZL = sYZL;
+    }
+
     public float gettKZL() {
         return tKZL;
     }
 
     public void settKZL(float tKZL) {
         this.tKZL = tKZL;
+    }
+
+    public float gettKZL1() {
+        return tKZL1;
+    }
+
+    public void settKZL1(float tKZL1) {
+        this.tKZL1 = tKZL1;
     }
 
     public float getpCZL() {
@@ -177,5 +227,13 @@ public class BcpTkShowBean {
 
     public void setBackDh(String backDh) {
         this.backDh = backDh;
+    }
+
+    public String getdW() {
+        return dW;
+    }
+
+    public void setdW(String dW) {
+        this.dW = dW;
     }
 }

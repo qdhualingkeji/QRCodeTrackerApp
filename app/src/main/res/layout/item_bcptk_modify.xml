@@ -190,8 +190,72 @@
                     android:textSize="@dimen/propertyNameText"
                     />
 
-                <EditText
+                <TextView
                     android:id="@+id/dwZhlValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/divide_dark_gray_color"
+                    android:textSize="16sp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="剩余重量："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <TextView
+                    android:id="@+id/syzlValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/divide_dark_gray_color"
+                    android:textSize="16sp"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@color/divide_gray_color"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="退库重量："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    />
+
+                <EditText
+                    android:id="@+id/tkzlValue"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
