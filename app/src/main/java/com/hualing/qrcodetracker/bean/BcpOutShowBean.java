@@ -2,6 +2,8 @@ package com.hualing.qrcodetracker.bean;
 
 public class BcpOutShowBean {
 
+    //主键
+    private Integer id;
     //二维码编号
     private String qRCodeID;
     //半成品编码
@@ -14,18 +16,32 @@ public class BcpOutShowBean {
     private String sortName;
     //原料批次
     private String yLPC;
+    //数量
+    private float shl;
     //单位重量
     private float dWZL;
     //入库重量
     private float rKZL;
+    //剩余重量
+    private float sYZL;
     //出库重量
     private float cKZL;
+    //修改前的出库重量
+    private float cKZL1;
     //出库单号
     private String outDh;
     //出库时间
     private String time;
     //单位
     private String dw;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getqRCodeID() {
         return qRCodeID;
@@ -75,6 +91,14 @@ public class BcpOutShowBean {
         this.yLPC = yLPC;
     }
 
+    public float getShl() {
+        return shl;
+    }
+
+    public void setShl(float shl) {
+        this.shl = shl;
+    }
+
     public float getdWZL() {
         return dWZL;
     }
@@ -91,12 +115,28 @@ public class BcpOutShowBean {
         this.rKZL = rKZL;
     }
 
+    public float getsYZL() {
+        return sYZL;
+    }
+
+    public void setsYZL(float sYZL) {
+        this.sYZL = sYZL;
+    }
+
     public float getcKZL() {
         return cKZL;
     }
 
     public void setcKZL(float cKZL) {
         this.cKZL = cKZL;
+    }
+
+    public float getcKZL1() {
+        return cKZL1;
+    }
+
+    public void setcKZL1(float cKZL1) {
+        this.cKZL1 = cKZL1;
     }
 
     public String getOutDh() {

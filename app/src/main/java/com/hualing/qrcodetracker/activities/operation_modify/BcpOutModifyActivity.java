@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
@@ -418,6 +419,14 @@ public class BcpOutModifyActivity extends BaseActivity {
                 Toast.makeText(this, "信息不完整", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            for (int i = 0; i < mBcpData.size(); i++) {
+                if (mBcpData.get(i).getcKZL() > mBcpData.get(i).getsYZL() + mBcpData.get(i).getcKZL1()) {
+                    Toast.makeText(this, "出库重量不能大于库存重量" + (mBcpData.get(i).getsYZL() + mBcpData.get(i).getcKZL1()) + mBcpData.get(i).getDw(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             updatedBcpParam.setBeans(mBcpData);
             updatedBcpParam.setKgID(kgID);
             updatedBcpParam.setKgStatus(0);
@@ -538,7 +547,7 @@ public class BcpOutModifyActivity extends BaseActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
             if (convertView == null) {
                 convertView = View.inflate(BcpOutModifyActivity.this, R.layout.item_bcpout_modify, null);
                 viewHolder = new ViewHolder(convertView);
@@ -550,8 +559,35 @@ public class BcpOutModifyActivity extends BaseActivity {
             viewHolder.mNameValue.setText(bean.getProductName());
             //viewHolder.mLbValue.setText(bean.getSortID() + "");
             viewHolder.mYlpcValue.setText(bean.getyLPC());
+            viewHolder.shl = bean.getShl();
+            viewHolder.rKZL = bean.getrKZL();
             viewHolder.mRkzlValue.setText(bean.getrKZL()+"");
             viewHolder.mDwzlValue.setText(bean.getdWZL()+"");
+            viewHolder.mSyzlValue.setText(bean.getsYZL()+"");
+            viewHolder.mCkzlValue.setText(bean.getcKZL()+"");
+            viewHolder.mCkzlValue.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (!TextUtils.isEmpty(s)) {
+                        float num = Float.parseFloat("" + s);
+                        bean.setcKZL(num);
+                        bean.setShl(num/viewHolder.rKZL);
+                    } else {
+                        bean.setcKZL(-1);
+                    }
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
 
             return convertView;
         }
@@ -567,6 +603,12 @@ public class BcpOutModifyActivity extends BaseActivity {
             TextView mRkzlValue;
             @BindView(R.id.dwzlValue)
             TextView mDwzlValue;
+            @BindView(R.id.syzlValue)
+            TextView mSyzlValue;
+            @BindView(R.id.ckzlValue)
+            EditText mCkzlValue;
+            Float shl;
+            Float rKZL;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);
