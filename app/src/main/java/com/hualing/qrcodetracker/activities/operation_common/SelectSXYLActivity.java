@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -49,6 +50,8 @@ public class SelectSXYLActivity extends BaseActivity {
 
     @BindView(R.id.inputValue)
     EditText mInputValue;
+    @BindView(R.id.jiSuanTLZL)
+    Button mJiSuanTLZL;
     @BindView(R.id.dataList)
     RecyclerView mRecyclerView;
     @BindView(R.id.selectAll)
@@ -97,6 +100,36 @@ public class SelectSXYLActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        mJiSuanTLZL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int size = mFilterData.size();
+                int selectedCount=0;
+                for(int i=0;i<size;i++){
+                    TLYLBean tlylBean = mFilterData.get(i);
+                    if(tlylBean.getFlag())
+                        selectedCount++;
+                }
+
+                if(selectedCount==0){
+                    Toast.makeText(SelectSXYLActivity.this, "请选择所需原料", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    float tlzl = dwzl / selectedCount;
+                    Log.e("size===",""+size);
+                    for(int i=0;i<size;i++){
+                        TLYLBean tlylBean = mFilterData.get(i);
+                        if(tlylBean.getFlag()) {
+                            Log.e("tlzl===",""+tlzl);
+                            tlylBean.setTlzl(tlzl);
+                        }
+                    }
+                    //mAdapter.getFilter();
+                    //mAdapter.notifyDataSetChanged();
+                }
             }
         });
 
