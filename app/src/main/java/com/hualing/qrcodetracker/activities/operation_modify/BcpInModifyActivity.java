@@ -659,6 +659,7 @@ public class BcpInModifyActivity extends BaseActivity {
                 }
             });
             */
+            viewHolder.mBmValue.setText(bean.getwLCode());
             viewHolder.mSelectedLeiBieId=bean.getSortID();
             viewHolder.mLbValue.setText(bean.getSortName());
             viewHolder.mGgValue.setText(bean.getgG());
@@ -823,19 +824,21 @@ public class BcpInModifyActivity extends BaseActivity {
             LinearLayout mSelectLB;
             @BindView(R.id.productNameValue)
             TextView mProductNameValue;
+            @BindView(R.id.bmValue)
+            TextView mBmValue;
             @BindView(R.id.selectProductName)
             LinearLayout mSelectProductName;
             @BindView(R.id.ylpcValue)
             EditText mYlpcValue;
             @BindView(R.id.ggValue)
-            EditText mGgValue;
+            TextView mGgValue;
             //@BindView(R.id.shlValue)
             //EditText mShlValue;
             Float shl;
             @BindView(R.id.dwzlValue)
             EditText mDwzlValue;
             @BindView(R.id.dwValue)
-            EditText mDwValue;
+            TextView mDwValue;
             @BindView(R.id.goSmallLayout)
             LinearLayout goSmallLayout;
             @BindView(R.id.goSmallBtn)
@@ -881,10 +884,16 @@ public class BcpInModifyActivity extends BaseActivity {
                 case SELECT_PRODUCT_NAME:
                     if (mCurrentPosition != -1) {
                         String productName = data.getStringExtra("productName");
+                        String productCode = data.getStringExtra("productCode");
                         String model = data.getStringExtra("model");
+                        String company = data.getStringExtra("company");
+                        if("".equals(model))
+                            model=getString(R.string.no_gg);
                         BcpInShowBean item = mData.get(mCurrentPosition);
                         item.setProductName(productName);
+                        item.setwLCode(productCode);
                         item.setgG(model);
+                        item.setdW(company);
                         mData.remove(mCurrentPosition);
                         mData.add(mCurrentPosition, item);
                         mAdapter.notifyDataSetChanged();
