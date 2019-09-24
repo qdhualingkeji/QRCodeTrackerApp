@@ -468,6 +468,23 @@ public class WlInModifyActivity extends BaseActivity {
 
                 }
             });
+            viewHolder.mWlbmValue.setText(bean.getwLCode());
+            viewHolder.mWlbmValue.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    bean.setwLCode(""+s);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
             viewHolder.mCdValue.setText(bean.getcHD());
             viewHolder.mCdValue.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -571,7 +588,13 @@ public class WlInModifyActivity extends BaseActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (!TextUtils.isEmpty(s)) {
-                        float num = Float.parseFloat(""+s);
+                        float num = 0;
+                        try {
+                            num = Float.parseFloat("" + s);
+                        }
+                        catch(Exception e){
+                            num=0;
+                        }
                         bean.setdWZL(num);
                         bean.setpCZL(num);
                         bean.setsYZL(num);
@@ -650,12 +673,14 @@ public class WlInModifyActivity extends BaseActivity {
             LinearLayout mSelectName;
             @BindView(R.id.nameValue)
             TextView mNameValue;
+            @BindView(R.id.wlbmValue)
+            TextView mWlbmValue;
             @BindView(R.id.ggValue)
-            EditText mGgValue;
+            TextView mGgValue;
             @BindView(R.id.ylpcValue)
             EditText mYlpcValue;
             @BindView(R.id.sldwValue)
-            EditText mSldwValue;
+            TextView mSldwValue;
             @BindView(R.id.slValue)
             EditText mSlValue;
             @BindView(R.id.zhlValue)
@@ -701,10 +726,16 @@ public class WlInModifyActivity extends BaseActivity {
                 case SELECT_PRODUCT_NAME:
                     if (mCurrentPosition!=-1) {
                         String productName = data.getStringExtra("productName");
+                        String productCode = data.getStringExtra("productCode");
                         String model = data.getStringExtra("model");
+                        String company = data.getStringExtra("company");
+                        if("".equals(model))
+                            model=getString(R.string.no_gg);
                         WLINShowBean item = mData.get(mCurrentPosition);
                         item.setProductName(productName);
+                        item.setwLCode(productCode);
                         item.setgG(model);
+                        item.setUnit(company);
                         mData.remove(mCurrentPosition);
                         mData.add(mCurrentPosition,item);
                         mAdapter.notifyDataSetChanged();

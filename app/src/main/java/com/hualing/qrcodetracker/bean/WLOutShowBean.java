@@ -47,6 +47,10 @@ public class WLOutShowBean {
     private String time;
     //标志位
     private int bz;
+    //产地
+    private String cHD;
+    //操作员（入库人）
+    private String cZY;
 
     public Integer getId() {
         return id;
@@ -189,5 +193,21 @@ public class WLOutShowBean {
 
     public void setBz(int bz) {
         this.bz = bz;
+    }
+
+    public String getcHD() {
+        return cHD;
+    }
+
+    public void setcHD(String cHD) {
+        this.cHD = cHD;
+    }
+
+    public String getcZY() {
+        return cZY;
+    }
+
+    public void setcZY(String cZY) {
+        this.cZY = cZY;
     }
 }
