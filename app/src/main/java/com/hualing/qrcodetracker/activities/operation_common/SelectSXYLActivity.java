@@ -67,6 +67,9 @@ public class SelectSXYLActivity extends BaseActivity {
     //车间包含的工序id
     private int mSelectedGxId;
     private String mTrackType;
+    private String mAction;
+    private String mAllYlQrCode;
+    private String mAllYlTlzl;
     private float dwzl;
 
     @Override
@@ -134,6 +137,9 @@ public class SelectSXYLActivity extends BaseActivity {
         mSelectedGxId = bundle.getInt("selectedGxId");
         mTrackType = bundle.getString("trackType");
         dwzl = bundle.getFloat("dwzl",0);
+        mAction = bundle.getString("action");
+        mAllYlQrCode = bundle.getString("allYlQrCode");
+        mAllYlTlzl = bundle.getString("allYlTlzl");
 
         mSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -196,10 +202,30 @@ public class SelectSXYLActivity extends BaseActivity {
                             }
                             mFilterData.clear();
                             mFilterData.addAll(mLocalData);
+
+                            if("edit".equals(mAction)){
+                                initSelectedSXYL();
+                            }
+
                             mAdapter.notifyDataSetChanged();
                         }
                     }
                 });
+    }
+
+    private void initSelectedSXYL() {
+        String[] ylQrCodeArr = mAllYlQrCode.split(",");
+        String[] ylTlzlArr = mAllYlTlzl.split(",");
+        for(int i=0;i<ylQrCodeArr.length;i++){
+            String ylQrCode = ylQrCodeArr[i];
+            for(int j=0;j<mFilterData.size();j++) {
+                TLYLBean tlylBean = mFilterData.get(j);
+                if (ylQrCode.equals(tlylBean.getQrcodeID())) {
+                    tlylBean.setTlzl(Float.valueOf(ylTlzlArr[i]));
+                    tlylBean.setFlag(true);
+                }
+            }
+        }
     }
 
     @Override

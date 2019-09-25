@@ -27,8 +27,14 @@ public class BcpInShowBean implements Serializable {
     private String yLPC;
     //生产批次
     private String sCPC;
+    //车间id
+    private int cjId;
     //车间
     private String cheJian;
+    //车间里的工序id
+    private String cjGXIds;
+    //工序id
+    private int gxId;
     //工序
     private String gx;
     //操作员
@@ -85,6 +91,9 @@ public class BcpInShowBean implements Serializable {
     private String yl10;
     private String ylmc10;
     private float tlzl10;
+    private String allYlStr;
+    private String allYlQrCode;
+    private String allYlTlzl;
 
     public String getYl1() {
         return yl1;
@@ -326,6 +335,30 @@ public class BcpInShowBean implements Serializable {
         this.tlzl10 = tlzl10;
     }
 
+    public String getAllYlStr() {
+        return allYlStr;
+    }
+
+    public void setAllYlStr(String allYlStr) {
+        this.allYlStr = allYlStr;
+    }
+
+    public String getAllYlQrCode() {
+        return allYlQrCode;
+    }
+
+    public void setAllYlQrCode(String allYlQrCode) {
+        this.allYlQrCode = allYlQrCode;
+    }
+
+    public String getAllYlTlzl() {
+        return allYlTlzl;
+    }
+
+    public void setAllYlTlzl(String allYlTlzl) {
+        this.allYlTlzl = allYlTlzl;
+    }
+
     public Integer getZjzt() {
         return zjzt;
     }
@@ -398,8 +431,36 @@ public class BcpInShowBean implements Serializable {
         this.sCPC = sCPC;
     }
 
+    public int getCjId() {
+        return cjId;
+    }
+
+    public void setCjId(int cjId) {
+        this.cjId = cjId;
+    }
+
     public String getCheJian() {
         return cheJian;
+    }
+
+    public void setCheJian(String cheJian) {
+        this.cheJian = cheJian;
+    }
+
+    public String getCjGXIds() {
+        return cjGXIds;
+    }
+
+    public void setCjGXIds(String cjGXIds) {
+        this.cjGXIds = cjGXIds;
+    }
+
+    public int getGxId() {
+        return gxId;
+    }
+
+    public void setGxId(int gxId) {
+        this.gxId = gxId;
     }
 
     public String getGx() {
@@ -424,10 +485,6 @@ public class BcpInShowBean implements Serializable {
 
     public void setZjy(String zjy) {
         this.zjy = zjy;
-    }
-
-    public void setCheJian(String cheJian) {
-        this.cheJian = cheJian;
     }
 
     public float getShl() {

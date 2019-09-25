@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -810,6 +811,10 @@ public class BcpInModifyActivity extends BaseActivity {
                 }
             });
 
+            viewHolder.mSelectedCheJianId=bean.getCjId();
+            viewHolder.mCJHasGongXuId=bean.getCjGXIds();
+
+            viewHolder.mSelectedGxId=bean.getGxId();
             viewHolder.mGxValue.setText(bean.getGx());
             viewHolder.mSelectGX.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -826,6 +831,7 @@ public class BcpInModifyActivity extends BaseActivity {
             });
 
             initSXYL(viewHolder,bean);
+            viewHolder.mSxylValue.setText(bean.getAllYlStr());
             viewHolder.mSelectSXYL.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -837,6 +843,10 @@ public class BcpInModifyActivity extends BaseActivity {
                     bundle2.putInt("selectedGxId", viewHolder.mSelectedGxId);
                     bundle2.putString("trackType", TrackType.BCP);
                     bundle2.putFloat("dwzl",Float.valueOf(viewHolder.mDwzlValue.getText().toString()));
+                    bundle2.putString("allYlQrCode",bean.getAllYlQrCode());
+                    Log.e("allYlTlzl222===",""+bean.getAllYlTlzl());
+                    bundle2.putString("allYlTlzl",bean.getAllYlTlzl());
+                    bundle2.putString("action","edit");
                     IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                     mCurrentPosition = position;
                 }
@@ -939,6 +949,26 @@ public class BcpInModifyActivity extends BaseActivity {
                 viewHolder.qrcodeBuffer.append(yl10 + ",");
                 viewHolder.tlzlBuffer.append(tlzl10 + ",");
             }
+
+            //如果有选中的则去掉最后一个逗号
+            if (viewHolder.nameBuffer.length()>0) {
+                viewHolder.nameBuffer.deleteCharAt(viewHolder.nameBuffer.length()-1);
+            }
+            //如果有选中的则去掉最后一个逗号
+            if (viewHolder.qrcodeBuffer.length()>0) {
+                viewHolder.qrcodeBuffer.deleteCharAt(viewHolder.qrcodeBuffer.length()-1);
+            }
+            //如果有选中的则去掉最后一个逗号
+            if (viewHolder.tlzlBuffer.length()>0) {
+                viewHolder.tlzlBuffer.deleteCharAt(viewHolder.tlzlBuffer.length()-1);
+            }
+
+            bean.setAllYlStr("");
+            bean.setAllYlStr(viewHolder.nameBuffer.toString());
+            bean.setAllYlQrCode("");
+            bean.setAllYlQrCode(viewHolder.qrcodeBuffer.toString());
+            bean.setAllYlTlzl("");
+            bean.setAllYlTlzl(viewHolder.tlzlBuffer.toString());
         }
 
         class ViewHolder {
@@ -958,6 +988,8 @@ public class BcpInModifyActivity extends BaseActivity {
             TextView mCjValue;
             @BindView(R.id.gxValue)
             TextView mGxValue;
+            @BindView(R.id.sxylValue)
+            TextView mSxylValue;
             @BindView(R.id.selectProductName)
             LinearLayout mSelectProductName;
             @BindView(R.id.selectCJ)
@@ -984,6 +1016,7 @@ public class BcpInModifyActivity extends BaseActivity {
             @BindView(R.id.goSmallView)
             View goSmallView;
             int mSelectedLeiBieId = -1;
+            int mSelectedCheJianId = -1;
             String mCJHasGongXuId;
             int mSelectedGxId = -1;
             StringBuffer nameBuffer;
@@ -1037,6 +1070,114 @@ public class BcpInModifyActivity extends BaseActivity {
                         item.setwLCode(productCode);
                         item.setgG(model);
                         item.setdW(company);
+                        mData.remove(mCurrentPosition);
+                        mData.add(mCurrentPosition, item);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                case SELECT_CHE_JIAN:
+                    if (mCurrentPosition != -1){
+                        String cjName = data.getStringExtra("cjName");
+                        int cjId = data.getIntExtra("cjId", -1);
+                        String cjGXIds = data.getStringExtra("cjGXIds");
+
+                        BcpInShowBean item = mData.get(mCurrentPosition);
+                        item.setCheJian(cjName);
+                        item.setCjId(cjId);
+                        item.setCjGXIds(cjGXIds);
+
+                        mData.remove(mCurrentPosition);
+                        mData.add(mCurrentPosition, item);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                case SELECT_GONG_XU:
+                    if (mCurrentPosition != -1){
+                        String gxName = data.getStringExtra("gxName");
+                        int gxId = data.getIntExtra("gxId", -1);
+
+                        BcpInShowBean item = mData.get(mCurrentPosition);
+                        item.setGx(gxName);
+                        item.setGxId(gxId);
+
+                        mData.remove(mCurrentPosition);
+                        mData.add(mCurrentPosition, item);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    break;
+                case SELECT_SXYL:
+                    if (mCurrentPosition != -1) {
+                        String allYlStr = data.getStringExtra("allYlStr");
+                        if (TextUtils.isEmpty(allYlStr))
+                            return;
+                        //所有所需原料的二维码id字符串
+                        String allYlQrCode = data.getStringExtra("allYlQrCode");
+                        String allYlTlzl = data.getStringExtra("allYlTlzl");
+
+                        BcpInShowBean item = mData.get(mCurrentPosition);
+                        item.setAllYlStr(allYlStr);
+                        item.setAllYlQrCode(allYlQrCode);
+                        Log.e("allYlTlzl111===",""+allYlTlzl);
+                        item.setAllYlTlzl(allYlTlzl);
+
+                        String[] ylArr = allYlStr.split(",");
+                        String[] ylQrCodeArr = allYlQrCode.split(",");
+                        String[] ylTlzlArr = allYlTlzl.split(",");
+                        for(int i=0;i<ylArr.length;i++){
+                            switch (i){
+                                case 0:
+                                    item.setYl1(ylQrCodeArr[i]);
+                                    item.setYlmc1(ylArr[i]);
+                                    item.setTlzl1(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 1:
+                                    item.setYl2(ylQrCodeArr[i]);
+                                    item.setYlmc2(ylArr[i]);
+                                    item.setTlzl2(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 2:
+                                    item.setYl3(ylQrCodeArr[i]);
+                                    item.setYlmc3(ylArr[i]);
+                                    item.setTlzl3(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 3:
+                                    item.setYl4(ylQrCodeArr[i]);
+                                    item.setYlmc4(ylArr[i]);
+                                    item.setTlzl4(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 4:
+                                    item.setYl5(ylQrCodeArr[i]);
+                                    item.setYlmc5(ylArr[i]);
+                                    item.setTlzl5(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 5:
+                                    item.setYl6(ylQrCodeArr[i]);
+                                    item.setYlmc6(ylArr[i]);
+                                    item.setTlzl6(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 6:
+                                    item.setYl7(ylQrCodeArr[i]);
+                                    item.setYlmc7(ylArr[i]);
+                                    item.setTlzl7(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 7:
+                                    item.setYl8(ylQrCodeArr[i]);
+                                    item.setYlmc8(ylArr[i]);
+                                    item.setTlzl8(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 8:
+                                    item.setYl9(ylQrCodeArr[i]);
+                                    item.setYlmc9(ylArr[i]);
+                                    item.setTlzl9(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                                case 9:
+                                    item.setYl10(ylQrCodeArr[i]);
+                                    item.setYlmc10(ylArr[i]);
+                                    item.setTlzl10(Float.valueOf(ylTlzlArr[i]));
+                                    break;
+                            }
+                        }
+
                         mData.remove(mCurrentPosition);
                         mData.add(mCurrentPosition, item);
                         mAdapter.notifyDataSetChanged();
