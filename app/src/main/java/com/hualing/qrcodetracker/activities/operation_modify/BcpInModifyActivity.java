@@ -18,9 +18,12 @@ import android.widget.Toast;
 import com.hualing.qrcodetracker.R;
 import com.hualing.qrcodetracker.activities.BaseActivity;
 import com.hualing.qrcodetracker.activities.operation_bcp.bcp_in.SmallCPInVerifyActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectCJActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectGXActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectHlProductActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectParentHlSortActivity;
 import com.hualing.qrcodetracker.activities.operation_common.SelectPersonGroupActivity;
+import com.hualing.qrcodetracker.activities.operation_common.SelectSXYLActivity;
 import com.hualing.qrcodetracker.aframework.yoni.ActionResult;
 import com.hualing.qrcodetracker.aframework.yoni.YoniClient;
 import com.hualing.qrcodetracker.bean.BcpInShowBean;
@@ -30,6 +33,7 @@ import com.hualing.qrcodetracker.bean.VerifyParam;
 import com.hualing.qrcodetracker.dao.MainDao;
 import com.hualing.qrcodetracker.global.TheApplication;
 import com.hualing.qrcodetracker.model.NotificationType;
+import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.util.IntentUtil;
 import com.hualing.qrcodetracker.widget.MyListView;
@@ -55,6 +59,9 @@ public class BcpInModifyActivity extends BaseActivity {
     //private static final int GET_WLSORT_CODE = 30;
     private static final int SELECT_LEI_BIE = 11;
     private static final int SELECT_PRODUCT_NAME = 12;
+    private static final int SELECT_CHE_JIAN = 13;
+    private static final int SELECT_GONG_XU = 14;
+    private static final int SELECT_SXYL = 15;
     private static final int REQUEST_CODE_SELECT_SHR = 31;
     private static final int REQUEST_CODE_SELECT_BZ = 32;
     private static final int REQUEST_CODE_SELECT_FZR = 33;
@@ -794,6 +801,47 @@ public class BcpInModifyActivity extends BaseActivity {
                 }
             });
 
+            viewHolder.mCjValue.setText(bean.getCheJian());
+            viewHolder.mSelectCJ.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectCJActivity.class, SELECT_CHE_JIAN, null);
+                    mCurrentPosition = position;
+                }
+            });
+
+            viewHolder.mGxValue.setText(bean.getGx());
+            viewHolder.mSelectGX.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ("请选择车间".equals(viewHolder.mCjValue.getText().toString())) {
+                        Toast.makeText(BcpInModifyActivity.this, "请先选择车间", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putString("cjGXIds", viewHolder.mCJHasGongXuId);
+                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectGXActivity.class, SELECT_GONG_XU, bundle);
+                    mCurrentPosition = position;
+                }
+            });
+
+            initSXYL(viewHolder,bean);
+            viewHolder.mSelectSXYL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ("请选择工序".equals(viewHolder.mGxValue.getText().toString())) {
+                        Toast.makeText(BcpInModifyActivity.this, "请先选择工序", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putInt("selectedGxId", viewHolder.mSelectedGxId);
+                    bundle2.putString("trackType", TrackType.BCP);
+                    bundle2.putFloat("dwzl",Float.valueOf(viewHolder.mDwzlValue.getText().toString()));
+                    IntentUtil.openActivityForResult(BcpInModifyActivity.this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
+                    mCurrentPosition = position;
+                }
+            });
+
             final String qRCodeID = bean.getqRCodeID();
             if("4".equals(qRCodeID.substring(8,9))){
                 viewHolder.goSmallLayout.setVisibility(View.VISIBLE);
@@ -813,6 +861,86 @@ public class BcpInModifyActivity extends BaseActivity {
             return convertView;
         }
 
+        /**
+         * 设置所需原料
+         * @param viewHolder
+         * @param bean**/
+        private void initSXYL(ViewHolder viewHolder, BcpInShowBean bean) {
+            viewHolder.nameBuffer = new StringBuffer();
+            viewHolder.qrcodeBuffer = new StringBuffer();
+            viewHolder.tlzlBuffer = new StringBuffer();
+            String yl1 = bean.getYl1();
+            float tlzl1 = bean.getTlzl1();
+            if(!TextUtils.isEmpty(yl1)&&tlzl1>0){
+                viewHolder.nameBuffer.append(bean.getYlmc1() + ",");
+                viewHolder.qrcodeBuffer.append(yl1 + ",");
+                viewHolder.tlzlBuffer.append(tlzl1 + ",");
+            }
+            String yl2 = bean.getYl2();
+            float tlzl2 = bean.getTlzl2();
+            if(!TextUtils.isEmpty(yl2)&&tlzl2>0){
+                viewHolder.nameBuffer.append(bean.getYlmc2() + ",");
+                viewHolder.qrcodeBuffer.append(yl2 + ",");
+                viewHolder.tlzlBuffer.append(tlzl2 + ",");
+            }
+            String yl3 = bean.getYl3();
+            float tlzl3 = bean.getTlzl3();
+            if(!TextUtils.isEmpty(yl3)&&tlzl3>0){
+                viewHolder.nameBuffer.append(bean.getYlmc3() + ",");
+                viewHolder.qrcodeBuffer.append(yl3 + ",");
+                viewHolder.tlzlBuffer.append(tlzl3 + ",");
+            }
+            String yl4 = bean.getYl4();
+            float tlzl4 = bean.getTlzl4();
+            if(!TextUtils.isEmpty(yl4)&&tlzl4>0){
+                viewHolder.nameBuffer.append(bean.getYlmc4() + ",");
+                viewHolder.qrcodeBuffer.append(yl4 + ",");
+                viewHolder.tlzlBuffer.append(tlzl4 + ",");
+            }
+            String yl5 = bean.getYl5();
+            float tlzl5 = bean.getTlzl5();
+            if(!TextUtils.isEmpty(yl5)&&tlzl5>0){
+                viewHolder.nameBuffer.append(bean.getYlmc5() + ",");
+                viewHolder.qrcodeBuffer.append(yl5 + ",");
+                viewHolder.tlzlBuffer.append(tlzl5 + ",");
+            }
+            String yl6 = bean.getYl6();
+            float tlzl6 = bean.getTlzl6();
+            if(!TextUtils.isEmpty(yl6)&&tlzl6>0){
+                viewHolder.nameBuffer.append(bean.getYlmc6() + ",");
+                viewHolder.qrcodeBuffer.append(yl6 + ",");
+                viewHolder.tlzlBuffer.append(tlzl6 + ",");
+            }
+            String yl7 = bean.getYl7();
+            float tlzl7 = bean.getTlzl7();
+            if(!TextUtils.isEmpty(yl7)&&tlzl7>0){
+                viewHolder.nameBuffer.append(bean.getYlmc7() + ",");
+                viewHolder.qrcodeBuffer.append(yl7 + ",");
+                viewHolder.tlzlBuffer.append(tlzl7 + ",");
+            }
+            String yl8 = bean.getYl8();
+            float tlzl8 = bean.getTlzl8();
+            if(!TextUtils.isEmpty(yl8)&&tlzl8>0){
+                viewHolder.nameBuffer.append(bean.getYlmc8() + ",");
+                viewHolder.qrcodeBuffer.append(yl8 + ",");
+                viewHolder.tlzlBuffer.append(tlzl8 + ",");
+            }
+            String yl9 = bean.getYl9();
+            float tlzl9 = bean.getTlzl9();
+            if(!TextUtils.isEmpty(yl9)&&tlzl9>0){
+                viewHolder.nameBuffer.append(bean.getYlmc9() + ",");
+                viewHolder.qrcodeBuffer.append(yl9 + ",");
+                viewHolder.tlzlBuffer.append(tlzl9 + ",");
+            }
+            String yl10 = bean.getYl10();
+            float tlzl10 = bean.getTlzl10();
+            if(!TextUtils.isEmpty(yl10)&&tlzl10>0){
+                viewHolder.nameBuffer.append(bean.getYlmc10() + ",");
+                viewHolder.qrcodeBuffer.append(yl10 + ",");
+                viewHolder.tlzlBuffer.append(tlzl10 + ",");
+            }
+        }
+
         class ViewHolder {
             //@BindView(R.id.bcpCodeValue)
             //TextView mBcpCodeValue;
@@ -826,8 +954,18 @@ public class BcpInModifyActivity extends BaseActivity {
             TextView mProductNameValue;
             @BindView(R.id.bmValue)
             TextView mBmValue;
+            @BindView(R.id.cjValue)
+            TextView mCjValue;
+            @BindView(R.id.gxValue)
+            TextView mGxValue;
             @BindView(R.id.selectProductName)
             LinearLayout mSelectProductName;
+            @BindView(R.id.selectCJ)
+            LinearLayout mSelectCJ;
+            @BindView(R.id.selectGX)
+            LinearLayout mSelectGX;
+            @BindView(R.id.selectSXYL)
+            LinearLayout mSelectSXYL;
             @BindView(R.id.ylpcValue)
             EditText mYlpcValue;
             @BindView(R.id.ggValue)
@@ -846,6 +984,11 @@ public class BcpInModifyActivity extends BaseActivity {
             @BindView(R.id.goSmallView)
             View goSmallView;
             int mSelectedLeiBieId = -1;
+            String mCJHasGongXuId;
+            int mSelectedGxId = -1;
+            StringBuffer nameBuffer;
+            StringBuffer qrcodeBuffer;
+            StringBuffer tlzlBuffer;
 
             ViewHolder(View view) {
                 ButterKnife.bind(this, view);

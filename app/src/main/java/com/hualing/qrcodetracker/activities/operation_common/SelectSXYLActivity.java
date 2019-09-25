@@ -119,16 +119,13 @@ public class SelectSXYLActivity extends BaseActivity {
                 }
                 else {
                     float tlzl = dwzl / selectedCount;
-                    Log.e("size===",""+size);
                     for(int i=0;i<size;i++){
                         TLYLBean tlylBean = mFilterData.get(i);
                         if(tlylBean.getFlag()) {
-                            Log.e("tlzl===",""+tlzl);
                             tlylBean.setTlzl(tlzl);
                         }
                     }
-                    //mAdapter.getFilter();
-                    //mAdapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -193,6 +190,7 @@ public class SelectSXYLActivity extends BaseActivity {
                                 b.setQrcodeID(mData.get(i).getQrcodeID());
                                 b.setDw(mData.get(i).getDw());
                                 b.setSyzl(mData.get(i).getSyzl());
+                                b.setTlzl(mData.get(i).getTlzl());
                                 b.setFlag(false);
                                 mLocalData.add(b);
                             }
@@ -285,6 +283,7 @@ public class SelectSXYLActivity extends BaseActivity {
             holder.ylName.setText(bean.getProductName());
             holder.qrcodeID.setText(bean.getQrcodeID());
             holder.syzlValue.setText(String.valueOf(bean.getSyzl()));
+            holder.tlZhlValue.setText(String.valueOf(bean.getTlzl()));
             holder.tlZhlValue.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
