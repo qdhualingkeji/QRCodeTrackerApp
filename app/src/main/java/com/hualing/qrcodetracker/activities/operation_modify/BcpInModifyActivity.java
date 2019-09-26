@@ -1178,6 +1178,61 @@ public class BcpInModifyActivity extends BaseActivity {
                             }
                         }
 
+                        for(int i=ylArr.length;i<10-ylArr.length;i++){
+                            switch (i){
+                                case 0:
+                                    item.setYl1(null);
+                                    item.setYlmc1(null);
+                                    item.setTlzl1(Float.valueOf(0));
+                                    break;
+                                case 1:
+                                    item.setYl2(null);
+                                    item.setYlmc2(null);
+                                    item.setTlzl2(Float.valueOf(0));
+                                    break;
+                                case 2:
+                                    item.setYl3(null);
+                                    item.setYlmc3(null);
+                                    item.setTlzl3(Float.valueOf(0));
+                                    break;
+                                case 3:
+                                    item.setYl4(null);
+                                    item.setYlmc4(null);
+                                    item.setTlzl4(Float.valueOf(0));
+                                    break;
+                                case 4:
+                                    item.setYl5(null);
+                                    item.setYlmc5(null);
+                                    item.setTlzl5(Float.valueOf(0));
+                                    break;
+                                case 5:
+                                    item.setYl6(null);
+                                    item.setYlmc6(null);
+                                    item.setTlzl6(Float.valueOf(0));
+                                    break;
+                                case 6:
+                                    item.setYl7(null);
+                                    item.setYlmc7(null);
+                                    item.setTlzl7(Float.valueOf(0));
+                                    break;
+                                case 7:
+                                    item.setYl8(null);
+                                    item.setYlmc8(null);
+                                    item.setTlzl8(Float.valueOf(0));
+                                    break;
+                                case 8:
+                                    item.setYl9(null);
+                                    item.setYlmc9(null);
+                                    item.setTlzl9(Float.valueOf(0));
+                                    break;
+                                case 9:
+                                    item.setYl10(null);
+                                    item.setYlmc10(null);
+                                    item.setTlzl10(Float.valueOf(0));
+                                    break;
+                            }
+                        }
+
                         mData.remove(mCurrentPosition);
                         mData.add(mCurrentPosition, item);
                         mAdapter.notifyDataSetChanged();
