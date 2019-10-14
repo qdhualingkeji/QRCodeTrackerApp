@@ -59,6 +59,8 @@ public class BigCpDataTrackActivity extends BaseActivity {
     TextView mSldwValue;
     @BindView(R.id.zhlValue)
     TextView mZhlValue;
+    @BindView(R.id.syzlValue)
+    TextView mSyzlValue;
     @BindView(R.id.lookSmallBtn)
     CardView mLookSmallBtn;
 
@@ -138,6 +140,7 @@ public class BigCpDataTrackActivity extends BaseActivity {
                             mCzyValue.setText(dataResult.getCzy());
                             mSldwValue.setText(dataResult.getDw());
                             mZhlValue.setText(dataResult.getDwzl() + "");
+                            mSyzlValue.setText(dataResult.getSyzl() + "");
                             mZjyValue.setText(dataResult.getZjy());
 
                             if (TextUtils.isEmpty(dataResult.getSmlPk1())) {

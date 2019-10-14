@@ -412,6 +412,38 @@
                 android:layout_height="@dimen/dividerHeight"
                 android:background="@android:color/black"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/propertyNameText"
+                    android:text="剩余重量："
+                    />
+
+                <TextView
+                    android:id="@+id/syzlValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/divide_dark_gray_color"
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dividerHeight"
+                android:background="@android:color/black"/>
+
             <android.support.v7.widget.CardView
                 android:id="@+id/lookSmallBtn"
                 android:layout_width="match_parent"

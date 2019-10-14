@@ -345,6 +345,7 @@ public class BigCPInDataInputActivity extends BaseActivity {
             ggValue="";
         params.setGg(ggValue);
         params.setDwzl(Float.parseFloat(dwzlValue));
+        params.setSyzl(Float.parseFloat(dwzlValue));
         params.setDw(dwValue);
 //        params.setZjy(zjyValue);
         params.setScTime(scTimeValue);

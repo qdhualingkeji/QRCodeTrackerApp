@@ -22,6 +22,7 @@ public class BigCPINParam {
     private String gg;
     private String scTime;
     private float dwzl;
+    private float syzl;
     private String czy;
     private String zjy;
     private String jyzt;
@@ -116,6 +117,14 @@ public class BigCPINParam {
 
     public void setDwzl(float dwzl) {
         this.dwzl = dwzl;
+    }
+
+    public float getSyzl() {
+        return syzl;
+    }
+
+    public void setSyzl(float syzl) {
+        this.syzl = syzl;
     }
 
     public String getCzy() {
