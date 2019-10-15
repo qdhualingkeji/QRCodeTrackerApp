@@ -34,6 +34,7 @@ import com.hualing.qrcodetracker.model.TrackType;
 import com.hualing.qrcodetracker.util.AllActivitiesHolder;
 import com.hualing.qrcodetracker.widget.MyRecycleViewDivider;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,8 @@ public class SelectSXYLActivity extends BaseActivity {
     private String mAllYlQrCode;
     private String mAllYlTlzl;
     private float dwzl;
+    private int shl;
+    private DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,21 +114,23 @@ public class SelectSXYLActivity extends BaseActivity {
             public void onClick(View v) {
                 int size = mFilterData.size();
                 int selectedCount=0;
+                int sumSyzl=0;
                 for(int i=0;i<size;i++){
                     TLYLBean tlylBean = mFilterData.get(i);
-                    if(tlylBean.getFlag())
+                    if(tlylBean.getFlag()) {
                         selectedCount++;
+                        sumSyzl+=tlylBean.getSyzl();
+                    }
                 }
 
                 if(selectedCount==0){
                     Toast.makeText(SelectSXYLActivity.this, "请选择所需原料", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    float tlzl = dwzl / selectedCount;
                     for(int i=0;i<size;i++){
                         TLYLBean tlylBean = mFilterData.get(i);
                         if(tlylBean.getFlag()) {
-                            tlylBean.setTlzl(tlzl);
+                            tlylBean.setTlzl(Float.valueOf(df.format(dwzl*shl*tlylBean.getSyzl()/sumSyzl)));
                         }
                     }
                     mAdapter.notifyDataSetChanged();
@@ -137,6 +142,7 @@ public class SelectSXYLActivity extends BaseActivity {
         mSelectedGxId = bundle.getInt("selectedGxId");
         mTrackType = bundle.getString("trackType");
         dwzl = bundle.getFloat("dwzl",0);
+        shl = bundle.getInt("shl",0);
         mAction = bundle.getString("action");
         mAllYlQrCode = bundle.getString("allYlQrCode");
         mAllYlTlzl = bundle.getString("allYlTlzl");
@@ -250,7 +256,7 @@ public class SelectSXYLActivity extends BaseActivity {
             if (mFilterData.get(i).getFlag()) {
                 nameBuffer.append(mFilterData.get(i).getProductName() + ",");
                 qrcodeBuffer.append(mFilterData.get(i).getQrcodeID() + ",");
-                tlzlBuffer.append(mFilterData.get(i).getTlzl() + ",");
+                tlzlBuffer.append(mFilterData.get(i).getTlzl()/shl + ",");
             }
         }
         //如果有选中的则去掉最后一个逗号
@@ -289,8 +295,8 @@ public class SelectSXYLActivity extends BaseActivity {
             }
         }
 
-        if(tlzlSum>0&&tlzlSum<dwzl){
-            Toast.makeText(this, "投料重量不能小于单位重量", Toast.LENGTH_SHORT).show();
+        if(tlzlSum>0&&tlzlSum<dwzl*shl){
+            Toast.makeText(this, "投料重量不能小于批次重量", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -435,7 +441,7 @@ public class SelectSXYLActivity extends BaseActivity {
             if (mFilterData.get(i).getFlag()) {
                 nameBuffer.append(mFilterData.get(i).getProductName() + ",");
                 qrcodeBuffer.append(mFilterData.get(i).getQrcodeID() + ",");
-                tlzlBuffer.append(mFilterData.get(i).getTlzl() + ",");
+                tlzlBuffer.append(mFilterData.get(i).getTlzl()/shl + ",");
             }
         }
         //如果有选中的则去掉最后一个逗号

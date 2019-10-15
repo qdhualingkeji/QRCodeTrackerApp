@@ -264,7 +264,9 @@ public class BCPInDataInputActivity extends BaseActivity {
         params.setSyzl(Float.parseFloat(dwzlValue));
         params.setDw(dwValue);
 //        params.setZjy(zjyValue);
+        params.setCjId(mSelectedCheJianId);
         params.setCheJian(cjName);
+        params.setGxId(mSelectedGxId);
         params.setGx(gxName);
         params.setScTime(scTimeValue);
         params.setKsTime(ksTimeValue);
@@ -510,6 +512,7 @@ public class BCPInDataInputActivity extends BaseActivity {
                 bundle2.putInt("selectedGxId", mSelectedGxId);
                 bundle2.putString("trackType", TrackType.BCP);
                 bundle2.putFloat("dwzl",Float.valueOf(mDwzlValue.getText().toString()));
+                bundle2.putInt("shl",Integer.valueOf(mTsValue.getText().toString()));
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
             case R.id.scTimeValue:

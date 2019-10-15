@@ -19,6 +19,8 @@ public class SmallCPINParam {
     private String scpc;
     private String gg;
     private float shl;
+    private int cjId;
+    private int gxId;
     private String scTime;
     private float dwzl;
     private String czy;
@@ -120,6 +122,22 @@ public class SmallCPINParam {
 
     public void setShl(float shl) {
         this.shl = shl;
+    }
+
+    public int getCjId() {
+        return cjId;
+    }
+
+    public void setCjId(int cjId) {
+        this.cjId = cjId;
+    }
+
+    public int getGxId() {
+        return gxId;
+    }
+
+    public void setGxId(int gxId) {
+        this.gxId = gxId;
     }
 
     public String getScTime() {

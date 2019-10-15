@@ -234,6 +234,7 @@ public class SmallCPInDataInputActivity extends BaseActivity {
                 bundle2.putInt("selectedGxId", mSelectedGxId);
                 bundle2.putString("trackType", TrackType.SMALL_CP);
                 bundle2.putFloat("dwzl",Float.valueOf(mDwzlValue.getText().toString()));
+                bundle2.putInt("shl",Integer.valueOf(mShlValue.getText().toString()));
                 IntentUtil.openActivityForResult(this, SelectSXYLActivity.class, SELECT_SXYL, bundle2);
                 break;
             case R.id.scTimeValue:
@@ -449,6 +450,8 @@ public class SmallCPInDataInputActivity extends BaseActivity {
         params.setDwzl(Float.parseFloat(dwzlValue));
         params.setDw(dwValue);
 //        params.setZjy(zjyValue);
+        params.setCjId(mSelectedCheJianId);
+        params.setGxId(mSelectedGxId);
         params.setScTime(scTimeValue);
 //        params.setJyzt(jyztValue);
         params.setCzy(GlobalData.realName);

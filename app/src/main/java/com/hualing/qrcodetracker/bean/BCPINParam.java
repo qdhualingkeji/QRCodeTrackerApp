@@ -35,6 +35,8 @@ public class BCPINParam {
     private int bz;
 
     //    private int CheJian ;
+    private int cjId;
+    private int gxId;
     private String cheJian ;
     private String indh ;
     private String dw ;
@@ -227,6 +229,22 @@ public class BCPINParam {
 
     public void setBz(int bz) {
         this.bz = bz;
+    }
+
+    public int getCjId() {
+        return cjId;
+    }
+
+    public void setCjId(int cjId) {
+        this.cjId = cjId;
+    }
+
+    public int getGxId() {
+        return gxId;
+    }
+
+    public void setGxId(int gxId) {
+        this.gxId = gxId;
     }
 
     public String getCheJian() {
