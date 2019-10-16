@@ -309,6 +309,12 @@ public class SelectSXYLActivity extends BaseActivity {
             return new MyViewHolder(v);
         }
 
+        //重写这个方法为了避免上下滑动时出现数据乱行，具体请参见：https://blog.csdn.net/public_calss/article/details/81060992
+        @Override
+        public int getItemViewType(int position) {
+            return position;
+        }
+
         @Override
         public void onBindViewHolder(final MyViewHolder holder, final int position) {
             final TLYLBean bean = mFilterData.get(position);
